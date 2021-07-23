@@ -25,12 +25,15 @@
   </p>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 
-defineProps<{
-  msg: String,
-}>()
+defineProps({
+  msg: {
+    type: String,
+    required: true
+  }
+})
 
 const count = ref(0)
 </script>
