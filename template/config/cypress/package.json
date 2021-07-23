@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "test:unit": "cypress open-ct",
+    "test:unit:ci": "cypress run-ct --quiet --reporter spec",
+    "test:e2e": "start-server-and-test preview 5050 'cypress open'",
+    "test:e2e:ci": "start-server-and-test preview 5050 'cypress run'"
+  },
+  "devDependencies": {
+    "@cypress/vite-dev-server": "^2.0.2",
+    "@cypress/vue": "^3.0.1",
+    "cypress": "^8.0.0",
+    "start-server-and-test": "^1.12.6"
+  }
+}
