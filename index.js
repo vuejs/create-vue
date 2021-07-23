@@ -22,10 +22,10 @@ import renderTemplate from './renderTemplate.js'
 //   renderTemplate('config/typescript')
 // }
 
-// sourceTemplateName =
+// templateName =
 //   (isTs ? 'typescript-' : '') +
 //   (isSPA ? 'spa' : 'default')
-// renderTemplate(`source/${sourceTemplateName}`)
+// renderTemplate(`code/${templateName}`)
 
 // Cleanup.
 
