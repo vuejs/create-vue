@@ -2,13 +2,17 @@
 // @ts-check
 
 import fs from 'fs'
+import path from 'path'
+
 import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
-import emptyDir from './emptyDir.js'
 import renderTemplate from './renderTemplate.js'
-import path from 'path'
+import {
+  postOrderDirectoryTraverse,
+  preOrderDirectoryTraverse
+} from './directoryTraverse.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(
@@ -27,6 +31,14 @@ function toValidPackageName(projectName) {
 
 function canSafelyOverwrite(dir) {
   return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0
+}
+
+function emptyDir (dir) {
+  postOrderDirectoryTraverse(
+    dir,
+    (dir) => fs.rmdirSync(dir),
+    (file) => fs.unlinkSync(file)
+  )
 }
 
 async function init() {
@@ -153,25 +165,17 @@ async function init() {
 
     // rename all `.js` files to `.ts`
     // rename jsconfig.json to tsconfig.json
-    function traverseAndRename(dir) {
-      for (const filename of fs.readdirSync(dir)) {
-        const fullpath = path.resolve(dir, filename)
-        if (fs.lstatSync(fullpath).isDirectory()) {
-          traverseAndRename(fullpath)
-          continue
-        }
-
-        if (filename.endsWith('.js')) {
-          fs.renameSync(fullpath, fullpath.replace(/\.js$/, '.ts'))
-        }
-
-        if (filename === 'jsconfig.json') {
-          fs.renameSync(fullpath, fullpath.replace(/jsconfig\.json$/, 'tsconfig.json'))
+    preOrderDirectoryTraverse(
+      root,
+      () => {},
+      (filepath) => {
+        if (filepath.endsWith('.js')) {
+          fs.renameSync(filepath, filepath.replace(/\.js$/, '.ts'))
+        } else if (path.basename(filepath) === 'jsconfig.json') {
+          fs.renameSync(filepath, filepath.replace(/jsconfig\.json$/, 'tsconfig.json'))
         }
       }
-    }
-
-    traverseAndRename(root)
+    )
   }
 
   // Render code template.
@@ -188,24 +192,18 @@ async function init() {
     // All templates assumes the need of tests.
     // If the user doesn't need it:
     // rm -rf cypress **/__tests__/
-    function removeTestDirectories (dir) {
-      for (const filename of fs.readdirSync(dir)) {
-        const subdir = path.resolve(dir, filename)
-        const stats = fs.lstatSync(subdir)
+    preOrderDirectoryTraverse(
+      root,
+      (dirpath) => {
+        const dirname = path.basename(dirpath)
 
-        if (!stats.isDirectory()) { continue }
-
-        if (filename === 'cypress' || filename === '__tests__') {
-          emptyDir(subdir)
-          fs.rmdirSync(subdir)
-          continue
+        if (dirname === 'cypress' || dirname === '__tests__') {
+          emptyDir(dirpath)
+          fs.rmdirSync(dirpath)
         }
-
-        removeTestDirectories(subdir)
-      }
-    }
-
-    removeTestDirectories(root)
+      },
+      () => {}
+    )
   }
 
   // Instructions:
