@@ -18,11 +18,9 @@
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
-    "vite.config.ts",
+    "vite.config.*",
 
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
+    "src/**/*",
     "src/**/*.vue"
   ]
 }

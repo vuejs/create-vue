@@ -150,6 +150,28 @@ async function init() {
   }
   if (shouldUseTypeScript) {
     render('config/typescript')
+
+    // rename all `.js` files to `.ts`
+    // rename jsconfig.json to tsconfig.json
+    function traverseAndRename(dir) {
+      for (const filename of fs.readdirSync(dir)) {
+        const fullpath = path.resolve(dir, filename)
+        if (fs.lstatSync(fullpath).isDirectory()) {
+          traverseAndRename(fullpath)
+          continue
+        }
+
+        if (filename.endsWith('.js')) {
+          fs.renameSync(fullpath, fullpath.replace(/\.js$/, '.ts'))
+        }
+
+        if (filename === 'jsconfig.json') {
+          fs.renameSync(fullpath, fullpath.replace(/jsconfig\.json$/, 'tsconfig.json'))
+        }
+      }
+    }
+
+    traverseAndRename(root)
   }
 
   // Render code template.
@@ -161,11 +183,6 @@ async function init() {
   // TODO: README generation
 
   // Cleanup.
-
-  if (shouldUseTypeScript) {
-    // Should remove the `vite.config.js` from the base config
-    fs.unlinkSync(path.resolve(root, 'vite.config.js'))
-  }
 
   if (!shouldAddCypress) {
     // All templates assumes the need of tests.
