@@ -32,7 +32,7 @@ function renderTemplate(src, dest) {
       JSON.parse(fs.readFileSync(dest)),
       JSON.parse(fs.readFileSync(src))
     )
-    fs.writeFileSync(dest, JSON.stringify(pkg, null, 2))
+    fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
     return
   }
 
