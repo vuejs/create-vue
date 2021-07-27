@@ -8,11 +8,11 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
-import renderTemplate from './renderTemplate.js'
+import renderTemplate from './utils/renderTemplate.js'
 import {
   postOrderDirectoryTraverse,
   preOrderDirectoryTraverse
-} from './directoryTraverse.js'
+} from './utils/directoryTraverse.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(
