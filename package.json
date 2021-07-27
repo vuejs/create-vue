@@ -16,6 +16,7 @@
     "node": "^12.13.0 || ^14.0.0 || >= 16.0.0"
   },
   "scripts": {
+    "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "node snapshot.js"
   },

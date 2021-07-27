@@ -29,7 +29,7 @@
 import { ref } from 'vue'
 
 defineProps<{
-  msg: String,
+  msg: String
 }>()
 
 const count = ref(0)

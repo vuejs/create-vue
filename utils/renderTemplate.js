@@ -14,7 +14,7 @@ import deepMerge from './deepMerge.js'
  */
 function renderTemplate(src, dest) {
   const stats = fs.statSync(src)
-  
+
   if (stats.isDirectory()) {
     // if it's a directory, render its subdirectories and files recusively
     fs.mkdirSync(dest, { recursive: true })
@@ -38,10 +38,7 @@ function renderTemplate(src, dest) {
 
   if (filename.startsWith('_')) {
     // rename `_file` to `.file`
-    dest = path.resolve(
-      path.dirname(dest),
-      filename.replace(/^_/, '.')
-    )
+    dest = path.resolve(path.dirname(dest), filename.replace(/^_/, '.'))
   }
 
   fs.copyFileSync(src, dest)

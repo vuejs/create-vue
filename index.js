@@ -34,7 +34,7 @@ function canSafelyOverwrite(dir) {
   return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0
 }
 
-function emptyDir (dir) {
+function emptyDir(dir) {
   postOrderDirectoryTraverse(
     dir,
     (dir) => fs.rmdirSync(dir),
@@ -45,7 +45,7 @@ function emptyDir (dir) {
 async function init() {
   const cwd = process.cwd()
   const argv = minimist(process.argv.slice(2))
-  
+
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
@@ -62,71 +62,77 @@ async function init() {
     // - Project language: JavaScript / TypeScript
     // - Install Vue Router & Vuex for SPA development?
     // - Add Cypress for testing?
-    result = await prompts([
-      {
-        name: 'projectName',
-        type: targetDir ? null : 'text',
-        message: 'Project name:',
-        initial: defaultProjectName,
-        onState: (state) =>
-          (targetDir = String(state.value).trim() || defaultProjectName)
-      },
-      {
-        name: 'shouldOverwrite',
-        type: () => canSafelyOverwrite(targetDir) ? null : 'confirm',
-        message: () => {
-          const dirForPrompt = targetDir === '.'
-            ? 'Current directory'
-            : `Target directory "${targetDir}"`
+    result = await prompts(
+      [
+        {
+          name: 'projectName',
+          type: targetDir ? null : 'text',
+          message: 'Project name:',
+          initial: defaultProjectName,
+          onState: (state) =>
+            (targetDir = String(state.value).trim() || defaultProjectName)
+        },
+        {
+          name: 'shouldOverwrite',
+          type: () => (canSafelyOverwrite(targetDir) ? null : 'confirm'),
+          message: () => {
+            const dirForPrompt =
+              targetDir === '.'
+                ? 'Current directory'
+                : `Target directory "${targetDir}"`
 
-          return `${dirForPrompt} is not empty. Remove existing files and continue?`
-        }
-      },
-      {
-        name: 'overwriteChecker',
-        type: (prev, values = {}) => {
-          if (values.shouldOverwrite === false) {
-            throw new Error(red('✖') + ' Operation cancelled')
+            return `${dirForPrompt} is not empty. Remove existing files and continue?`
           }
-          return null
+        },
+        {
+          name: 'overwriteChecker',
+          type: (prev, values = {}) => {
+            if (values.shouldOverwrite === false) {
+              throw new Error(red('✖') + ' Operation cancelled')
+            }
+            return null
+          }
+        },
+        {
+          name: 'packageName',
+          type: () => (isValidPackageName(targetDir) ? null : 'text'),
+          message: 'Package name:',
+          initial: () => toValidPackageName(targetDir),
+          validate: (dir) =>
+            isValidPackageName(dir) || 'Invalid package.json name'
+        },
+        {
+          name: 'shouldUseTypeScript',
+          type: () => (isValidTemplate ? null : 'toggle'),
+          message: 'Add TypeScript?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'isSPA',
+          type: () => (isValidTemplate ? null : 'toggle'),
+          message:
+            'Add Vue Router & Vuex for Single Page Application development?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'shouldAddCypress',
+          type: () => (isValidTemplate ? null : 'toggle'),
+          message: 'Add Cypress for testing?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
-      },
+      ],
       {
-        name: 'packageName',
-        type: () => (isValidPackageName(targetDir) ? null : 'text'),
-        message: 'Package name:',
-        initial: () => toValidPackageName(targetDir),
-        validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
-      },
-      {
-        name: 'shouldUseTypeScript',
-        type: () => isValidTemplate ? null : 'toggle',
-        message: 'Add TypeScript?',
-        initial: false,
-        active: 'Yes',
-        inactive: 'No'
-      },
-      {
-        name: 'isSPA',
-        type: () => isValidTemplate ? null : 'toggle',
-        message: 'Add Vue Router & Vuex for Single Page Application development?',
-        initial: false,
-        active: 'Yes',
-        inactive: 'No'
-      },
-      {
-        name: 'shouldAddCypress',
-        type: () => isValidTemplate ? null : 'toggle',
-        message: 'Add Cypress for testing?',
-        initial: false,
-        active: 'Yes',
-        inactive: 'No'
+        onCancel: () => {
+          throw new Error(red('✖') + ' Operation cancelled')
+        }
       }
-    ], {
-      onCancel: () => {
-        throw new Error(red('✖') + ' Operation cancelled')
-      }
-    })
+    )
   } catch (cancelled) {
     console.log(cancelled.message)
     process.exit(1)
@@ -180,13 +186,17 @@ async function init() {
         if (filepath.endsWith('.js')) {
           fs.renameSync(filepath, filepath.replace(/\.js$/, '.ts'))
         } else if (path.basename(filepath) === 'jsconfig.json') {
-          fs.renameSync(filepath, filepath.replace(/jsconfig\.json$/, 'tsconfig.json'))
+          fs.renameSync(
+            filepath,
+            filepath.replace(/jsconfig\.json$/, 'tsconfig.json')
+          )
         }
       }
     )
   }
 
   // Render code template.
+  // prettier-ignore
   const codeTemplate =
     (shouldUseTypeScript ? 'typescript-' : '') +
     (isSPA ? 'spa' : 'default')
@@ -219,9 +229,9 @@ async function init() {
   const packageManager = /pnpm/.test(process.env.npm_execpath)
     ? 'pnpm'
     : /yarn/.test(process.env.npm_execpath)
-      ?'yarn'
-      : 'npm'
-  
+    ? 'yarn'
+    : 'npm'
+
   const commandsMap = {
     install: {
       pnpm: 'pnpm install',

@@ -11,20 +11,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "skipLibCheck": true
   },
-  "include": [
-    "vite.config.*",
-
-    "src/**/*",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "src/**/__tests__/**"
-  ]
+  "include": ["vite.config.*", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/**"]
 }

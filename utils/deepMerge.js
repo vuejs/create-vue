@@ -1,4 +1,4 @@
-const isObject = val => val && typeof val === 'object'
+const isObject = (val) => val && typeof val === 'object'
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
 /**
