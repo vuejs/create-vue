@@ -48,7 +48,14 @@ async function init() {
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
+  const TEMPLATE_LIST = ['default', 'spa']
+    .flatMap(x => [x, x + '-ts'])
+    .flatMap(x => [x, x + '-with-tests'])
+  let template = argv.template || argv.t
+  const isValidTemplate = TEMPLATE_LIST.includes(template)
+
   let result = {}
+
   try {
     // Prompts:
     // - Project name:
@@ -95,7 +102,7 @@ async function init() {
       },
       {
         name: 'shouldUseTypeScript',
-        type: 'toggle',
+        type: () => isValidTemplate ? null : 'toggle',
         message: 'Add TypeScript?',
         initial: false,
         active: 'Yes',
@@ -103,15 +110,15 @@ async function init() {
       },
       {
         name: 'isSPA',
-        type: 'toggle',
-        message: 'Install Vue Router & Vuex for Single Page Application development?',
+        type: () => isValidTemplate ? null : 'toggle',
+        message: 'Add Vue Router & Vuex for Single Page Application development?',
         initial: false,
         active: 'Yes',
         inactive: 'No'
       },
       {
         name: 'shouldAddCypress',
-        type: 'toggle',
+        type: () => isValidTemplate ? null : 'toggle',
         message: 'Add Cypress for testing?',
         initial: false,
         active: 'Yes',
@@ -127,7 +134,15 @@ async function init() {
     process.exit(1)
   }
 
-  const { packageName, shouldOverwrite, shouldUseTypeScript, isSPA, shouldAddCypress } = result
+  // `initial` won't take effect if the prompt type is null
+  // so we still have to assign the default values here
+  const {
+    packageName = toValidPackageName(defaultProjectName),
+    shouldOverwrite,
+    shouldUseTypeScript = isValidTemplate && template.includes('-ts'),
+    isSPA = isValidTemplate && template.includes('spa'),
+    shouldAddCypress = isValidTemplate && template.includes('-with-tests')
+  } = result
   const root = path.join(cwd, targetDir)
 
   if (shouldOverwrite) {
@@ -135,11 +150,6 @@ async function init() {
   } else if (!fs.existsSync(root)) {
     fs.mkdirSync(root)
   }
-
-  // TODO:
-  // Add command-line option as a template-shortcut,
-  // so that we can generate them in playgrounds
-  // e.g. `--template typescript-spa` and `--with-tests`
 
   console.log(`\nScaffolding project in ${root}...`)
 
