@@ -16,7 +16,8 @@
     "node": "^12.13.0 || ^14.0.0 || >= 16.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "node snapshot.js"
   },
   "repository": {
     "type": "git",

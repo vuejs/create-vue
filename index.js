@@ -8,6 +8,7 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
+import templateList from './utils/templateList.js'
 import renderTemplate from './utils/renderTemplate.js'
 import {
   postOrderDirectoryTraverse,
@@ -48,11 +49,8 @@ async function init() {
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
-  const TEMPLATE_LIST = ['default', 'spa']
-    .flatMap(x => [x, x + '-ts'])
-    .flatMap(x => [x, x + '-with-tests'])
   let template = argv.template || argv.t
-  const isValidTemplate = TEMPLATE_LIST.includes(template)
+  const isValidTemplate = templateList.includes(template)
 
   let result = {}
 
