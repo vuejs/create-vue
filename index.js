@@ -102,7 +102,15 @@ async function init() {
             isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
-          name: 'shouldUseTypeScript',
+          name: 'shouldAddJSX',
+          type: () => (isValidTemplate ? null : 'toggle'),
+          message: 'Add JSX Support?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'shouldAddTypeScript',
           type: () => (isValidTemplate ? null : 'toggle'),
           message: 'Add TypeScript?',
           initial: false,
@@ -143,7 +151,8 @@ async function init() {
   const {
     packageName = toValidPackageName(defaultProjectName),
     shouldOverwrite,
-    shouldUseTypeScript = isValidTemplate && template.includes('-ts'),
+    shouldAddJSX,
+    shouldAddTypeScript = isValidTemplate && template.includes('-ts'),
     isSPA = isValidTemplate && template.includes('spa'),
     shouldAddCypress = isValidTemplate && template.includes('-with-tests')
   } = result
@@ -171,10 +180,13 @@ async function init() {
 
   // Add configs.
   render('config/base')
+  if (shouldAddJSX) {
+    render('config/jsx')
+  }
   if (shouldAddCypress) {
     render('config/cypress')
   }
-  if (shouldUseTypeScript) {
+  if (shouldAddTypeScript) {
     render('config/typescript')
 
     // rename all `.js` files to `.ts`
@@ -198,7 +210,7 @@ async function init() {
   // Render code template.
   // prettier-ignore
   const codeTemplate =
-    (shouldUseTypeScript ? 'typescript-' : '') +
+    (shouldAddTypeScript ? 'typescript-' : '') +
     (isSPA ? 'spa' : 'default')
   render(`code/${codeTemplate}`)
 
