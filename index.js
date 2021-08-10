@@ -44,13 +44,22 @@ function emptyDir(dir) {
 
 async function init() {
   const cwd = process.cwd()
-  const argv = minimist(process.argv.slice(2))
+  // possible options:
+  // --jsx
+  // --spa (todo: split into vuex & vue-router)
+  // --typescript / --ts
+  // --with-tests / --tests / --cypress
+  const argv = minimist(process.argv.slice(2), {
+    alias: {
+      'typescript': ['ts'],
+      'with-tests': ['tests', 'cypress']
+    },
+    // all arguments are treated as booleans
+    boolean: true
+  })
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
-
-  let template = argv.template || argv.t
-  const isValidTemplate = templateList.includes(template)
 
   let result = {}
 
@@ -102,16 +111,16 @@ async function init() {
             isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
-          name: 'shouldAddJSX',
-          type: () => (isValidTemplate ? null : 'toggle'),
+          name: 'needsJSX',
+          type: () => (argv.jsx ? null : 'toggle'),
           message: 'Add JSX Support?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
         },
         {
-          name: 'shouldAddTypeScript',
-          type: () => (isValidTemplate ? null : 'toggle'),
+          name: 'needsTypeScript',
+          type: () => (argv.typescript ? null : 'toggle'),
           message: 'Add TypeScript?',
           initial: false,
           active: 'Yes',
@@ -119,7 +128,7 @@ async function init() {
         },
         {
           name: 'isSPA',
-          type: () => (isValidTemplate ? null : 'toggle'),
+          type: () => (argv.spa ? null : 'toggle'),
           message:
             'Add Vue Router & Vuex for Single Page Application development?',
           initial: false,
@@ -127,8 +136,8 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'shouldAddCypress',
-          type: () => (isValidTemplate ? null : 'toggle'),
+          name: 'needsTests',
+          type: () => (argv.tests ? null : 'toggle'),
           message: 'Add Cypress for testing?',
           initial: false,
           active: 'Yes',
@@ -151,10 +160,10 @@ async function init() {
   const {
     packageName = toValidPackageName(defaultProjectName),
     shouldOverwrite,
-    shouldAddJSX,
-    shouldAddTypeScript = isValidTemplate && template.includes('-ts'),
-    isSPA = isValidTemplate && template.includes('spa'),
-    shouldAddCypress = isValidTemplate && template.includes('-with-tests')
+    needsJSX = argv.jsx,
+    needsTypeScript = argv.typescript,
+    isSPA = argv.spa,
+    needsTests = argv.tests
   } = result
   const root = path.join(cwd, targetDir)
 
@@ -180,13 +189,13 @@ async function init() {
 
   // Add configs.
   render('config/base')
-  if (shouldAddJSX) {
+  if (needsJSX) {
     render('config/jsx')
   }
-  if (shouldAddCypress) {
+  if (needsTests) {
     render('config/cypress')
   }
-  if (shouldAddTypeScript) {
+  if (needsTypeScript) {
     render('config/typescript')
 
     // rename all `.js` files to `.ts`
@@ -210,7 +219,7 @@ async function init() {
   // Render code template.
   // prettier-ignore
   const codeTemplate =
-    (shouldAddTypeScript ? 'typescript-' : '') +
+    (needsTypeScript ? 'typescript-' : '') +
     (isSPA ? 'spa' : 'default')
   render(`code/${codeTemplate}`)
 
@@ -219,7 +228,7 @@ async function init() {
 
   // Cleanup.
 
-  if (!shouldAddCypress) {
+  if (!needsTests) {
     // All templates assumes the need of tests.
     // If the user doesn't need it:
     // rm -rf cypress **/__tests__/
