@@ -48,7 +48,7 @@ async function init() {
   // --typescript / --ts
   // --jsx
   // --router / --vue-router
-  // --vuex (todo)
+  // --vuex
   // --with-tests / --tests / --cypress
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -59,6 +59,10 @@ async function init() {
     // all arguments are treated as booleans
     boolean: true
   })
+
+  // if any of the feature flags is set, we would skip the feature prompts
+  // use `??` instead of `||` once we drop Node.js 12 support 
+  const isFeatureFlagsUsed = typeof (argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) === 'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
@@ -116,15 +120,15 @@ async function init() {
         },
         {
           name: 'needsTypeScript',
-          type: () => (argv.typescript ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add TypeScript?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
         },
         {
-          name: 'needsJSX',
-          type: () => (argv.jsx ? null : 'toggle'),
+          name: 'needsJsx',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add JSX Support?',
           initial: false,
           active: 'Yes',
@@ -132,7 +136,7 @@ async function init() {
         },
         {
           name: 'needsRouter',
-          type: () => (argv.router ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message:
             'Add Vue Router for Single Page Application development?',
           initial: false,
@@ -140,8 +144,17 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsVuex',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message:
+            'Add Vuex for state management?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsTests',
-          type: () => (argv.tests ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add Cypress for testing?',
           initial: false,
           active: 'Yes',
@@ -164,9 +177,10 @@ async function init() {
   const {
     packageName = toValidPackageName(defaultProjectName),
     shouldOverwrite,
-    needsJSX = argv.jsx,
+    needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
+    needsVuex = argv.vuex,
     needsTests = argv.tests
   } = result
   const root = path.join(cwd, targetDir)
@@ -193,15 +207,46 @@ async function init() {
 
   // Add configs.
   render('config/base')
-  if (needsJSX) {
+  if (needsJsx) {
     render('config/jsx')
+  }
+  if (needsRouter) {
+    render('config/router')
+  }
+  if (needsVuex) {
+    render('config/vuex')
   }
   if (needsTests) {
     render('config/cypress')
   }
   if (needsTypeScript) {
     render('config/typescript')
+  }
 
+  // Render code template.
+  // prettier-ignore
+  const codeTemplate =
+    (needsTypeScript ? 'typescript-' : '') +
+    (needsRouter ? 'router' : 'default')
+  render(`code/${codeTemplate}`)
+
+  // Render entry file (main.js/ts).
+  if (needsVuex && needsRouter) {
+    render('entry/vuex-and-router')
+  } else if (needsVuex) {
+    render('entry/vuex')
+  } else if (needsRouter) {
+    render('entry/router')
+  } else {
+    render('entry/default')
+  }
+
+  // TODO:
+  // Replace `<!-- NPM-SCRIPTS-PLACEHOLDER -->` in README with detailed explanation of npm scripts.
+
+  // Cleanup.
+
+  if (needsTypeScript) {
     // rename all `.js` files to `.ts`
     // rename jsconfig.json to tsconfig.json
     preOrderDirectoryTraverse(
@@ -219,18 +264,6 @@ async function init() {
       }
     )
   }
-
-  // Render code template.
-  // prettier-ignore
-  const codeTemplate =
-    (needsTypeScript ? 'typescript-' : '') +
-    (needsRouter ? 'router' : 'default')
-  render(`code/${codeTemplate}`)
-
-  // TODO:
-  // Replace `<!-- NPM-SCRIPTS-PLACEHOLDER -->` in README with detailed explanation of npm scripts.
-
-  // Cleanup.
 
   if (!needsTests) {
     // All templates assumes the need of tests.
