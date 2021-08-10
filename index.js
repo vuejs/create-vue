@@ -205,8 +205,10 @@ async function init() {
     renderTemplate(templateDir, root)
   }
 
+  // Render base template
+  render('base')
+
   // Add configs.
-  render('config/base')
   if (needsJsx) {
     render('config/jsx')
   }
