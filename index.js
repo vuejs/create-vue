@@ -214,7 +214,8 @@ async function init() {
     (isSPA ? 'spa' : 'default')
   render(`code/${codeTemplate}`)
 
-  // TODO: README generation
+  // TODO:
+  // Replace `<!-- NPM-SCRIPTS-PLACEHOLDER -->` in README with detailed explanation of npm scripts.
 
   // Cleanup.
 

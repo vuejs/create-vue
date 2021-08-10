@@ -12,6 +12,10 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 
 However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
-### Customize configuration
+## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Usage
+
+<!-- NPM-SCRIPTS-PLACEHOLDER -->
