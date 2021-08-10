@@ -45,14 +45,16 @@ function emptyDir(dir) {
 async function init() {
   const cwd = process.cwd()
   // possible options:
-  // --jsx
-  // --spa (todo: split into vuex & vue-router)
   // --typescript / --ts
+  // --jsx
+  // --router / --vue-router
+  // --vuex (todo)
   // --with-tests / --tests / --cypress
   const argv = minimist(process.argv.slice(2), {
     alias: {
       'typescript': ['ts'],
-      'with-tests': ['tests', 'cypress']
+      'with-tests': ['tests', 'cypress'],
+      'router': ['vue-router']
     },
     // all arguments are treated as booleans
     boolean: true
@@ -69,7 +71,9 @@ async function init() {
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
     // - Project language: JavaScript / TypeScript
-    // - Install Vue Router & Vuex for SPA development?
+    // - Add JSX Support?
+    // - Install Vue Router for SPA development?
+    // - Install Vuex for state management? (TODO)
     // - Add Cypress for testing?
     result = await prompts(
       [
@@ -111,14 +115,6 @@ async function init() {
             isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
-          name: 'needsJSX',
-          type: () => (argv.jsx ? null : 'toggle'),
-          message: 'Add JSX Support?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
           name: 'needsTypeScript',
           type: () => (argv.typescript ? null : 'toggle'),
           message: 'Add TypeScript?',
@@ -127,10 +123,18 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'isSPA',
-          type: () => (argv.spa ? null : 'toggle'),
+          name: 'needsJSX',
+          type: () => (argv.jsx ? null : 'toggle'),
+          message: 'Add JSX Support?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'needsRouter',
+          type: () => (argv.router ? null : 'toggle'),
           message:
-            'Add Vue Router & Vuex for Single Page Application development?',
+            'Add Vue Router for Single Page Application development?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -162,7 +166,7 @@ async function init() {
     shouldOverwrite,
     needsJSX = argv.jsx,
     needsTypeScript = argv.typescript,
-    isSPA = argv.spa,
+    needsRouter = argv.router,
     needsTests = argv.tests
   } = result
   const root = path.join(cwd, targetDir)
@@ -220,7 +224,7 @@ async function init() {
   // prettier-ignore
   const codeTemplate =
     (needsTypeScript ? 'typescript-' : '') +
-    (isSPA ? 'spa' : 'default')
+    (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
   // TODO:
