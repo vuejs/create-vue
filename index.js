@@ -50,6 +50,7 @@ async function init() {
   // --router / --vue-router
   // --vuex
   // --with-tests / --tests / --cypress
+  // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
       typescript: ['ts'],
@@ -75,6 +76,8 @@ async function init() {
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
+  const forceOverwrite = argv.force
+
   let result = {}
 
   try {
@@ -99,7 +102,8 @@ async function init() {
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSafelyOverwrite(targetDir) ? null : 'confirm'),
+          type: () =>
+            canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm',
           message: () => {
             const dirForPrompt =
               targetDir === '.'
