@@ -279,7 +279,10 @@ async function init() {
     // Rename entry in `index.html`
     const indexHtmlPath = path.resolve(root, 'index.html')
     const indexHtmlContent = fs.readFileSync(indexHtmlPath, 'utf8')
-    fs.writeFileSync(indexHtmlPath, indexHtmlContent.replace('src/main.js', 'src/main.ts'))
+    fs.writeFileSync(
+      indexHtmlPath,
+      indexHtmlContent.replace('src/main.js', 'src/main.ts')
+    )
   }
 
   if (!needsTests) {
