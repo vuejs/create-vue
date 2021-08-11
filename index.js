@@ -8,7 +8,6 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
-import templateList from './utils/templateList.js'
 import renderTemplate from './utils/renderTemplate.js'
 import {
   postOrderDirectoryTraverse,
@@ -45,6 +44,7 @@ function emptyDir(dir) {
 async function init() {
   const cwd = process.cwd()
   // possible options:
+  // --default
   // --typescript / --ts
   // --jsx
   // --router / --vue-router
@@ -62,7 +62,7 @@ async function init() {
 
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support 
-  const isFeatureFlagsUsed = typeof (argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) === 'boolean'
+  const isFeatureFlagsUsed = typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) === 'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
