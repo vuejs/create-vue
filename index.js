@@ -311,12 +311,15 @@ async function init() {
     : 'npm'
 
   // README generation
-  fs.writeFileSync(path.resolve(root, 'README.md'), generateReadme({
-    projectName: result.projectName || defaultProjectName,
-    packageManager,
-    needsTypeScript,
-    needsTests
-  }))
+  fs.writeFileSync(
+    path.resolve(root, 'README.md'),
+    generateReadme({
+      projectName: result.projectName || defaultProjectName,
+      packageManager,
+      needsTypeScript,
+      needsTests
+    })
+  )
 
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {

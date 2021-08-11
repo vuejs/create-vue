@@ -21,13 +21,15 @@ export default function generateReadme({
   template = template.replace('{{projectName}}', projectName)
 
   if (needsTypeScript) {
-    template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n', sfcTypeSupportDoc)
+    template = template.replace(
+      '<!-- SFC-TYPE-SUPPORT -->\n',
+      sfcTypeSupportDoc
+    )
   } else {
     template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n\n', '')
   }
 
-  let npmScriptsDescriptions = 
-`\`\`\`sh
+  let npmScriptsDescriptions = `\`\`\`sh
 ${getCommand(packageManager, 'install')}
 \`\`\`
 
@@ -45,25 +47,28 @@ ${getCommand(packageManager, 'build')}
 `
 
   if (needsTests) {
-    npmScriptsDescriptions +=`
+    npmScriptsDescriptions += `
 ### Run Unit Tests with [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction)
 
 \`\`\`sh
-${getCommand(packageManager, 'test:unit')} # or \`${getCommand(packageManager, 'test:unit:ci')}\` for headless testing
+${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
+      packageManager,
+      'test:unit:ci'
+    )}\` for headless testing
 \`\`\`
 
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
-${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(packageManager, 'test:e2e:ci')}\` for headless testing
+${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
+      packageManager,
+      'test:e2e:ci'
+    )}\` for headless testing
 \`\`\`
 `
   }
 
-  template = template.replace(
-    '<!-- NPM-SCRIPTS -->\n',
-    npmScriptsDescriptions
-  )
+  template = template.replace('<!-- NPM-SCRIPTS -->\n', npmScriptsDescriptions)
 
   return template
 }
