@@ -304,6 +304,8 @@ async function init() {
 
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
+  // Note: until <https://github.com/pnpm/pnpm/issues/3505> is resolved,
+  // it is not possible to tell if the command is called by `pnpm init`.
   const packageManager = /pnpm/.test(process.env.npm_execpath)
     ? 'pnpm'
     : /yarn/.test(process.env.npm_execpath)
