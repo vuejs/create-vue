@@ -6,26 +6,12 @@ const playgroundDir = new URL('./playground/', import.meta.url).pathname
 function createProjectWithFeatureFlags(flags) {
   const projectName = flags.join('-')
   console.log(`Creating project ${projectName}`)
-  spawnSync(
-    'node',
-    [
-      bin,
-      projectName,
-      ...flags.map(flag => `--${flag}`)
-    ],
-    {
-      cwd: playgroundDir
-    }
-  )
+  spawnSync('node', [bin, projectName, ...flags.map((flag) => `--${flag}`)], {
+    cwd: playgroundDir
+  })
 }
 
-const featureFlags = [
-  'typescript',
-  'jsx',
-  'router',
-  'vuex',
-  'with-tests'
-]
+const featureFlags = ['typescript', 'jsx', 'router', 'vuex', 'with-tests']
 
 function getCombinations(arr) {
   const combinations = []

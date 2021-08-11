@@ -52,17 +52,25 @@ async function init() {
   // --with-tests / --tests / --cypress
   const argv = minimist(process.argv.slice(2), {
     alias: {
-      'typescript': ['ts'],
+      typescript: ['ts'],
       'with-tests': ['tests', 'cypress'],
-      'router': ['vue-router']
+      router: ['vue-router']
     },
     // all arguments are treated as booleans
     boolean: true
   })
 
   // if any of the feature flags is set, we would skip the feature prompts
-  // use `??` instead of `||` once we drop Node.js 12 support 
-  const isFeatureFlagsUsed = typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) === 'boolean'
+  // use `??` instead of `||` once we drop Node.js 12 support
+  const isFeatureFlagsUsed =
+    typeof (
+      argv.default ||
+      argv.ts ||
+      argv.jsx ||
+      argv.router ||
+      argv.vuex ||
+      argv.tests
+    ) === 'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
@@ -137,8 +145,7 @@ async function init() {
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message:
-            'Add Vue Router for Single Page Application development?',
+          message: 'Add Vue Router for Single Page Application development?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -146,8 +153,7 @@ async function init() {
         {
           name: 'needsVuex',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message:
-            'Add Vuex for state management?',
+          message: 'Add Vuex for state management?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
