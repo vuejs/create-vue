@@ -13,6 +13,8 @@ import {
   postOrderDirectoryTraverse,
   preOrderDirectoryTraverse
 } from './utils/directoryTraverse.js'
+import generateReadme from './utils/generateReadme.js'
+import getCommand from './utils/getCommand.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(
@@ -253,9 +255,6 @@ async function init() {
     render('entry/default')
   }
 
-  // TODO:
-  // Replace `<!-- NPM-SCRIPTS-PLACEHOLDER -->` in README with detailed explanation of npm scripts.
-
   // Cleanup.
 
   if (needsTypeScript) {
@@ -311,25 +310,20 @@ async function init() {
     ? 'yarn'
     : 'npm'
 
-  const commandsMap = {
-    install: {
-      pnpm: 'pnpm install',
-      yarn: 'yarn',
-      npm: 'npm install'
-    },
-    dev: {
-      pnpm: 'pnpm dev',
-      yarn: 'yarn dev',
-      npm: 'npm run dev'
-    }
-  }
+  // README generation
+  fs.writeFileSync(path.resolve(root, 'README.md'), generateReadme({
+    projectName: result.projectName || defaultProjectName,
+    packageManager,
+    needsTypeScript,
+    needsTests
+  }))
 
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
     console.log(`  ${bold(green(`cd ${path.relative(cwd, root)}`))}`)
   }
-  console.log(`  ${bold(green(commandsMap.install[packageManager]))}`)
-  console.log(`  ${bold(green(commandsMap.dev[packageManager]))}`)
+  console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
+  console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()
 }
 
