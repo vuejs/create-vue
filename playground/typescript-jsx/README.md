@@ -1,4 +1,4 @@
-# Vue 3 + Vite
+# typescript-jsx
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -16,6 +16,20 @@ However, if you wish to get actual prop types in `.vue` imports (for example to 
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Usage
+## Project Setup
 
-<!-- NPM-SCRIPTS-PLACEHOLDER -->
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```

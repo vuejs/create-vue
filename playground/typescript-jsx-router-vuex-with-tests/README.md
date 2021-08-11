@@ -1,4 +1,4 @@
-# Vue 3 + Vite
+# typescript-jsx-router-vuex-with-tests
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -16,6 +16,32 @@ However, if you wish to get actual prop types in `.vue` imports (for example to 
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Usage
+## Project Setup
 
-<!-- NPM-SCRIPTS-PLACEHOLDER -->
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Run Unit Tests with [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction)
+
+```sh
+npm run test:unit # or `npm run test:unit:ci` for headless testing
+```
+
+### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+
+```sh
+npm run test:e2e # or `npm run test:e2e:ci` for headless testing
+```
