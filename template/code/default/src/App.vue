@@ -113,18 +113,6 @@ header {
   line-height: 1.5;
 }
 
-.color-scheme-switcher {
-  position: absolute;
-  left: 0;
-  top: 20px;
-
-  border: none;
-  background: transparent;
-
-  color: var(--color-text);
-  cursor: pointer;
-}
-
 .logo {
   display: block;
   margin: 0 auto 2rem;
