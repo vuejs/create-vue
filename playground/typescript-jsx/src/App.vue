@@ -113,18 +113,6 @@ header {
   line-height: 1.5;
 }
 
-.color-scheme-switcher {
-  position: absolute;
-  left: 0;
-  top: 20px;
-
-  border: none;
-  background: transparent;
-
-  color: var(--color-text);
-  cursor: pointer;
-}
-
 .logo {
   display: block;
   margin: 0 auto 2rem;
@@ -137,14 +125,22 @@ a,
   transition: 0.4s;
 }
 
-a:hover {
-  background-color: hsla(160, 100%, 37%, 0.2);
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
 }
 
 @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
   }
 
   header {
@@ -161,27 +157,6 @@ a:hover {
 
   .logo {
     margin: 0 2rem 0 0;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  .router-links {
-    margin-top: 1rem;
-    text-align: left;
-  }
-
-  .router-links a {
-    padding: 0 0.5rem 0 0;
-    background-color: transparent;
-  }
-
-  .router-links a + a {
-    border-left: 0;
-    margin-left: 0.2rem;
   }
 }
 </style>

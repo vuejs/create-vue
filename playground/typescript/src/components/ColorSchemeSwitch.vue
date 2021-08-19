@@ -130,7 +130,7 @@ watchEffect(() => {
   }
 
   .color-scheme-switch-wrapper .text {
-    font-size: 1.3em;
+    font-size: 1.2rem;
     font-weight: normal;
   }
 }
