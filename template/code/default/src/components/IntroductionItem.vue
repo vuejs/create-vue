@@ -35,6 +35,7 @@ i {
 
 h3 {
   font-size: 1.3rem;
+  font-weight: 500;
   margin-bottom: 0.4rem;
   color: var(--color-heading);
 }
