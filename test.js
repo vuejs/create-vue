@@ -8,8 +8,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const playgroundDir = path.resolve(__dirname, './playground/')
 
 for (const projectName of fs.readdirSync(playgroundDir)) {
-  // TODO: test `dev` & `build` commands
-
   if (projectName.endsWith('with-tests')) {
     console.log(`Running unit tests in ${projectName}`)
     const unitTestResult = spawnSync('pnpm', ['test:unit:ci'], {
