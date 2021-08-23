@@ -1,9 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 import { spawnSync } from 'child_process'
 
-const playgroundDir = new URL('./playground/', import.meta.url).pathname
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const playgroundDir = path.resolve(__dirname, './playground/')
 
 for (const projectName of fs.readdirSync(playgroundDir)) {
   // TODO: test `dev` & `build` commands
