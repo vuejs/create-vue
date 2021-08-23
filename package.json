@@ -18,6 +18,7 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
+    "pretest": "node snapshot.js",
     "test": "node test.js",
     "prepublishOnly": "node snapshot.js"
   },
