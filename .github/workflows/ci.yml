@@ -19,7 +19,7 @@ jobs:
           - 14
         include:
           - node-version: 12
-            os: unbuntu-latest
+            os: ubuntu-latest
           - node-version: 16
             os: ubuntu-latest
     name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
