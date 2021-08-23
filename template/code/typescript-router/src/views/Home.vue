@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import IntroductionItem from '@/components/IntroductionItem.vue'
 
-import DocumentationIcon from '@/components/icons/Documentation.vue'
-import ToolingIcon from '@/components/icons/Tooling.vue'
-import EcosystemIcon from '@/components/icons/Ecosystem.vue'
-import CommunityIcon from '@/components/icons/Community.vue'
-import SupportIcon from '@/components/icons/Support.vue'
+import DocumentationIcon from '@/components/icons/IconDocumentation.vue'
+import ToolingIcon from '@/components/icons/IconTooling.vue'
+import EcosystemIcon from '@/components/icons/IconEcosystem.vue'
+import CommunityIcon from '@/components/icons/IconCommunity.vue'
+import SupportIcon from '@/components/icons/IconSupport.vue'
 </script>
 
 <template>

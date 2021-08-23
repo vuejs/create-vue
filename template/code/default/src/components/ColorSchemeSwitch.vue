@@ -1,6 +1,6 @@
 <script setup>
-import IconMoon from './icons/Moon.vue'
-import IconSun from './icons/Sun.vue'
+import IconMoon from './icons/IconMoon.vue'
+import IconSun from './icons/IconSun.vue'
 
 import { watchEffect } from 'vue'
 import useColorScheme from '@/composables/useColorScheme'
