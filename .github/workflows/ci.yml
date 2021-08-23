@@ -16,9 +16,12 @@ jobs:
           - macos-latest
           - windows-latest
         node_version:
-          - 12
           - 14
-          - 16
+        include:
+          - node-version: 12
+            os: unbuntu-latest
+          - node-version: 16
+            os: ubuntu-latest
     name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
