@@ -14,11 +14,9 @@ import SupportIcon from './icons/IconSupport.vue'
     </template>
     <template #heading>Documentation</template>
 
-    Widely regarded as one of the best, Vue’s
+    Vue’s
     <a target="_blank" href="https://v3.vuejs.org/">official documentation</a>
-    will provide you with all information you need to get started. Whether you’re already a Vue
-    veteran or just trying the framework out, great chances are you’ll find the answer to your next
-    question there.
+    provides you with all information you need to get started.
   </WelcomeItem>
 
   <WelcomeItem>
