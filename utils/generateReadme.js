@@ -21,10 +21,7 @@ export default function generateReadme({
   template = template.replace('{{projectName}}', projectName)
 
   if (needsTypeScript) {
-    template = template.replace(
-      '<!-- SFC-TYPE-SUPPORT -->\n',
-      sfcTypeSupportDoc
-    )
+    template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n', sfcTypeSupportDoc)
   } else {
     template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n\n', '')
   }

@@ -28,10 +28,7 @@ function renderTemplate(src, dest) {
 
   if (filename === 'package.json' && fs.existsSync(dest)) {
     // merge instead of overwriting
-    const pkg = deepMerge(
-      JSON.parse(fs.readFileSync(dest)),
-      JSON.parse(fs.readFileSync(src))
-    )
+    const pkg = deepMerge(JSON.parse(fs.readFileSync(dest)), JSON.parse(fs.readFileSync(src)))
     fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
     return
   }
