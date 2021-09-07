@@ -9,17 +9,12 @@ import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
 import renderTemplate from './utils/renderTemplate.js'
-import {
-  postOrderDirectoryTraverse,
-  preOrderDirectoryTraverse
-} from './utils/directoryTraverse.js'
+import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
 import generateReadme from './utils/generateReadme.js'
 import getCommand from './utils/getCommand.js'
 
 function isValidPackageName(projectName) {
-  return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(
-    projectName
-  )
+  return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
 }
 
 function toValidPackageName(projectName) {
@@ -66,14 +61,8 @@ async function init() {
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
-    typeof (
-      argv.default ||
-      argv.ts ||
-      argv.jsx ||
-      argv.router ||
-      argv.vuex ||
-      argv.tests
-    ) === 'boolean'
+    typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) ===
+    'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
@@ -99,18 +88,14 @@ async function init() {
           type: targetDir ? null : 'text',
           message: 'Project name:',
           initial: defaultProjectName,
-          onState: (state) =>
-            (targetDir = String(state.value).trim() || defaultProjectName)
+          onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
         },
         {
           name: 'shouldOverwrite',
-          type: () =>
-            canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm',
+          type: () => (canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm'),
           message: () => {
             const dirForPrompt =
-              targetDir === '.'
-                ? 'Current directory'
-                : `Target directory "${targetDir}"`
+              targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
 
             return `${dirForPrompt} is not empty. Remove existing files and continue?`
           }
@@ -129,8 +114,7 @@ async function init() {
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
           message: 'Package name:',
           initial: () => toValidPackageName(targetDir),
-          validate: (dir) =>
-            isValidPackageName(dir) || 'Invalid package.json name'
+          validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
           name: 'needsTypeScript',
@@ -206,10 +190,7 @@ async function init() {
   console.log(`\nScaffolding project in ${root}...`)
 
   const pkg = { name: packageName, version: '0.0.0' }
-  fs.writeFileSync(
-    path.resolve(root, 'package.json'),
-    JSON.stringify(pkg, null, 2)
-  )
+  fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
 
   const templateRoot = new URL('./template', import.meta.url).pathname
   const render = function render(templateName) {
@@ -267,10 +248,7 @@ async function init() {
         if (filepath.endsWith('.js')) {
           fs.renameSync(filepath, filepath.replace(/\.js$/, '.ts'))
         } else if (path.basename(filepath) === 'jsconfig.json') {
-          fs.renameSync(
-            filepath,
-            filepath.replace(/jsconfig\.json$/, 'tsconfig.json')
-          )
+          fs.renameSync(filepath, filepath.replace(/jsconfig\.json$/, 'tsconfig.json'))
         }
       }
     )
@@ -278,10 +256,7 @@ async function init() {
     // Rename entry in `index.html`
     const indexHtmlPath = path.resolve(root, 'index.html')
     const indexHtmlContent = fs.readFileSync(indexHtmlPath, 'utf8')
-    fs.writeFileSync(
-      indexHtmlPath,
-      indexHtmlContent.replace('src/main.js', 'src/main.ts')
-    )
+    fs.writeFileSync(indexHtmlPath, indexHtmlContent.replace('src/main.js', 'src/main.ts'))
   }
 
   if (!needsTests) {

@@ -1,6 +1,5 @@
 <script setup>
 import HelloWorld from '@/components/HelloWorld.vue'
-import ColorSchemeSwitch from '@/components/ColorSchemeSwitch.vue'
 </script>
 
 <template>
@@ -9,7 +8,6 @@ import ColorSchemeSwitch from '@/components/ColorSchemeSwitch.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-      <ColorSchemeSwitch />
 
       <div id="nav">
         <router-link to="/">Home</router-link>

@@ -1,0 +1,30 @@
+{
+  "name": "typescript-router-with-tests",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preserve": "vite build",
+    "serve": "vite preview --port 5050",
+    "test:unit": "cypress open-ct",
+    "test:unit:ci": "cypress run-ct --quiet --reporter spec",
+    "test:e2e": "start-server-and-test serve 5050 'cypress open'",
+    "test:e2e:ci": "start-server-and-test serve 5050 'cypress run'",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.2.2",
+    "vue-router": "^4.0.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.4.0",
+    "@vue/compiler-sfc": "^3.2.2",
+    "vite": "^2.5.0",
+    "@cypress/vite-dev-server": "^2.0.7",
+    "@cypress/vue": "^3.0.3",
+    "cypress": "^8.2.0",
+    "start-server-and-test": "^1.13.1",
+    "typescript": "~4.3.5",
+    "vue-tsc": "^0.2.3"
+  }
+}

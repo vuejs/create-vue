@@ -110,6 +110,96 @@ importers:
       start-server-and-test: 1.13.1
       vite: 2.5.0
 
+  playground/jsx-router-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      vite: 2.5.0
+
+  playground/jsx-vuex:
+    specifiers:
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      vite: 2.5.0
+
+  playground/jsx-vuex-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      vite: 2.5.0
+
+  playground/jsx-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      vite: ^2.5.0
+      vue: ^3.2.2
+    dependencies:
+      vue: 3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      vite: 2.5.0
+
   playground/router:
     specifiers:
       '@vitejs/plugin-vue': ^1.4.0
@@ -158,6 +248,29 @@ importers:
       vue: 3.2.2
       vue-router: 4.0.11_vue@3.2.2
       vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      vite: 2.5.0
+
+  playground/router-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
     devDependencies:
       '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
       '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
@@ -271,6 +384,279 @@ importers:
       '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
       '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
       '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-jsx-router-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+      vue-tsc: ^0.2.3
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-jsx-vuex:
+    specifiers:
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-jsx-vuex-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-jsx-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vitejs/plugin-vue-jsx': ^1.1.7
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+    dependencies:
+      vue: 3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vitejs/plugin-vue-jsx': 1.1.7
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-router:
+    specifiers:
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+      vue-tsc: ^0.2.3
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+    devDependencies:
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-router-vuex:
+    specifiers:
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-router-vuex-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-router-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-router: ^4.0.11
+      vue-tsc: ^0.2.3
+    dependencies:
+      vue: 3.2.2
+      vue-router: 4.0.11_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-vuex:
+    specifiers:
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-vuex-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+      vuex: ^4.0.2
+    dependencies:
+      vue: 3.2.2
+      vuex: 4.0.2_vue@3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
+      '@vue/compiler-sfc': 3.2.2
+      cypress: 8.2.0
+      start-server-and-test: 1.13.1
+      typescript: 4.3.5
+      vite: 2.5.0
+      vue-tsc: 0.2.3_typescript@4.3.5
+
+  playground/typescript-with-tests:
+    specifiers:
+      '@cypress/vite-dev-server': ^2.0.7
+      '@cypress/vue': ^3.0.3
+      '@vitejs/plugin-vue': ^1.4.0
+      '@vue/compiler-sfc': ^3.2.2
+      cypress: ^8.2.0
+      start-server-and-test: ^1.13.1
+      typescript: ~4.3.5
+      vite: ^2.5.0
+      vue: ^3.2.2
+      vue-tsc: ^0.2.3
+    dependencies:
+      vue: 3.2.2
+    devDependencies:
+      '@cypress/vite-dev-server': 2.0.7_vite@2.5.0
+      '@cypress/vue': 3.0.3_cypress@8.2.0+vue@3.2.2
+      '@vitejs/plugin-vue': 1.4.0_@vue+compiler-sfc@3.2.2
       '@vue/compiler-sfc': 3.2.2
       cypress: 8.2.0
       start-server-and-test: 1.13.1
