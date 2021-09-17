@@ -192,7 +192,11 @@ async function init() {
   const pkg = { name: packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
 
-  const templateRoot = new URL('./template', import.meta.url).pathname
+  // todo:
+  // work around the esbuild issue that `import.meta.url` cannot be correctly transpiled
+  // when bundling for node and the format is cjs
+  // const templateRoot = new URL('./template', import.meta.url).pathname
+  const templateRoot = path.resolve(__dirname, 'template')
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root)

@@ -8,7 +8,7 @@
     "create-vue": "outfile.js"
   },
   "files": [
-    "outfile.js",
+    "outfile.cjs",
     "template"
   ],
   "engines": {
@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "build": "esbuild --bundle index.js --format=esm --platform=node --outfile=outfile.js",
+    "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=outfile.cjs",
     "snapshot": "node snapshot.js",
     "pretest": "run-s build snapshot",
     "test": "node test.js",
