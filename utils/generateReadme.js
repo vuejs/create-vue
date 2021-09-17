@@ -2,10 +2,13 @@ import fs from 'fs'
 
 import getCommand from './getCommand.js'
 
-const sfcTypeSupportDoc = fs.readFileSync(
-  new URL('./docs/SFC-TYPE-SUPPORT.md', import.meta.url).pathname,
-  'utf8'
-)
+const sfcTypeSupportDoc =
+  '\n' +
+  '## Type Support for `.vue` Imports in TS\n' +
+  '\n' +
+  "Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates.\n" +
+  '\n' +
+  'However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VSCode command palette.\n'
 
 export default function generateReadme({
   projectName,
@@ -13,18 +16,21 @@ export default function generateReadme({
   needsTypeScript,
   needsTests
 }) {
-  let template = fs.readFileSync(
-    new URL('./docs/README-TEMPLATE.md', import.meta.url).pathname,
-    'utf8'
-  )
+  let readme = `# ${projectName}
 
-  template = template.replace('{{projectName}}', projectName)
+This template should help get you started developing with Vue 3 in Vite.
 
-  if (needsTypeScript) {
-    template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n', sfcTypeSupportDoc)
-  } else {
-    template = template.replace('<!-- SFC-TYPE-SUPPORT -->\n\n', '')
-  }
+## Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur).
+${needsTypeScript ? sfcTypeSupportDoc : ''}
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+`
 
   let npmScriptsDescriptions = `\`\`\`sh
 ${getCommand(packageManager, 'install')}
@@ -65,7 +71,7 @@ ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
 `
   }
 
-  template = template.replace('<!-- NPM-SCRIPTS -->\n', npmScriptsDescriptions)
+  readme += npmScriptsDescriptions
 
-  return template
+  return readme
 }
