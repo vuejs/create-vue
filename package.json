@@ -5,11 +5,10 @@
   "type": "module",
   "main": "index.js",
   "bin": {
-    "create-vue": "index.js"
+    "create-vue": "outfile.js"
   },
   "files": [
-    "index.js",
-    "utils",
+    "outfile.js",
     "template"
   ],
   "engines": {
@@ -18,9 +17,11 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "pretest": "node snapshot.js",
+    "build": "esbuild --bundle index.js --format=esm --platform=node --outfile=outfile.js",
+    "snapshot": "node snapshot.js",
+    "pretest": "run-s build snapshot",
     "test": "node test.js",
-    "prepublishOnly": "node snapshot.js"
+    "prepublishOnly": "run-s build snapshot"
   },
   "repository": {
     "type": "git",
@@ -33,15 +34,15 @@
     "url": "https://github.com/vuejs/create-vue/issues"
   },
   "homepage": "https://github.com/vuejs/create-vue#readme",
-  "dependencies": {
-    "kolorist": "^1.5.0",
-    "minimist": "^1.2.5",
-    "prompts": "^2.4.1"
-  },
   "devDependencies": {
+    "esbuild": "^0.12.28",
     "husky": "^7.0.1",
+    "kolorist": "^1.5.0",
     "lint-staged": "^11.1.2",
-    "prettier": "^2.3.2"
+    "minimist": "^1.2.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "prompts": "^2.4.1"
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [

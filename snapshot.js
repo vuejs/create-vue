@@ -1,6 +1,6 @@
 import { spawnSync } from 'child_process'
 
-const bin = new URL('./index.js', import.meta.url).pathname
+const bin = new URL('./outfile.js', import.meta.url).pathname
 const playgroundDir = new URL('./playground/', import.meta.url).pathname
 
 function createProjectWithFeatureFlags(flags) {
