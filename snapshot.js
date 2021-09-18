@@ -6,9 +6,18 @@ const playgroundDir = new URL('./playground/', import.meta.url).pathname
 function createProjectWithFeatureFlags(flags) {
   const projectName = flags.join('-')
   console.log(`Creating project ${projectName}`)
-  spawnSync('node', [bin, projectName, ...flags.map((flag) => `--${flag}`), '--force'], {
-    cwd: playgroundDir
-  })
+  const { status } = spawnSync(
+    'node',
+    [bin, projectName, ...flags.map((flag) => `--${flag}`), '--force'],
+    {
+      cwd: playgroundDir,
+      stdio: ['pipe', 'pipe', 'inherit']
+    }
+  )
+
+  if (status !== 0) {
+    process.exit(status)
+  }
 }
 
 const featureFlags = ['typescript', 'jsx', 'router', 'vuex', 'with-tests']
