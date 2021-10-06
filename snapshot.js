@@ -1,7 +1,12 @@
 import { spawnSync } from 'child_process'
+import path from 'path'
 
-const bin = new URL('./outfile.cjs', import.meta.url).pathname
-const playgroundDir = new URL('./playground/', import.meta.url).pathname
+const __dirname = path
+  .dirname(new URL(import.meta.url).pathname)
+  .substring(process.platform === 'win32' ? 1 : 0)
+
+const bin = path.resolve(__dirname, './outfile.cjs')
+const playgroundDir = path.resolve(__dirname, './playground/')
 
 function createProjectWithFeatureFlags(flags) {
   const projectName = flags.join('-')
