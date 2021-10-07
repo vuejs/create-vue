@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import deepMerge from './deepMerge.js'
+import sortDependencies from './sortDependencies.js'
 
 /**
  * Renders a template folder/file to the file system,
@@ -28,7 +29,9 @@ function renderTemplate(src, dest) {
 
   if (filename === 'package.json' && fs.existsSync(dest)) {
     // merge instead of overwriting
-    const pkg = deepMerge(JSON.parse(fs.readFileSync(dest)), JSON.parse(fs.readFileSync(src)))
+    const existing = JSON.parse(fs.readFileSync(dest))
+    const newPackage = JSON.parse(fs.readFileSync(src))
+    const pkg = sortDependencies(deepMerge(existing, newPackage))
     fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
     return
   }
