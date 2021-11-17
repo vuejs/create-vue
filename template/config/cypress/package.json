@@ -2,8 +2,8 @@
   "scripts": {
     "test:unit": "cypress open-ct",
     "test:unit:ci": "cypress run-ct --quiet --reporter spec",
-    "test:e2e": "start-server-and-test serve 5050 'cypress open'",
-    "test:e2e:ci": "start-server-and-test serve 5050 'cypress run'"
+    "test:e2e": "start-server-and-test preview 5050 'cypress open'",
+    "test:e2e:ci": "start-server-and-test preview 5050 'cypress run'"
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^2.2.0",

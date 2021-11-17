@@ -63,6 +63,7 @@ ${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
+${getCommand(packageManager, 'build')}
 ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
       packageManager,
       'test:e2e:ci'
