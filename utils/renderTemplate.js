@@ -17,7 +17,7 @@ function renderTemplate(src, dest) {
   const stats = fs.statSync(src)
 
   if (stats.isDirectory()) {
-    // if it's a directory, render its subdirectories and files recusively
+    // if it's a directory, render its subdirectories and files recursively
     fs.mkdirSync(dest, { recursive: true })
     for (const file of fs.readdirSync(src)) {
       renderTemplate(path.resolve(src, file), path.resolve(dest, file))
