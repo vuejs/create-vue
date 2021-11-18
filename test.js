@@ -19,6 +19,16 @@ for (const projectName of fs.readdirSync(playgroundDir)) {
       throw new Error(`Unit tests failed in ${projectName}`)
     }
 
+    console.log(`Building ${projectName}`)
+    const buildResult = spawnSync('pnpm', ['build'], {
+      cwd: path.resolve(playgroundDir, projectName),
+      stdio: 'inherit',
+      shell: true
+    })
+    if (buildResult.status !== 0) {
+      throw new Error(`Build failed in ${projectName}`)
+    }
+
     console.log(`Running e2e tests in ${projectName}`)
     const e2eTestResult = spawnSync('pnpm', ['test:e2e:ci'], {
       cwd: path.resolve(playgroundDir, projectName),
