@@ -37,5 +37,6 @@ pnpm test:unit # or `pnpm test:unit:ci` for headless testing
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 ```sh
+pnpm build
 pnpm test:e2e # or `pnpm test:e2e:ci` for headless testing
 ```
