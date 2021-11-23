@@ -9,10 +9,10 @@ import HelloWorld from '@/components/HelloWorld.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <div id="nav">
+      <nav>
         <router-link to="/">Home</router-link>
         <router-link to="/about">About</router-link>
-      </div>
+      </nav>
     </div>
   </header>
 
@@ -53,28 +53,28 @@ a,
   }
 }
 
-#nav {
+nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
 }
 
-#nav a.router-link-exact-active {
+nav a.router-link-exact-active {
   color: var(--color-text);
 }
 
-#nav a.router-link-exact-active:hover {
+nav a.router-link-exact-active:hover {
   background-color: transparent;
 }
 
-#nav a {
+nav a {
   display: inline-block;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
 
-#nav a:first-of-type {
+nav a:first-of-type {
   border: 0;
 }
 
@@ -106,7 +106,7 @@ a,
     margin: 0 2rem 0 0;
   }
 
-  #nav {
+  nav {
     text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
