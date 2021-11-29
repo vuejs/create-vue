@@ -11,16 +11,20 @@
     "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.4.0",
     "pinia": "^2.0.4",
-    "vue": "^3.2.22",
-    "vue-router": "^4.0.12"
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^2.2.1",
-    "@cypress/vue": "^3.0.5",
-    "@vitejs/plugin-vue": "^1.10.0",
+    "@cypress/vue": "^2.2.4",
+    "@vue/runtime-dom": "^3.2.22",
     "cypress": "^8.7.0",
     "start-server-and-test": "^1.14.0",
-    "vite": "^2.6.14"
+    "unplugin-vue2-script-setup": "^0.7.1",
+    "vite": "^2.6.14",
+    "vite-plugin-vue2": "^1.9.0",
+    "vue-template-compiler": "^2.6.14"
   }
 }

@@ -43,7 +43,6 @@ async function init() {
   // possible options:
   // --default
   // --typescript / --ts
-  // --jsx
   // --router / --vue-router
   // --pinia
   // --with-tests / --tests / --cypress
@@ -61,8 +60,7 @@ async function init() {
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
-    typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.pinia || argv.tests) ===
-    'boolean'
+    typeof (argv.default || argv.ts || argv.router || argv.pinia || argv.tests) === 'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
@@ -77,7 +75,6 @@ async function init() {
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
     // - Project language: JavaScript / TypeScript
-    // - Add JSX Support?
     // - Install Vue Router for SPA development?
     // - Install Pinia for state management?
     // - Add Cypress for testing?
@@ -125,14 +122,6 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsJsx',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add JSX Support?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add Vue Router for Single Page Application development?',
@@ -173,7 +162,6 @@ async function init() {
   const {
     packageName = toValidPackageName(defaultProjectName),
     shouldOverwrite,
-    needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
     needsPinia = argv.pinia,
@@ -206,9 +194,6 @@ async function init() {
   render('base')
 
   // Add configs.
-  if (needsJsx) {
-    render('config/jsx')
-  }
   if (needsRouter) {
     render('config/router')
   }
