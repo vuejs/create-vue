@@ -45,7 +45,7 @@ async function init() {
   // --typescript / --ts
   // --jsx
   // --router / --vue-router
-  // --vuex
+  // --pinia
   // --with-tests / --tests / --cypress
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
@@ -61,7 +61,7 @@ async function init() {
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
-    typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.vuex || argv.tests) ===
+    typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.pinia || argv.tests) ===
     'boolean'
 
   let targetDir = argv._[0]
@@ -79,7 +79,7 @@ async function init() {
     // - Project language: JavaScript / TypeScript
     // - Add JSX Support?
     // - Install Vue Router for SPA development?
-    // - Install Vuex for state management? (TODO)
+    // - Install Pinia for state management?
     // - Add Cypress for testing?
     result = await prompts(
       [
@@ -141,9 +141,9 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsVuex',
+          name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vuex for state management?',
+          message: 'Add Pinia for state management?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -176,7 +176,7 @@ async function init() {
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
-    needsVuex = argv.vuex,
+    needsPinia = argv.pinia,
     needsTests = argv.tests
   } = result
   const root = path.join(cwd, targetDir)
@@ -212,8 +212,8 @@ async function init() {
   if (needsRouter) {
     render('config/router')
   }
-  if (needsVuex) {
-    render('config/vuex')
+  if (needsPinia) {
+    render('config/pinia')
   }
   if (needsTests) {
     render('config/cypress')
@@ -230,10 +230,10 @@ async function init() {
   render(`code/${codeTemplate}`)
 
   // Render entry file (main.js/ts).
-  if (needsVuex && needsRouter) {
-    render('entry/vuex-and-router')
-  } else if (needsVuex) {
-    render('entry/vuex')
+  if (needsPinia && needsRouter) {
+    render('entry/router-and-pinia')
+  } else if (needsPinia) {
+    render('entry/pinia')
   } else if (needsRouter) {
     render('entry/router')
   } else {
