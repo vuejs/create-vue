@@ -42,7 +42,7 @@ function fullCombination(arr) {
   // [0, 0, 0, 0, 1] = 0b0001
   // [1, 1, 1, 1, 1] = 0b1111
 
-  // Note we need to exclude the empty comination in our case
+  // Note we need to exclude the empty combination in our case
   for (let i = 1; i < 1 << arr.length; i++) {
     const combination = []
     for (let j = 0; j < arr.length; j++) {
