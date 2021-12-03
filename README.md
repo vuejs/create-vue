@@ -7,5 +7,11 @@ An easy way to start a Vue project
 ## Usage
 
 ```sh
-npm init vue@next
+npm init vue@3
+```
+
+Or, if you need to support IE11, you can create a Vue 2 project with:
+
+```sh
+npm init vue@2
 ```
