@@ -10,7 +10,7 @@ importers:
       lint-staged: ^12.1.2
       minimist: ^1.2.5
       npm-run-all: ^4.1.5
-      prettier: ^2.5.0
+      prettier: ^2.5.1
       prompts: ^2.4.2
     devDependencies:
       esbuild: 0.13.15
@@ -19,680 +19,680 @@ importers:
       lint-staged: 12.1.2
       minimist: 1.2.5
       npm-run-all: 4.1.5
-      prettier: 2.5.0
+      prettier: 2.5.1
       prompts: 2.4.2
 
   playground/default:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@vitejs/plugin-vue': ^2.0.0
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      vite: 2.7.1
 
   playground/jsx:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      vite: 2.7.1
 
   playground/jsx-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       pinia: ^2.0.6
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      vite: 2.7.1
 
   playground/jsx-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/jsx-router:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      vite: 2.7.1
 
   playground/jsx-router-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       pinia: ^2.0.6
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      vite: 2.7.1
 
   playground/jsx-router-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/jsx-router-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/jsx-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       pinia: ^2.0.6
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      vite: 2.7.1
 
   playground/pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/router:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@vitejs/plugin-vue': ^2.0.0
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      vite: 2.7.1
 
   playground/router-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       pinia: ^2.0.6
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      vite: 2.6.14
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      vite: 2.7.1
 
   playground/router-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      pinia: 2.0.6_vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/router-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
   playground/typescript:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-pinia:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       pinia: ^2.0.6
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-router:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-router-pinia:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       pinia: ^2.0.6
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-router-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-router-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-jsx-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      '@vitejs/plugin-vue-jsx': ^1.3.0
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      '@vitejs/plugin-vue-jsx': ^1.3.1
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      '@vitejs/plugin-vue-jsx': 1.3.0
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      '@vitejs/plugin-vue-jsx': 1.3.1
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-pinia:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       pinia: ^2.0.6
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-router:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-router-pinia:
     specifiers:
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       pinia: ^2.0.6
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-router-pinia-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       pinia: ^2.0.6
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      pinia: 2.0.6_typescript@4.5.2+vue@3.2.23
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      pinia: 2.0.6_typescript@4.5.3+vue@3.2.26
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-router-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-router: ^4.0.12
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
-      vue-router: 4.0.12_vue@3.2.23
+      vue: 3.2.26
+      vue-router: 4.0.12_vue@3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/typescript-with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@types/node': ^16.11.11
-      '@vitejs/plugin-vue': ^1.10.1
+      '@types/node': ^16.11.12
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      typescript: ~4.5.2
-      vite: ^2.6.14
-      vue: ^3.2.23
+      typescript: ~4.5.3
+      vite: ^2.7.1
+      vue: ^3.2.26
       vue-tsc: ^0.29.8
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@types/node': 16.11.11
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@types/node': 16.11.12
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      typescript: 4.5.2
-      vite: 2.6.14
-      vue-tsc: 0.29.8_typescript@4.5.2
+      typescript: 4.5.3
+      vite: 2.7.1
+      vue-tsc: 0.29.8_typescript@4.5.3
 
   playground/with-tests:
     specifiers:
       '@cypress/vite-dev-server': ^2.2.1
       '@cypress/vue': ^3.0.5
-      '@vitejs/plugin-vue': ^1.10.1
+      '@vitejs/plugin-vue': ^2.0.0
       cypress: ^9.1.1
       start-server-and-test: ^1.14.0
-      vite: ^2.6.14
-      vue: ^3.2.23
+      vite: ^2.7.1
+      vue: ^3.2.26
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     devDependencies:
-      '@cypress/vite-dev-server': 2.2.1_vite@2.6.14
-      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.23
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
+      '@cypress/vite-dev-server': 2.2.1_vite@2.7.1
+      '@cypress/vue': 3.0.5_cypress@9.1.1+vue@3.2.26
+      '@vitejs/plugin-vue': 2.0.0_vite@2.7.1+vue@3.2.26
       cypress: 9.1.1
       start-server-and-test: 1.14.0
-      vite: 2.6.14
+      vite: 2.7.1
 
 packages:
 
@@ -1008,19 +1008,19 @@ packages:
       uuid: 8.3.2
     dev: true
 
-  /@cypress/vite-dev-server/2.2.1_vite@2.6.14:
+  /@cypress/vite-dev-server/2.2.1_vite@2.7.1:
     resolution: {integrity: sha512-WPDqO1uc+cRLnKNlWbggORzFYBsgvbCf19fOIGnQqaPm/SH7w6+mt7Py+PD26G1Fwx9NENXzh3AfwoIk4FePTw==}
     peerDependencies:
       vite: '>= 2.1.3'
     dependencies:
       debug: 4.3.3
       get-port: 5.1.1
-      vite: 2.6.14
+      vite: 2.7.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@cypress/vue/3.0.5_cypress@9.1.1+vue@3.2.23:
+  /@cypress/vue/3.0.5_cypress@9.1.1+vue@3.2.26:
     resolution: {integrity: sha512-v6uVMEP04mCJGfc9/oH2ZIYPZ3fRwiOSzjtQ7jT0O2Lt2+SkoEWbDymG0pUFMRM1W8oc7Ep1hqEgZjIop7RXgw==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -1035,9 +1035,9 @@ packages:
         optional: true
     dependencies:
       '@cypress/mount-utils': 1.0.2
-      '@vue/test-utils': 2.0.0-rc.17_vue@3.2.23
+      '@vue/test-utils': 2.0.0-rc.17_vue@3.2.26
       cypress: 9.1.1
-      vue: 3.2.23
+      vue: 3.2.26
     dev: true
 
   /@cypress/xvfb/1.2.4:
@@ -1099,8 +1099,8 @@ packages:
     resolution: {integrity: sha512-0GeIl2kmVMXEnx8tg1SlG6Gg8vkqirrW752KqolYo1PHevhhZN3bhJ67qHj+bQaINhX0Ra3TlWwRvMCd9iEfNQ==}
     dev: true
 
-  /@types/node/16.11.11:
-    resolution: {integrity: sha512-KB0sixD67CeecHC33MYn+eYARkqTheIRNuu97y2XMjR7Wu3XibO1vaY6VBV6O/a89SPI81cEUIYT87UqUWlZNw==}
+  /@types/node/16.11.12:
+    resolution: {integrity: sha512-+2Iggwg7PxoO5Kyhvsq9VarmPbIelXP070HMImEpbtGCoyWNINQj4wzjbQCXzdHTRXnqufutJb5KAURZANNBAw==}
     dev: true
 
   /@types/sinonjs__fake-timers/6.0.4:
@@ -1119,8 +1119,8 @@ packages:
     dev: true
     optional: true
 
-  /@vitejs/plugin-vue-jsx/1.3.0:
-    resolution: {integrity: sha512-mm2jT63s/DWapVWT62t7xsMmwqsLNj5LUpokSXWnlUv9oxPfZsAymhHs6byWxvuvC5jo3zzFMO7rs8ax4PcyxA==}
+  /@vitejs/plugin-vue-jsx/1.3.1:
+    resolution: {integrity: sha512-Ku0pnlG0CuFfkvwOe3TEHS7noqBIBR61JbdvH6F6i3IqJv8+0+tcyusR+EoFwi7YrA2vdP26oorWyGv3wDt5kg==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@babel/core': 7.16.0
@@ -1133,13 +1133,15 @@ packages:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-vue/1.10.1_vite@2.6.14:
-    resolution: {integrity: sha512-oL76QETMSpVE9jIScirGB2bYJEVU/+r+g+K7oG+sXPs9TZljqveoVRsmLyXlMZTjpQkLL8gz527cW80NMGVKJg==}
+  /@vitejs/plugin-vue/2.0.0_vite@2.7.1+vue@3.2.26:
+    resolution: {integrity: sha512-4Xn1h9OcaAf7KYrvz2oEi52fCCCLcCzyr3pDOrzYTWrs0DrzNOXt9fT5IiGb1f/uoNTdX3aAkXVGNXrGkzF/zw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
+      vue: ^3.2.25
     dependencies:
-      vite: 2.6.14
+      vite: 2.7.1
+      vue: 3.2.26
     dev: true
 
   /@volar/code-gen/0.29.8:
@@ -1185,9 +1187,9 @@ packages:
       '@volar/code-gen': 0.29.8
       '@volar/shared': 0.29.8
       '@volar/source-map': 0.29.8
-      '@vue/compiler-core': 3.2.23
-      '@vue/compiler-dom': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-core': 3.2.26
+      '@vue/compiler-dom': 3.2.26
+      '@vue/shared': 3.2.26
       upath: 2.0.1
     dev: true
 
@@ -1223,95 +1225,95 @@ packages:
       - supports-color
     dev: true
 
-  /@vue/compiler-core/3.2.23:
-    resolution: {integrity: sha512-4ZhiI/orx+7EJ1B+0zjgvXMV2uRN+XBfG06UN2sJfND9rH5gtEQT3QmO4erum1o6Irl7y754W8/KSaDJh4EUQg==}
+  /@vue/compiler-core/3.2.26:
+    resolution: {integrity: sha512-N5XNBobZbaASdzY9Lga2D9Lul5vdCIOXvUMd6ThcN8zgqQhPKfCV+wfAJNNJKQkSHudnYRO2gEB+lp0iN3g2Tw==}
     dependencies:
       '@babel/parser': 7.16.4
-      '@vue/shared': 3.2.23
+      '@vue/shared': 3.2.26
       estree-walker: 2.0.2
       source-map: 0.6.1
 
-  /@vue/compiler-dom/3.2.23:
-    resolution: {integrity: sha512-X2Nw8QFc5lgoK3kio5ktM95nqmLUH+q+N/PbV4kCHzF1avqv/EGLnAhaaF0Iu4bewNvHJAAhhwPZFeoV/22nbw==}
+  /@vue/compiler-dom/3.2.26:
+    resolution: {integrity: sha512-smBfaOW6mQDxcT3p9TKT6mE22vjxjJL50GFVJiI0chXYGU/xzC05QRGrW3HHVuJrmLTLx5zBhsZ2dIATERbarg==}
     dependencies:
-      '@vue/compiler-core': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-core': 3.2.26
+      '@vue/shared': 3.2.26
 
-  /@vue/compiler-sfc/3.2.23:
-    resolution: {integrity: sha512-Aw+pb50Q5zTjyvWod8mNKmYZDRGHJBptmNNWE+84ZxrzEztPgMz8cNYIzWGbwcFVkmJlhvioAMvKnB+LM/sjSA==}
+  /@vue/compiler-sfc/3.2.26:
+    resolution: {integrity: sha512-ePpnfktV90UcLdsDQUh2JdiTuhV0Skv2iYXxfNMOK/F3Q+2BO0AulcVcfoksOpTJGmhhfosWfMyEaEf0UaWpIw==}
     dependencies:
       '@babel/parser': 7.16.4
-      '@vue/compiler-core': 3.2.23
-      '@vue/compiler-dom': 3.2.23
-      '@vue/compiler-ssr': 3.2.23
-      '@vue/ref-transform': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-core': 3.2.26
+      '@vue/compiler-dom': 3.2.26
+      '@vue/compiler-ssr': 3.2.26
+      '@vue/reactivity-transform': 3.2.26
+      '@vue/shared': 3.2.26
       estree-walker: 2.0.2
       magic-string: 0.25.7
       postcss: 8.4.4
       source-map: 0.6.1
     dev: false
 
-  /@vue/compiler-ssr/3.2.23:
-    resolution: {integrity: sha512-Bqzn4jFyXPK1Ehqiq7e/czS8n62gtYF1Zfeu0DrR5uv+SBllh7LIvZjZU6+c8qbocAd3/T3I3gn2cZGmnDb6zg==}
+  /@vue/compiler-ssr/3.2.26:
+    resolution: {integrity: sha512-2mywLX0ODc4Zn8qBoA2PDCsLEZfpUGZcyoFRLSOjyGGK6wDy2/5kyDOWtf0S0UvtoyVq95OTSGIALjZ4k2q/ag==}
     dependencies:
-      '@vue/compiler-dom': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-dom': 3.2.26
+      '@vue/shared': 3.2.26
     dev: false
 
   /@vue/devtools-api/6.0.0-beta.20.1:
     resolution: {integrity: sha512-R2rfiRY+kZugzWh9ZyITaovx+jpU4vgivAEAiz80kvh3yviiTU3CBuGuyWpSwGz9/C7TkSWVM/FtQRGlZ16n8Q==}
     dev: false
 
-  /@vue/reactivity/3.2.23:
-    resolution: {integrity: sha512-8RGVr/5Kpgb/EkCjgHXqttgA5IMc6n0lIXFY4TVbMkzdXrvaIhzBd7Te44oIDsTSYVKZLpfHd6/wEnuDqE8vFw==}
-    dependencies:
-      '@vue/shared': 3.2.23
-
-  /@vue/ref-transform/3.2.23:
-    resolution: {integrity: sha512-gW0GD2PSAs/th7mC7tPB/UwpIQxclbApVtsDtscDmOJXb2+cdu60ny+SuHNgfrlUT/JqWKQHq7jFKO4woxLNaA==}
+  /@vue/reactivity-transform/3.2.26:
+    resolution: {integrity: sha512-XKMyuCmzNA7nvFlYhdKwD78rcnmPb7q46uoR00zkX6yZrUmcCQ5OikiwUEVbvNhL5hBJuvbSO95jB5zkUon+eQ==}
     dependencies:
       '@babel/parser': 7.16.4
-      '@vue/compiler-core': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-core': 3.2.26
+      '@vue/shared': 3.2.26
       estree-walker: 2.0.2
       magic-string: 0.25.7
     dev: false
 
-  /@vue/runtime-core/3.2.23:
-    resolution: {integrity: sha512-wSI5lmY2kCGLf89iiygqxVh6/5bsawz78Me9n1x4U2bHnN0yf3PWyuhN0WgIE8VfEaF7e75E333uboNEIFjgkg==}
+  /@vue/reactivity/3.2.26:
+    resolution: {integrity: sha512-h38bxCZLW6oFJVDlCcAiUKFnXI8xP8d+eO0pcDxx+7dQfSPje2AO6M9S9QO6MrxQB7fGP0DH0dYQ8ksf6hrXKQ==}
     dependencies:
-      '@vue/reactivity': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/shared': 3.2.26
+
+  /@vue/runtime-core/3.2.26:
+    resolution: {integrity: sha512-BcYi7qZ9Nn+CJDJrHQ6Zsmxei2hDW0L6AB4vPvUQGBm2fZyC0GXd/4nVbyA2ubmuhctD5RbYY8L+5GUJszv9mQ==}
+    dependencies:
+      '@vue/reactivity': 3.2.26
+      '@vue/shared': 3.2.26
     dev: false
 
-  /@vue/runtime-dom/3.2.23:
-    resolution: {integrity: sha512-z6lp0888NkLmxD9j2sGoll8Kb7J743s8s6w7GbiyUc4WZwm0KJ35B4qTFDMoIU0G7CatS6Z+yRTpPHc6srtByg==}
+  /@vue/runtime-dom/3.2.26:
+    resolution: {integrity: sha512-dY56UIiZI+gjc4e8JQBwAifljyexfVCkIAu/WX8snh8vSOt/gMSEGwPRcl2UpYpBYeyExV8WCbgvwWRNt9cHhQ==}
     dependencies:
-      '@vue/runtime-core': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/runtime-core': 3.2.26
+      '@vue/shared': 3.2.26
       csstype: 2.6.19
     dev: false
 
-  /@vue/server-renderer/3.2.23_vue@3.2.23:
-    resolution: {integrity: sha512-mgQ2VAE5WjeZELJKNbwE69uiBNpN+3LyL0ZDki1bJWVwHD2fhPfx7pwyYuiucE81xz2LxVsyGxhKKUL997g8vw==}
+  /@vue/server-renderer/3.2.26_vue@3.2.26:
+    resolution: {integrity: sha512-Jp5SggDUvvUYSBIvYEhy76t4nr1vapY/FIFloWmQzn7UxqaHrrBpbxrqPcTrSgGrcaglj0VBp22BKJNre4aA1w==}
     peerDependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     dependencies:
-      '@vue/compiler-ssr': 3.2.23
-      '@vue/shared': 3.2.23
-      vue: 3.2.23
+      '@vue/compiler-ssr': 3.2.26
+      '@vue/shared': 3.2.26
+      vue: 3.2.26
     dev: false
 
-  /@vue/shared/3.2.23:
-    resolution: {integrity: sha512-U+/Jefa0QfXUF2qVy9Dqlrb6HKJSr9/wJcM66wXmWcTOoqg7hOWzF4qruDle51pyF4x3wMn6TSH54UdjKjCKMA==}
+  /@vue/shared/3.2.26:
+    resolution: {integrity: sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA==}
 
-  /@vue/test-utils/2.0.0-rc.17_vue@3.2.23:
+  /@vue/test-utils/2.0.0-rc.17_vue@3.2.26:
     resolution: {integrity: sha512-7LHZKsFRV/HqDoMVY+cJamFzgHgsrmQFalROHC5FMWrzPzd+utG5e11krj1tVsnxYufGA2ABShX4nlcHXED+zQ==}
     peerDependencies:
       vue: ^3.0.1
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     dev: true
 
   /acorn/7.4.1:
@@ -1421,7 +1423,7 @@ packages:
   /axios/0.21.4_debug@4.3.2:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.5_debug@4.3.2
+      follow-redirects: 1.14.6_debug@4.3.2
     transitivePeerDependencies:
       - debug
     dev: true
@@ -1470,8 +1472,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001284
-      electron-to-chromium: 1.4.11
+      caniuse-lite: 1.0.30001286
+      electron-to-chromium: 1.4.16
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -1498,8 +1500,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001284:
-    resolution: {integrity: sha512-t28SKa7g6kiIQi6NHeOcKrOrGMzCRrXvlasPwWC26TH2QNdglgzQIRUuJ0cR3NeQPH+5jpuveeeSFDLm2zbkEw==}
+  /caniuse-lite/1.0.30001286:
+    resolution: {integrity: sha512-zaEMRH6xg8ESMi2eQ3R4eZ5qw/hJiVsO/HlLwniIwErij0JDr9P+8V4dtx1l+kLq6j3yy8l8W4fst1lBnat5wQ==}
     dev: true
 
   /caseless/0.12.0:
@@ -1845,8 +1847,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /electron-to-chromium/1.4.11:
-    resolution: {integrity: sha512-2OhsaYgsWGhWjx2et8kaUcdktPbBGjKM2X0BReUCKcSCPttEY+hz2zie820JLbttU8jwL92+JJysWwkut3wZgA==}
+  /electron-to-chromium/1.4.16:
+    resolution: {integrity: sha512-BQb7FgYwnu6haWLU63/CdVW+9xhmHls3RCQUFiV4lvw3wimEHTVcUk2hkuZo76QhR8nnDdfZE7evJIZqijwPdA==}
     dev: true
 
   /emmet/2.3.4:
@@ -1905,12 +1907,12 @@ packages:
       has-symbols: 1.0.2
       internal-slot: 1.0.3
       is-callable: 1.2.4
-      is-negative-zero: 2.0.1
+      is-negative-zero: 2.0.2
       is-regex: 1.1.4
       is-shared-array-buffer: 1.0.1
       is-string: 1.0.7
-      is-weakref: 1.0.1
-      object-inspect: 1.11.0
+      is-weakref: 1.0.2
+      object-inspect: 1.11.1
       object-keys: 1.1.1
       object.assign: 4.1.2
       string.prototype.trimend: 1.0.4
@@ -2196,8 +2198,8 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
-  /follow-redirects/1.14.5_debug@4.3.2:
-    resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
+  /follow-redirects/1.14.6_debug@4.3.2:
+    resolution: {integrity: sha512-fhUl5EwSJbbl8AR+uYL2KQDxLkdSjZGR36xy46AO7cOMTrCMON6Sa28FmAnC2tRTDbd/Uuzz3aJBv7EBN7JH8A==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -2506,8 +2508,8 @@ packages:
       is-path-inside: 3.0.3
     dev: true
 
-  /is-negative-zero/2.0.1:
-    resolution: {integrity: sha512-2z6JzQvZRa9A2Y7xC6dQQm4FSTSTNWjKIYYTt4246eMTJmIo0Q+ZyOsU66X8lxK1AbB92dFeglPLrhwpeRKO6w==}
+  /is-negative-zero/2.0.2:
+    resolution: {integrity: sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA==}
     engines: {node: '>= 0.4'}
     dev: true
 
@@ -2572,8 +2574,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /is-weakref/1.0.1:
-    resolution: {integrity: sha512-b2jKc2pQZjaeFYWEf7ScFj+Be1I+PXmlu572Q8coTXZ+LD/QQZ7ShPMst8h16riVgyXTQwUsFEl74mDvc/3MHQ==}
+  /is-weakref/1.0.2:
+    resolution: {integrity: sha512-qctsuLZmIQ0+vSSMfoVvyFe2+GSEvnmZ2ezTup1SBse9+twCCeial6EEi3Nc2KFcf6+qz2FBPnjXsk8xhKSaPQ==}
     dependencies:
       call-bind: 1.0.2
     dev: true
@@ -2701,7 +2703,7 @@ packages:
       listr2: 3.13.5_enquirer@2.3.6
       micromatch: 4.0.4
       normalize-path: 3.0.0
-      object-inspect: 1.11.0
+      object-inspect: 1.11.1
       string-argv: 0.3.1
       supports-color: 9.2.1
       yaml: 1.10.2
@@ -2887,8 +2889,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /object-inspect/1.11.0:
-    resolution: {integrity: sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==}
+  /object-inspect/1.11.1:
+    resolution: {integrity: sha512-If7BjFlpkzzBeV1cqgT3OSWT3azyoxDGajR+iGnFBfVV2EWyDyWaZZW2ERDjUaY2QM8i5jI3Sj7mhsM4DDAqWA==}
     dev: true
 
   /object-keys/1.1.1:
@@ -3002,7 +3004,7 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinia/2.0.6_typescript@4.5.2+vue@3.2.23:
+  /pinia/2.0.6_typescript@4.5.3+vue@3.2.26:
     resolution: {integrity: sha512-01mP4+KapIcTNSYLhQESy6GW0N8vY5wX3UqOwkC87e7DPjEusNJ8bENrKqdvZaRHbB2rDMOONeAbwMa3+n1/rw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -3015,12 +3017,12 @@ packages:
         optional: true
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.20.1
-      typescript: 4.5.2
-      vue: 3.2.23
-      vue-demi: 0.12.1_vue@3.2.23
+      typescript: 4.5.3
+      vue: 3.2.26
+      vue-demi: 0.12.1_vue@3.2.26
     dev: false
 
-  /pinia/2.0.6_vue@3.2.23:
+  /pinia/2.0.6_vue@3.2.26:
     resolution: {integrity: sha512-01mP4+KapIcTNSYLhQESy6GW0N8vY5wX3UqOwkC87e7DPjEusNJ8bENrKqdvZaRHbB2rDMOONeAbwMa3+n1/rw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -3033,8 +3035,8 @@ packages:
         optional: true
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.20.1
-      vue: 3.2.23
-      vue-demi: 0.12.1_vue@3.2.23
+      vue: 3.2.26
+      vue-demi: 0.12.1_vue@3.2.26
     dev: false
 
   /postcss/8.4.4:
@@ -3045,8 +3047,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.1
 
-  /prettier/2.5.0:
-    resolution: {integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==}
+  /prettier/2.5.1:
+    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -3249,8 +3251,8 @@ packages:
       glob: 7.2.0
     dev: true
 
-  /rollup/2.60.2:
-    resolution: {integrity: sha512-1Bgjpq61sPjgoZzuiDSGvbI1tD91giZABgjCQBKM5aYLnzjq52GoDuWVwT/cm/MCxCMPU8gqQvkj8doQ5C8Oqw==}
+  /rollup/2.61.1:
+    resolution: {integrity: sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -3326,7 +3328,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
-      object-inspect: 1.11.0
+      object-inspect: 1.11.1
     dev: true
 
   /signal-exit/3.0.6:
@@ -3604,8 +3606,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /typescript/4.5.2:
-    resolution: {integrity: sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==}
+  /typescript/4.5.3:
+    resolution: {integrity: sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
@@ -3662,8 +3664,8 @@ packages:
       extsprintf: 1.3.0
     dev: true
 
-  /vite/2.6.14:
-    resolution: {integrity: sha512-2HA9xGyi+EhY2MXo0+A2dRsqsAG3eFNEVIo12olkWhOmc8LfiM+eMdrXf+Ruje9gdXgvSqjLI9freec1RUM5EA==}
+  /vite/2.7.1:
+    resolution: {integrity: sha512-TDXXhcu5lyQ6uosK4ZWaOyB4VzOiizk0biitRzDzaEtgSUi8rVYPc4k1xgOjLSf0OuceDJmojFKXHOX9DB1WuQ==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:
@@ -3681,7 +3683,7 @@ packages:
       esbuild: 0.13.15
       postcss: 8.4.4
       resolve: 1.20.0
-      rollup: 2.60.2
+      rollup: 2.61.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3794,8 +3796,8 @@ packages:
       '@volar/transforms': 0.29.8
       '@volar/vue-code-gen': 0.29.8
       '@vscode/emmet-helper': 2.8.2
-      '@vue/reactivity': 3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/reactivity': 3.2.26
+      '@vue/shared': 3.2.26
       request-light: 0.5.5
       upath: 2.0.1
       vscode-css-languageservice: 5.1.9
@@ -3807,7 +3809,7 @@ packages:
       vscode-typescript-languageservice: 0.29.8
     dev: true
 
-  /vue-demi/0.12.1_vue@3.2.23:
+  /vue-demi/0.12.1_vue@3.2.26:
     resolution: {integrity: sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==}
     engines: {node: '>=12'}
     hasBin: true
@@ -3819,37 +3821,37 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      vue: 3.2.23
+      vue: 3.2.26
     dev: false
 
-  /vue-router/4.0.12_vue@3.2.23:
+  /vue-router/4.0.12_vue@3.2.26:
     resolution: {integrity: sha512-CPXvfqe+mZLB1kBWssssTiWg4EQERyqJZes7USiqfW9B5N2x+nHlnsM1D3b5CaJ6qgCvMmYJnz+G0iWjNCvXrg==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.20.1
-      vue: 3.2.23
+      vue: 3.2.26
     dev: false
 
-  /vue-tsc/0.29.8_typescript@4.5.2:
+  /vue-tsc/0.29.8_typescript@4.5.3:
     resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==}
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
       '@volar/shared': 0.29.8
-      typescript: 4.5.2
+      typescript: 4.5.3
       vscode-vue-languageservice: 0.29.8
     dev: true
 
-  /vue/3.2.23:
-    resolution: {integrity: sha512-MGp9JZC37lzGhwSu6c1tQxrQbXbw7XKFqtYh7SFwNrNK899FPxGAHwSHMZijMChTSC3uZrD2BGO/3EHOgMJ0cw==}
+  /vue/3.2.26:
+    resolution: {integrity: sha512-KD4lULmskL5cCsEkfhERVRIOEDrfEL9CwAsLYpzptOGjaGFNWo3BQ9g8MAb7RaIO71rmVOziZ/uEN/rHwcUIhg==}
     dependencies:
-      '@vue/compiler-dom': 3.2.23
-      '@vue/compiler-sfc': 3.2.23
-      '@vue/runtime-dom': 3.2.23
-      '@vue/server-renderer': 3.2.23_vue@3.2.23
-      '@vue/shared': 3.2.23
+      '@vue/compiler-dom': 3.2.26
+      '@vue/compiler-sfc': 3.2.26
+      '@vue/runtime-dom': 3.2.26
+      '@vue/server-renderer': 3.2.26_vue@3.2.26
+      '@vue/shared': 3.2.26
     dev: false
 
   /wait-on/6.0.0_debug@4.3.2:
