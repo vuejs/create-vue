@@ -37,7 +37,6 @@ h3 {
 @media (min-width: 1024px) {
   .greetings h1,
   .greetings h3 {
-    display: block;
     text-align: left;
   }
 }
