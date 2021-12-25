@@ -12,6 +12,7 @@ import renderTemplate from './utils/renderTemplate.js'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
 import generateReadme from './utils/generateReadme.js'
 import getCommand from './utils/getCommand.js'
+import renderEslint from './utils/renderEslint.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -47,6 +48,8 @@ async function init() {
   // --router / --vue-router
   // --pinia
   // --with-tests / --tests / --cypress
+  // --eslint
+  // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -61,8 +64,15 @@ async function init() {
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
-    typeof (argv.default || argv.ts || argv.jsx || argv.router || argv.pinia || argv.tests) ===
-    'boolean'
+    typeof (
+      argv.default ||
+      argv.ts ||
+      argv.jsx ||
+      argv.router ||
+      argv.pinia ||
+      argv.tests ||
+      argv.eslint
+    ) === 'boolean'
 
   let targetDir = argv._[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
@@ -81,6 +91,8 @@ async function init() {
     // - Install Vue Router for SPA development?
     // - Install Pinia for state management?
     // - Add Cypress for testing?
+    // - Add ESLint for code quality?
+    // - Add Prettier for code formatting?
     result = await prompts(
       [
         {
@@ -155,6 +167,27 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsEslint',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add ESLint for code quality?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'needsPrettier',
+          type: (prev, values = {}) => {
+            if (isFeatureFlagsUsed || !values.needsEslint) {
+              return null
+            }
+            return 'toggle'
+          },
+          message: 'Add Prettier for code formatting?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -177,7 +210,9 @@ async function init() {
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
     needsPinia = argv.pinia,
-    needsTests = argv.tests
+    needsTests = argv.tests,
+    needsEslint = argv.eslint || argv['eslint-with-prettier'],
+    needsPrettier = argv['eslint-with-prettier']
   } = result
   const root = path.join(cwd, targetDir)
 
@@ -220,6 +255,10 @@ async function init() {
   }
   if (needsTypeScript) {
     render('config/typescript')
+  }
+
+  if (needsEslint) {
+    renderEslint(root, result)
   }
 
   // Render code template.
@@ -298,7 +337,8 @@ async function init() {
       projectName: result.projectName || defaultProjectName,
       packageManager,
       needsTypeScript,
-      needsTests
+      needsTests,
+      needsEslint
     })
   )
 

@@ -14,7 +14,8 @@ export default function generateReadme({
   projectName,
   packageManager,
   needsTypeScript,
-  needsTests
+  needsTests,
+  needsEslint
 }) {
   let readme = `# ${projectName}
 
@@ -68,6 +69,16 @@ ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
       packageManager,
       'test:e2e:ci'
     )}\` for headless testing
+\`\`\`
+`
+  }
+
+  if (needsEslint) {
+    npmScriptsDescriptions += `
+### Lint with [ESLint](https://eslint.org/)
+
+\`\`\`sh
+${getCommand(packageManager, 'lint')}
 \`\`\`
 `
   }
