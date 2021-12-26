@@ -13,6 +13,7 @@ import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/d
 import generateReadme from './utils/generateReadme.js'
 import getCommand from './utils/getCommand.js'
 import renderEslint from './utils/renderEslint.js'
+import banner from './utils/banner.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -40,6 +41,8 @@ function emptyDir(dir) {
 }
 
 async function init() {
+  console.log(`\n${banner}\n`)
+
   const cwd = process.cwd()
   // possible options:
   // --default
