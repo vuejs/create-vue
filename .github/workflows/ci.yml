@@ -36,4 +36,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm pretest
+      # Rerun install to ensure the dependencies in the playground apps are resolved correctly
+      - run: pnpm install
       - run: pnpm test
