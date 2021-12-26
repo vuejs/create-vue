@@ -54,7 +54,7 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress }) 
 
   // generate the configuration file
   let configuration = '/* eslint-env node */\n'
-  if (styleGuide !== 'default' || language !== 'typescript' || needsPrettier) {
+  if (styleGuide !== 'default' || language !== 'javascript' || needsPrettier) {
     addEslintDependency('@rushstack/eslint-patch')
     configuration += `require("@rushstack/eslint-patch/modern-module-resolution");\n\n`
   }
