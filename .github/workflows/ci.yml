@@ -16,7 +16,11 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-latest
+          # Cypress Component Testing with Vite cannot run successfully
+          # on Windows **CI** machines, due to resource restraints, this is a known issue.
+          # So we'll just test it locally.
+          # Later when Vitest becomes stable, we may switch to that for unit testing.
+          # - windows-latest
         node-version:
           - 16
         include:
