@@ -12,7 +12,7 @@ await $`git add -A .`
 try {
   await $`git commit -m "version ${version} snapshot"`
 } catch (e) {
-  if (!e.message.includes('nothing to commit')) {
+  if (!e.stdout.includes('nothing to commit')) {
     throw e
   }
 }
