@@ -261,7 +261,7 @@ async function init() {
   }
 
   if (needsEslint) {
-    renderEslint(root, result)
+    renderEslint(root, { needsTypeScript, needsTests, needsPrettier })
   }
 
   // Render code template.
