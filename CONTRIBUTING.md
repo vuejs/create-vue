@@ -19,5 +19,5 @@ This repo is a monorepo using pnpm workspaces. The package manager used to insta
 ## Pull Request Guidelines
 
 - Checkout a topic branch from a base branch, e.g. `main`, and merge back against that branch.
-- For any non-trivial new features or bug fixes, please open a issue first and have it approved before working on it.
+- For any non-trivial new features or bug fixes, please open an issue first and have it approved before working on it.
 - Don't include the `playground` directory in the commits. It will be updated automatically after each release.
