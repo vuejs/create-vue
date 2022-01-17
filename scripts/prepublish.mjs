@@ -6,7 +6,8 @@ await $`pnpm snapshot`
 
 let { version } = JSON.parse(await fs.readFile('./package.json'))
 
-cd('./playground')
+const playgroundDir = path.resolve(__dirname, '../playground/')
+cd(playgroundDir)
 
 await $`git add -A .`
 try {

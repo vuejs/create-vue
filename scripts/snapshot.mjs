@@ -1,29 +1,10 @@
-import { spawnSync } from 'child_process'
-import path from 'path'
+#!/usr/bin/env zx
+import 'zx/globals'
 
-const __dirname = path
-  .dirname(new URL(import.meta.url).pathname)
-  .substring(process.platform === 'win32' ? 1 : 0)
+$.verbose = false
 
-const bin = path.resolve(__dirname, './outfile.cjs')
-const playgroundDir = path.resolve(__dirname, './playground/')
-
-function createProjectWithFeatureFlags(flags) {
-  const projectName = flags.join('-')
-  console.log(`Creating project ${projectName}`)
-  const { status } = spawnSync(
-    'node',
-    [bin, projectName, ...flags.map((flag) => `--${flag}`), '--force'],
-    {
-      cwd: playgroundDir,
-      stdio: ['pipe', 'pipe', 'inherit']
-    }
-  )
-
-  if (status !== 0) {
-    process.exit(status)
-  }
-}
+const bin = path.resolve(__dirname, '../outfile.cjs')
+const playgroundDir = path.resolve(__dirname, '../playground/')
 
 const featureFlags = ['typescript', 'jsx', 'router', 'pinia', 'with-tests']
 
@@ -59,6 +40,10 @@ function fullCombination(arr) {
 const flagCombinations = fullCombination(featureFlags)
 flagCombinations.push(['default'])
 
+cd(playgroundDir)
 for (const flags of flagCombinations) {
-  createProjectWithFeatureFlags(flags)
+  const projectName = flags.join('-')
+  console.log(`Creating project ${projectName}`)
+
+  await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
 }
