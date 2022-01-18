@@ -255,6 +255,7 @@ async function init() {
   }
   if (needsTests) {
     render('config/cypress')
+    render('config/cypress-ct')
   }
   if (needsTypeScript) {
     render('config/typescript')
