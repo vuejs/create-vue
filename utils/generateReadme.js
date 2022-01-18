@@ -21,7 +21,9 @@ export default function generateReadme({
   projectName,
   packageManager,
   needsTypeScript,
-  needsTests,
+  needsCypress,
+  needsCypressCT,
+  needsVitest,
   needsEslint
 }) {
   let readme = `# ${projectName}
@@ -57,7 +59,17 @@ ${getCommand(packageManager, 'build')}
 \`\`\`
 `
 
-  if (needsTests) {
+  if (needsVitest) {
+    npmScriptsDescriptions += `
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+\`\`\`sh
+${getCommand(packageManager, 'test:unit')}
+\`\`\`
+`
+  }
+
+  if (needsCypressCT) {
     npmScriptsDescriptions += `
 ### Run Unit Tests with [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction)
 
@@ -67,7 +79,11 @@ ${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
       'test:unit:ci'
     )}\` for headless testing
 \`\`\`
+`
+  }
 
+  if (needsCypress) {
+    npmScriptsDescriptions += `
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
