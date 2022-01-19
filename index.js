@@ -33,6 +33,10 @@ function canSafelyOverwrite(dir) {
 }
 
 function emptyDir(dir) {
+  if (!fs.existsSync(dir)) {
+    return
+  }
+
   postOrderDirectoryTraverse(
     dir,
     (dir) => fs.rmdirSync(dir),
@@ -237,7 +241,7 @@ async function init() {
   const needsCypressCT = needsCypress && !needsVitest
   const root = path.join(cwd, targetDir)
 
-  if (shouldOverwrite) {
+  if (fs.existsSync(root) && shouldOverwrite) {
     emptyDir(root)
   } else if (!fs.existsSync(root)) {
     fs.mkdirSync(root)
