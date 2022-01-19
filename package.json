@@ -16,7 +16,7 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=outfile.cjs",
+    "build": "esbuild --bundle index.js --format=cjs --platform=node --target=node14 --outfile=outfile.cjs",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
