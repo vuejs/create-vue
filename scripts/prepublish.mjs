@@ -20,3 +20,9 @@ try {
 
 await $`git tag -m "v${version}" v${version}`
 await $`git push --follow-tags`
+
+const projectRoot = path.resolve(__dirname, '../')
+cd(projectRoot)
+await $`git add playground`
+await $`git commit -m 'chore: update snapshot'`
+await $`git push`
