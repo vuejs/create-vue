@@ -224,7 +224,7 @@ async function init() {
   const {
     projectName,
     packageName = projectName,
-    shouldOverwrite,
+    shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
@@ -278,6 +278,7 @@ async function init() {
     render('config/cypress')
   }
   if (needsCypressCT) {
+    console.log('needsCypressCT', needsCypressCT)
     render('config/cypress-ct')
   }
   if (needsTypeScript) {
