@@ -21,14 +21,7 @@ const config = {
   }
 }
 
-const cypressOverrides = [
-  {
-    files: ['**/__tests__/*.spec.{js,ts,jsx,tsx}', 'cypress/integration/**.spec.{js,ts,jsx,tsx}'],
-    extends: ['plugin:cypress/recommended']
-  }
-]
-
-function configureEslint({ language, styleGuide, needsPrettier, needsCypress }) {
+function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
   switch (`${styleGuide}-${language}`) {
     case 'default-javascript':
       config.extends.push('eslint:recommended')
@@ -48,6 +41,15 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress }) 
   }
 
   if (needsCypress) {
+    const cypressOverrides = [
+      {
+        files: needsCypressCT
+          ? ['**/__tests__/*.spec.{js,ts,jsx,tsx}', 'cypress/integration/**.spec.{js,ts,jsx,tsx}']
+          : ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],
+        extends: ['plugin:cypress/recommended']
+      }
+    ]
+
     addEslintDependency('eslint-plugin-cypress')
     config.overrides = cypressOverrides
   }
@@ -66,14 +68,18 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress }) 
   }
 }
 
-export default function renderEslint(rootDir, { needsTypeScript, needsTests, needsPrettier }) {
+export default function renderEslint(
+  rootDir,
+  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
+) {
   const { dependencies, configuration } = configureEslint({
     language: needsTypeScript ? 'typescript' : 'javascript',
     // we currently don't support other style guides
     styleGuide: 'default',
     needsPrettier,
     // we curently only support Cypress, will add Vitest support later
-    needsCypress: needsTests
+    needsCypress,
+    needsCypressCT
   })
 
   // update package.json
