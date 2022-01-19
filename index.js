@@ -282,7 +282,6 @@ async function init() {
     render('config/cypress')
   }
   if (needsCypressCT) {
-    console.log('needsCypressCT', needsCypressCT)
     render('config/cypress-ct')
   }
   if (needsTypeScript) {
