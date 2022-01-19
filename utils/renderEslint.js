@@ -77,7 +77,6 @@ export default function renderEslint(
     // we currently don't support other style guides
     styleGuide: 'default',
     needsPrettier,
-    // we curently only support Cypress, will add Vitest support later
     needsCypress,
     needsCypressCT
   })
