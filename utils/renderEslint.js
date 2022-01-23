@@ -90,7 +90,8 @@ export default function renderEslint(
         // Note that we reuse .gitignore here to avoid duplicating the configuration
         lint: needsTypeScript
           ? 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore'
-          : 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore'
+          : 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore',
+        format: needsPrettier ? 'prettier --write .' : undefined
       },
       devDependencies: dependencies
     })
