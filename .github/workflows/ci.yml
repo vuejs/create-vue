@@ -22,8 +22,10 @@ jobs:
         include:
           - node-version: 14
             os: ubuntu-latest
-          - node-version: 17
-            os: ubuntu-latest
+          # Node.js 17 support is a known issue in Cypress
+          # Comment it out until <https://github.com/cypress-io/cypress/issues/19600> is resolved
+          # - node-version: 17
+          #   os: ubuntu-latest
     name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
