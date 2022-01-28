@@ -25,4 +25,4 @@ const projectRoot = path.resolve(__dirname, '../')
 cd(projectRoot)
 await $`git add playground`
 await $`git commit -m 'chore: update snapshot'`
-await $`git push`
+await $`git push --follow-tags`
