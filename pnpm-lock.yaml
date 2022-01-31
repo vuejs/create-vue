@@ -5,6 +5,7 @@ importers:
   .:
     specifiers:
       esbuild: ^0.13.15
+      esbuild-plugin-license: ^1.0.4
       husky: ^7.0.4
       kolorist: ^1.5.1
       lint-staged: ^12.2.0
@@ -15,6 +16,7 @@ importers:
       zx: ^4.3.0
     devDependencies:
       esbuild: 0.13.15
+      esbuild-plugin-license: 1.0.4_esbuild@0.13.15
       husky: 7.0.4
       kolorist: 1.5.1
       lint-staged: 12.3.2
@@ -3721,6 +3723,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /esbuild-plugin-license/1.0.4_esbuild@0.13.15:
+    resolution: {integrity: sha512-u4HTZCO69MypH12W0c5wzWRfTdlVhOgQB5Z44A1Gn8NgqWy1B7VB36lT+PQFQ7hdrRTLabGGjmCjvsOUGF4s6Q==}
+    peerDependencies:
+      esbuild: '*'
+    dependencies:
+      esbuild: 0.13.15
+    dev: true
 
   /esbuild-sunos-64/0.13.15:
     resolution: {integrity: sha512-lbivT9Bx3t1iWWrSnGyBP9ODriEvWDRiweAs69vI+miJoeKwHWOComSRukttbuzjZ8r1q0mQJ8Z7yUsDJ3hKdw==}
