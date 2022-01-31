@@ -1,6 +1,4 @@
 /* eslint-env node */
-/// <reference types="node" />
-/// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.ts can be used to load plugins
 //

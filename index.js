@@ -286,8 +286,18 @@ async function init() {
   }
   if (needsTypeScript) {
     render('config/typescript')
+
+    // Render tsconfigs
+    render('tsconfig/base')
+    if (needsCypress) {
+      render('tsconfig/cypress')
+    }
+    if (needsVitest) {
+      render('tsconfig/vitest')
+    }
   }
 
+  // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
   }
@@ -316,13 +326,15 @@ async function init() {
   // If that's not possible, we put `.ts` version alongside the `.js` one in the templates.
   // So after all the templates are rendered, we need to clean up the redundant files.
   // (Currently it's only `cypress/plugin/index.ts`, but we might add more in the future.)
+  // (Or, we might completely get rid of the plugins folder as Cypress 10 supports `cypress.config.ts`)
 
   if (needsTypeScript) {
     // Convert the JavaScript template to the TypeScript
     // Check all the remaining `.js` files:
     //   - If the corresponding TypeScript version already exists, remove the `.js` version.
     //   - Otherwise, rename the `.js` file to `.ts`
-    // rename jsconfig.json to tsconfig.json
+    // Remove `jsconfig.json`, because we already hav tsconfig.json
+    // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
     preOrderDirectoryTraverse(
       root,
       () => {},
@@ -335,7 +347,7 @@ async function init() {
             fs.renameSync(filepath, tsFilePath)
           }
         } else if (path.basename(filepath) === 'jsconfig.json') {
-          fs.renameSync(filepath, filepath.replace(/jsconfig\.json$/, 'tsconfig.json'))
+          fs.unlinkSync(filepath)
         }
       }
     )
