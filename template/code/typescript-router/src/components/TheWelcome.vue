@@ -79,6 +79,6 @@ import SupportIcon from './icons/IconSupport.vue'
 
     As an independent project, Vue relies on community backing for its sustainability. You can help
     us by
-    <a target="_blank" href="https://vuejs.org/support-vuejs/">becoming a sponsor</a>.
+    <a target="_blank" href="https://vuejs.org/sponsor/">becoming a sponsor</a>.
   </WelcomeItem>
 </template>
