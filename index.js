@@ -333,7 +333,7 @@ async function init() {
     // Check all the remaining `.js` files:
     //   - If the corresponding TypeScript version already exists, remove the `.js` version.
     //   - Otherwise, rename the `.js` file to `.ts`
-    // Remove `jsconfig.json`, because we already hav tsconfig.json
+    // Remove `jsconfig.json`, because we already have tsconfig.json
     // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
     preOrderDirectoryTraverse(
       root,
