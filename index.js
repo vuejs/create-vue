@@ -227,7 +227,7 @@ async function init() {
   // so we still have to assign the default values here
   const {
     projectName,
-    packageName = projectName,
+    packageName = projectName || defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
