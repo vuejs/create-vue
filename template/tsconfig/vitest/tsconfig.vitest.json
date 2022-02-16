@@ -1,12 +1,9 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["src/**/__tests__/*"],
+  "extends": "./tsconfig.app.json",
+  "exclude": [],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "lib": [],
     "types": ["node", "jsdom"]
   }
 }
