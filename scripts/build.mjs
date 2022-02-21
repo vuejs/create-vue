@@ -33,7 +33,7 @@ await esbuild.build({
   target: 'node14',
 
   plugins: [
-    esbuildPluginLicense.default({
+    esbuildPluginLicense({
       thirdParty: {
         includePrivate: false,
         output: {
