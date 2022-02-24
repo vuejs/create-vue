@@ -1,27 +1,30 @@
 import fs from 'fs'
 import path from 'path'
 
-import { devDependencies as allEslintDeps } from '../template/eslint/package.json'
 import deepMerge from './deepMerge.js'
 import sortDependencies from './sortDependencies.js'
 
-const dependencies = {}
-function addEslintDependency(name) {
-  dependencies[name] = allEslintDeps[name]
-}
-
-addEslintDependency('eslint')
-addEslintDependency('eslint-plugin-vue')
-
-const config = {
-  root: true,
-  extends: ['plugin:vue/vue3-essential'],
-  env: {
-    'vue/setup-compiler-macros': true
+function configureEslint(
+  src,
+  { language, styleGuide, needsPrettier, needsCypress, needsCypressCT }
+) {
+  const { devDependencies: allEslintDeps } = JSON.parse(path.resolve(src, 'package.json'))
+  const dependencies = {}
+  function addEslintDependency(name) {
+    dependencies[name] = allEslintDeps[name]
   }
-}
 
-function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
+  addEslintDependency('eslint')
+  addEslintDependency('eslint-plugin-vue')
+
+  const config = {
+    root: true,
+    extends: ['plugin:vue/vue3-essential'],
+    env: {
+      'vue/setup-compiler-macros': true
+    }
+  }
+
   switch (`${styleGuide}-${language}`) {
     case 'default-javascript':
       config.extends.push('eslint:recommended')
@@ -69,10 +72,11 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
 }
 
 export default function renderEslint(
-  rootDir,
+  src,
+  dest,
   { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
 ) {
-  const { dependencies, configuration } = configureEslint({
+  const { dependencies, configuration } = configureEslint(src, {
     language: needsTypeScript ? 'typescript' : 'javascript',
     // we currently don't support other style guides
     styleGuide: 'default',
@@ -82,7 +86,7 @@ export default function renderEslint(
   })
 
   // update package.json
-  const packageJsonPath = path.resolve(rootDir, 'package.json')
+  const packageJsonPath = path.resolve(dest, 'package.json')
   const existingPkg = JSON.parse(fs.readFileSync(packageJsonPath))
   const pkg = sortDependencies(
     deepMerge(existingPkg, {
@@ -98,6 +102,6 @@ export default function renderEslint(
   fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
 
   // write to .eslintrc.cjs
-  const eslintrcPath = path.resolve(rootDir, '.eslintrc.cjs')
+  const eslintrcPath = path.resolve(dest, '.eslintrc.cjs')
   fs.writeFileSync(eslintrcPath, configuration)
 }

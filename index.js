@@ -299,7 +299,8 @@ async function init() {
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    const eslintDir = path.resolve(templateRoot, 'eslint')
+    renderEslint(eslintDir, root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
   }
 
   // Render code template.
