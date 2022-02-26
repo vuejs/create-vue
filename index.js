@@ -373,7 +373,7 @@ async function init() {
   // Supported package managers: pnpm > yarn > npm
   // Note: until <https://github.com/pnpm/pnpm/issues/3505> is resolved,
   // it is not possible to tell if the command is called by `pnpm init`.
-  const userAgent = process.env.npm_config_user_agent ?? ''
+  const userAgent = process.env.npm_config_user_agent || ''
   const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm'
 
   // README generation
