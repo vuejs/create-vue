@@ -6,14 +6,26 @@ An easy way to start a Vue project
 
 ## Usage
 
+NPM
 ```sh
 npm init vue@3
 ```
 
+Yarn
+```sh
+yarn create vue@3
+```
+
 Or, if you need to support IE11, you can create a Vue 2 project with:
 
+NPM
 ```sh
 npm init vue@2
 ```
 
-Note that the version number (`@3` or `@2`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
+Yarn
+```sh
+yarn create vue@2
+```
+
+Note that the version number (`@3` or `@2`) MUST NOT be omitted, otherwise `npm`/`yarn` may resolve to a cached and outdated version of the package.
