@@ -71,17 +71,16 @@ async function init() {
   })
 
   // if any of the feature flags is set, we would skip the feature prompts
-  // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
     typeof (
-      argv.default ||
-      argv.ts ||
-      argv.jsx ||
-      argv.router ||
-      argv.pinia ||
-      argv.tests ||
-      argv.vitest ||
-      argv.cypress ||
+      argv.default ??
+      argv.ts ??
+      argv.jsx ??
+      argv.router ??
+      argv.pinia ??
+      argv.tests ??
+      argv.vitest ??
+      argv.cypress ??
       argv.eslint
     ) === 'boolean'
 
@@ -227,7 +226,7 @@ async function init() {
   // so we still have to assign the default values here
   const {
     projectName,
-    packageName = projectName || defaultProjectName,
+    packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
@@ -380,7 +379,7 @@ async function init() {
   fs.writeFileSync(
     path.resolve(root, 'README.md'),
     generateReadme({
-      projectName: result.projectName || defaultProjectName,
+      projectName: result.projectName ?? defaultProjectName,
       packageManager,
       needsTypeScript,
       needsVitest,
