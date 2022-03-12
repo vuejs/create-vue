@@ -87,11 +87,14 @@ ${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
+${getCommand(packageManager, 'test:e2e')}
+\`\`\`
+
+Headless testing:
+
+\`\`\`sh
 ${getCommand(packageManager, 'build')}
-${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
-      packageManager,
-      'test:e2e:ci'
-    )}\` for headless testing
+${getCommand(packageManager, 'test:e2e:ci')}
 \`\`\`
 `
   }
