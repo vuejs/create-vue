@@ -1,8 +1,8 @@
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 
-import deepMerge from './deepMerge.js'
-import sortDependencies from './sortDependencies.js'
+import deepMerge from './deepMerge'
+import sortDependencies from './sortDependencies'
 
 /**
  * Renders a template folder/file to the file system,
@@ -34,8 +34,8 @@ function renderTemplate(src, dest) {
 
   if (filename === 'package.json' && fs.existsSync(dest)) {
     // merge instead of overwriting
-    const existing = JSON.parse(fs.readFileSync(dest))
-    const newPackage = JSON.parse(fs.readFileSync(src))
+    const existing = JSON.parse(fs.readFileSync(dest, 'utf8'))
+    const newPackage = JSON.parse(fs.readFileSync(src, 'utf8'))
     const pkg = sortDependencies(deepMerge(existing, newPackage))
     fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
     return

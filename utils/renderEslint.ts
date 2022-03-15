@@ -1,9 +1,11 @@
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
+
+import type { ESLint, Linter } from 'eslint'
 
 import { devDependencies as allEslintDeps } from '../template/eslint/package.json'
-import deepMerge from './deepMerge.js'
-import sortDependencies from './sortDependencies.js'
+import deepMerge from './deepMerge'
+import sortDependencies from './sortDependencies'
 
 const dependencies = {}
 function addEslintDependency(name) {
@@ -13,7 +15,10 @@ function addEslintDependency(name) {
 addEslintDependency('eslint')
 addEslintDependency('eslint-plugin-vue')
 
-const config = {
+interface ESLintConfig extends Linter.Config {
+  extends: string[]
+}
+const config: ESLintConfig = {
   root: true,
   extends: ['plugin:vue/vue3-essential'],
   env: {
@@ -83,7 +88,7 @@ export default function renderEslint(
 
   // update package.json
   const packageJsonPath = path.resolve(rootDir, 'package.json')
-  const existingPkg = JSON.parse(fs.readFileSync(packageJsonPath))
+  const existingPkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   const pkg = sortDependencies(
     deepMerge(existingPkg, {
       scripts: {
