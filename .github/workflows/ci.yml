@@ -8,7 +8,7 @@ on:
       - CONTRIBUTING.md
   pull_request:
     branches:
-      - main
+      - '**'
 jobs:
   test:
     runs-on: ${{ matrix.os }}
