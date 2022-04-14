@@ -80,7 +80,10 @@ async function init() {
       argv.tests ??
       argv.vitest ??
       argv.cypress ??
-      argv.eslint
+      argv.eslint ??
+      argv['eslint-with-prettier'] ??
+      argv['standard-style'] ??
+      argv['airbnb-style']
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -92,6 +95,8 @@ async function init() {
     projectName?: string
     shouldOverwrite?: boolean
     packageName?: string
+  } = {}
+  let renderFeatures: {
     needsTypeScript?: boolean
     needsJsx?: boolean
     needsRouter?: boolean
@@ -99,6 +104,7 @@ async function init() {
     needsVitest?: boolean
     needsCypress?: boolean
     needsEslint?: boolean
+    eslintStyle?: 'default' | 'standard' | 'airbnb'
     needsPrettier?: boolean
   } = {}
 
@@ -148,78 +154,6 @@ async function init() {
           message: 'Package name:',
           initial: () => toValidPackageName(targetDir),
           validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
-        },
-        {
-          name: 'needsTypeScript',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add TypeScript?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsJsx',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add JSX Support?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsRouter',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vue Router for Single Page Application development?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsPinia',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Pinia for state management?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsVitest',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vitest for Unit Testing?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsCypress',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: (prev, answers) =>
-            answers.needsVitest
-              ? 'Add Cypress for End-to-End testing?'
-              : 'Add Cypress for both Unit and End-to-End testing?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add ESLint for code quality?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsPrettier',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsEslint) {
-              return null
-            }
-            return 'toggle'
-          },
-          message: 'Add Prettier for code formatting?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
         }
       ],
       {
@@ -228,6 +162,94 @@ async function init() {
         }
       }
     )
+    if (!isFeatureFlagsUsed) {
+      renderFeatures = await prompts(
+        [
+          {
+            name: 'needsTypeScript',
+            type: 'toggle',
+            message: 'Add TypeScript?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsJsx',
+            type: 'toggle',
+            message: 'Add JSX Support?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsRouter',
+            type: 'toggle',
+            message: 'Add Vue Router for Single Page Application development?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsPinia',
+            type: 'toggle',
+            message: 'Add Pinia for state management?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsVitest',
+            type: 'toggle',
+            message: 'Add Vitest for Unit Testing?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsCypress',
+            type: 'toggle',
+            message: (prev, answers) =>
+              answers.needsVitest
+                ? 'Add Cypress for End-to-End testing?'
+                : 'Add Cypress for both Unit and End-to-End testing?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'needsEslint',
+            type: 'toggle',
+            message: 'Add ESLint for code quality?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          },
+          {
+            name: 'eslintStyle',
+            type: (prev, values) => (values.needsEslint ? 'select' : null),
+            message: 'Choose a ESLint style',
+            choices: [
+              { title: 'ESLint with error prevention only', value: 'default' },
+              { title: 'ESLint+Standard', value: 'standard' },
+              { title: 'ESLint+Airbnb', value: 'airbnb' }
+            ]
+          },
+          {
+            name: 'needsPrettier',
+            type: (prev, values) => (values.needsEslint ? 'toggle' : null),
+            message: 'Add Prettier for code formatting?',
+            initial: false,
+            active: 'Yes',
+            inactive: 'No'
+          }
+        ],
+        {
+          onCancel: () => {
+            throw new Error(red('✖') + ' Operation cancelled')
+          }
+        }
+      )
+    }
   } catch (cancelled) {
     console.log(cancelled.message)
     process.exit(1)
@@ -238,7 +260,9 @@ async function init() {
   const {
     projectName,
     packageName = projectName ?? defaultProjectName,
-    shouldOverwrite = argv.force,
+    shouldOverwrite = argv.force
+  } = result
+  const {
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
@@ -246,8 +270,19 @@ async function init() {
     needsCypress = argv.cypress || argv.tests,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
+    eslintStyle = () => {
+      if (argv.eslint) {
+        if (argv['airbnb-style']) {
+          return 'airbnb'
+        }
+        if (argv['standard-style']) {
+          return 'standard'
+        }
+        return 'default'
+      }
+    },
     needsPrettier = argv['eslint-with-prettier']
-  } = result
+  } = renderFeatures
   const needsCypressCT = needsCypress && !needsVitest
   const root = path.join(cwd, targetDir)
 
@@ -309,7 +344,13 @@ async function init() {
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    renderEslint(root, {
+      needsTypeScript,
+      needsCypress,
+      needsCypressCT,
+      needsPrettier,
+      eslintStyle
+    })
   }
 
   // Render code template.

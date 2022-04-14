@@ -27,18 +27,27 @@ const config: ESLintConfig = {
 }
 
 function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
-  switch (`${styleGuide}-${language}`) {
-    case 'default-javascript':
+  switch (`${styleGuide}`) {
+    case 'default':
       config.extends.push('eslint:recommended')
       break
-    case 'default-typescript':
-      addEslintDependency('@vue/eslint-config-typescript')
-      config.extends.push('eslint:recommended')
-      config.extends.push('@vue/eslint-config-typescript/recommended')
+    case 'standard':
+      config.extends.push('@vue/standard')
+      addEslintDependency('@vue/eslint-config-standard')
+      addEslintDependency('eslint-plugin-import')
+      addEslintDependency('eslint-plugin-node')
+      addEslintDependency('eslint-plugin-promise')
       break
-    // TODO: airbnb and standard
+    case 'airbnb':
+      config.extends.push('@vue/airbnb')
+      addEslintDependency('eslint-plugin-vuejs-accessibility')
+      addEslintDependency('eslint-plugin-import')
+      break
   }
-
+  if (language == 'typescript') {
+    config.extends.push('@vue/eslint-config-typescript/recommended')
+    addEslintDependency('@vue/eslint-config-typescript')
+  }
   if (needsPrettier) {
     addEslintDependency('prettier')
     addEslintDependency('@vue/eslint-config-prettier')
@@ -75,12 +84,12 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
+  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier, eslintStyle }
 ) {
   const { dependencies, configuration } = configureEslint({
     language: needsTypeScript ? 'typescript' : 'javascript',
     // we currently don't support other style guides
-    styleGuide: 'default',
+    styleGuide: eslintStyle,
     needsPrettier,
     needsCypress,
     needsCypressCT
