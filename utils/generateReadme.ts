@@ -21,6 +21,7 @@ export default function generateReadme({
   needsTypeScript,
   needsCypress,
   needsCypressCT,
+  needsPlaywright,
   needsVitest,
   needsEslint
 }) {
@@ -90,6 +91,26 @@ ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
       packageManager,
       'test:e2e:ci'
     )}\` for headless testing
+\`\`\`
+`
+  }
+
+  if (needsPlaywright) {
+    npmScriptsDescriptions += `
+### Run End-to-End Tests with [Playwright](https://playwright.dev)
+
+\`\`\`sh
+# Install browsers for the first run
+npx playwright install
+
+# Runs the end-to-end tests.
+${getCommand(packageManager, 'test:e2e')}
+# Runs the tests only on Desktop Chrome.
+${getCommand(packageManager, 'test:e2e -- --project="Desktop Chrome"')}
+# Runs the tests of a specific file.
+${getCommand(packageManager, 'test:e2e -- tests/example.spec.ts')}
+# Runs the tests in debug mode.
+${getCommand(packageManager, 'test:e2e -- --debug')}
 \`\`\`
 `
   }
