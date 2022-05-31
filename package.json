@@ -52,5 +52,14 @@
     "*.{js,ts,vue,json}": [
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "zx": {
+        "engines": {
+          "node": ">= 14.16.0"
+        }
+      }
+    }
   }
 }
