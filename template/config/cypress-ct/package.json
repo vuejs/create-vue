@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test:unit": "cypress open",
+    "test:unit": "cypress open --component",
     "test:unit:ci": "cypress run --component --quiet --reporter spec"
   },
   "dependencies": {
