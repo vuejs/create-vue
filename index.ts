@@ -302,6 +302,9 @@ async function init() {
     if (needsCypress) {
       render('tsconfig/cypress')
     }
+    if (needsCypressCT) {
+      render('tsconfig/cypress-ct')
+    }
     if (needsVitest) {
       render('tsconfig/vitest')
     }
