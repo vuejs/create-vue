@@ -55,7 +55,10 @@ const bin = path.posix.relative('../playground/', '../outfile.cjs')
 cd(playgroundDir)
 for (const flags of flagCombinations) {
   const projectName = flags.join('-')
-  console.log(`Creating project ${projectName}`)
+  
+  console.log(`Removing previously generated project ${projectName}`)
+  await $`rm -rf ${projectName}`
 
+  console.log(`Creating project ${projectName}`)
   await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
 }
