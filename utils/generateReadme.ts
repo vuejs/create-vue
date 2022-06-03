@@ -69,7 +69,7 @@ ${getCommand(packageManager, 'test:unit')}
 
   if (needsCypressCT) {
     npmScriptsDescriptions += `
-### Run Unit Tests with [Cypress Component Testing](https://docs.cypress.io/guides/component-testing/introduction)
+### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
 
 \`\`\`sh
 ${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
