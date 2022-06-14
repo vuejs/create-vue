@@ -20,10 +20,7 @@ interface ESLintConfig extends Linter.Config {
 }
 const config: ESLintConfig = {
   root: true,
-  extends: ['plugin:vue/vue3-essential'],
-  env: {
-    'vue/setup-compiler-macros': true
-  }
+  extends: ['plugin:vue/vue3-essential']
 }
 
 function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
