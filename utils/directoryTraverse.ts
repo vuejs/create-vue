@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 
 export function preOrderDirectoryTraverse(dir, dirCallback, fileCallback) {
   for (const filename of fs.readdirSync(dir)) {

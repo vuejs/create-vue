@@ -1,19 +1,18 @@
 #!/usr/bin/env node
-// @ts-check
 
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 
 import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
-import renderTemplate from './utils/renderTemplate.js'
-import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
-import generateReadme from './utils/generateReadme.js'
-import getCommand from './utils/getCommand.js'
-import renderEslint from './utils/renderEslint.js'
-import banner from './utils/banner.js'
+import renderTemplate from './utils/renderTemplate'
+import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
+import generateReadme from './utils/generateReadme'
+import getCommand from './utils/getCommand'
+import renderEslint from './utils/renderEslint'
+import banner from './utils/banner'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -71,17 +70,16 @@ async function init() {
   })
 
   // if any of the feature flags is set, we would skip the feature prompts
-  // use `??` instead of `||` once we drop Node.js 12 support
   const isFeatureFlagsUsed =
     typeof (
-      argv.default ||
-      argv.ts ||
-      argv.jsx ||
-      argv.router ||
-      argv.pinia ||
-      argv.tests ||
-      argv.vitest ||
-      argv.cypress ||
+      argv.default ??
+      argv.ts ??
+      argv.jsx ??
+      argv.router ??
+      argv.pinia ??
+      argv.tests ??
+      argv.vitest ??
+      argv.cypress ??
       argv.eslint
     ) === 'boolean'
 
@@ -90,7 +88,19 @@ async function init() {
 
   const forceOverwrite = argv.force
 
-  let result = {}
+  let result: {
+    projectName?: string
+    shouldOverwrite?: boolean
+    packageName?: string
+    needsTypeScript?: boolean
+    needsJsx?: boolean
+    needsRouter?: boolean
+    needsPinia?: boolean
+    needsVitest?: boolean
+    needsCypress?: boolean
+    needsEslint?: boolean
+    needsPrettier?: boolean
+  } = {}
 
   try {
     // Prompts:
@@ -125,7 +135,7 @@ async function init() {
         },
         {
           name: 'overwriteChecker',
-          type: (prev, values = {}) => {
+          type: (prev, values) => {
             if (values.shouldOverwrite === false) {
               throw new Error(red('✖') + ' Operation cancelled')
             }
@@ -200,7 +210,7 @@ async function init() {
         },
         {
           name: 'needsPrettier',
-          type: (prev, values = {}) => {
+          type: (prev, values) => {
             if (isFeatureFlagsUsed || !values.needsEslint) {
               return null
             }
@@ -227,7 +237,7 @@ async function init() {
   // so we still have to assign the default values here
   const {
     projectName,
-    packageName = projectName || defaultProjectName,
+    packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
     needsTypeScript = argv.typescript,
@@ -291,6 +301,9 @@ async function init() {
     render('tsconfig/base')
     if (needsCypress) {
       render('tsconfig/cypress')
+    }
+    if (needsCypressCT) {
+      render('tsconfig/cypress-ct')
     }
     if (needsVitest) {
       render('tsconfig/vitest')
@@ -380,7 +393,7 @@ async function init() {
   fs.writeFileSync(
     path.resolve(root, 'README.md'),
     generateReadme({
-      projectName: result.projectName || defaultProjectName,
+      projectName: result.projectName ?? defaultProjectName,
       packageManager,
       needsTypeScript,
       needsVitest,
