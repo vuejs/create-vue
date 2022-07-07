@@ -408,7 +408,7 @@ async function init() {
     console.log(`  ${bold(green(`cd ${path.relative(cwd, root)}`))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
-  if (needsPrettier) {
+  if (needsEslint) {
     console.log(`  ${bold(green(getCommand(packageManager, 'lint')))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
