@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import type { ESLint, Linter } from 'eslint'
 
-import { devDependencies as allEslintDeps } from '../template/eslint/package.json'
+import { devDependencies as allEslintDeps } from '../template/eslint/package.json' assert { type: 'json' }
 import deepMerge from './deepMerge'
 import sortDependencies from './sortDependencies'
 
