@@ -3,6 +3,8 @@ import { createPinia, PiniaVuePlugin } from 'pinia'
 
 import App from './App.vue'
 
+import './assets/main.css'
+
 Vue.use(PiniaVuePlugin)
 
 new Vue({
