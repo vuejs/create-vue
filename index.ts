@@ -27,8 +27,20 @@ function toValidPackageName(projectName) {
     .replace(/[^a-z0-9-~]+/g, '-')
 }
 
-function canSafelyOverwrite(dir) {
-  return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0
+function canSkipEmptying(dir: string) {
+  if (!fs.existsSync(dir)) {
+    return true
+  }
+
+  const files = fs.readdirSync(dir)
+  if (files.length === 0) {
+    return true
+  }
+  if (files.length === 1 && files[0] === '.git') {
+    return true
+  }
+
+  return false
 }
 
 function emptyDir(dir) {
@@ -125,7 +137,7 @@ async function init() {
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
           message: () => {
             const dirForPrompt =
               targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
