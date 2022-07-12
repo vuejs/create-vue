@@ -20,7 +20,7 @@ import './commands'
 // require('./commands')
 
 // Import global styles
-import '@/main.css'
+import '@/assets/main.css'
 
 import { mount } from 'cypress/vue'
 
