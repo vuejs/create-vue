@@ -34,1266 +34,1266 @@ importers:
 
   playground/cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       cypress: ^10.3.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/default:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/jsx:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/jsx-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       cypress: ^10.3.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/jsx-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
-      pinia: ^2.0.14
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/jsx-pinia-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       cypress: ^10.3.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/jsx-pinia-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      pinia: ^2.0.14
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-pinia-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-pinia-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/jsx-router-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       cypress: ^10.3.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/jsx-router-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
-      pinia: ^2.0.14
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/jsx-router-pinia-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       cypress: ^10.3.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/jsx-router-pinia-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      pinia: ^2.0.14
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router-pinia-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router-pinia-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-router-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/jsx-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      pinia: ^2.0.14
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      pinia: ^2.0.16
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/pinia-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       cypress: ^10.3.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/pinia-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      pinia: ^2.0.14
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/pinia-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/pinia-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/router-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       cypress: ^10.3.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/router-pinia:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      pinia: ^2.0.14
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      pinia: ^2.0.16
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   playground/router-pinia-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       cypress: ^10.3.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       cypress: 10.3.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
+      vite: 3.0.1
 
   playground/router-pinia-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      pinia: ^2.0.14
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      pinia: ^2.0.16
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router-pinia-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router-pinia-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router-vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router-vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/router-with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/typescript:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-pinia:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-pinia-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-pinia-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-pinia-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-pinia-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-pinia:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-pinia-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-pinia-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-pinia-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-pinia-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1301,36 +1301,36 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-router-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1338,67 +1338,67 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1406,34 +1406,34 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-jsx-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
+      '@vitejs/plugin-vue-jsx': ^2.0.0
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1441,426 +1441,426 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-pinia:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-pinia-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-pinia-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-pinia-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-pinia-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-pinia:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-pinia-cypress:
     specifiers:
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
+      vite: ^3.0.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-pinia-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-pinia-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-pinia-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
-      pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
+      pinia: 2.0.16_j6bzmzd4ujpabbp5objtwxyjp4
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1868,34 +1868,34 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-router-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1903,63 +1903,63 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
       vue-router: ^4.1.2
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
       vue-router: 4.1.2_vue@3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-vitest:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       jsdom: ^20.0.0
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-vitest-cypress:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -1967,32 +1967,32 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/typescript-with-tests:
     specifiers:
       '@types/jsdom': ^16.2.14
-      '@types/node': ^16.11.43
-      '@vitejs/plugin-vue': ^2.3.3
+      '@types/node': ^16.11.45
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       '@vue/tsconfig': ^0.1.3
       cypress: ^10.3.0
@@ -2000,96 +2000,96 @@ importers:
       npm-run-all: ^4.1.5
       start-server-and-test: ^1.14.0
       typescript: ~4.7.4
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@types/jsdom': 16.2.14
-      '@types/node': 16.11.43
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@types/node': 16.11.45
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
-      '@vue/tsconfig': 0.1.3_@types+node@16.11.43
+      '@vue/tsconfig': 0.1.3_@types+node@16.11.45
       cypress: 10.3.0
       jsdom: 20.0.0
       npm-run-all: 4.1.5
       start-server-and-test: 1.14.0
       typescript: 4.7.4
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   playground/vitest:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/vitest-cypress:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   playground/with-tests:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
+      '@vitejs/plugin-vue': ^3.0.1
       '@vue/test-utils': ^2.0.2
       cypress: ^10.3.0
       jsdom: ^20.0.0
       start-server-and-test: ^1.14.0
-      vite: ^2.9.14
-      vitest: ^0.18.0
+      vite: ^3.0.1
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
       '@vue/test-utils': 2.0.2_vue@3.2.37
       cypress: 10.3.0
       jsdom: 20.0.0
       start-server-and-test: 1.14.0
-      vite: 2.9.14
-      vitest: 0.18.0_jsdom@20.0.0
+      vite: 3.0.1
+      vitest: 0.18.1_jsdom@20.0.0
 
   template/base:
     specifiers:
-      '@vitejs/plugin-vue': ^2.3.3
-      vite: ^2.9.14
+      '@vitejs/plugin-vue': ^3.0.1
+      vite: ^3.0.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
-      '@vitejs/plugin-vue': 2.3.3_vite@2.9.14+vue@3.2.37
-      vite: 2.9.14
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
 
   template/config/cypress:
     specifiers:
@@ -2110,16 +2110,20 @@ importers:
 
   template/config/jsx:
     specifiers:
-      '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vitejs/plugin-vue-jsx': ^2.0.0
+      vite: ^3.0.1
+      vue: ^3.2.37
     devDependencies:
-      '@vitejs/plugin-vue-jsx': 1.3.10
+      '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.1+vue@3.2.37
+      vite: 3.0.1
+      vue: 3.2.37
 
   template/config/pinia:
     specifiers:
-      pinia: ^2.0.14
+      pinia: ^2.0.16
       vue: ^3.2.37
     dependencies:
-      pinia: 2.0.14_vue@3.2.37
+      pinia: 2.0.16_vue@3.2.37
       vue: 3.2.37
 
   template/config/router:
@@ -2132,28 +2136,28 @@ importers:
 
   template/config/typescript:
     specifiers:
-      '@types/node': ^16.11.43
+      '@types/node': ^16.11.45
       npm-run-all: ^4.1.5
       typescript: ~4.7.4
-      vue-tsc: ^0.38.4
+      vue-tsc: ^0.38.8
     devDependencies:
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
       npm-run-all: 4.1.5
       typescript: 4.7.4
-      vue-tsc: 0.38.4_typescript@4.7.4
+      vue-tsc: 0.38.8_typescript@4.7.4
 
   template/config/vitest:
     specifiers:
       '@vue/test-utils': ^2.0.2
       jsdom: ^20.0.0
-      vitest: ^0.18.0
+      vitest: ^0.18.1
       vue: ^3.2.37
     dependencies:
       vue: 3.2.37
     devDependencies:
       '@vue/test-utils': 2.0.2_vue@3.2.37
       jsdom: 20.0.0
-      vitest: 0.18.0_jsdom@20.0.0
+      vitest: 0.18.1_jsdom@20.0.0
 
   template/tsconfig/base:
     specifiers:
@@ -2237,7 +2241,7 @@ packages:
       '@babel/compat-data': 7.18.8
       '@babel/core': 7.18.6
       '@babel/helper-validator-option': 7.18.6
-      browserslist: 4.21.1
+      browserslist: 4.21.2
       semver: 6.3.0
     dev: true
 
@@ -2570,14 +2574,6 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@rollup/pluginutils/4.2.1:
-    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
-    engines: {node: '>= 8.0.0'}
-    dependencies:
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-    dev: true
-
   /@sideway/address/4.1.4:
     resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
     dependencies:
@@ -2610,24 +2606,24 @@ packages:
   /@types/eslint/8.4.5:
     resolution: {integrity: sha512-dhsC09y1gpJWnK+Ff4SGvCuSnk9DaU0BJZSzOwa6GVSg65XtTugLBITDAAzRU5duGBoXBHpdR/9jHGxJjNflJQ==}
     dependencies:
-      '@types/estree': 0.0.52
+      '@types/estree': 1.0.0
       '@types/json-schema': 7.0.11
     dev: true
 
-  /@types/estree/0.0.52:
-    resolution: {integrity: sha512-BZWrtCU0bMVAIliIV+HJO1f1PR41M7NKjfxrFJwwhKI1KwhwOxYw1SXg9ao+CIMt774nFuGiG6eU+udtbEI9oQ==}
+  /@types/estree/1.0.0:
+    resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
   /@types/fs-extra/9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
     dev: true
 
   /@types/jsdom/16.2.14:
     resolution: {integrity: sha512-6BAy1xXEmMuHeAJ4Fv4yXKwBDTGTOseExKE3OaHiNycdHdZw59KfYzrt0DkDluvwmik1HRt6QS7bImxUmpSy+w==}
     dependencies:
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
       '@types/parse5': 6.0.3
       '@types/tough-cookie': 4.0.2
     dev: true
@@ -2643,20 +2639,20 @@ packages:
   /@types/node-fetch/2.6.2:
     resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
     dependencies:
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
       form-data: 3.0.1
     dev: true
 
-  /@types/node/14.18.21:
-    resolution: {integrity: sha512-x5W9s+8P4XteaxT/jKF0PSb7XEvo5VmqEWgsMlyeY4ZlLK8I6aH6g5TPPyDlLAep+GYf4kefb7HFyc7PAO3m+Q==}
+  /@types/node/14.18.22:
+    resolution: {integrity: sha512-qzaYbXVzin6EPjghf/hTdIbnVW1ErMx8rPzwRNJhlbyJhu2SyqlvjGOY/tbUt6VFyzg56lROcOeSQRInpt63Yw==}
     dev: true
 
-  /@types/node/16.11.43:
-    resolution: {integrity: sha512-GqWykok+3uocgfAJM8imbozrqLnPyTrpFlrryURQlw1EesPUCx5XxTiucWDSFF9/NUEXDuD4bnvHm8xfVGWTpQ==}
+  /@types/node/16.11.45:
+    resolution: {integrity: sha512-3rKg/L5x0rofKuuUt5zlXzOnKyIHXmIu5R8A0TuNDMF2062/AOIDBciFIjToLEJ/9F9DzkHNot+BpNsMI1OLdQ==}
     dev: true
 
-  /@types/node/18.0.3:
-    resolution: {integrity: sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==}
+  /@types/node/18.0.6:
+    resolution: {integrity: sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==}
     dev: true
 
   /@types/parse5/6.0.3:
@@ -2666,7 +2662,7 @@ packages:
   /@types/prompts/2.0.14:
     resolution: {integrity: sha512-HZBd99fKxRWpYCErtm2/yxUZv6/PBI9J7N4TNFffl5JbrYMHBwF25DjQGTW3b3jmXq+9P6/8fCIb2ee57BFfYA==}
     dependencies:
-      '@types/node': 18.0.3
+      '@types/node': 18.0.6
     dev: true
 
   /@types/sinonjs__fake-timers/8.1.1:
@@ -2685,61 +2681,64 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 14.18.21
+      '@types/node': 14.18.22
     dev: true
     optional: true
 
-  /@vitejs/plugin-vue-jsx/1.3.10:
-    resolution: {integrity: sha512-Cf5zznh4yNMiEMBfTOztaDVDmK1XXfgxClzOSUVUc8WAmHzogrCUeM8B05ABzuGtg0D1amfng+mUmSIOFGP3Pw==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue-jsx/2.0.0_vite@3.0.1+vue@3.2.37:
+    resolution: {integrity: sha512-WF9ApZ/ivyyW3volQfu0Td0KNPhcccYEaRNzNY1NxRLVJQLSX0nFqquv3e2g7MF74p1XZK4bGtDL2y5i5O5+1A==}
+    engines: {node: '>=14.18.0'}
+    peerDependencies:
+      vite: ^3.0.0
+      vue: ^3.0.0
     dependencies:
       '@babel/core': 7.18.6
       '@babel/plugin-syntax-import-meta': 7.10.4_@babel+core@7.18.6
       '@babel/plugin-transform-typescript': 7.18.8_@babel+core@7.18.6
-      '@rollup/pluginutils': 4.2.1
       '@vue/babel-plugin-jsx': 1.1.1_@babel+core@7.18.6
-      hash-sum: 2.0.0
+      vite: 3.0.1
+      vue: 3.2.37
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-vue/2.3.3_vite@2.9.14+vue@3.2.37:
-    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue/3.0.1_vite@3.0.1+vue@3.2.37:
+    resolution: {integrity: sha512-Ll9JgxG7ONIz/XZv3dssfoMUDu9qAnlJ+km+pBA0teYSXzwPCIzS/e1bmwNYl5dcQGs677D21amgfYAnzMl17A==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 2.9.14
+      vite: 3.0.1
       vue: 3.2.37
     dev: true
 
-  /@volar/code-gen/0.38.4:
-    resolution: {integrity: sha512-k21QvSMFpqqjNfNd140DrpzjO6JtQa/4HUI+XKbWzFl6tHcRUNMDuYCuFaYeneJhVR+9h+Imvbp9qThEtKJ4VQ==}
+  /@volar/code-gen/0.38.8:
+    resolution: {integrity: sha512-e37jd+JwNjBpWiBblsdmYMbJ9bELiuj2yZrsXv1IVKpYNSfvS92ZiYjJqVXHUwpzNeZjFG0RCd5nTpbiebwANw==}
     dependencies:
-      '@volar/source-map': 0.38.4
+      '@volar/source-map': 0.38.8
     dev: true
 
-  /@volar/source-map/0.38.4:
-    resolution: {integrity: sha512-qQdvIhXHw6oku40HV7w1LfbjtdTmym+O5UlR9y6fpgrWOny9W2SpyyDTApM5I3iL0AL6DsBj9WyQagcnVtd8rA==}
+  /@volar/source-map/0.38.8:
+    resolution: {integrity: sha512-JZvpjW/z2U3wq5wvwcTounPrRAZuSl4hlVKr3y7y72bKr++6W05OnX7fl/ddw39G/wLHdI2ag5+4JWsSd/EYhg==}
     dev: true
 
-  /@volar/vue-code-gen/0.38.4:
-    resolution: {integrity: sha512-MtWExJXGIILcRuu9VIHPhvVY9xBxpa0ym+iL1OJvv46Bp8PF69WD6JdZGTD3rZPwxrLmB32W4xvo5xN4F+ba6A==}
+  /@volar/vue-code-gen/0.38.8:
+    resolution: {integrity: sha512-iQVNmIu1TqnqTko+l9yeylmZipZ8zNH20XZAK9+48hkv2fEQnnJn5AI2W9Zb2M5DkGMpbYiJk9Fq1vm51YY1+g==}
     dependencies:
-      '@volar/code-gen': 0.38.4
-      '@volar/source-map': 0.38.4
+      '@volar/code-gen': 0.38.8
+      '@volar/source-map': 0.38.8
       '@vue/compiler-core': 3.2.37
       '@vue/compiler-dom': 3.2.37
       '@vue/shared': 3.2.37
     dev: true
 
-  /@volar/vue-typescript/0.38.4:
-    resolution: {integrity: sha512-o9fvHyaSZt3rijBxVZAbQWsHy4dgx78tfD5jiDHZeBKErMPVfaX0a0lMzJRThP/gbdh6zz7Ks4ZwCxTlYIx0Ig==}
+  /@volar/vue-typescript/0.38.8:
+    resolution: {integrity: sha512-7WeFt5piz9I6FKw2cQQCWm+75MxS6xCOGm300iu+hJORlroN2dwWbwj97pQnDGbjQbftCRplUYf0GqmhcOsanQ==}
     dependencies:
-      '@volar/code-gen': 0.38.4
-      '@volar/source-map': 0.38.4
-      '@volar/vue-code-gen': 0.38.4
+      '@volar/code-gen': 0.38.8
+      '@volar/source-map': 0.38.8
+      '@volar/vue-code-gen': 0.38.8
       '@vue/compiler-sfc': 3.2.37
       '@vue/reactivity': 3.2.37
     dev: true
@@ -2799,8 +2798,8 @@ packages:
       '@vue/compiler-dom': 3.2.37
       '@vue/shared': 3.2.37
 
-  /@vue/devtools-api/6.2.0:
-    resolution: {integrity: sha512-pF1G4wky+hkifDiZSWn8xfuLOJI1ZXtuambpBEYaf7Xaf6zC/pM29rvAGpd3qaGXnr4BAXU1Pxz/VfvBGwexGA==}
+  /@vue/devtools-api/6.2.1:
+    resolution: {integrity: sha512-OEgAMeQXvCoJ+1x8WyQuVZzFo0wcyCmUR3baRVLmKBo1LmYZWMlRiXlux5jd0fqVJu6PfDbOrZItVqUEzLobeQ==}
     dev: false
 
   /@vue/reactivity-transform/3.2.37:
@@ -2859,7 +2858,7 @@ packages:
         optional: true
     dev: true
 
-  /@vue/tsconfig/0.1.3_@types+node@16.11.43:
+  /@vue/tsconfig/0.1.3_@types+node@16.11.45:
     resolution: {integrity: sha512-kQVsh8yyWPvHpb8gIc9l/HIDiiVUy1amynLNpCy8p+FoCiZXCo6fQos5/097MmnNZc9AtseDsCrfkhqCrJ8Olg==}
     peerDependencies:
       '@types/node': '*'
@@ -2867,7 +2866,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
     dev: true
 
   /abab/2.0.6:
@@ -3054,15 +3053,15 @@ packages:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
     dev: true
 
-  /browserslist/4.21.1:
-    resolution: {integrity: sha512-Nq8MFCSrnJXSc88yliwlzQe3qNe3VntIjhsArW9IJOEPSHNx23FalwApUVbzAWABLhYJJ7y8AynWI/XM8OdfjQ==}
+  /browserslist/4.21.2:
+    resolution: {integrity: sha512-MonuOgAtUB46uP5CezYbRaYKBNt2LxP0yX+Pmj4LkcDFGkn9Cbpi83d9sCjwQDErXsIJSzY5oKGDbgOlF/LPAA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001364
-      electron-to-chromium: 1.4.185
+      caniuse-lite: 1.0.30001367
+      electron-to-chromium: 1.4.192
       node-releases: 2.0.6
-      update-browserslist-db: 1.0.4_browserslist@4.21.1
+      update-browserslist-db: 1.0.4_browserslist@4.21.2
     dev: true
 
   /buffer-crc32/0.2.13:
@@ -3093,8 +3092,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001364:
-    resolution: {integrity: sha512-9O0xzV3wVyX0SlegIQ6knz+okhBB5pE0PC40MNdwcipjwpxoUEHL24uJ+gG42cgklPjfO5ZjZPme9FTSN3QT2Q==}
+  /caniuse-lite/1.0.30001367:
+    resolution: {integrity: sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==}
     dev: true
 
   /caseless/0.12.0:
@@ -3218,8 +3217,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /commander/9.3.0:
-    resolution: {integrity: sha512-hv95iU5uXPbK83mjrJKuZyFM/LBAoCV/XhVGkS5Je6tl7sxr6A0ITMw5WoRV46/UaJ46Nllm3Xt7IaJhXTIkzw==}
+  /commander/9.4.0:
+    resolution: {integrity: sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw==}
     engines: {node: ^12.20.0 || >=14}
     dev: true
 
@@ -3288,7 +3287,7 @@ packages:
     dependencies:
       '@cypress/request': 2.88.10
       '@cypress/xvfb': 1.2.4_supports-color@8.1.1
-      '@types/node': 14.18.21
+      '@types/node': 14.18.22
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.3
       arch: 2.2.0
@@ -3456,8 +3455,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /electron-to-chromium/1.4.185:
-    resolution: {integrity: sha512-9kV/isoOGpKkBt04yYNaSWIBn3187Q5VZRtoReq8oz5NY/A4XmU6cAoqgQlDp7kKJCZMRjWZ8nsQyxfpFHvfyw==}
+  /electron-to-chromium/1.4.192:
+    resolution: {integrity: sha512-8nCXyIQY9An88NXAp+PuPy5h3/w5ZY7Iu2lag65Q0XREprcat5F8gKhoHsBUnQcFuCRnmevpR8yEBYRU3d2HDw==}
     dev: true
 
   /emoji-regex/8.0.0:
@@ -4150,10 +4149,6 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /hash-sum/2.0.0:
-    resolution: {integrity: sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==}
-    dev: true
-
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
@@ -4479,7 +4474,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.8.0
+      ws: 8.8.1
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -4563,7 +4558,7 @@ packages:
     dependencies:
       cli-truncate: 3.1.0
       colorette: 2.0.19
-      commander: 9.3.0
+      commander: 9.4.0
       debug: 4.3.4
       execa: 6.1.0
       lilconfig: 2.0.5
@@ -4594,7 +4589,7 @@ packages:
       log-update: 4.0.0
       p-map: 4.0.0
       rfdc: 1.3.0
-      rxjs: 7.5.5
+      rxjs: 7.5.6
       through: 2.3.8
       wrap-ansi: 7.0.0
     dev: true
@@ -4613,7 +4608,7 @@ packages:
       log-update: 4.0.0
       p-map: 4.0.0
       rfdc: 1.3.0
-      rxjs: 7.5.5
+      rxjs: 7.5.6
       through: 2.3.8
       wrap-ansi: 7.0.0
     dev: true
@@ -4628,8 +4623,8 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /local-pkg/0.4.1:
-    resolution: {integrity: sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw==}
+  /local-pkg/0.4.2:
+    resolution: {integrity: sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg==}
     engines: {node: '>=14'}
     dev: true
 
@@ -4976,8 +4971,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinia/2.0.14_j6bzmzd4ujpabbp5objtwxyjp4:
-    resolution: {integrity: sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA==}
+  /pinia/2.0.16_j6bzmzd4ujpabbp5objtwxyjp4:
+    resolution: {integrity: sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
@@ -4988,14 +4983,14 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@vue/devtools-api': 6.2.0
+      '@vue/devtools-api': 6.2.1
       typescript: 4.7.4
       vue: 3.2.37
-      vue-demi: 0.13.2_vue@3.2.37
+      vue-demi: 0.13.5_vue@3.2.37
     dev: false
 
-  /pinia/2.0.14_vue@3.2.37:
-    resolution: {integrity: sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA==}
+  /pinia/2.0.16_vue@3.2.37:
+    resolution: {integrity: sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
@@ -5006,9 +5001,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@vue/devtools-api': 6.2.0
+      '@vue/devtools-api': 6.2.1
       vue: 3.2.37
-      vue-demi: 0.13.2_vue@3.2.37
+      vue-demi: 0.13.5_vue@3.2.37
     dev: false
 
   /postcss/8.4.14:
@@ -5137,8 +5132,8 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup/2.76.0:
-    resolution: {integrity: sha512-9jwRIEY1jOzKLj3nsY/yot41r19ITdQrhs+q3ggNWhr9TQgduHqANvPpS32RNpzGklJu3G1AJfvlZLi/6wFgWA==}
+  /rollup/2.77.0:
+    resolution: {integrity: sha512-vL8xjY4yOQEw79DvyXLijhnhh+R/O9zpF/LEgkCebZFtb6ELeN9H3/2T0r8+mp+fFTBHZ5qGpOpW2ela2zRt3g==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -5151,8 +5146,8 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /rxjs/7.5.5:
-    resolution: {integrity: sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==}
+  /rxjs/7.5.6:
+    resolution: {integrity: sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==}
     dependencies:
       tslib: 2.4.0
     dev: true
@@ -5465,13 +5460,13 @@ packages:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
-  /tinypool/0.2.2:
-    resolution: {integrity: sha512-tp4n5OARNL3v8ntdJUyo5NsDfwvUtu8isB43USjrsQxQrADDKY6UGBkmFaw/2vNmEt8S/uSm2U5FhkiK1eAFGw==}
+  /tinypool/0.2.4:
+    resolution: {integrity: sha512-Vs3rhkUH6Qq1t5bqtb816oT+HeJTXfwt2cbPH17sWHIYKTotQIFPk3tf2fgqRrVyMDVOc1EnPgzIxfIulXVzwQ==}
     engines: {node: '>=14.0.0'}
     dev: true
 
-  /tinyspy/0.3.3:
-    resolution: {integrity: sha512-gRiUR8fuhUf0W9lzojPf1N1euJYA30ISebSfgca8z76FOvXtVXqd5ojEIaKLWbDQhAaC3ibxZIjqbyi4ybjcTw==}
+  /tinyspy/1.0.0:
+    resolution: {integrity: sha512-FI5B2QdODQYDRjfuLF+OrJ8bjWRMCXokQPcwKm0W3IzcbUmBNv536cQc7eXGoAuXphZwgx1DFbqImwzz08Fnhw==}
     engines: {node: '>=14.0.0'}
     dev: true
 
@@ -5581,13 +5576,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /update-browserslist-db/1.0.4_browserslist@4.21.1:
+  /update-browserslist-db/1.0.4_browserslist@4.21.2:
     resolution: {integrity: sha512-jnmO2BEGUjsMOe/Fg9u0oczOe/ppIDZPebzccl1yDWGLFP16Pa1/RM5wEoKYPG2zstNcDuAStejyxsOuKINdGA==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: 4.21.1
+      browserslist: 4.21.2
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
@@ -5613,14 +5608,15 @@ packages:
       extsprintf: 1.3.0
     dev: true
 
-  /vite/2.9.14:
-    resolution: {integrity: sha512-P/UCjSpSMcE54r4mPak55hWAZPlyfS369svib/gpmz8/01L822lMPOJ/RYW6tLCe1RPvMvOsJ17erf55bKp4Hw==}
-    engines: {node: '>=12.2.0'}
+  /vite/3.0.1:
+    resolution: {integrity: sha512-nefKSglkoEsDpYUkBuT2++L04ktcP8fz8dxLtmZdDdMyhubFSOLFw6BTh/46Fc6tIX/cibs/NVYWNrsqn0k6pQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
       less: '*'
       sass: '*'
       stylus: '*'
+      terser: ^5.4.0
     peerDependenciesMeta:
       less:
         optional: true
@@ -5628,17 +5624,19 @@ packages:
         optional: true
       stylus:
         optional: true
+      terser:
+        optional: true
     dependencies:
       esbuild: 0.14.49
       postcss: 8.4.14
       resolve: 1.22.1
-      rollup: 2.76.0
+      rollup: 2.77.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.18.0_jsdom@20.0.0:
-    resolution: {integrity: sha512-ryAtlh5Gvg3+aLNuOQ8YOHxgQCCu46jx40X5MBL0K0/ejB9i5zsr8fV8LTGXbXex80UMHlzceI9F+ouGaiR+mQ==}
+  /vitest/0.18.1_jsdom@20.0.0:
+    resolution: {integrity: sha512-4F/1K/Vn4AvJwe7i2YblR02PT5vMKcw9KN4unDq2KD0YcSxX0B/6D6Qu9PJaXwVuxXMFTQ5ovd4+CQaW3bwofA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -5661,23 +5659,24 @@ packages:
     dependencies:
       '@types/chai': 4.3.1
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.0.3
+      '@types/node': 18.0.6
       chai: 4.3.6
       debug: 4.3.4
       jsdom: 20.0.0
-      local-pkg: 0.4.1
-      tinypool: 0.2.2
-      tinyspy: 0.3.3
-      vite: 2.9.14
+      local-pkg: 0.4.2
+      tinypool: 0.2.4
+      tinyspy: 1.0.0
+      vite: 3.0.1
     transitivePeerDependencies:
       - less
       - sass
       - stylus
       - supports-color
+      - terser
     dev: true
 
-  /vue-demi/0.13.2_vue@3.2.37:
-    resolution: {integrity: sha512-41ukrclEbMddAyP7PvxMSYqnOSzPV6r7GNnyTSKSCNTaz19GehxmTiXyP9kwHSUv2+Dr6hHqiUiF7L1VAw2KdQ==}
+  /vue-demi/0.13.5_vue@3.2.37:
+    resolution: {integrity: sha512-tO3K2bML3AwiHmVHeKCq6HLef2st4zBXIV5aEkoJl6HZ+gJWxWv2O8wLH8qrA3SX3lDoTDHNghLX1xZg83MXvw==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
@@ -5696,17 +5695,17 @@ packages:
     peerDependencies:
       vue: ^3.2.0
     dependencies:
-      '@vue/devtools-api': 6.2.0
+      '@vue/devtools-api': 6.2.1
       vue: 3.2.37
     dev: false
 
-  /vue-tsc/0.38.4_typescript@4.7.4:
-    resolution: {integrity: sha512-s0Sgq5JVHKGW6wGn3atVBLeZJLbwdUvVc2Ilo8KwT4G+lY56HHASvme9rwO+rYGQjt6iwk8IwEmlW5XINGxZKQ==}
+  /vue-tsc/0.38.8_typescript@4.7.4:
+    resolution: {integrity: sha512-hhyc5SODiekcYNXG08aNg17LogR19o3i14avVejo+Fm45Dqk9Ke6rb0M19HoTKdQGfZBgqg2VUboYxmtAukWeg==}
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
-      '@volar/vue-typescript': 0.38.4
+      '@volar/vue-typescript': 0.38.8
       typescript: 4.7.4
     dev: true
 
@@ -5741,7 +5740,7 @@ packages:
       joi: 17.6.0
       lodash: 4.17.21
       minimist: 1.2.6
-      rxjs: 7.5.5
+      rxjs: 7.5.6
     transitivePeerDependencies:
       - debug
     dev: true
@@ -5834,8 +5833,8 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
-  /ws/8.8.0:
-    resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
+  /ws/8.8.1:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -5879,7 +5878,7 @@ packages:
     dependencies:
       '@types/fs-extra': 9.0.13
       '@types/minimist': 1.2.2
-      '@types/node': 16.11.43
+      '@types/node': 16.11.45
       '@types/node-fetch': 2.6.2
       chalk: 4.1.2
       fs-extra: 10.1.0
