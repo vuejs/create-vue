@@ -62,7 +62,12 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
     addEslintDependency('@rushstack/eslint-patch')
     configuration += `require("@rushstack/eslint-patch/modern-module-resolution");\n\n`
   }
-  configuration += `module.exports = ${JSON.stringify(config, undefined, 2)}\n`
+  const configString = JSON.stringify(config, undefined, 2)
+    // remove quotes from the object keys (keep escaped quotes)
+    .replace(/\\"/g, '\uFFFF')
+    .replace(/"([^"]+)":/g, '$1:')
+    .replace(/\uFFFF/g, '\\"')
+  configuration += `module.exports = ${configString}\n`
 
   return {
     dependencies,

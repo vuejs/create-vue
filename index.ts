@@ -326,6 +326,9 @@ async function init() {
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
   }
+  if (needsPrettier) {
+    render('config/prettier')
+  }
 
   // Render code template.
   // prettier-ignore
