@@ -120,9 +120,9 @@ importers:
 
   template/tsconfig/vitest:
     specifiers:
-      '@types/jsdom': ^16.2.15
+      '@types/jsdom': ^20.0.0
     devDependencies:
-      '@types/jsdom': 16.2.15
+      '@types/jsdom': 20.0.0
 
 packages:
 
@@ -582,12 +582,12 @@ packages:
       '@types/node': 16.11.45
     dev: true
 
-  /@types/jsdom/16.2.15:
-    resolution: {integrity: sha512-nwF87yjBKuX/roqGYerZZM0Nv1pZDMAT5YhOHYeM/72Fic+VEqJh4nyoqoapzJnW3pUlfxPY5FhgsJtM+dRnQQ==}
+  /@types/jsdom/20.0.0:
+    resolution: {integrity: sha512-YfAchFs0yM1QPDrLm2VHe+WHGtqms3NXnXAMolrgrVP6fgBHHXy1ozAbo/dFtPNtZC/m66bPiCTWYmqp1F14gA==}
     dependencies:
       '@types/node': 18.0.6
-      '@types/parse5': 6.0.3
       '@types/tough-cookie': 4.0.2
+      parse5: 7.0.0
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -619,10 +619,6 @@ packages:
 
   /@types/node/18.0.6:
     resolution: {integrity: sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==}
-    dev: true
-
-  /@types/parse5/6.0.3:
-    resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: true
 
   /@types/prompts/2.0.14:
