@@ -20,7 +20,10 @@ interface ESLintConfig extends Linter.Config {
 }
 const config: ESLintConfig = {
   root: true,
-  extends: ['plugin:vue/vue3-essential']
+  extends: ['plugin:vue/vue3-essential'],
+  parserOptions: {
+    ecmaVersion: 'latest'
+  }
 }
 
 function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
