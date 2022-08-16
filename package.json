@@ -1,0 +1,50 @@
+{
+  "name": "@vue/create-eslint-config",
+  "version": "0.0.1",
+  "description": "Utility to setup ESLint in Vue.js projects.",
+  "type": "commonjs",
+  "main": "index.js",
+  "bin": {
+    "create-eslint-config": "bin/create-eslint-config.js"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuejs/create-eslint-config.git"
+  },
+  "keywords": [
+    "vue",
+    "eslint",
+    "config"
+  ],
+  "author": "Haoqun Jiang <haoqunjiang+npm@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vuejs/create-eslint-config/issues"
+  },
+  "homepage": "https://github.com/vuejs/create-eslint-config#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "javascript-stringify": "^2.1.0"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@vue/eslint-config-airbnb": "^7.0.0",
+    "@vue/eslint-config-airbnb-with-typescript": "^7.0.0",
+    "@vue/eslint-config-standard": "^8.0.1",
+    "@vue/eslint-config-standard-with-typescript": "^8.0.0",
+    "@vue/eslint-config-typescript": "^11.0.0",
+    "eslint": "^8.22.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "standard": "^17.0.0",
+    "typescript": "~4.7.4"
+  }
+}
