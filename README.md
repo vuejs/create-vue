@@ -6,13 +6,13 @@ Utility to setup ESLint in Vue.js projects.
 
 Run the following command in your project root:
 
-With NPM:
+With npm:
 
 ```sh
 npm create @vue/eslint-config@latest
 ```
 
-With PNPM:
+With pnpm:
 
 ```sh
 pnpm create @vue/eslint-config
