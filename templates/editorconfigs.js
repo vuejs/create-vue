@@ -1,4 +1,4 @@
-exports.airbnb = `root = true
+const airbnb = `root = true
 
 [*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
 charset = utf-8
@@ -14,7 +14,7 @@ trim_trailing_whitespace = true
 // https://github.com/standard/standard/issues/140
 // or maximum line length
 // https://github.com/standard/standard/issues/1559
-exports.standard = `root = true
+const standard = `root = true
 
 [*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
 charset = utf-8
@@ -23,3 +23,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 `
+
+export {
+  airbnb,
+  standard
+}

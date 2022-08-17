@@ -1,5 +1,5 @@
 // This is also used in `create-vue`
-module.exports = function renderESLintConfig ({
+export default function renderESLintConfig ({
   vueVersion, // 2 | 3 (TODO: 2.7 / vue-demi)
 
   language, // js | ts

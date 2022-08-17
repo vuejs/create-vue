@@ -1,3 +1,6 @@
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
+
 // 1. check for existing config files
 // `.eslintrc.*`, `eslintConfig` in `package.json`
 // ask if wanna overwrite?
