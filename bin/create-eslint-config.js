@@ -138,7 +138,8 @@ const { styleGuide } = await prompt({
 let hasTypeScript = false
 const additionalConfig = {}
 try {
-  requireInCwd('typescript')
+  const tsVersion = requireInCwd('typescript/package.json').version
+  console.info(`Detected TypeScript version: ${tsVersion}`)
   hasTypeScript = true
 } catch (e) {
   const anwsers = await prompt({
