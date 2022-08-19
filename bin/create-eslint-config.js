@@ -160,7 +160,7 @@ if (hasTypeScript && styleGuide !== 'default') {
     disabled: 'No',
     enabled: 'Yes',
     name: 'allowJsInVue',
-    message: `Are plain ${yellow('<script>')}s (without ${blue('lang="ts"')}) allowed in ${green('.vue')} files?`,
+    message: `Do you use plain ${yellow('<script>')}s (without ${blue('lang="ts"')}) in ${green('.vue')} files?`,
     initial: false
   })
 
@@ -170,7 +170,7 @@ if (hasTypeScript && styleGuide !== 'default') {
       disabled: 'No',
       enabled: 'Yes',
       name: 'allowJsxInVue',
-      message: `Are ${yellow('<script lang="jsx">')}s allowed in ${green('.vue')} files (not recommended)?`,
+      message: `Do you use ${yellow('<script lang="jsx">')}s in ${green('.vue')} files (not recommended)?`,
       initial: false
     })
 
@@ -187,7 +187,7 @@ if (hasTypeScript && styleGuide !== 'default') {
       disabled: 'No',
       enabled: 'Yes',
       name: 'allowTsxInVue',
-      message: `Are ${yellow('<script lang="tsx">')}s allowed in ${green('.vue')} files (not recommended)?`,
+      message: `Do you use ${yellow('<script lang="tsx">')}s in ${green('.vue')} files (not recommended)?`,
       initial: false
     })
 
