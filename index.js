@@ -28,6 +28,31 @@ function stringifyJS (value, styleGuide) {
   )
 }
 
+const isObject = (val) => val && typeof val === 'object'
+const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
+
+/**
+ * Recursively merge the content of the new object to the existing one
+ * @param {Object} target the existing object
+ * @param {Object} obj the new object
+ */
+export function deepMerge (target, obj) {
+  for (const key of Object.keys(obj)) {
+    const oldVal = target[key]
+    const newVal = obj[key]
+
+    if (Array.isArray(oldVal) && Array.isArray(newVal)) {
+      target[key] = mergeArrayWithDedupe(oldVal, newVal)
+    } else if (isObject(oldVal) && isObject(newVal)) {
+      target[key] = deepMerge(oldVal, newVal)
+    } else {
+      target[key] = newVal
+    }
+  }
+
+  return target
+}
+
 // This is also used in `create-vue`
 export default function createConfig ({
   vueVersion = '3.x', // '2.x' | '3.x' (TODO: 2.7 / vue-demi)
@@ -92,20 +117,8 @@ export default function createConfig ({
     addDependencyAndExtend('@vue/eslint-config-prettier')
   }
 
-  Object.assign(pkg.devDependencies, additionalDependenices)
-
-  function mergeESLintConfig (original, additional) {
-    // Actually we need to do the same for `overrides` field
-    // But in this package we don't have built-in `overrides`,
-    // so I just omitted it for simplicity.
-    const newExtends = [
-      ...(original.extends ?? []),
-      ...(additional.extends ?? [])
-    ]
-
-    return Object.assign(original, additional, { extends: newExtends })
-  }
-  mergeESLintConfig(eslintConfig, additionalConfig)
+  deepMerge(pkg.devDependencies, additionalDependenices)
+  deepMerge(eslintConfig, additionalConfig)
 
   const files = {
     '.eslintrc.cjs': ''

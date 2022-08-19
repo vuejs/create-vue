@@ -1,10 +1,10 @@
-import { existsSync, readFileSync, writeFileSync, unlinkSync, write } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 import process from 'node:process'
 import { bold, blue, yellow, red, green, dim } from 'kolorist'
 
-import createConfig, { CREATE_ALIAS_SETTING_PLACEHOLDER } from '../index.js'
+import createConfig, { deepMerge, CREATE_ALIAS_SETTING_PLACEHOLDER } from '../index.js'
 
 const require = createRequire(import.meta.url)
 const Enquirer = require('enquirer')
@@ -276,7 +276,7 @@ const { pkg: pkgToExtend, files } = createConfig({
 // - Vue CLI -> vue-cli-service lint
 // - Otherwise -> eslint ... (extensions vary based on the language)
 
-Object.assign(pkg, pkgToExtend)
+deepMerge(pkg, pkgToExtend)
 
 // Write `package.json` back
 writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, indent) + '\n', 'utf-8')
