@@ -20,7 +20,7 @@ function prompt (questions) {
 }
 
 const cwd = process.cwd()
-const requireInCwd = createRequire(cwd)
+const requireInCwd = createRequire(path.resolve(cwd, 'index.cjs'))
 
 // Only works in directories that has a `package.json`
 const pkgJsonPath = path.resolve(cwd, 'package.json')
