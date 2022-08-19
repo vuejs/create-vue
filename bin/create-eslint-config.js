@@ -93,7 +93,7 @@ if (pkg.eslintConfig) {
 let vueVersion
 try {
   vueVersion = requireInCwd('vue/package.json').version
-  console.info(`Detected Vue.js version: ${vueVersion}`)
+  console.info(dim(`Detected Vue.js version: ${vueVersion}`))
 } catch (e) {
   const anwsers = await prompt({
     type: 'select',
@@ -139,7 +139,7 @@ let hasTypeScript = false
 const additionalConfig = {}
 try {
   const tsVersion = requireInCwd('typescript/package.json').version
-  console.info(`Detected TypeScript version: ${tsVersion}`)
+  console.info(dim(`Detected TypeScript version: ${tsVersion}`))
   hasTypeScript = true
 } catch (e) {
   const anwsers = await prompt({
