@@ -275,6 +275,8 @@ const { pkg: pkgToExtend, files } = createConfig({
 // Add `lint` command to package.json
 // - Vue CLI -> vue-cli-service lint
 // - Otherwise -> eslint ... (extensions vary based on the language)
+// TODO:
+// Add a note about that Vue CLI projects may need a `tsconfig.eslint.json`
 
 deepMerge(pkg, pkgToExtend)
 
