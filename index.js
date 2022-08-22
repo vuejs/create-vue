@@ -1,13 +1,9 @@
 import { stringify } from 'javascript-stringify'
 
 import * as editorconfigs from './templates/editorconfigs.js'
-import * as prettierrcs from './templates/prettierrcs.js'
+import * as prettierrcs from './templates/prettierrcs.cjs'
 
-// Use require because import assertions are only supported in Node.js 16
-// This package still has to support Node.js 14 until it reaches EOL
-import { createRequire } from 'node:module'
-const require = createRequire(import.meta.url)
-const versionMap = require('./package.json').devDependencies
+import versionMap from './versionMap.cjs'
 
 const CREATE_ALIAS_SETTING_PLACEHOLDER = 'CREATE_ALIAS_SETTING_PLACEHOLDER'
 export { CREATE_ALIAS_SETTING_PLACEHOLDER }
