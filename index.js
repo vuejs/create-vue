@@ -141,8 +141,9 @@ export default function createConfig ({
   if (editorconfigs[styleGuide]) {
     files['.editorconfig'] = editorconfigs[styleGuide]
   }
-  if (needsPrettier && prettierrcs[styleGuide]) {
-    files['.prettierrc.json'] = prettierrcs[styleGuide]
+  if (needsPrettier) {
+    // Prettier recommends an explicit configuration file to let the editor know that it's used.
+    files['.prettierrc.json'] = prettierrcs[styleGuide] || '{}'
   }
 
   return {
