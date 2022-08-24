@@ -1,8 +1,8 @@
 import { stringify } from 'javascript-stringify'
 
 import * as editorconfigs from './templates/editorconfigs.js'
-import * as prettierrcs from './templates/prettierrcs.cjs'
 
+import prettierrcs from './templates/prettierrcs.cjs'
 import versionMap from './versionMap.cjs'
 
 const CREATE_ALIAS_SETTING_PLACEHOLDER = 'CREATE_ALIAS_SETTING_PLACEHOLDER'
