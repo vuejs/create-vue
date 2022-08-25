@@ -69,8 +69,9 @@ async function init() {
   // --vitest
   // --cypress
   // --eslint
-  // --styleGuide
-  // --eslint-with-prettier (only support prettier through eslint for simplicity)
+  // --eslint-with-prettier
+  // --eslint-with-airbnb
+  // --eslint-with-standard
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -94,6 +95,13 @@ async function init() {
       argv.vitest ??
       argv.cypress ??
       argv.eslint
+    ) === 'boolean'
+
+  const eslintConfigUsed =
+    typeof (
+      argv['eslint-with-prettier'] ??
+      argv['eslint-with-airbnb'] ??
+      argv['eslint-with-standard']
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -216,7 +224,7 @@ async function init() {
         },
         {
           name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed || eslintConfigUsed ? null : 'toggle'),
           message: 'Add ESLint for code quality?',
           initial: false,
           active: 'Yes',
@@ -225,7 +233,7 @@ async function init() {
         {
           name: 'styleGuide',
           type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsEslint) {
+            if (isFeatureFlagsUsed || eslintConfigUsed || !values.needsEslint) {
               return null
             }
             return 'select'
@@ -274,9 +282,16 @@ async function init() {
     needsPinia = argv.pinia,
     needsCypress = argv.cypress || argv.tests,
     needsVitest = argv.vitest || argv.tests,
-    needsEslint = argv.eslint || argv['eslint-with-prettier'],
+    needsEslint = argv.eslint ||
+      argv['eslint-with-prettier'] ||
+      argv['eslint-with-airbnb'] ||
+      argv['eslint-with-standard'],
     needsPrettier = argv['eslint-with-prettier'],
-    styleGuide = argv.styleGuide
+    styleGuide = argv['eslint-with-standard']
+      ? 'standard'
+      : argv['eslint-with-airbnb']
+      ? 'airbnb'
+      : 'default'
   } = result
   const needsCypressCT = needsCypress && !needsVitest
   const root = path.join(cwd, targetDir)
