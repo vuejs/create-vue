@@ -36,7 +36,22 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
       config.extends.push('eslint:recommended')
       config.extends.push('@vue/eslint-config-typescript/recommended')
       break
-    // TODO: airbnb and standard
+    case 'airbnb-javascript':
+      addEslintDependency('@vue/eslint-config-airbnb')
+      config.extends.push('@vue/eslint-config-airbnb')
+      break
+    case 'airbnb-typescript':
+      addEslintDependency('@vue/eslint-config-airbnb-with-typescript')
+      config.extends.push('@vue/eslint-config-airbnb-with-typescript')
+      break
+    case 'standard-javascript':
+      addEslintDependency('@vue/eslint-config-standard')
+      config.extends.push('@vue/eslint-config-standard')
+      break
+    case 'standard-typescript':
+      addEslintDependency('@vue/eslint-config-standard-with-typescript')
+      config.extends.push('@vue/eslint-config-standard-with-typescript')
+      break
   }
 
   if (needsPrettier) {
@@ -75,12 +90,11 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
+  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier, styleGuide }
 ) {
   const { dependencies, configuration } = configureEslint({
     language: needsTypeScript ? 'typescript' : 'javascript',
-    // we currently don't support other style guides
-    styleGuide: 'default',
+    styleGuide,
     needsPrettier,
     needsCypress,
     needsCypressCT

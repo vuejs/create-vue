@@ -69,6 +69,7 @@ async function init() {
   // --vitest
   // --cypress
   // --eslint
+  // --styleGuide
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
@@ -111,6 +112,7 @@ async function init() {
     needsVitest?: boolean
     needsCypress?: boolean
     needsEslint?: boolean
+    styleGuide?: string
     needsPrettier?: boolean
   } = {}
 
@@ -221,6 +223,21 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'styleGuide',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsEslint) {
+              return null
+            }
+            return 'select'
+          },
+          message: 'Select a Linter Config:',
+          choices: [
+            { title: 'Default Config', value: 'default' },
+            { title: 'Airbnb Config', value: 'airbnb' },
+            { title: 'Standard Config', value: 'standard' }
+          ]
+        },
+        {
           name: 'needsPrettier',
           type: (prev, values) => {
             if (isFeatureFlagsUsed || !values.needsEslint) {
@@ -258,7 +275,8 @@ async function init() {
     needsCypress = argv.cypress || argv.tests,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    styleGuide = argv.styleGuide
   } = result
   const needsCypressCT = needsCypress && !needsVitest
   const root = path.join(cwd, targetDir)
@@ -324,7 +342,13 @@ async function init() {
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    renderEslint(root, {
+      needsTypeScript,
+      needsCypress,
+      needsCypressCT,
+      needsPrettier,
+      styleGuide
+    })
   }
 
   // Render code template.
