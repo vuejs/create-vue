@@ -58,7 +58,7 @@ export default function createConfig ({
   needsPrettier = false, // true | false
 
   additionalConfig = {}, // e.g. Cypress, createAliasSetting for Airbnb, etc.
-  additionalDependenices = {} // e.g. eslint-plugin-cypress
+  additionalDependencies = {} // e.g. eslint-plugin-cypress
 }) {
   // This is the pkg object to extend
   const pkg = { devDependencies: {} }
@@ -113,7 +113,7 @@ export default function createConfig ({
     addDependencyAndExtend('@vue/eslint-config-prettier')
   }
 
-  deepMerge(pkg.devDependencies, additionalDependenices)
+  deepMerge(pkg.devDependencies, additionalDependencies)
   deepMerge(eslintConfig, additionalConfig)
 
   const files = {
