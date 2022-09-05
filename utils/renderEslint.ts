@@ -58,7 +58,6 @@ export default function renderEslint(
   // write to .eslintrc.cjs, .prettierrc.json, etc.
   for (const [fileName, content] of Object.entries(files)) {
     const fullPath = path.resolve(rootDir, fileName)
-    console.log(fullPath, content)
     fs.writeFileSync(fullPath, content as string, 'utf-8')
   }
 }
