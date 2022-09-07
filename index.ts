@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import * as fs from 'fs'
-import * as path from 'path'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 
 import minimist from 'minimist'
 import prompts from 'prompts'
@@ -27,8 +27,20 @@ function toValidPackageName(projectName) {
     .replace(/[^a-z0-9-~]+/g, '-')
 }
 
-function canSafelyOverwrite(dir) {
-  return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0
+function canSkipEmptying(dir: string) {
+  if (!fs.existsSync(dir)) {
+    return true
+  }
+
+  const files = fs.readdirSync(dir)
+  if (files.length === 0) {
+    return true
+  }
+  if (files.length === 1 && files[0] === '.git') {
+    return true
+  }
+
+  return false
 }
 
 function emptyDir(dir) {
@@ -125,7 +137,7 @@ async function init() {
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
           message: () => {
             const dirForPrompt =
               targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
@@ -384,8 +396,6 @@ async function init() {
 
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
-  // Note: until <https://github.com/pnpm/pnpm/issues/3505> is resolved,
-  // it is not possible to tell if the command is called by `pnpm init`.
   const userAgent = process.env.npm_config_user_agent ?? ''
   const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm'
 
@@ -393,7 +403,7 @@ async function init() {
   fs.writeFileSync(
     path.resolve(root, 'README.md'),
     generateReadme({
-      projectName: result.projectName ?? defaultProjectName,
+      projectName: result.projectName ?? result.packageName ?? defaultProjectName,
       packageManager,
       needsTypeScript,
       needsVitest,
