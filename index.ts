@@ -403,7 +403,7 @@ async function init() {
   fs.writeFileSync(
     path.resolve(root, 'README.md'),
     generateReadme({
-      projectName: result.projectName ?? result.packageName ?? defaultProjectName,
+      projectName: projectName === '.' ? packageName : projectName ?? packageName,
       packageManager,
       needsTypeScript,
       needsVitest,
