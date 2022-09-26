@@ -68,6 +68,7 @@ async function init() {
   // --with-tests / --tests (equals to `--vitest --cypress`)
   // --vitest
   // --cypress
+  // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
@@ -92,6 +93,7 @@ async function init() {
       argv.tests ??
       argv.vitest ??
       argv.cypress ??
+      argv.playwright ??
       argv.eslint
     ) === 'boolean'
 
@@ -110,6 +112,7 @@ async function init() {
     needsPinia?: boolean
     needsVitest?: boolean
     needsCypress?: boolean
+    needsPlaywright?: boolean
     needsEslint?: boolean
     needsPrettier?: boolean
   } = {}
@@ -124,6 +127,7 @@ async function init() {
     // - Install Vue Router for SPA development?
     // - Install Pinia for state management?
     // - Add Cypress for testing?
+    // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
     result = await prompts(
@@ -213,6 +217,19 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsPlaywright',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || values.needsCypress) {
+              return null
+            }
+            return 'toggle'
+          },
+          message: 'Add Playwright for End-to-End testing?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsEslint',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add ESLint for code quality?',
@@ -256,6 +273,7 @@ async function init() {
     needsRouter = argv.router,
     needsPinia = argv.pinia,
     needsCypress = argv.cypress || argv.tests,
+    needsPlaywright = argv.playwright,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier']
@@ -305,6 +323,9 @@ async function init() {
   }
   if (needsCypressCT) {
     render('config/cypress-ct')
+  }
+  if (needsPlaywright) {
+    render('config/playwright')
   }
   if (needsTypeScript) {
     render('config/typescript')
@@ -408,6 +429,7 @@ async function init() {
       needsTypeScript,
       needsVitest,
       needsCypress,
+      needsPlaywright,
       needsCypressCT,
       needsEslint
     })

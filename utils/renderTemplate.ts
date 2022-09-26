@@ -46,6 +46,14 @@ function renderTemplate(src, dest) {
     dest = path.resolve(path.dirname(dest), filename.replace(/^_/, '.'))
   }
 
+  if (filename === '_gitignore' && fs.existsSync(dest)) {
+    // append to existing .gitignore
+    const existing = fs.readFileSync(dest, 'utf8')
+    const newGitignore = fs.readFileSync(src, 'utf8')
+    fs.writeFileSync(dest, existing + '\n' + newGitignore)
+    return
+  }
+
   fs.copyFileSync(src, dest)
 }
 
