@@ -62,7 +62,7 @@ const bin = path.posix.relative('../playground/', '../outfile.cjs')
 cd(playgroundDir)
 for (const flags of flagCombinations) {
   const projectName = flags.join('-')
-  
+
   console.log(`Removing previously generated project ${projectName}`)
   await $`rm -rf ${projectName}`
 
