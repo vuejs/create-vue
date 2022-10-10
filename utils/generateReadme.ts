@@ -103,13 +103,13 @@ ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
 # Install browsers for the first run
 npx playwright install
 
-# Runs the end-to-end tests.
+# Runs the end-to-end tests
 ${getCommand(packageManager, 'test:e2e')}
-# Runs the tests only on Chromium.
+# Runs the tests only on Chromium
 ${getCommand(packageManager, 'test:e2e -- --project=chromium')}
-# Runs the tests of a specific file.
+# Runs the tests of a specific file
 ${getCommand(packageManager, 'test:e2e -- tests/example.spec.ts')}
-# Runs the tests in debug mode.
+# Runs the tests in debug mode
 ${getCommand(packageManager, 'test:e2e -- --debug')}
 \`\`\`
 `
