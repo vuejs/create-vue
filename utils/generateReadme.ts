@@ -105,8 +105,8 @@ npx playwright install
 
 # Runs the end-to-end tests.
 ${getCommand(packageManager, 'test:e2e')}
-# Runs the tests only on Desktop Chrome.
-${getCommand(packageManager, 'test:e2e -- --project="Desktop Chrome"')}
+# Runs the tests only on Chromium.
+${getCommand(packageManager, 'test:e2e -- --project=chromium')}
 # Runs the tests of a specific file.
 ${getCommand(packageManager, 'test:e2e -- tests/example.spec.ts')}
 # Runs the tests in debug mode.
