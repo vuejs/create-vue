@@ -5,7 +5,10 @@ import 'zx/globals'
 process.env.CI = '1';
 
 const playgroundDir = path.resolve(__dirname, '../playground/')
-let projects = fs.readdirSync(playgroundDir).filter(name => !name.startsWith('.'));
+let projects = fs.readdirSync(playgroundDir, { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name)
+  .filter(name => !name.startsWith('.') && name !== 'node_modules')
 
 if (process.argv[3])
   projects = projects.filter(project => project.includes(process.argv[3]))
