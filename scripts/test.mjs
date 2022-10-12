@@ -10,10 +10,14 @@ let projects = fs.readdirSync(playgroundDir).filter(name => !name.startsWith('.'
 if (process.argv[3])
   projects = projects.filter(project => project.includes(process.argv[3]))
 
-for (const projectName of projects) {
-  if (projectName.includes('vitest')) {
-    cd(path.resolve(playgroundDir, projectName))
+cd(playgroundDir)
+console.log('Installing playground dependencies')
+await $`pnpm install`
 
+for (const projectName of projects) {
+  cd(path.resolve(playgroundDir, projectName))
+
+  if (projectName.includes('vitest')) {
     console.log(`Running unit tests in ${projectName}`)
     await $`pnpm test:unit`
   }
