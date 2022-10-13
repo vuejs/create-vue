@@ -111,8 +111,7 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
-    needsCypress?: boolean
-    needsPlaywright?: boolean
+    needsE2eTesting?: false | 'cypress' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
   } = {}
@@ -206,28 +205,24 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsCypress',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: (prev, answers) =>
-            answers.needsVitest
-              ? 'Add Cypress for End-to-End testing?'
-              : 'Add Cypress for both Unit and End-to-End testing?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsPlaywright',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || values.needsCypress) {
-              return null
+          name: 'needsE2eTesting',
+          type: () => (isFeatureFlagsUsed ? null : 'select'),
+          message: 'Add an End-to-End Testing Solution?',
+          initial: 0,
+          choices: (prev, anwsers) => [
+            { title: 'No', value: false },
+            {
+              title: 'Cypress',
+              description: anwsers.needsVitest
+                ? undefined
+                : 'also supports unit testing with Cypress Component Testing',
+              value: 'cypress'
+            },
+            {
+              title: 'Playwright',
+              value: 'playwright'
             }
-            return 'toggle'
-          },
-          message: 'Add Playwright for End-to-End testing?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          ]
         },
         {
           name: 'needsEslint',
@@ -272,13 +267,16 @@ async function init() {
     needsTypeScript = argv.typescript,
     needsRouter = argv.router,
     needsPinia = argv.pinia,
-    needsCypress = argv.cypress || argv.tests,
-    needsPlaywright = argv.playwright,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier']
   } = result
+
+  const { needsE2eTesting } = result
+  const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
+  const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
+
   const root = path.join(cwd, targetDir)
 
   if (fs.existsSync(root) && shouldOverwrite) {
