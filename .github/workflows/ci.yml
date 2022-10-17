@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - '**'
+      - '!renovate/**'
     paths-ignore:
       - README.md
       - CONTRIBUTING.md
