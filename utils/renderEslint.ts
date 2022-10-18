@@ -20,8 +20,11 @@ export default function renderEslint(
     additionalConfig.overrides = [
       {
         files: needsCypressCT
-          ? ['**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}', 'cypress/e2e/**.{cy,spec}.{js,ts,jsx,tsx}']
-          : ['cypress/e2e/**.{cy,spec}.{js,ts,jsx,tsx}'],
+          ? [
+              '**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',
+              'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'
+            ]
+          : ['cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'],
         extends: ['plugin:cypress/recommended']
       }
     ]
