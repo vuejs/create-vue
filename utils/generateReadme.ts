@@ -99,6 +99,9 @@ ${commandFor('test:e2e')} # or \`${commandFor('test:e2e:ci')}\` for headless tes
 # Install browsers for the first run
 npx playwright install
 
+# Must build the project before end-to-end testing
+${commandFor('build')}
+
 # Runs the end-to-end tests
 ${commandFor('test:e2e')}
 # Runs the tests only on Chromium
