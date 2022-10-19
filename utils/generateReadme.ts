@@ -25,6 +25,8 @@ export default function generateReadme({
   needsVitest,
   needsEslint
 }) {
+  const commandFor = (scriptName) => getCommand(packageManager, scriptName)
+
   let readme = `# ${projectName}
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -42,19 +44,19 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 `
 
   let npmScriptsDescriptions = `\`\`\`sh
-${getCommand(packageManager, 'install')}
+${commandFor('install')}
 \`\`\`
 
 ### Compile and Hot-Reload for Development
 
 \`\`\`sh
-${getCommand(packageManager, 'dev')}
+${commandFor('dev')}
 \`\`\`
 
 ### ${needsTypeScript ? 'Type-Check, ' : ''}Compile and Minify for Production
 
 \`\`\`sh
-${getCommand(packageManager, 'build')}
+${commandFor('build')}
 \`\`\`
 `
 
@@ -63,7 +65,7 @@ ${getCommand(packageManager, 'build')}
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 \`\`\`sh
-${getCommand(packageManager, 'test:unit')}
+${commandFor('test:unit')}
 \`\`\`
 `
   }
@@ -73,10 +75,7 @@ ${getCommand(packageManager, 'test:unit')}
 ### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
 
 \`\`\`sh
-${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
-      packageManager,
-      'test:unit:ci'
-    )}\` for headless testing
+${commandFor('test:unit')} # or \`${commandFor('test:unit:ci')}\` for headless testing
 \`\`\`
 `
   }
@@ -86,11 +85,8 @@ ${getCommand(packageManager, 'test:unit')} # or \`${getCommand(
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
-${getCommand(packageManager, 'build')}
-${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
-      packageManager,
-      'test:e2e:ci'
-    )}\` for headless testing
+${commandFor('build')}
+${commandFor('test:e2e')} # or \`${commandFor('test:e2e:ci')}\` for headless testing
 \`\`\`
 `
   }
@@ -104,13 +100,13 @@ ${getCommand(packageManager, 'test:e2e')} # or \`${getCommand(
 npx playwright install
 
 # Runs the end-to-end tests
-${getCommand(packageManager, 'test:e2e')}
+${commandFor('test:e2e')}
 # Runs the tests only on Chromium
-${getCommand(packageManager, 'test:e2e -- --project=chromium')}
+${commandFor('test:e2e -- --project=chromium')}
 # Runs the tests of a specific file
-${getCommand(packageManager, 'test:e2e -- tests/example.spec.ts')}
+${commandFor('test:e2e -- tests/example.spec.ts')}
 # Runs the tests in debug mode
-${getCommand(packageManager, 'test:e2e -- --debug')}
+${commandFor('test:e2e -- --debug')}
 \`\`\`
 `
   }
@@ -120,7 +116,7 @@ ${getCommand(packageManager, 'test:e2e -- --debug')}
 ### Lint with [ESLint](https://eslint.org/)
 
 \`\`\`sh
-${getCommand(packageManager, 'lint')}
+${commandFor('lint')}
 \`\`\`
 `
   }
