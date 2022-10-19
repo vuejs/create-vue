@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "type-check": "run-p type-check:*",
+    "type-check:app": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "type-check:vitest": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "devDependencies": {
     "@types/jsdom": "^20.0.0"

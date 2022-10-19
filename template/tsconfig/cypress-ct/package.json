@@ -1,5 +1,7 @@
 {
   "scripts": {
-    "type-check": "vue-tsc --noEmit -p tsconfig.cypress-ct.json --composite false"
+    "type-check": "run-p type-check:*",
+    "type-check:app": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "type-check:cypress-ct": "vue-tsc --noEmit -p tsconfig.cypress-ct.json --composite false"
   }
 }

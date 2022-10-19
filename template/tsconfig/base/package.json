@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "type-check:app": "vue-tsc --noEmit",
+    "type-check:config": "vue-tsc --noEmit -p tsconfig.config.json --composite false"
+  },
   "devDependencies": {
     "@vue/tsconfig": "^0.1.3"
   }
