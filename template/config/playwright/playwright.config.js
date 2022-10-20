@@ -103,7 +103,7 @@ const config = {
      * Use the dev server by default for faster feedback loop.
      * Use the preview server on CI for more realistic testing.
      */
-    command: process.env.CI ? 'npm run preview -- --port 5173' : 'npm run dev',
+    command: process.env.CI ? 'vite preview --port 5173' : 'vite dev',
     port: 5173,
     reuseExistingServer: !process.env.CI
   }
