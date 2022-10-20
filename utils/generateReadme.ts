@@ -99,7 +99,7 @@ ${commandFor('test:e2e')} # or \`${commandFor('test:e2e:ci')}\` for headless tes
 # Install browsers for the first run
 npx playwright install
 
-# Must build the project before end-to-end testing
+# When testing on CI, must build the project first
 ${commandFor('build')}
 
 # Runs the end-to-end tests
