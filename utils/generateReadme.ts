@@ -25,7 +25,8 @@ export default function generateReadme({
   needsVitest,
   needsEslint
 }) {
-  const commandFor = (scriptName) => getCommand(packageManager, scriptName)
+  const commandFor = (scriptName: string, args?: string) =>
+    getCommand(packageManager, scriptName, args)
 
   let readme = `# ${projectName}
 
@@ -105,11 +106,11 @@ ${commandFor('build')}
 # Runs the end-to-end tests
 ${commandFor('test:e2e')}
 # Runs the tests only on Chromium
-${commandFor('test:e2e -- --project=chromium')}
+${commandFor('test:e2e', '--project=chromium')}
 # Runs the tests of a specific file
-${commandFor('test:e2e -- tests/example.spec.ts')}
+${commandFor('test:e2e', 'tests/example.spec.ts')}
 # Runs the tests in debug mode
-${commandFor('test:e2e -- --debug')}
+${commandFor('test:e2e', '--debug')}
 \`\`\`
 `
   }
