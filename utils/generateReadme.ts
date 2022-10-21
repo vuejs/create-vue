@@ -76,7 +76,7 @@ ${commandFor('test:unit')}
 ### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
 
 \`\`\`sh
-${commandFor('test:unit')} # or \`${commandFor('test:unit:ci')}\` for headless testing
+${commandFor('test:unit:dev')} # or \`${commandFor('test:unit')}\` for headless testing
 \`\`\`
 `
   }
@@ -86,8 +86,17 @@ ${commandFor('test:unit')} # or \`${commandFor('test:unit:ci')}\` for headless t
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 \`\`\`sh
+${commandFor('test:e2e:dev')}
+\`\`\`
+
+This runs the end-to-end tests against the Vite development server.
+It is much faster than the production build.
+
+But it's still recommended to test the production build with \`test:e2e\` before deploying (e.g. in CI environments):
+
+\`\`\`sh
 ${commandFor('build')}
-${commandFor('test:e2e')} # or \`${commandFor('test:e2e:ci')}\` for headless testing
+${commandFor('test:e2e')}
 \`\`\`
 `
   }
