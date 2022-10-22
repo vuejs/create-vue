@@ -209,11 +209,11 @@ async function init() {
           type: () => (isFeatureFlagsUsed ? null : 'select'),
           message: 'Add an End-to-End Testing Solution?',
           initial: 0,
-          choices: (prev, anwsers) => [
+          choices: (prev, answers) => [
             { title: 'No', value: false },
             {
               title: 'Cypress',
-              description: anwsers.needsVitest
+              description: answers.needsVitest
                 ? undefined
                 : 'also supports unit testing with Cypress Component Testing',
               value: 'cypress'
