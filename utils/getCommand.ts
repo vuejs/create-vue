@@ -1,7 +1,13 @@
-export default function getCommand(packageManager, scriptName) {
+export default function getCommand(packageManager: string, scriptName: string, args?: string) {
   if (scriptName === 'install') {
     return packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
   }
 
-  return packageManager === 'npm' ? `npm run ${scriptName}` : `${packageManager} ${scriptName}`
+  if (args) {
+    return packageManager === 'npm'
+      ? `npm run ${scriptName} -- ${args}`
+      : `${packageManager} ${scriptName} ${args}`
+  } else {
+    return packageManager === 'npm' ? `npm run ${scriptName}` : `${packageManager} ${scriptName}`
+  }
 }

@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "test:unit": "cypress open --component",
-    "test:unit:ci": "cypress run --component --quiet --reporter spec"
+    "test:unit": "cypress run --component",
+    "test:unit:dev": "cypress open --component"
   },
   "dependencies": {
-    "vue": "^3.2.40"
+    "vue": "^3.2.41"
   },
   "devDependencies": {
     "cypress": "^10.10.0"
