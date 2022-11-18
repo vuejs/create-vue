@@ -336,6 +336,9 @@ async function init() {
     if (needsCypressCT) {
       render('tsconfig/cypress-ct')
     }
+    if (needsPlaywright) {
+      render('tsconfig/playwright')
+    }
     if (needsVitest) {
       render('tsconfig/vitest')
     }
