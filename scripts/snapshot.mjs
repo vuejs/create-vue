@@ -4,7 +4,7 @@ import 'zx/globals'
 $.verbose = false
 
 if (!/pnpm/.test(process.env.npm_config_user_agent ?? ''))
-  throw new Error('Please use pnpm (\'pnpm run snapshot\') to generate snapshots!')
+  throw new Error("Please use pnpm ('pnpm run snapshot') to generate snapshots!")
 
 const featureFlags = ['typescript', 'jsx', 'router', 'pinia', 'vitest', 'cypress', 'playwright']
 const featureFlagsDenylist = [['cypress', 'playwright']]
@@ -42,7 +42,10 @@ let flagCombinations = fullCombination(featureFlags)
 flagCombinations.push(['default'])
 
 // Filter out combinations that are not allowed
-flagCombinations = flagCombinations.filter(combination => !featureFlagsDenylist.some(denylist => denylist.every(flag => combination.includes(flag))))
+flagCombinations = flagCombinations.filter(
+  (combination) =>
+    !featureFlagsDenylist.some((denylist) => denylist.every((flag) => combination.includes(flag)))
+)
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
