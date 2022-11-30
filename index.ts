@@ -98,6 +98,9 @@ async function init() {
     ) === 'boolean'
 
   let targetDir = argv._[0]
+  if (targetDir !== undefined) {
+    targetDir = String(argv._[0])
+  }
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
