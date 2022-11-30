@@ -99,7 +99,7 @@ async function init() {
 
   let targetDir = argv._[0]
   if (targetDir !== undefined) {
-    targetDir = String(argv._[0])
+    targetDir = String(targetDir)
   }
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
