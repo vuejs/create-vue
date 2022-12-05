@@ -22,5 +22,5 @@ function deepMerge(target, obj) {
 
   return target
 }
-
+let 啊 = 111;
 export default deepMerge
