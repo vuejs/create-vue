@@ -49,20 +49,20 @@ importers:
 
   template/config/cypress:
     specifiers:
-      cypress: ^11.2.0
+      cypress: ^12.0.2
       start-server-and-test: ^1.14.0
     devDependencies:
-      cypress: 11.2.0
+      cypress: 12.0.2
       start-server-and-test: 1.14.0
 
   template/config/cypress-ct:
     specifiers:
-      cypress: ^11.2.0
+      cypress: ^12.0.2
       vue: ^3.2.45
     dependencies:
       vue: 3.2.45
     devDependencies:
-      cypress: 11.2.0
+      cypress: 12.0.2
 
   template/config/jsx:
     specifiers:
@@ -1309,9 +1309,9 @@ packages:
   /csstype/2.6.20:
     resolution: {integrity: sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==}
 
-  /cypress/11.2.0:
-    resolution: {integrity: sha512-u61UGwtu7lpsNWLUma/FKNOsrjcI6wleNmda/TyKHe0dOBcVjbCPlp1N6uwFZ0doXev7f/91YDpU9bqDCFeBLA==}
-    engines: {node: '>=12.0.0'}
+  /cypress/12.0.2:
+    resolution: {integrity: sha512-WnLx1DpnbF1vbpDBkgP14rK5yS3U+Gvxrv2fsB4Owma26oIyENj7DDRnsJbSZuTfG4mcuUJxAkRHJR2wBqBfMA==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
