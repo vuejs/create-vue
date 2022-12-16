@@ -78,6 +78,7 @@ async function init() {
       'with-tests': ['tests'],
       router: ['vue-router']
     },
+    string: ['_'],
     // all arguments are treated as booleans
     boolean: true
   })
