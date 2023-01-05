@@ -5,9 +5,11 @@ import type { Linter } from 'eslint'
 
 import createESLintConfig from '@vue/create-eslint-config'
 
-import { devDependencies as eslintDeps } from '../template/eslint/package.json' assert { type: 'json' }
 import sortDependencies from './sortDependencies'
 import deepMerge from './deepMerge'
+
+import eslintTemplatePackage from '../template/eslint/package.json' assert { type: 'json' }
+const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,

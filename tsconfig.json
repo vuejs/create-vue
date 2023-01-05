@@ -2,6 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": ["index.ts", "utils/**/*"],
   "compilerOptions": {
-    "strict": false
+    "strict": false,
+    "resolveJsonModule": true
   }
 }
