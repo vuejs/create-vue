@@ -7,12 +7,13 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
+import * as banners from './utils/banners'
+
 import renderTemplate from './utils/renderTemplate'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import renderEslint from './utils/renderEslint'
-import banner from './utils/banner'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -56,7 +57,13 @@ function emptyDir(dir) {
 }
 
 async function init() {
-  console.log(`\n${banner}\n`)
+  console.log()
+  console.log(
+    process.stdout.isTTY && process.stdout.getColorDepth() > 8
+      ? banners.gradientBanner
+      : banners.defaultBanner
+  )
+  console.log()
 
   const cwd = process.cwd()
   // possible options:
