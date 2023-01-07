@@ -285,7 +285,7 @@ async function init() {
   const needsCypressCT = needsCypress && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
 
-  const root = path.join(cwd, targetDir)
+  const root = path.join(cwd, targetDir.replace(/\s+/g, '-'))
 
   if (fs.existsSync(root) && shouldOverwrite) {
     emptyDir(root)
