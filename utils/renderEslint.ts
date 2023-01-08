@@ -11,7 +11,7 @@ import deepMerge from './deepMerge'
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
+  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier, needsEslintAirbnb }
 ) {
   const additionalConfig: Linter.Config = {}
   const additionalDependencies = {}
@@ -30,6 +30,10 @@ export default function renderEslint(
     ]
 
     additionalDependencies['eslint-plugin-cypress'] = eslintDeps['eslint-plugin-cypress']
+  }
+  if (needsEslintAirbnb) {
+    additionalConfig.extends = ['@vue/eslint-config-airbnb']
+    additionalDependencies['@vue/eslint-config-airbnb'] = eslintDeps['@vue/eslint-config-airbnb']
   }
 
   const { pkg, files } = createESLintConfig({

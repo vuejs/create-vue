@@ -95,7 +95,8 @@ async function init() {
       argv.vitest ??
       argv.cypress ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv.eslintAirbnb
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -114,6 +115,7 @@ async function init() {
     needsVitest?: boolean
     needsE2eTesting?: false | 'cypress' | 'playwright'
     needsEslint?: boolean
+    needsEslintAirbnb?: boolean
     needsPrettier?: boolean
   } = {}
 
@@ -234,6 +236,19 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsEslintAirbnb',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsEslint) {
+              return null
+            }
+            return 'toggle'
+          },
+          message: 'Add ESLint airbnb rules?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsPrettier',
           type: (prev, values) => {
             if (isFeatureFlagsUsed || !values.needsEslint) {
@@ -270,6 +285,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
+    needsEslintAirbnb = argv.eslintAirbnb,
     needsPrettier = argv['eslint-with-prettier']
   } = result
 
@@ -347,7 +363,13 @@ async function init() {
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    renderEslint(root, {
+      needsTypeScript,
+      needsCypress,
+      needsCypressCT,
+      needsPrettier,
+      needsEslintAirbnb
+    })
   }
 
   // Render code template.
