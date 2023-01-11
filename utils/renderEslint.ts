@@ -33,6 +33,10 @@ export default function renderEslint(
   }
   if (needsEslintAirbnb) {
     additionalConfig.extends = ['@vue/eslint-config-airbnb']
+    additionalConfig.rules = {
+      'linebreak-style': 0,
+      semi: 0
+    }
     additionalDependencies['@vue/eslint-config-airbnb'] = eslintDeps['@vue/eslint-config-airbnb']
   }
 
