@@ -285,7 +285,7 @@ async function init() {
   const needsCypressCT = needsCypress && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
 
-  const root = path.join(cwd, targetDir.replace(/\s+/g, '-'))
+  const root = path.join(cwd, targetDir)
 
   if (fs.existsSync(root) && shouldOverwrite) {
     emptyDir(root)
@@ -446,7 +446,8 @@ async function init() {
 
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
-    console.log(`  ${bold(green(`cd ${path.relative(cwd, root)}`))}`)
+    const cdProjectName = path.relative(cwd, root)
+    console.log(`  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
