@@ -143,13 +143,7 @@ export default function createConfig ({
   }
   if (needsPrettier) {
     // Prettier recommends an explicit configuration file to let the editor know that it's used.
-    files['.prettierrc.json'] = prettierrcs[styleGuide] || `{
-  "semi": false,
-  "tabWidth": 2,
-  "singleQuote": true,
-  "printWidth": 100,
-  "trailingComma": "none"
-}`
+    files['.prettierrc.json'] = prettierrcs[styleGuide]
   }
 
   return {
