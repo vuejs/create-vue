@@ -110,7 +110,8 @@ export default function createConfig ({
 
   if (needsPrettier) {
     addDependency('prettier')
-    addDependencyAndExtend('@vue/eslint-config-prettier')
+    addDependency('@vue/eslint-config-prettier')
+    eslintConfig.extends.push('@vue/eslint-config-prettier/skip-formatting')
   }
 
   deepMerge(pkg.devDependencies, additionalDependencies)
