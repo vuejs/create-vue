@@ -144,7 +144,7 @@ export default function createConfig ({
   }
   if (needsPrettier) {
     // Prettier recommends an explicit configuration file to let the editor know that it's used.
-    files['.prettierrc.json'] = prettierrcs[styleGuide]
+    files['.prettierrc.json'] = JSON.stringify(prettierrcs[styleGuide], undefined, 2)
   }
 
   return {

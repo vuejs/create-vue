@@ -1,7 +1,11 @@
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import defaultConfig from './prettierrc-default.json' assert { type: 'json' }
 
-export default readFileSync(fileURLToPath(new URL('./prettierrc-default.json', import.meta.url)))
+import airbnb from './prettierrc-airbnb.json' assert { type: 'json' }
+import standard from './prettierrc-standard.json' assert { type: 'json' }
 
-export const airbnb = readFileSync(fileURLToPath(new URL('./prettierrc-airbnb.json', import.meta.url)))
-export const standard = readFileSync(fileURLToPath(new URL('./prettierrc-standard.json', import.meta.url)))
+export {
+  defaultConfig as default,
+
+  airbnb,
+  standard,
+}
