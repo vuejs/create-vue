@@ -108,14 +108,14 @@ export default function createConfig ({
       throw new Error(`unexpected combination of styleGuide and language: ${styleGuide}-${language}`)
   }
 
+  deepMerge(pkg.devDependencies, additionalDependencies)
+  deepMerge(eslintConfig, additionalConfig)
+
   if (needsPrettier) {
     addDependency('prettier')
     addDependency('@vue/eslint-config-prettier')
     eslintConfig.extends.push('@vue/eslint-config-prettier/skip-formatting')
   }
-
-  deepMerge(pkg.devDependencies, additionalDependencies)
-  deepMerge(eslintConfig, additionalConfig)
 
   const files = {
     '.eslintrc.cjs': ''
