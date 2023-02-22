@@ -450,7 +450,7 @@ async function init() {
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
-    console.log(`  ${bold(green(getCommand(packageManager, 'lint')))}`)
+    console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()
