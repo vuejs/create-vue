@@ -16,13 +16,13 @@ jobs:
     name: Build the package
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
       - run: pnpm install
         env:
           CYPRESS_INSTALL_BINARY: 0
@@ -60,13 +60,13 @@ jobs:
       FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
       - uses: actions/cache/restore@v3
         id: cache-restore
         with:
