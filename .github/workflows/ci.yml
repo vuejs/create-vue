@@ -47,6 +47,10 @@ jobs:
         flag-for-router: ['--router', '']
         flag-for-pinia: ['--pinia', '']
         flag-for-vitest: ['--vitest', '']
+
+        # It's quite costly to install Cypress & Playwright even with cache.
+        # Maybe we can split them into another job so that all the projects
+        # can share the same binary installation.
         flag-for-e2e: ['--cypress', '--playwright', '']
 
         # Skip ESLint/Prettier tests as we've reached the limit of job numbers
