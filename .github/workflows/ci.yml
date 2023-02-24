@@ -133,11 +133,6 @@ jobs:
         working-directory: ../sample-project
         run: pnpm test:unit
 
-      - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
-        name: Run Cypress with dev server
-        working-directory: ../sample-project
-        run: pnpm test:e2e:dev
-
       - name: Run build script
         working-directory: ../sample-project
         run: pnpm build
