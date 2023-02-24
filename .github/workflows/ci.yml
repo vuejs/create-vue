@@ -108,6 +108,11 @@ jobs:
         working-directory: ../sample-project
         run: pnpm build
 
+      - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
+        name: Install Playwright dependencies
+        working-directory: ../sample-project
+        run: npx playwright install
+
       - if: ${{ contains(matrix.flag-for-e2e, '--') }}
         name: Run e2e test script
         working-directory: ../sample-project
