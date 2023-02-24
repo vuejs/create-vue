@@ -96,15 +96,19 @@ jobs:
 
       - if: ${{ contains(matrix.flag-for-vitest, '--') }}
         name: Run unit test script
+        working-directory: ../sample-project
         run: pnpm test:unit
 
       - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
         name: Run Cypress with dev server
+        working-directory: ../sample-project
         run: pnpm test:e2e:dev
 
       - name: Run build script
+        working-directory: ../sample-project
         run: pnpm build
 
       - if: ${{ contains(matrix.flag-for-e2e, '--') }}
         name: Run e2e test script
+        working-directory: ../sample-project
         run: pnpm test:e2e
