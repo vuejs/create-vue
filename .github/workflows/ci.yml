@@ -145,7 +145,7 @@ jobs:
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
         working-directory: ../sample-project
-        run: npx playwright install
+        run: npx playwright install --with-deps
 
       - if: ${{ contains(matrix.flag-for-e2e, '--') }}
         name: Run e2e test script
