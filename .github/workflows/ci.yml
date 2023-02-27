@@ -40,21 +40,22 @@ jobs:
     needs: build
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node-version: [18]
-        flag-for-ts: ['--typescript', '']
-        flag-for-jsx: ['--jsx', '']
-        flag-for-router: ['--router', '']
-        flag-for-pinia: ['--pinia', '']
-        flag-for-vitest: ['--vitest', '']
+        flag-for-ts: ['', '--typescript']
+        flag-for-jsx: ['', '--jsx']
+        flag-for-router: ['', '--router']
+        flag-for-pinia: ['', '--pinia']
+        flag-for-vitest: ['', '--vitest']
 
         # It's quite costly to install Cypress & Playwright even with cache.
         # Maybe we can split them into another job so that all the projects
         # can share the same binary installation.
-        flag-for-e2e: ['--cypress', '--playwright', '']
+        flag-for-e2e: ['', '--cypress', '--playwright']
 
         # Skip ESLint/Prettier tests as we've reached the limit of job numbers
         # TODO: Find a way to test them without adding new jobs
+
+        node-version: [18]
+        os: [ubuntu-latest]
 
         # Run a few tests on other systems and Node.js versions
         include:
