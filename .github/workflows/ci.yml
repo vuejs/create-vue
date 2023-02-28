@@ -168,7 +168,7 @@ jobs:
         run: pnpm build
 
       - name: Force download Cypress on cache miss
-        if: steps.cache-cypress.outputs.cache-hit != 'true'
+        if: ${{ contains(matrix.flag-for-e2e, '--cypress') && steps.cache-cypress.outputs.cache-hit != 'true'}}
         working-directory: ../sample-project
         run: pnpm exec cypress install --force
 
