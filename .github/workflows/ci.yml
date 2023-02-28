@@ -156,7 +156,7 @@ jobs:
 
       - name: Install dependencies in the sample project
         working-directory: ../sample-project
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - if: ${{ contains(matrix.flag-for-vitest, '--') }}
         name: Run unit test script
