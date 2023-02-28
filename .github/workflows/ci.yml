@@ -113,21 +113,46 @@ jobs:
           path: outfile.cjs
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache-restore.outputs.cache-hit != 'true'
         run: pnpm install && pnpm build
-        env:
-          CYPRESS_INSTALL_BINARY: 0
+
+      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
+      # Install playwright's binary under custom directory to cache
+      - name: Set Playwright & Cypress path
+        if: runner.os != 'Windows'
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
+          echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
+      - name: Set Playwright & Cypress path (windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
+          echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
+
+      - name: Cache Cypress binaries
+        id: cache-cypress
+        uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-cypress-bin
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
+
+      - name: Cache Playwright's binary
+        uses: actions/cache@v3
+        with:
+          # Playwright removes unused browsers automatically
+          # So does not need to add playwright version to key
+          key: ${{ runner.os }}-playwright-bin-v1
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
       - if: ${{ (contains(env.FEATURE_FLAGS, '--')) }}
         name: Create the sample project with feature flags
-        run: node ./outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
+        working-directory: ../
+        run: node ./create-vue/outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
 
       - if: ${{ !(contains(env.FEATURE_FLAGS, '--')) }}
         name: Create the sample project with default options
-        run: node ./outfile.cjs sample-project --default
-
-      - name: Move the sample project to the upper-level directory
-        run: mv sample-project ../sample-project
+        working-directory: ../
+        run: node ./create-vue/outfile.cjs sample-project --default
 
       - name: Install dependencies in the sample project
         working-directory: ../sample-project
@@ -141,6 +166,11 @@ jobs:
       - name: Run build script
         working-directory: ../sample-project
         run: pnpm build
+
+      - name: Force download Cypress on cache miss
+        if: ${{ contains(matrix.flag-for-e2e, '--cypress') && steps.cache-cypress.outputs.cache-hit != 'true'}}
+        working-directory: ../sample-project
+        run: pnpm exec cypress install --force
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
