@@ -130,6 +130,7 @@ jobs:
           echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
       - name: Cache Cypress binaries
+        id: cache-cypress
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-cypress-bin
@@ -145,18 +146,17 @@ jobs:
 
       - if: ${{ (contains(env.FEATURE_FLAGS, '--')) }}
         name: Create the sample project with feature flags
-        run: node ./outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
+        working-directory: ../
+        run: node ./create-vue/outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
 
       - if: ${{ !(contains(env.FEATURE_FLAGS, '--')) }}
         name: Create the sample project with default options
-        run: node ./outfile.cjs sample-project --default
-
-      - name: Move the sample project to the upper-level directory
-        run: mv sample-project ../sample-project
+        working-directory: ../
+        run: node ./create-vue/outfile.cjs sample-project --default
 
       - name: Install dependencies in the sample project
         working-directory: ../sample-project
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
 
       - if: ${{ contains(matrix.flag-for-vitest, '--') }}
         name: Run unit test script
@@ -167,6 +167,10 @@ jobs:
         working-directory: ../sample-project
         run: pnpm build
 
+      - name: Force download Cypress on cache miss
+        if: steps.cache-cypress.outputs.cache-hit != 'true'
+        working-directory: ../sample-project
+        run: pnpm exec cypress install --force
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
