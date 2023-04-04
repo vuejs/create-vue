@@ -78,6 +78,7 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
+  // --tailwind
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -102,7 +103,8 @@ async function init() {
       argv.vitest ??
       argv.cypress ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv.tailwind
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -122,6 +124,7 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
+    needsTailwind?: boolean
   } = {}
 
   try {
@@ -137,6 +140,7 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+    // - Add Tailwind for styling?
     result = await prompts(
       [
         {
@@ -252,6 +256,14 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsTailwind',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add TailwindCss for styling?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -277,7 +289,8 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    needsTailwind = argv['tailwind']
   } = result
 
   const { needsE2eTesting } = result
@@ -355,6 +368,11 @@ async function init() {
   // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+  }
+
+  // Render tailwind config
+  if (needsTailwind) {
+    render('config/tailwind')
   }
 
   // Render code template.
@@ -440,14 +458,17 @@ async function init() {
       needsCypress,
       needsPlaywright,
       needsCypressCT,
-      needsEslint
+      needsEslint,
+      needsTailwind
     })
   )
 
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(`  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`)
+    console.log(
+      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
+    )
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {

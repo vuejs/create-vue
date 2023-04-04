@@ -23,14 +23,17 @@ export default function generateReadme({
   needsCypressCT,
   needsPlaywright,
   needsVitest,
-  needsEslint
+  needsEslint,
+  needsTailwind
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
 
   let readme = `# ${projectName}
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Vue 3 ${
+    needsTailwind ? 'alongside [TailwindCSS](https://tailwindcss.com/) ' : ''
+  }in Vite.
 
 ## Recommended IDE Setup
 
