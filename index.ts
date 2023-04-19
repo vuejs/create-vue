@@ -75,6 +75,7 @@ async function init() {
   // --with-tests / --tests (equals to `--vitest --cypress`)
   // --vitest
   // --cypress
+  // --nightwatch
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
@@ -101,6 +102,7 @@ async function init() {
       argv.tests ??
       argv.vitest ??
       argv.cypress ??
+      argv.nightwatch ??
       argv.playwright ??
       argv.eslint
     ) === 'boolean'
@@ -119,7 +121,7 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
-    needsE2eTesting?: false | 'cypress' | 'playwright'
+    needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
   } = {}
@@ -134,6 +136,7 @@ async function init() {
     // - Install Vue Router for SPA development?
     // - Install Pinia for state management?
     // - Add Cypress for testing?
+    // - Add Nightwatch for testing?
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
@@ -227,6 +230,13 @@ async function init() {
               value: 'cypress'
             },
             {
+              title: 'Nightwatch',
+              description: answers.needsVitest
+                ? undefined
+                : 'also supports unit testing with Nightwatch Component Testing',
+              value: 'nightwatch'
+            },
+            {
               title: 'Playwright',
               value: 'playwright'
             }
@@ -283,6 +293,8 @@ async function init() {
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
+  const needsNightwatch = argv.nightwatch || argv.tests || needsE2eTesting === 'nightwatch'
+  const needsNightwatchCT = needsNightwatch && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
 
   const root = path.join(cwd, targetDir)
@@ -330,6 +342,12 @@ async function init() {
   if (needsCypressCT) {
     render('config/cypress-ct')
   }
+  if (needsNightwatch) {
+    render('config/nightwatch')
+  }
+  if (needsNightwatchCT) {
+    render('config/nightwatch-ct')
+  }
   if (needsPlaywright) {
     render('config/playwright')
   }
@@ -349,6 +367,12 @@ async function init() {
     }
     if (needsVitest) {
       render('tsconfig/vitest')
+    }
+    if (needsNightwatch) {
+      render('tsconfig/nightwatch')
+    }
+    if (needsNightwatchCT) {
+      render('tsconfig/nightwatch-ct')
     }
   }
 
@@ -438,7 +462,9 @@ async function init() {
       needsTypeScript,
       needsVitest,
       needsCypress,
+      needsNightwatch,
       needsPlaywright,
+      needsNightwatchCT,
       needsCypressCT,
       needsEslint
     })
@@ -447,7 +473,9 @@ async function init() {
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(`  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`)
+    console.log(
+      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
+    )
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
