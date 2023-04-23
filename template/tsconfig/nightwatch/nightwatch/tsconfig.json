@@ -3,14 +3,9 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
     "isolatedModules": false,
     "preserveValueImports": false,
-    "importsNotUsedAsValues": "preserve",
-    "lib": ["dom"],
+    "lib": ["ESNext", "dom"],
     "types": ["nightwatch"]
   },
   "include": ["../tests/e2e/**/*"],

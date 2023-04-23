@@ -123,6 +123,17 @@ ${commandFor('test:e2e', '--debug')}
     `
   }
 
+  if (needsNightwatch) {
+    npmScriptsDescriptions += `
+### Run Headed Component Tests with [Nightwatch Component Testing](https://nightwatchjs.org/guide/component-testing/introduction.html)
+  
+\`\`\`sh
+${commandFor('test:unit')}
+${commandFor('test:unit -- --headless # for headless testing')}
+\`\`\`
+`
+  }
+
   if (needsPlaywright) {
     npmScriptsDescriptions += `
 ### Run End-to-End Tests with [Playwright](https://playwright.dev)
