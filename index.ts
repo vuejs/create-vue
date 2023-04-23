@@ -14,6 +14,7 @@ import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/d
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import renderEslint from './utils/renderEslint'
+import { FILES_TO_FILTER } from './utils/filterList'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -418,7 +419,7 @@ async function init() {
       root,
       () => {},
       (filepath) => {
-        if (filepath.endsWith('.js')) {
+        if (filepath.endsWith('.js') && !FILES_TO_FILTER.includes(path.basename(filepath))) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
           if (fs.existsSync(tsFilePath)) {
             fs.unlinkSync(filepath)

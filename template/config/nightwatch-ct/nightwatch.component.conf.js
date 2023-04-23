@@ -1,4 +1,3 @@
-// @ts-nocheck
 //
 // Refer to the online docs for more details:
 // https://nightwatchjs.org/guide/configuration/nightwatch-configuration-file.html
@@ -16,7 +15,7 @@
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
-  src_folders: ['tests/e2e'],
+  src_folders: ['src/components/**/__tests__/*'],
 
   // See https://nightwatchjs.org/guide/concepts/page-object-model.html
   page_objects_path: [],
@@ -28,10 +27,10 @@ module.exports = {
   custom_assertions_path: ['nightwatch/custom-assertions'],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-plugins.html
-  plugins: [],
+  plugins: ['@nightwatch/vue'],
 
   // See https://nightwatchjs.org/guide/concepts/test-globals.html#external-test-globals
-  globals_path: 'nightwatch/globals.ts',
+  globals_path: '',
 
   webdriver: {},
 
