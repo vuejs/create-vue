@@ -3,11 +3,12 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",
+    "composite": true,
     "isolatedModules": false,
     "preserveValueImports": false,
     "lib": ["ESNext", "dom"],
     "types": ["nightwatch"]
   },
-  "include": ["../tests/e2e/**/*"],
+  "include": ["../node_modules/@nightwatch/**/*", "../src/components/**/*", "../tests/e2e/**/*"],
   "files": ["nightwatch.d.ts"]
 }

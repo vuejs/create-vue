@@ -1,5 +1,3 @@
-// TODO: Remove @ts-nocheck and fix types
-// @ts-nocheck
 describe('Hello World', function () {
   before((browser) => {
     browser.init()
