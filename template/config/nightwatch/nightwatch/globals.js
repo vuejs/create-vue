@@ -1,17 +1,11 @@
 const waitOn = require('wait-on')
-const { spawn } = require('child_process')
+const { setup, teardown } = require('@nightwatch/vue')
 
-let serverPid = null
 const serverPort = process.env.CI ? '4173' : '5173'
 
 module.exports = {
   before(done) {
-    const commandType = process.env.CI ? 'preview' : 'dev'
-    serverPid = spawn('npm', ['run', commandType, '--', '--host'], {
-      cwd: process.cwd(),
-      stdio: 'inherit'
-    }).pid
-
+    setup()
     waitOn({
       resources: [`http-get://localhost:${serverPort}`],
       verbose: true,
@@ -24,8 +18,6 @@ module.exports = {
   },
 
   after() {
-    if (serverPid) {
-      process.kill(serverPid)
-    }
+    teardown()
   }
 }

@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "test:e2e": "nightwatch --config nightwatch.e2e.conf.js"
+    "test:e2e": "nightwatch tests/e2e"
   },
   "devDependencies": {
     "nightwatch": "^2.6.20",
+    "@nightwatch/vue": "0.4.2",
+    "@vitejs/plugin-vue": "^4.1.0",
     "@types/nightwatch": "^2.3.23",
     "geckodriver": "^3.2.0",
     "chromedriver": "^112.0.0",

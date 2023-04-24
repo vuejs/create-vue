@@ -77,14 +77,18 @@ importers:
 
   template/config/nightwatch:
     specifiers:
+      '@nightwatch/vue': 0.4.2
       '@types/nightwatch': ^2.3.23
+      '@vitejs/plugin-vue': ^4.1.0
       chromedriver: ^112.0.0
       geckodriver: ^3.2.0
       nightwatch: ^2.6.20
       ts-node: ^10.9.1
       wait-on: ^7.0.1
     devDependencies:
+      '@nightwatch/vue': 0.4.2
       '@types/nightwatch': 2.3.23
+      '@vitejs/plugin-vue': 4.1.0
       chromedriver: 112.0.0
       geckodriver: 3.2.0
       nightwatch: 2.6.20_v2gzsudym6oasy2x36dz3t7hle
@@ -93,26 +97,9 @@ importers:
 
   template/config/nightwatch-ct:
     specifiers:
-      '@nightwatch/vue': 0.4.3
-      '@types/nightwatch': ^2.3.23
-      '@vitejs/plugin-vue': ^4.1.0
-      chromedriver: ^112.0.0
-      geckodriver: ^3.2.0
-      nightwatch: ^2.6.20
-      ts-node: ^10.9.1
       vue: ^3.2.47
-      wait-on: ^7.0.1
     dependencies:
       vue: 3.2.47
-    devDependencies:
-      '@nightwatch/vue': 0.4.3_vue@3.2.47
-      '@types/nightwatch': 2.3.23
-      '@vitejs/plugin-vue': 4.1.0_vue@3.2.47
-      chromedriver: 112.0.0
-      geckodriver: 3.2.0
-      nightwatch: 2.6.20_v2gzsudym6oasy2x36dz3t7hle
-      ts-node: 10.9.1
-      wait-on: 7.0.1
 
   template/config/pinia:
     specifiers:
@@ -1022,15 +1009,15 @@ packages:
     resolution: {integrity: sha512-GEBeGoXVmTYPtNC4Yq34vfgxf6mlFyEagxpsfH18Qe5BvctF2rprX+wI5dKBm9p5IqHo6ZOcXHCufOeP3cjuOw==}
     dev: true
 
-  /@nightwatch/vue/0.4.3_vue@3.2.47:
-    resolution: {integrity: sha512-miub73JCtTCdgChVwgjmxQi+Yy2a2tbTdyBILJt1Y5Vq/jMQjPtrvEZF74F6VSEX75GCtoZFPWa7aK1/7QLYmw==}
+  /@nightwatch/vue/0.4.2:
+    resolution: {integrity: sha512-6YaEVhPCRTB+ffE78id9wT82DrDrJne9VDaw6Oj+OgD0UuaT6r6m1ip0Mly3lyyq11t4Je98g7XXHxX+ET87fQ==}
     dependencies:
       '@nightwatch/esbuild-utils': 0.2.1
       '@types/nightwatch': 2.3.23
-      '@vitejs/plugin-vue': 4.1.0_vite@4.3.1+vue@3.2.47
+      '@vitejs/plugin-vue': 4.1.0_vite@4.3.1
       get-port: 5.1.1
       vite: 4.3.1
-      vite-plugin-nightwatch: 0.4.4_vue@3.2.47
+      vite-plugin-nightwatch: 0.4.4
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -1311,6 +1298,24 @@ packages:
       - supports-color
     dev: true
 
+  /@vitejs/plugin-vue/4.1.0:
+    resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.0.0
+      vue: ^3.2.25
+    dev: true
+
+  /@vitejs/plugin-vue/4.1.0_vite@4.3.1:
+    resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.0.0
+      vue: ^3.2.25
+    dependencies:
+      vite: 4.3.1
+    dev: true
+
   /@vitejs/plugin-vue/4.1.0_vite@4.3.1+vue@3.2.47:
     resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -1319,16 +1324,6 @@ packages:
       vue: ^3.2.25
     dependencies:
       vite: 4.3.1
-      vue: 3.2.47
-    dev: true
-
-  /@vitejs/plugin-vue/4.1.0_vue@3.2.47:
-    resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    peerDependencies:
-      vite: ^4.0.0
-      vue: ^3.2.25
-    dependencies:
       vue: 3.2.47
     dev: true
 
@@ -1503,6 +1498,16 @@ packages:
       '@vue/shared': 3.2.47
       csstype: 2.6.21
 
+  /@vue/server-renderer/3.2.47:
+    resolution: {integrity: sha512-dN9gc1i8EvmP9RCzvneONXsKfBRgqFeFZLurmHOveL7oH6HiFXJw5OGu294n1nHc/HMgTy6LulU/tv5/A7f/LA==}
+    peerDependencies:
+      vue: 3.2.47
+    dependencies:
+      '@vue/compiler-ssr': 3.2.47
+      '@vue/shared': 3.2.47
+    dev: true
+    optional: true
+
   /@vue/server-renderer/3.2.47_vue@3.2.47:
     resolution: {integrity: sha512-dN9gc1i8EvmP9RCzvneONXsKfBRgqFeFZLurmHOveL7oH6HiFXJw5OGu294n1nHc/HMgTy6LulU/tv5/A7f/LA==}
     peerDependencies:
@@ -1514,6 +1519,17 @@ packages:
 
   /@vue/shared/3.2.47:
     resolution: {integrity: sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==}
+
+  /@vue/test-utils/2.3.2:
+    resolution: {integrity: sha512-hJnVaYhbrIm0yBS0+e1Y0Sj85cMyAi+PAbK4JHqMRUZ6S622Goa+G7QzkRSyvCteG8wop7tipuEbHoZo26wsSA==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      js-beautify: 1.14.6
+    optionalDependencies:
+      '@vue/compiler-dom': 3.2.47
+      '@vue/server-renderer': 3.2.47
+    dev: true
 
   /@vue/test-utils/2.3.2_vue@3.2.47:
     resolution: {integrity: sha512-hJnVaYhbrIm0yBS0+e1Y0Sj85cMyAi+PAbK4JHqMRUZ6S622Goa+G7QzkRSyvCteG8wop7tipuEbHoZo26wsSA==}
@@ -5841,12 +5857,12 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-nightwatch/0.4.4_vue@3.2.47:
+  /vite-plugin-nightwatch/0.4.4:
     resolution: {integrity: sha512-gOsT2QBl0RrzqdGhasWJBHIeJzMw0Ztho7oZyYbWrmNR9Xuj8a+okb6VsEtuTMEbJ12C4UE+XnJVW0jA+qnrYA==}
     dependencies:
       '@nightwatch/esbuild-utils': 0.2.1
       '@types/nightwatch': 2.3.23
-      '@vue/test-utils': 2.3.2_vue@3.2.47
+      '@vue/test-utils': 2.3.2
       assertion-error: 1.1.0
       mkdirp: 2.1.6
       sinon: 15.0.4

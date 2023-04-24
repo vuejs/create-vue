@@ -1,18 +1,8 @@
 {
   "scripts": {
-    "test:unit": "nightwatch --config nightwatch.component.conf.js"
+    "test:unit": "nightwatch src/components/**/__tests__/*"
   },
   "dependencies": {
     "vue": "^3.2.47"
-  },
-  "devDependencies": {
-    "nightwatch": "^2.6.20",
-    "@nightwatch/vue": "0.4.2",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "@types/nightwatch": "^2.3.23",
-    "geckodriver": "^3.2.0",
-    "chromedriver": "^112.0.0",
-    "ts-node": "^10.9.1",
-    "wait-on": "^7.0.1"
   }
 }
