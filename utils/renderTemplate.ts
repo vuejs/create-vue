@@ -41,6 +41,15 @@ function renderTemplate(src, dest) {
     return
   }
 
+  if (filename === 'extensions.json' && fs.existsSync(dest)) {
+    // merge instead of overwriting
+    const existing = JSON.parse(fs.readFileSync(dest, 'utf8'))
+    const newExtensionJson = JSON.parse(fs.readFileSync(src, 'utf8'))
+    const pkg = sortDependencies(deepMerge(existing, newExtensionJson))
+    fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
+    return
+  }
+
   if (filename.startsWith('_')) {
     // rename `_file` to `.file`
     dest = path.resolve(path.dirname(dest), filename.replace(/^_/, '.'))
