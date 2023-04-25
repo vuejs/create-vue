@@ -10,5 +10,8 @@
     "types": ["nightwatch"]
   },
   "include": ["../node_modules/@nightwatch/**/*", "../src/components/**/*", "../tests/e2e/**/*"],
+  "ts-node": {
+    "files": true
+  },
   "files": ["nightwatch.d.ts"]
 }
