@@ -44,9 +44,9 @@ function renderTemplate(src, dest) {
   if (filename === 'extensions.json' && fs.existsSync(dest)) {
     // merge instead of overwriting
     const existing = JSON.parse(fs.readFileSync(dest, 'utf8'))
-    const newExtensionJson = JSON.parse(fs.readFileSync(src, 'utf8'))
-    const pkg = sortDependencies(deepMerge(existing, newExtensionJson))
-    fs.writeFileSync(dest, JSON.stringify(pkg, null, 2) + '\n')
+    const newExtensions = JSON.parse(fs.readFileSync(src, 'utf8'))
+    const extensions = deepMerge(existing, newExtensions)
+    fs.writeFileSync(dest, JSON.stringify(extensions, null, 2) + '\n')
     return
   }
 

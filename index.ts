@@ -320,7 +320,6 @@ async function init() {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root)
   }
-
   // Render base template
   render('base')
 
