@@ -173,7 +173,7 @@ jobs:
         working-directory: ../sample-project
         run: |
           pnpm exec cypress cache list
-          pnpm exec cypress install --force
+          pnpm exec cypress install
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
