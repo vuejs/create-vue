@@ -307,7 +307,6 @@ async function init() {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root)
   }
-
   // Render base template
   render('base')
 
@@ -447,7 +446,9 @@ async function init() {
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(`  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`)
+    console.log(
+      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
+    )
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
