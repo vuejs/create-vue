@@ -307,13 +307,6 @@ async function init() {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root)
   }
-  const addPlaywrightExtensions = function addPlaywrightExtensions() {
-    const extensionDir = path.resolve(root, '.vscode/extensions.json')
-    const json = fs.readFileSync(extensionDir, 'utf-8')
-    const obj = JSON.parse(json)
-    obj.recommendations.push('ms-playwright.playwright')
-    fs.writeFileSync(path.resolve(root, '.vscode/extensions.json'), JSON.stringify(obj, null, 2))
-  }
   // Render base template
   render('base')
 
@@ -338,7 +331,6 @@ async function init() {
   }
   if (needsPlaywright) {
     render('config/playwright')
-    addPlaywrightExtensions()
   }
   if (needsTypeScript) {
     render('config/typescript')
