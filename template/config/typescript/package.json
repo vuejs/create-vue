@@ -2,7 +2,7 @@
   "scripts": {
     "build": "run-p type-check build-only",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build --force"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
