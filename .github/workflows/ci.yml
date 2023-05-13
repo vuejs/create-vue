@@ -98,6 +98,8 @@ jobs:
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
       FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }}
+      # Sometimes the Linux runner can't verify Cypress in 30s
+      CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -129,7 +131,8 @@ jobs:
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
           echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
-      - name: Cache Cypress binaries
+      - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
+        name: Cache Cypress binaries
         id: cache-cypress
         uses: actions/cache@v3
         with:
@@ -137,7 +140,8 @@ jobs:
           key: ${{ runner.os }}-cypress-bin
           path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-      - name: Cache Playwright's binary
+      - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
+        name: Cache Playwright's binary
         uses: actions/cache@v3
         with:
           # Playwright removes unused browsers automatically
