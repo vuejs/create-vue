@@ -22,6 +22,7 @@ export default function generateReadme({
   needsCypress,
   needsCypressCT,
   needsPlaywright,
+  needsPlaywrightCT,
   needsVitest,
   needsEslint
 }) {
@@ -120,6 +121,26 @@ ${commandFor('test:e2e', '--project=chromium')}
 ${commandFor('test:e2e', 'tests/example.spec.ts')}
 # Runs the tests in debug mode
 ${commandFor('test:e2e', '--debug')}
+\`\`\`
+`
+  }
+
+  if (needsCypressCT) {
+    npmScriptsDescriptions += `
+### Run Component Tests with [Playwright](https://playwright.dev/docs/test-components)
+
+\`\`\`sh
+# Install browsers for the first run
+npx playwright install
+
+# Runs the component tests
+${commandFor('test:unit')}
+# Runs the tests only on Chromium
+${commandFor('test:unit', '--project=chromium')}
+# Runs the tests of a specific file
+${commandFor('test:unit', 'tests/example.spec.ts')}
+# Runs the tests in debug mode
+${commandFor('test:unit', '--debug')}
 \`\`\`
 `
   }

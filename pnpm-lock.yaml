@@ -113,6 +113,15 @@ importers:
         specifier: ^1.33.0
         version: 1.33.0
 
+  template/config/playwright-ct:
+    devDependencies:
+      '@playwright/experimental-ct-vue':
+        specifier: ^1.33.0
+        version: 1.33.0(@types/node@18.16.8)(vite@4.3.5)(vue@3.3.2)
+      '@playwright/test':
+        specifier: ^1.33.0
+        version: 1.33.0
+
   template/config/router:
     dependencies:
       vue:
@@ -785,12 +794,46 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@playwright/experimental-ct-core@1.33.0(@types/node@18.16.8):
+    resolution: {integrity: sha512-mfCpAdYDL5fR9PRZKXbgbeHBkWJZMRWmHofE4r9IP1D8tne/Sy1oZSnan7S8c1HGy6d9MAedpsn802uCzsYzCg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@playwright/test': 1.33.0
+      vite: 4.3.5(@types/node@18.16.8)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - terser
+    dev: true
+
+  /@playwright/experimental-ct-vue@1.33.0(@types/node@18.16.8)(vite@4.3.5)(vue@3.3.2):
+    resolution: {integrity: sha512-vsYRD0MI3a7RLXhVOrAPqRJyaPajOn9lq3JFjZivNRrQylYhuNZW48vOhuzzlm40KZD3HCpUye2UzHhEAHuMxA==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@playwright/experimental-ct-core': 1.33.0(@types/node@18.16.8)
+      '@vitejs/plugin-vue': 4.2.3(vite@4.3.5)(vue@3.3.2)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - sass
+      - stylus
+      - sugarss
+      - terser
+      - vite
+      - vue
+    dev: true
+
   /@playwright/test@1.33.0:
     resolution: {integrity: sha512-YunBa2mE7Hq4CfPkGzQRK916a4tuZoVx/EpLjeWlTVOnD4S2+fdaQZE0LJkbfhN5FTSKNLdcl7MoT5XB37bTkg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@types/node': 18.16.2
+      '@types/node': 18.16.8
       playwright-core: 1.33.0
     optionalDependencies:
       fsevents: 2.3.2
@@ -875,10 +918,6 @@ packages:
 
   /@types/node@16.18.3:
     resolution: {integrity: sha512-jh6m0QUhIRcZpNv7Z/rpN+ZWXOicUUQbSoWks7Htkbb9IjFQj4kzcX/xFCkjstCj5flMsN8FiSvt+q+Tcs4Llg==}
-    dev: true
-
-  /@types/node@18.16.2:
-    resolution: {integrity: sha512-GQW/JL/5Fz/0I8RpeBG9lKp0+aNcXEaVL71c0D2Q0QHDTFvlYKT7an0onCUXj85anv7b4/WesqdfchLc0jtsCg==}
     dev: true
 
   /@types/node@18.16.8:
