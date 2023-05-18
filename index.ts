@@ -228,6 +228,9 @@ async function init() {
             },
             {
               title: 'Playwright',
+              description: answers.needsVitest
+                ? undefined
+                : 'also supports unit testing with Playwright Component Testing',
               value: 'playwright'
             }
           ]
@@ -284,6 +287,7 @@ async function init() {
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
+  const needsPlaywrightCT = needsPlaywright && !needsVitest
 
   const root = path.join(cwd, targetDir)
 
@@ -332,6 +336,9 @@ async function init() {
   }
   if (needsPlaywright) {
     render('config/playwright')
+  }
+  if (needsPlaywrightCT) {
+    render('config/playwright-ct')
   }
   if (needsTypeScript) {
     render('config/typescript')
@@ -447,7 +454,9 @@ async function init() {
   console.log(`\nDone. Now run:\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(`  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`)
+    console.log(
+      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
+    )
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
