@@ -49,7 +49,7 @@ h3 {
   i {
     top: calc(50% - 25px);
     left: -26px;
-    position: absolute;
+    position: relative;
     border: 1px solid var(--color-border);
     background: var(--color-background);
     border-radius: 8px;
@@ -60,19 +60,13 @@ h3 {
   .item:before {
     content: ' ';
     border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
+    position: relative;
   }
 
   .item:after {
     content: ' ';
     border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
+    position: relative;
   }
 
   .item:first-of-type:before {
