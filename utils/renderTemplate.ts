@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 import deepMerge from './deepMerge'
 import sortDependencies from './sortDependencies'
@@ -70,7 +71,7 @@ function renderTemplate(src, dest, callbacks) {
 
     // Add a callback to the array for late usage when template files are being processed
     callbacks.push(async (dataStore) => {
-      const getData = (await import(src)).default
+      const getData = (await import(pathToFileURL(src).toString())).default
 
       // Though current `getData` are all sync, we still retain the possibility of async
       dataStore[dest] = await getData({
