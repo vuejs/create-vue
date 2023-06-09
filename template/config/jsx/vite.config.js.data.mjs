@@ -1,7 +1,7 @@
 export default function getData({ oldData }) {
   const vueJsxPlugin = {
     name: 'vueJsx',
-    importer: "import vueJsx from '@vitejs/plugin-vue'",
+    importer: "import vueJsx from '@vitejs/plugin-vue-jsx'",
     initializer: 'vueJsx()'
   }
 
