@@ -402,7 +402,7 @@ async function init() {
     render('entry/default')
   }
 
-  // an external data store for callbacks to share data
+  // An external data store for callbacks to share data
   const dataStore = {}
   // Process callbacks
   for (const cb of callbacks) {
