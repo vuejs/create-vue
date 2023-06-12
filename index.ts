@@ -7,6 +7,8 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
+import ejs from 'ejs'
+
 import * as banners from './utils/banners'
 
 import renderTemplate from './utils/renderTemplate'
@@ -316,9 +318,10 @@ async function init() {
   // when bundling for node and the format is cjs
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template')
+  const callbacks = []
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
-    renderTemplate(templateDir, root)
+    renderTemplate(templateDir, root, callbacks)
   }
   // Render base template
   render('base')
@@ -398,6 +401,29 @@ async function init() {
   } else {
     render('entry/default')
   }
+
+  // An external data store for callbacks to share data
+  const dataStore = {}
+  // Process callbacks
+  for (const cb of callbacks) {
+    await cb(dataStore)
+  }
+
+  // EJS template rendering
+  preOrderDirectoryTraverse(
+    root,
+    () => {},
+    (filepath) => {
+      if (filepath.endsWith('.ejs')) {
+        const template = fs.readFileSync(filepath, 'utf-8')
+        const dest = filepath.replace(/\.ejs$/, '')
+        const content = ejs.render(template, dataStore[dest])
+
+        fs.writeFileSync(dest, content)
+        fs.unlinkSync(filepath)
+      }
+    }
+  )
 
   // Cleanup.
 
