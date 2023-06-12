@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -117,14 +117,14 @@ importers:
         specifier: ^4.2.3
         version: 4.2.3(vite@4.3.9)(vue@3.3.4)
       chromedriver:
-        specifier: ^112.0.1
-        version: 112.0.1
+        specifier: ^114.0.2
+        version: 114.0.2
       geckodriver:
         specifier: ^3.2.0
         version: 3.2.0
       nightwatch:
         specifier: ^2.6.21
-        version: 2.6.21(chromedriver@112.0.1)(geckodriver@3.2.0)
+        version: 2.6.21(chromedriver@114.0.2)(geckodriver@3.2.0)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.16.16)(typescript@5.0.4)
@@ -1829,8 +1829,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /chromedriver@112.0.1:
-    resolution: {integrity: sha512-ieQzvellbtPY4MUrFzzayC1bZa/HoBsGXejUQJhAPWcYALxtkjUZNUYWbojMjIzf8iIhVda9VvdXiRKqdlN7ow==}
+  /chromedriver@114.0.2:
+    resolution: {integrity: sha512-v0qrXRBknbxqmtklG7RWOe3TJ/dLaHhtB0jVxE7BAdYERxUjEaNRyqBwoGgVfQDibHCB0swzvzsj158nnfPgZw==}
     engines: {node: '>=16'}
     hasBin: true
     requiresBuild: true
@@ -4229,7 +4229,7 @@ packages:
       axe-core: 4.7.0
     dev: true
 
-  /nightwatch@2.6.21(chromedriver@112.0.1)(geckodriver@3.2.0):
+  /nightwatch@2.6.21(chromedriver@114.0.2)(geckodriver@3.2.0):
     resolution: {integrity: sha512-jNet9MjhPiU0LY3upxTF1PN65u93f0bHm7ref3+W800GZ64/rlETIZ2s6MvTbokJH/TAhEYVBtdfy05KDvXKtw==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
@@ -4251,7 +4251,7 @@ packages:
       assertion-error: 1.1.0
       boxen: 5.1.2
       chai-nightwatch: 0.5.3
-      chromedriver: 112.0.1
+      chromedriver: 114.0.2
       ci-info: 3.3.0
       cli-table3: 0.6.3
       didyoumean: 1.2.2
