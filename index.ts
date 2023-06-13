@@ -296,7 +296,7 @@ async function init() {
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
-  const needsNightwatch = argv.nightwatch || argv.tests || needsE2eTesting === 'nightwatch'
+  const needsNightwatch = argv.nightwatch || needsE2eTesting === 'nightwatch'
   const needsNightwatchCT = needsNightwatch && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
 
