@@ -9,14 +9,14 @@ import { red, green, bold } from 'kolorist'
 
 import ejs from 'ejs'
 
-import * as banners from './utils/banners'
+import * as banners from './utils/banners.js'
 
-import renderTemplate from './utils/renderTemplate'
-import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
-import generateReadme from './utils/generateReadme'
-import getCommand from './utils/getCommand'
-import renderEslint from './utils/renderEslint'
-import { FILES_TO_FILTER } from './utils/filterList'
+import renderTemplate from './utils/renderTemplate.js'
+import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
+import generateReadme from './utils/generateReadme.js'
+import getCommand from './utils/getCommand.js'
+import renderEslint from './utils/renderEslint.js'
+import { FILES_TO_FILTER } from './utils/filterList.js'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -107,7 +107,8 @@ async function init() {
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv.vueUse
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -127,6 +128,7 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
+    needsVueUse?: boolean
   } = {}
 
   try {
@@ -265,6 +267,14 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsVueUse',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add VueUse - Collection of essential Composition Utilities?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -290,7 +300,8 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    needsVueUse = argv.vueUse
   } = result
 
   const { needsE2eTesting } = result
@@ -382,6 +393,10 @@ async function init() {
   // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+  }
+
+  if (needsVueUse) {
+    render('config/vueUse')
   }
 
   // Render code template.
