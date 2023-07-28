@@ -107,7 +107,9 @@ async function init() {
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv.less ??
+      argv.scss
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -127,6 +129,7 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
+    needsCssPreprocessor?: false | 'less' | 'scss'
   } = {}
 
   try {
@@ -143,6 +146,8 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+    // - Add Scss for css style preprocessor?
+    // - Add Less for css style preprocessor?
     result = await prompts(
       [
         {
@@ -265,6 +270,23 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsCssPreprocessor',
+          type: () => (isFeatureFlagsUsed ? null : 'select'),
+          message: 'Add a CSS style preprocessor Solution?',
+          initial: 0,
+          choices: (prev, answers) => [
+            { title: 'No', value: false },
+            {
+              title: 'Less',
+              value: 'less'
+            },
+            {
+              title: 'Scss/Sass',
+              value: 'scss'
+            }
+          ]
         }
       ],
       {
@@ -290,15 +312,17 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    needsCssPreprocessor = argv.scss || argv.less
   } = result
-
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
   const needsNightwatch = argv.nightwatch || needsE2eTesting === 'nightwatch'
   const needsNightwatchCT = needsNightwatch && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
+  const needsLess = argv.less || needsCssPreprocessor === 'less'
+  const needsScss = argv.scss || needsCssPreprocessor === 'scss'
 
   const root = path.join(cwd, targetDir)
 
@@ -382,6 +406,16 @@ async function init() {
   // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+  }
+
+  // Render CSS Preprocessor config
+  if (needsCssPreprocessor) {
+    if (needsScss) {
+      render('config/scss')
+    }
+    if (needsLess) {
+      render('config/less')
+    }
   }
 
   // Render code template.
