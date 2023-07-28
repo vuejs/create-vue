@@ -422,7 +422,8 @@ async function init() {
   // prettier-ignore
   const codeTemplate =
     (needsTypeScript ? 'typescript-' : '') +
-    (needsRouter ? 'router' : 'default')
+    (needsRouter ? 'router' : 'default') +
+    (needsLess ? '-less': '') + (needsScss ? '-scss': '')
   render(`code/${codeTemplate}`)
 
   // Render entry file (main.js/ts).
