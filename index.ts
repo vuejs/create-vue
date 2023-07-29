@@ -422,9 +422,16 @@ async function init() {
   // prettier-ignore
   const codeTemplate =
     (needsTypeScript ? 'typescript-' : '') +
+    (needsRouter ? 'router' : 'default')
+  render(`code/${codeTemplate}`)
+
+  // Render app.vue in order to avoid too many unnecessary files
+  // prettier-ignore
+  const appTemplate =
+    (needsTypeScript ? 'typescript-' : '') +
     (needsRouter ? 'router' : 'default') +
     (needsLess ? '-less': '') + (needsScss ? '-scss': '')
-  render(`code/${codeTemplate}`)
+  render(`app/${appTemplate}`)
 
   // Render entry file (main.js/ts).
   if (needsPinia && needsRouter) {
