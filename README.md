@@ -9,16 +9,16 @@ The recommended way to start a Vite-powered Vue project
 ## Usage
 
 ```sh
-npm create vue@3
+npm create vue@latest
 ```
 
 Or, if you need to support IE11, you can create a Vue 2 project with:
 
 ```sh
-npm create vue@2
+npm create vue@legacy
 ```
 
-Note that the version number (`@3` or `@2`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
+Note that the tag name (`@latest` or `@legacy`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
 
 ## Difference from Vue CLI
 
