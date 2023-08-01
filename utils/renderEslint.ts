@@ -73,4 +73,13 @@ export default function renderEslint(
     const fullPath = path.resolve(rootDir, fileName)
     fs.writeFileSync(fullPath, content as string, 'utf-8')
   }
+
+  // update .vscode/extensions.json
+  const extensionsJsonPath = path.resolve(rootDir, '.vscode/extensions.json')
+  const existingExtensions = JSON.parse(fs.readFileSync(extensionsJsonPath, 'utf8'))
+  existingExtensions.recommendations.push('dbaeumer.vscode-eslint')
+  if (needsPrettier) {
+    existingExtensions.recommendations.push('esbenp.prettier-vscode')
+  }
+  fs.writeFileSync(extensionsJsonPath, JSON.stringify(existingExtensions, null, 2) + '\n', 'utf-8')
 }
