@@ -274,7 +274,7 @@ async function init() {
         {
           name: 'needsCssPreprocessor',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: 'Add a CSS style preprocessor Solution?',
+          message: 'Add a CSS preprocessor?',
           initial: 0,
           choices: (prev, answers) => [
             { title: 'No', value: false },
