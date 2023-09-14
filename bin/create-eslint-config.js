@@ -275,8 +275,8 @@ const { pkg: pkgToExtend, files } = createConfig({
 
 // TODO:
 // Add `lint` command to package.json
-// - Vue CLI -> vue-cli-service lint
-// - Otherwise -> eslint ... (extensions vary based on the language)
+// - eslint ... (extensions vary based on the language)
+// - note: for Vue CLI, remove the @vue/cli-plugin-eslint and override its lint command, they are too outdated.
 // Add a `format` command to package.json when prettier is used
 // TODO:
 // Add a note about that Vue CLI projects may need a `tsconfig.eslint.json`
