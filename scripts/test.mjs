@@ -23,7 +23,7 @@ for (const projectName of projects) {
 
   console.log(`Building ${projectName}`)
   await $`pnpm build`
-  
+
   if ('@playwright/test' in packageJSON.devDependencies) {
     await $`pnpm playwright install --with-deps`
   }

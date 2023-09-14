@@ -2,7 +2,7 @@ export default function getData({ oldData }) {
   return {
     ...oldData,
 
-    plugins: oldData.plugins.map(plugin => {
+    plugins: oldData.plugins.map((plugin) => {
       if (plugin.id !== 'nightwatch') {
         return plugin
       }
