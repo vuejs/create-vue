@@ -8,5 +8,12 @@
   ],
   "rangeStrategy": "bump",
   "labels": ["dependencies"],
-  "ignoreDeps": ["esbuild", "typescript", "node"]
+  "ignoreDeps": ["esbuild", "node"],
+  "packageRules": [
+    {
+      "matchDepNames": ["typescript"],
+      "rangeStrategy": "replace",
+      "groupName": "typescript"
+    }
+  ]
 }
