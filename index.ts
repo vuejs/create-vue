@@ -5,7 +5,7 @@ import * as path from 'node:path'
 
 import minimist from 'minimist'
 import prompts from 'prompts'
-import { red, green, bold } from 'kolorist'
+import { red, green, bold, yellow } from 'kolorist'
 
 import ejs from 'ejs'
 
@@ -115,6 +115,33 @@ async function init() {
 
   const forceOverwrite = argv.force
 
+  type LocaleItem = {
+    message: string
+    dirForPrompts?: string[]
+    toggleOptions?: string[]
+    selectOptions?: { title: string; desc?: string }[]
+  }
+  let locales: {
+    projectName: LocaleItem
+    shouldOverwrite: LocaleItem
+    packageName: LocaleItem
+    needsTypeScript: LocaleItem
+    needsJsx: LocaleItem
+    needsRouter: LocaleItem
+    needsPinia: LocaleItem
+    needsVitest: LocaleItem
+    needsE2eTesting: LocaleItem
+    needsEslint: LocaleItem
+    needsPrettier: LocaleItem
+    errors: {
+      operationCancelled: string
+    }
+    infos: {
+      scaffolding: string
+      done: string
+    }
+  }
+
   let result: {
     projectName?: string
     shouldOverwrite?: boolean
@@ -130,6 +157,26 @@ async function init() {
   } = {}
 
   try {
+    const i18n = await prompts(
+      [
+        {
+          name: 'language',
+          type: 'select',
+          message: 'Select Language',
+          choices: () => [
+            { title: 'English', value: 'en-US' },
+            { title: '简体中文', value: 'zh-CN' }
+          ]
+        }
+      ],
+      {
+        onCancel: () => {
+          console.log(yellow('>') + ' Default Language is English')
+        }
+      }
+    )
+    const localesRoot = path.resolve(__dirname, 'locales')
+    locales = require(path.resolve(localesRoot, `${i18n.language || 'en-US'}.json`))
     // Prompts:
     // - Project name:
     //   - whether to overwrite the existing directory or not?
@@ -148,25 +195,30 @@ async function init() {
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
-          message: 'Project name:',
+          message: locales.projectName.message,
           initial: defaultProjectName,
           onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'toggle'),
           message: () => {
             const dirForPrompt =
-              targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
+              targetDir === '.'
+                ? locales.shouldOverwrite.dirForPrompts[0]
+                : `${locales.shouldOverwrite.dirForPrompts[1]}Target directory "${targetDir}"`
 
-            return `${dirForPrompt} is not empty. Remove existing files and continue?`
-          }
+            return `${dirForPrompt} ${locales.shouldOverwrite.message}`
+          },
+          initial: true,
+          active: locales.shouldOverwrite.toggleOptions[0],
+          inactive: locales.shouldOverwrite.toggleOptions[1]
         },
         {
           name: 'overwriteChecker',
           type: (prev, values) => {
             if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ' Operation cancelled')
+              throw new Error(red('✖') + ` ${locales.errors.operationCancelled}`)
             }
             return null
           }
@@ -174,73 +226,76 @@ async function init() {
         {
           name: 'packageName',
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: 'Package name:',
+          message: locales.packageName.message,
           initial: () => toValidPackageName(targetDir),
           validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
           name: 'needsTypeScript',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add TypeScript?',
+          message: locales.needsTypeScript.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsTypeScript.toggleOptions[0],
+          inactive: locales.needsTypeScript.toggleOptions[1]
         },
         {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add JSX Support?',
+          message: locales.needsJsx.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsJsx.toggleOptions[0],
+          inactive: locales.needsJsx.toggleOptions[1]
         },
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vue Router for Single Page Application development?',
+          message: locales.needsRouter.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsRouter.toggleOptions[0],
+          inactive: locales.needsRouter.toggleOptions[1]
         },
         {
           name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Pinia for state management?',
+          message: locales.needsPinia.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsPinia.toggleOptions[0],
+          inactive: locales.needsPinia.toggleOptions[1]
         },
         {
           name: 'needsVitest',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vitest for Unit Testing?',
+          message: locales.needsVitest.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsVitest.toggleOptions[0],
+          inactive: locales.needsVitest.toggleOptions[1]
         },
         {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: 'Add an End-to-End Testing Solution?',
+          message: locales.needsE2eTesting.message,
           initial: 0,
           choices: (prev, answers) => [
-            { title: 'No', value: false },
             {
-              title: 'Cypress',
+              title: locales.needsE2eTesting.selectOptions[0].title,
+              value: false
+            },
+            {
+              title: locales.needsE2eTesting.selectOptions[1].title,
               description: answers.needsVitest
                 ? undefined
-                : 'also supports unit testing with Cypress Component Testing',
+                : locales.needsE2eTesting.selectOptions[1].desc,
               value: 'cypress'
             },
             {
-              title: 'Nightwatch',
+              title: locales.needsE2eTesting.selectOptions[2].title,
               description: answers.needsVitest
                 ? undefined
-                : 'also supports unit testing with Nightwatch Component Testing',
+                : locales.needsE2eTesting.selectOptions[2].desc,
               value: 'nightwatch'
             },
             {
-              title: 'Playwright',
+              title: locales.needsE2eTesting.selectOptions[3].title,
               value: 'playwright'
             }
           ]
@@ -248,10 +303,10 @@ async function init() {
         {
           name: 'needsEslint',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add ESLint for code quality?',
+          message: locales.needsEslint.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsEslint.toggleOptions[0],
+          inactive: locales.needsEslint.toggleOptions[1]
         },
         {
           name: 'needsPrettier',
@@ -261,15 +316,15 @@ async function init() {
             }
             return 'toggle'
           },
-          message: 'Add Prettier for code formatting?',
+          message: locales.needsPrettier.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: locales.needsPrettier.toggleOptions[0],
+          inactive: locales.needsPrettier.toggleOptions[1]
         }
       ],
       {
         onCancel: () => {
-          throw new Error(red('✖') + ' Operation cancelled')
+          throw new Error(red('✖') + ` ${locales.errors.operationCancelled}`)
         }
       }
     )
@@ -308,7 +363,7 @@ async function init() {
     fs.mkdirSync(root)
   }
 
-  console.log(`\nScaffolding project in ${root}...`)
+  console.log(`\n${locales.infos.scaffolding} ${root}...`)
 
   const pkg = { name: packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
@@ -496,7 +551,7 @@ async function init() {
     })
   )
 
-  console.log(`\nDone. Now run:\n`)
+  console.log(`\n${locales.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(
