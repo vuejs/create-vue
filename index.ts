@@ -15,6 +15,7 @@ import renderTemplate from './utils/renderTemplate'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
+import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
 import { FILES_TO_FILTER } from './utils/filterList'
 
@@ -115,32 +116,7 @@ async function init() {
 
   const forceOverwrite = argv.force
 
-  type LocaleItem = {
-    message: string
-    dirForPrompts?: string[]
-    toggleOptions?: string[]
-    selectOptions?: { title: string; desc?: string }[]
-  }
-  let locales: {
-    projectName: LocaleItem
-    shouldOverwrite: LocaleItem
-    packageName: LocaleItem
-    needsTypeScript: LocaleItem
-    needsJsx: LocaleItem
-    needsRouter: LocaleItem
-    needsPinia: LocaleItem
-    needsVitest: LocaleItem
-    needsE2eTesting: LocaleItem
-    needsEslint: LocaleItem
-    needsPrettier: LocaleItem
-    errors: {
-      operationCancelled: string
-    }
-    infos: {
-      scaffolding: string
-      done: string
-    }
-  }
+  const language = getLanguage()
 
   let result: {
     projectName?: string
@@ -157,26 +133,6 @@ async function init() {
   } = {}
 
   try {
-    const i18n = await prompts(
-      [
-        {
-          name: 'language',
-          type: 'select',
-          message: 'Select Language',
-          choices: () => [
-            { title: 'English', value: 'en-US' },
-            { title: '简体中文', value: 'zh-CN' }
-          ]
-        }
-      ],
-      {
-        onCancel: () => {
-          console.log(yellow('>') + ' Default Language is English')
-        }
-      }
-    )
-    const localesRoot = path.resolve(__dirname, 'locales')
-    locales = require(path.resolve(localesRoot, `${i18n.language || 'en-US'}.json`))
     // Prompts:
     // - Project name:
     //   - whether to overwrite the existing directory or not?
@@ -195,7 +151,7 @@ async function init() {
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
-          message: locales.projectName.message,
+          message: language.projectName.message,
           initial: defaultProjectName,
           onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
         },
@@ -205,20 +161,20 @@ async function init() {
           message: () => {
             const dirForPrompt =
               targetDir === '.'
-                ? locales.shouldOverwrite.dirForPrompts[0]
-                : `${locales.shouldOverwrite.dirForPrompts[1]}Target directory "${targetDir}"`
+                ? language.shouldOverwrite.dirForPrompts[0]
+                : `${language.shouldOverwrite.dirForPrompts[1]}Target directory "${targetDir}"`
 
-            return `${dirForPrompt} ${locales.shouldOverwrite.message}`
+            return `${dirForPrompt} ${language.shouldOverwrite.message}`
           },
           initial: true,
-          active: locales.shouldOverwrite.toggleOptions[0],
-          inactive: locales.shouldOverwrite.toggleOptions[1]
+          active: language.shouldOverwrite.toggleOptions[0],
+          inactive: language.shouldOverwrite.toggleOptions[1]
         },
         {
           name: 'overwriteChecker',
           type: (prev, values) => {
             if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ` ${locales.errors.operationCancelled}`)
+              throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
             }
             return null
           }
@@ -226,76 +182,76 @@ async function init() {
         {
           name: 'packageName',
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: locales.packageName.message,
+          message: language.packageName.message,
           initial: () => toValidPackageName(targetDir),
           validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
         },
         {
           name: 'needsTypeScript',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsTypeScript.message,
+          message: language.needsTypeScript.message,
           initial: false,
-          active: locales.needsTypeScript.toggleOptions[0],
-          inactive: locales.needsTypeScript.toggleOptions[1]
+          active: language.needsTypeScript.toggleOptions[0],
+          inactive: language.needsTypeScript.toggleOptions[1]
         },
         {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsJsx.message,
+          message: language.needsJsx.message,
           initial: false,
-          active: locales.needsJsx.toggleOptions[0],
-          inactive: locales.needsJsx.toggleOptions[1]
+          active: language.needsJsx.toggleOptions[0],
+          inactive: language.needsJsx.toggleOptions[1]
         },
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsRouter.message,
+          message: language.needsRouter.message,
           initial: false,
-          active: locales.needsRouter.toggleOptions[0],
-          inactive: locales.needsRouter.toggleOptions[1]
+          active: language.needsRouter.toggleOptions[0],
+          inactive: language.needsRouter.toggleOptions[1]
         },
         {
           name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsPinia.message,
+          message: language.needsPinia.message,
           initial: false,
-          active: locales.needsPinia.toggleOptions[0],
-          inactive: locales.needsPinia.toggleOptions[1]
+          active: language.needsPinia.toggleOptions[0],
+          inactive: language.needsPinia.toggleOptions[1]
         },
         {
           name: 'needsVitest',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsVitest.message,
+          message: language.needsVitest.message,
           initial: false,
-          active: locales.needsVitest.toggleOptions[0],
-          inactive: locales.needsVitest.toggleOptions[1]
+          active: language.needsVitest.toggleOptions[0],
+          inactive: language.needsVitest.toggleOptions[1]
         },
         {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: locales.needsE2eTesting.message,
+          message: language.needsE2eTesting.message,
           initial: 0,
           choices: (prev, answers) => [
             {
-              title: locales.needsE2eTesting.selectOptions[0].title,
+              title: language.needsE2eTesting.selectOptions[0].title,
               value: false
             },
             {
-              title: locales.needsE2eTesting.selectOptions[1].title,
+              title: language.needsE2eTesting.selectOptions[1].title,
               description: answers.needsVitest
                 ? undefined
-                : locales.needsE2eTesting.selectOptions[1].desc,
+                : language.needsE2eTesting.selectOptions[1].desc,
               value: 'cypress'
             },
             {
-              title: locales.needsE2eTesting.selectOptions[2].title,
+              title: language.needsE2eTesting.selectOptions[2].title,
               description: answers.needsVitest
                 ? undefined
-                : locales.needsE2eTesting.selectOptions[2].desc,
+                : language.needsE2eTesting.selectOptions[2].desc,
               value: 'nightwatch'
             },
             {
-              title: locales.needsE2eTesting.selectOptions[3].title,
+              title: language.needsE2eTesting.selectOptions[3].title,
               value: 'playwright'
             }
           ]
@@ -303,10 +259,10 @@ async function init() {
         {
           name: 'needsEslint',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: locales.needsEslint.message,
+          message: language.needsEslint.message,
           initial: false,
-          active: locales.needsEslint.toggleOptions[0],
-          inactive: locales.needsEslint.toggleOptions[1]
+          active: language.needsEslint.toggleOptions[0],
+          inactive: language.needsEslint.toggleOptions[1]
         },
         {
           name: 'needsPrettier',
@@ -316,15 +272,15 @@ async function init() {
             }
             return 'toggle'
           },
-          message: locales.needsPrettier.message,
+          message: language.needsPrettier.message,
           initial: false,
-          active: locales.needsPrettier.toggleOptions[0],
-          inactive: locales.needsPrettier.toggleOptions[1]
+          active: language.needsPrettier.toggleOptions[0],
+          inactive: language.needsPrettier.toggleOptions[1]
         }
       ],
       {
         onCancel: () => {
-          throw new Error(red('✖') + ` ${locales.errors.operationCancelled}`)
+          throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
         }
       }
     )
@@ -363,7 +319,7 @@ async function init() {
     fs.mkdirSync(root)
   }
 
-  console.log(`\n${locales.infos.scaffolding} ${root}...`)
+  console.log(`\n${language.infos.scaffolding} ${root}...`)
 
   const pkg = { name: packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
@@ -551,7 +507,7 @@ async function init() {
     })
   )
 
-  console.log(`\n${locales.infos.done}\n`)
+  console.log(`\n${language.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(
