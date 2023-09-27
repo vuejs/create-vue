@@ -5,7 +5,7 @@ import * as path from 'node:path'
 
 import minimist from 'minimist'
 import prompts from 'prompts'
-import { red, green, bold, yellow } from 'kolorist'
+import { red, green, bold } from 'kolorist'
 
 import ejs from 'ejs'
 
