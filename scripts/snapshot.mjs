@@ -1,4 +1,5 @@
 #!/usr/bin/env zx
+import fs from 'node:fs'
 import 'zx/globals'
 
 $.verbose = false
@@ -76,7 +77,7 @@ for (const flags of flagCombinations) {
   const projectName = flags.join('-')
 
   console.log(`Removing previously generated project ${projectName}`)
-  await $`rm -rf ${projectName}`
+  fs.rmSync(projectName, { recursive: true, force: true })
 
   console.log(`Creating project ${projectName}`)
   await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
