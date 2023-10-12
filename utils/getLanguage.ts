@@ -3,9 +3,17 @@ import * as path from 'node:path'
 
 interface LanguageItem {
   message: string
-  dirForPrompts?: string[]
-  toggleOptions?: string[]
-  selectOptions?: { title: string; desc?: string }[]
+  dirForPrompts?: {
+    current: string
+    target: string
+  }
+  toggleOptions?: {
+    active: string
+    inactive: string
+  }
+  selectOptions?: {
+    [key: string]: { title: string; desc?: string }
+  }
 }
 
 interface Language {
@@ -22,6 +30,10 @@ interface Language {
   needsPrettier: LanguageItem
   errors: {
     operationCancelled: string
+  }
+  defaultToggleOptions: {
+    active: string
+    inactive: string
   }
   infos: {
     scaffolding: string

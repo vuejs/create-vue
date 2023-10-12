@@ -161,14 +161,14 @@ async function init() {
           message: () => {
             const dirForPrompt =
               targetDir === '.'
-                ? language.shouldOverwrite.dirForPrompts[0]
-                : `${language.shouldOverwrite.dirForPrompts[1]}Target directory "${targetDir}"`
+                ? language.shouldOverwrite.dirForPrompts.current
+                : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
 
             return `${dirForPrompt} ${language.shouldOverwrite.message}`
           },
           initial: true,
-          active: language.shouldOverwrite.toggleOptions[0],
-          inactive: language.shouldOverwrite.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'overwriteChecker',
@@ -191,40 +191,40 @@ async function init() {
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsTypeScript.message,
           initial: false,
-          active: language.needsTypeScript.toggleOptions[0],
-          inactive: language.needsTypeScript.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsJsx.message,
           initial: false,
-          active: language.needsJsx.toggleOptions[0],
-          inactive: language.needsJsx.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsRouter.message,
           initial: false,
-          active: language.needsRouter.toggleOptions[0],
-          inactive: language.needsRouter.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsPinia.message,
           initial: false,
-          active: language.needsPinia.toggleOptions[0],
-          inactive: language.needsPinia.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsVitest',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsVitest.message,
           initial: false,
-          active: language.needsVitest.toggleOptions[0],
-          inactive: language.needsVitest.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsE2eTesting',
@@ -233,25 +233,25 @@ async function init() {
           initial: 0,
           choices: (prev, answers) => [
             {
-              title: language.needsE2eTesting.selectOptions[0].title,
+              title: language.needsE2eTesting.selectOptions.negative.title,
               value: false
             },
             {
-              title: language.needsE2eTesting.selectOptions[1].title,
+              title: language.needsE2eTesting.selectOptions.cypress.title,
               description: answers.needsVitest
                 ? undefined
-                : language.needsE2eTesting.selectOptions[1].desc,
+                : language.needsE2eTesting.selectOptions.cypress.desc,
               value: 'cypress'
             },
             {
-              title: language.needsE2eTesting.selectOptions[2].title,
+              title: language.needsE2eTesting.selectOptions.nightwatch.title,
               description: answers.needsVitest
                 ? undefined
-                : language.needsE2eTesting.selectOptions[2].desc,
+                : language.needsE2eTesting.selectOptions.nightwatch.desc,
               value: 'nightwatch'
             },
             {
-              title: language.needsE2eTesting.selectOptions[3].title,
+              title: language.needsE2eTesting.selectOptions.playwright.title,
               value: 'playwright'
             }
           ]
@@ -261,8 +261,8 @@ async function init() {
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsEslint.message,
           initial: false,
-          active: language.needsEslint.toggleOptions[0],
-          inactive: language.needsEslint.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsPrettier',
@@ -274,8 +274,8 @@ async function init() {
           },
           message: language.needsPrettier.message,
           initial: false,
-          active: language.needsPrettier.toggleOptions[0],
-          inactive: language.needsPrettier.toggleOptions[1]
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {

@@ -3,55 +3,57 @@
     "message": "Project name:"
   },
   "shouldOverwrite": {
-    "dirForPrompts": ["Current directory", "Target directory"],
-    "message": "is not empty. Remove existing files and continue?",
-    "toggleOptions": ["Yes", "No"]
+    "dirForPrompts": {
+      "current": "Current directory",
+      "target": "Target directory"
+    },
+    "message": "is not empty. Remove existing files and continue?"
   },
   "packageName": {
     "message": "Package name:"
   },
   "needsTypeScript": {
-    "message": "Add TypeScript?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add TypeScript?"
   },
   "needsJsx": {
-    "message": "Add JSX Support?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add JSX Support?"
   },
   "needsRouter": {
-    "message": "Add Vue Router for Single Page Application development?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add Vue Router for Single Page Application development?"
   },
   "needsPinia": {
-    "message": "Add Pinia for state management?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add Pinia for state management?"
   },
   "needsVitest": {
-    "message": "Add Vitest for Unit Testing?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add Vitest for Unit Testing?"
   },
   "needsE2eTesting": {
     "message": "Add an End-to-End Testing Solution?",
-    "selectOptions": [
-      { "title": "No" },
-      { "title": "Cypress", "desc": "also supports unit testing with Cypress Component Testing" },
-      {
+    "selectOptions": {
+      "negative": { "title": "No" },
+      "cypress": {
+        "title": "Cypress",
+        "desc": "also supports unit testing with Cypress Component Testing"
+      },
+      "nightwatch": {
         "title": "Nightwatch",
         "desc": "also supports unit testing with Nightwatch Component Testing"
       },
-      { "title": "Playwright" }
-    ]
+      "playwright": { "title": "Playwright" }
+    }
   },
   "needsEslint": {
-    "message": "Add ESLint for code quality?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add ESLint for code quality?"
   },
   "needsPrettier": {
-    "message": "Add Prettier for code formatting?",
-    "toggleOptions": ["Yes", "No"]
+    "message": "Add Prettier for code formatting?"
   },
   "errors": {
     "operationCancelled": "Operation cancelled"
+  },
+  "defaultToggleOptions": {
+    "active": "Yes",
+    "inactive": "No"
   },
   "infos": {
     "scaffolding": "Scaffolding project in",
