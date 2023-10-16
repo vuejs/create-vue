@@ -1,0 +1,62 @@
+{
+  "projectName": {
+    "message": "请输入项目名称："
+  },
+  "shouldOverwrite": {
+    "dirForPrompts": {
+      "current": "当前目录",
+      "target": "目标文件夹"
+    },
+    "message": "非空，是否覆盖？"
+  },
+  "packageName": {
+    "message": "请输入包名称："
+  },
+  "needsTypeScript": {
+    "message": "是否使用 TypeScript 语法？"
+  },
+  "needsJsx": {
+    "message": "是否启用 JSX 支持？"
+  },
+  "needsRouter": {
+    "message": "是否引入 Vue Router 进行单页面应用开发？"
+  },
+  "needsPinia": {
+    "message": "是否引入 Pinia 用于状态管理？"
+  },
+  "needsVitest": {
+    "message": "是否引入 Vitest 用于单元测试？"
+  },
+  "needsE2eTesting": {
+    "message": "是否要引入一款端到端（End to End）测试工具？",
+    "selectOptions": {
+      "negative": { "title": "不需要" },
+      "cypress": {
+        "title": "Cypress",
+        "desc": "同时支持基于 Cypress Component Testing 的单元测试"
+      },
+      "nightwatch": {
+        "title": "Nightwatch",
+        "desc": "同时支持基于 Nightwatch Component Testing 的单元测试"
+      },
+      "playwright": { "title": "Playwright" }
+    }
+  },
+  "needsEslint": {
+    "message": "是否引入 ESLint 用于代码质量检测？"
+  },
+  "needsPrettier": {
+    "message": "是否引入 Prettier 用于代码格式化？"
+  },
+  "errors": {
+    "operationCancelled": "操作取消"
+  },
+  "defaultToggleOptions": {
+    "active": "是",
+    "inactive": "否"
+  },
+  "infos": {
+    "scaffolding": "正在构建项目",
+    "done": "项目构建完成，可执行以下命令："
+  }
+}
