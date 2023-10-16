@@ -43,17 +43,16 @@ interface Language {
 
 function getLocale() {
   const shellLocale =
-    process.env.LC_ALL ||
-    process.env.LANG || // Unix maybe
-    process.env.LC_CTYPE || // C libraries maybe
-    process.env.LANGSPEC || // Windows maybe
-    Intl.DateTimeFormat().resolvedOptions().locale || // Node.js - Internationalization support
-    'en-US'
+    Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
+    process.env.LC_ALL || // POSIX locale environment variables
+    process.env.LC_MESSAGES ||
+    process.env.LANG ||
+    // TODO: Windows support if needed, could consider https://www.npmjs.com/package/os-locale
+    'en-US' // Default fallback
 
   const locale = shellLocale.split('.')[0].replace('_', '-')
 
-  // locale might be 'C' or something else
-  return locale.length < 5 ? 'en-US' : locale
+  return locale
 }
 
 export default function getLanguage() {
