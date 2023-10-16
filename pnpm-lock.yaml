@@ -117,14 +117,14 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(vite@4.4.11)(vue@3.3.4)
       chromedriver:
-        specifier: ^117.0.3
-        version: 117.0.3
+        specifier: ^118.0.1
+        version: 118.0.1
       geckodriver:
         specifier: ^4.2.1
         version: 4.2.1
       nightwatch:
         specifier: ^3.2.1
-        version: 3.2.1(chromedriver@117.0.3)(geckodriver@4.2.1)
+        version: 3.2.1(chromedriver@118.0.1)(geckodriver@4.2.1)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.18.4)(typescript@5.2.2)
@@ -1850,8 +1850,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /chromedriver@117.0.3:
-    resolution: {integrity: sha512-c2rk2eGK5zZFBJMdviUlAJfQEBuPNIKfal4+rTFVYAmrWbMPYAqPozB+rIkc1lDP/Ryw44lPiqKglrI01ILhTQ==}
+  /chromedriver@118.0.1:
+    resolution: {integrity: sha512-GlGfyRE47IuSJnuadIiDy89EMDMQFBVWxUmiclLJKzQhFsiWAtcIr/mNOxjljZdsw9IwIOQEkrB9wympKYFPLw==}
     engines: {node: '>=18'}
     hasBin: true
     requiresBuild: true
@@ -4134,7 +4134,7 @@ packages:
       axe-core: 4.8.1
     dev: true
 
-  /nightwatch@3.2.1(chromedriver@117.0.3)(geckodriver@4.2.1):
+  /nightwatch@3.2.1(chromedriver@118.0.1)(geckodriver@4.2.1):
     resolution: {integrity: sha512-94IdpTPxuKK8HIT5M3fNClC7MgsAzsFQEOAGzXFQNTRpBSCBGBDvowNCv/ItZscMi4byV8Mj25wPz7m/d17e+g==}
     engines: {node: '>= 16'}
     hasBin: true
@@ -4162,7 +4162,7 @@ packages:
       boxen: 5.1.2
       chai-nightwatch: 0.5.3
       chalk: 4.1.2
-      chromedriver: 117.0.3
+      chromedriver: 118.0.1
       ci-info: 3.3.0
       cli-table3: 0.6.3
       copyfiles: 2.4.1
