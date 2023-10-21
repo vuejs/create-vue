@@ -3,6 +3,7 @@ import * as path from 'node:path'
 
 interface LanguageItem {
   message: string
+  invalidMessage?: string
   dirForPrompts?: {
     current: string
     target: string

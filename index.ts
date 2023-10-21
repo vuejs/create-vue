@@ -184,7 +184,7 @@ async function init() {
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
           message: language.packageName.message,
           initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
+          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
           name: 'needsTypeScript',
