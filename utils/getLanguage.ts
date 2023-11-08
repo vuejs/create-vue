@@ -56,8 +56,8 @@ function getLocale() {
   return locale
 }
 
-export default function getLanguage() {
-  const locale = getLocale()
+export default function getLanguage(lang?: string) {
+  const locale = lang ?? getLocale()
 
   // Note here __dirname would not be transpiled,
   // so it refers to the __dirname of the file `<repositoryRoot>/outfile.cjs`
@@ -72,9 +72,9 @@ export default function getLanguage() {
     )
   }
 
-  const lang: Language = doesLanguageExist
+  const _lang: Language = doesLanguageExist
     ? require(languageFilePath)
     : require(path.resolve(localesRoot, 'en-US.json'))
 
-  return lang
+  return _lang
 }

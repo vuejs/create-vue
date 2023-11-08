@@ -116,7 +116,7 @@ async function init() {
 
   const forceOverwrite = argv.force
 
-  const language = getLanguage()
+  const language = getLanguage(argv.lang)
 
   let result: {
     projectName?: string
