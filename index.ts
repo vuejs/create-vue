@@ -229,6 +229,7 @@ async function init() {
         {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
+          hint: language.needsE2eTesting.hint,
           message: language.needsE2eTesting.message,
           initial: 0,
           choices: (prev, answers) => [
