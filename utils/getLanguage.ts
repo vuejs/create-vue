@@ -42,6 +42,31 @@ interface Language {
   }
 }
 
+/**
+ *
+ * This function is used to link obtained locale with correct locale file that could make locales reusable
+ *
+ * @param locale the obtained locale
+ * @returns locale that linked with correct name
+ */
+function linkLocale(locale: string) {
+  let linkedLocale: string
+  switch (locale) {
+    case 'zh-TW':
+      linkedLocale = 'zh-Hant'
+      break
+    case 'zh-HK':
+      linkedLocale = 'zh-Hant'
+      break
+    case 'zh-MO':
+      linkedLocale = 'zh-Hant'
+    default:
+      linkedLocale = locale
+  }
+
+  return linkLocale
+}
+
 function getLocale() {
   const shellLocale =
     Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
@@ -51,7 +76,7 @@ function getLocale() {
     // TODO: Windows support if needed, could consider https://www.npmjs.com/package/os-locale
     'en-US' // Default fallback
 
-  const locale = shellLocale.split('.')[0].replace('_', '-')
+  const locale = linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 
   return locale
 }
