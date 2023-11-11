@@ -66,8 +66,6 @@ function linkLocale(locale: string) {
       linkedLocale = 'zh-Hant'
       break
     case 'zh-CN':
-      linkedLocale = 'zh-Hans'
-      break
     case 'zh-SG':
       linkedLocale = 'zh-Hans'
       break
@@ -88,8 +86,6 @@ function getLocale() {
     'en-US' // Default fallback
 
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
-
-  return locale
 }
 
 export default function getLanguage() {
@@ -108,9 +104,9 @@ export default function getLanguage() {
     )
   }
 
-  const lang: Language = doesLanguageExist
-    ? require(languageFilePath)
-    : require(path.resolve(localesRoot, 'en-US.json'))
+  const lang = (
+    doesLanguageExist ? require(languageFilePath) : require(path.resolve(localesRoot, 'en-US.json'))
+  ) as Language
 
   return lang
 }
