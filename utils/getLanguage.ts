@@ -53,7 +53,6 @@ interface Language {
 function linkLocale(locale: string) {
   let linkedLocale: string
   switch (locale) {
-    case 'zh-MO':
     case 'zh-TW':
     case 'zh-HK':
     case 'zh-MO':
