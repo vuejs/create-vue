@@ -60,7 +60,11 @@ function linkLocale(locale: string) {
       linkedLocale = 'zh-Hant'
       break
     case 'zh-MO':
+    case 'zh-TW':
+    case 'zh-HK':
+    case 'zh-MO':
       linkedLocale = 'zh-Hant'
+      break
     case 'zh-CN':
       linkedLocale = 'zh-Hans'
       break
@@ -71,7 +75,7 @@ function linkLocale(locale: string) {
       linkedLocale = locale
   }
 
-  return linkLocale
+  return linkedLocale
 }
 
 function getLocale() {
@@ -83,7 +87,7 @@ function getLocale() {
     // TODO: Windows support if needed, could consider https://www.npmjs.com/package/os-locale
     'en-US' // Default fallback
 
-  const locale = linkLocale(shellLocale.split('.')[0].replace('_', '-'))
+  return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 
   return locale
 }
