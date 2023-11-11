@@ -44,7 +44,7 @@ interface Language {
 
 /**
  *
- * This function is used to link obtained locale with correct locale file that could make locales reusable
+ * This function is used to link obtained locale with correct locale file in order to make locales reusable
  *
  * @param locale the obtained locale
  * @returns locale that linked with correct name
