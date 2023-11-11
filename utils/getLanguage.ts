@@ -60,6 +60,12 @@ function linkLocale(locale: string) {
       break
     case 'zh-MO':
       linkedLocale = 'zh-Hant'
+    case 'zh-CN':
+      linkedLocale = 'zh-Hans'
+      break
+    case 'zh-SG':
+      linkedLocale = 'zh-Hans'
+      break
     default:
       linkedLocale = locale
   }
