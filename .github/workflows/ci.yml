@@ -27,6 +27,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
       - run: pnpm build
+      - run: pnpm test:unit
 
       # Use cache to share the output across different jobs
       # No need to cache node_modules because they are all bundled
