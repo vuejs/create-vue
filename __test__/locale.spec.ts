@@ -25,7 +25,7 @@ describe('should match name regex', () => {
 })
 
 describe('should include full keys', () => {
-  const structure: Language = require('../schema/locale.json')
+  const structure = require('../schema/locale.json') as Language
   locales.forEach((locale) => {
     it(`for ${locale}`, () => {
       expect(includeAllKeys(require(`../locales/${locale}`), structure)).toBeTruthy()
@@ -34,7 +34,7 @@ describe('should include full keys', () => {
 })
 
 describe("should not include unnecessary keys", () => {
-  const structure: Language = require('../schema/locale.json')
+  const structure = require('../schema/locale.json') as Language
   locales.forEach((locale) => {
     it(`for ${locale}`, () => {
       expect(excludeKeys(require(`../locales/${locale}`), structure)).toBeTruthy()
