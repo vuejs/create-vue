@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
 import { Language } from '../utils/getLanguage'
-import { isValid } from './untils'
+import { isValid } from './utils'
 
 const locales = readdirSync(resolve(__dirname, '../locales'))
 
