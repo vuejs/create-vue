@@ -2,18 +2,19 @@ import { it, describe, expect } from 'vitest'
 import getCommand from '../utils/getCommand'
 
 describe("should generate correct command", () => {
-    const template = {
-        packageManager: ["pnpm", "yarn", "npm"],
-        commands: ["install", "dev", "build"],
-        correct: ["pnpm install", "pnpm dev", "pnpm build", "yarn", "yarn dev", "yarn build", "npm install", "npm run dev", "npm run build"]
-    }
-    template.packageManager.forEach((manager) => {
-        template.commands.forEach((command) => {
-            it(`packageManager: ${manager}, command: ${command}`, () => {
-                expect(getCommand(manager, command)).satisfy((generatedCommand) => {
-                    return template.correct.includes(generatedCommand)
-                })
-            })
-        })
+    it('for yarn', () => {
+        expect(getCommand('yarn', 'install')).toBe('yarn')
+        expect(getCommand('yarn', 'dev')).toBe('yarn dev')
+        expect(getCommand('yarn', 'build')).toBe('yarn build')
+    })
+    it('for npm', () => {
+        expect(getCommand('npm', 'install')).toBe('npm install')
+        expect(getCommand('npm', 'dev')).toBe('npm run dev')
+        expect(getCommand('npm', 'build')).toBe('npm run build')
+    })
+    it('for pnpm', () => {
+        expect(getCommand('pnpm', 'install')).toBe('pnpm install')
+        expect(getCommand('pnpm', 'dev')).toBe('pnpm dev')
+        expect(getCommand('pnpm', 'build')).toBe('pnpm build')
     })
 })

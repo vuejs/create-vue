@@ -21,7 +21,7 @@
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
-    "test:unit": "vitest run -u",
+    "test:unit": "vitest",
     "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "repository": {
