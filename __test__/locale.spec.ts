@@ -9,10 +9,18 @@ const locales = readdirSync(resolve(__dirname, '../locales')).filter((file) => {
 })
 
 describe('should match name regex', () => {
+  /**
+   * 
+   * both can match normal locale or reusable locale
+   * 
+   * @example normal locale: en-US
+   * @example reusable locale: zh-Hant
+   */
+  const regex = /^[a-zA-Z]{2}(-[a-zA-Z]{2})*.json$|^[a-zA-Z]{2}(-[a-zA-z]{4})*.json$/
   locales.forEach((locale) => {
-      it(`for ${locale}`, () => {
-        expect(locale).toMatch(/^[a-zA-Z]{2}(-[a-zA-Z]{2})*.json$/)
-      })
+    it(`for ${locale}`, () => {
+      expect(locale).toMatch(regex)
+    })
   })
 })
 
