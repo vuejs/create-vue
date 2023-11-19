@@ -7,11 +7,13 @@
 export function includeAllKeys(obj: Object, schema: Object) {
   for (let key in schema) {
     if (!obj.hasOwnProperty(key)) {
+      console.log(`key '${key}' lost`)
       return false
     }
     if (schema[key] !== null) {
       if (typeof schema[key] === 'string') {
         if (typeof obj[key] !== schema[key]) {
+          console.error(`the type of ${obj.toString()} is incorrect`)
           return false
         }
       } else if (typeof schema[key] === 'object') {
@@ -33,6 +35,7 @@ export function includeAllKeys(obj: Object, schema: Object) {
 export function excludeKeys(obj: Object, schema: Object) {
   for (let key in obj) {
     if (!schema.hasOwnProperty(key)) {
+      console.error(`unexpected key: ${key}`)
       return false
     }
     if (schema[key] !== null && typeof schema[key] === 'object') {

@@ -5,7 +5,7 @@ import { Language } from '../utils/getLanguage'
 import { includeAllKeys, excludeKeys } from './utils'
 
 const locales = readdirSync(resolve(__dirname, '../locales')).filter((file) => {
-  return file.includes('.json') // exclude unnecessary files
+  return file.includes('.json')
 })
 
 describe('should match name regex', () => {
@@ -17,6 +17,7 @@ describe('should match name regex', () => {
    * @example reusable locale: zh-Hant
    */
   const regex = /^[a-zA-Z]{2}(-[a-zA-Z]{2})*.json$|^[a-zA-Z]{2}(-[a-zA-z]{4})*.json$/
+  
   locales.forEach((locale) => {
     it(`for ${locale}`, () => {
       expect(locale).toMatch(regex)
@@ -33,7 +34,7 @@ describe('should include full keys', () => {
   })
 })
 
-describe("should not include unnecessary keys", () => {
+describe("should not include extra keys", () => {
   const structure = require('../schema/locale.json') as Language
   locales.forEach((locale) => {
     it(`for ${locale}`, () => {
