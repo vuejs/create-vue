@@ -30,7 +30,7 @@ export function includeAllKeys(obj: Object, schema: Object) {
  *
  * @param obj object that needs to be validated
  * @param schema template for validation
- * @returns whether include unnecessary keys
+ * @returns whether include extra keys
  */
 export function excludeKeys(obj: Object, schema: Object) {
   for (let key in obj) {
