@@ -13,7 +13,7 @@ export function includeAllKeys(obj: Object, schema: Object) {
     if (schema[key] !== null) {
       if (typeof schema[key] === 'string') {
         if (typeof obj[key] !== schema[key]) {
-          console.error(`the type of ${obj.toString()} is incorrect`)
+          console.error(`the type of ${key} is incorrect`)
           return false
         }
       } else if (typeof schema[key] === 'object') {
