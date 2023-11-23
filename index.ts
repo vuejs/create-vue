@@ -447,17 +447,20 @@ async function init() {
 
   if (needsTypeScript) {
     // Convert the JavaScript template to the TypeScript
-    // Check all the remaining `.js` files:
-    //   - If the corresponding TypeScript version already exists, remove the `.js` version.
-    //   - Otherwise, rename the `.js` file to `.ts`
+    // Check all the remaining `.js`/`.cjs` files:
+    //   - If the corresponding TypeScript version already exists, remove the `.js`/`.cjs` version.
+    //   - Otherwise, rename the `.js`/`.cjs` file to `.ts`
     // Remove `jsconfig.json`, because we already have tsconfig.json
     // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
     preOrderDirectoryTraverse(
       root,
       () => {},
       (filepath) => {
-        if (filepath.endsWith('.js') && !FILES_TO_FILTER.includes(path.basename(filepath))) {
-          const tsFilePath = filepath.replace(/\.js$/, '.ts')
+        if (
+          (filepath.endsWith('.js') || filepath.endsWith('.cjs')) &&
+          !FILES_TO_FILTER.includes(path.basename(filepath))
+        ) {
+          const tsFilePath = filepath.replace(/\.c?js$/, '.ts')
           if (fs.existsSync(tsFilePath)) {
             fs.unlinkSync(filepath)
           } else {

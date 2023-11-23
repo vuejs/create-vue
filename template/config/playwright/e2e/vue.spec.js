@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 // See here how to get started:
 // https://playwright.dev/docs/intro
