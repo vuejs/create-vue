@@ -18,7 +18,7 @@ interface LanguageItem {
   }
 }
 
-interface Language {
+export interface Language {
   projectName: LanguageItem
   shouldOverwrite: LanguageItem
   packageName: LanguageItem
