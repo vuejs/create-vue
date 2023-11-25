@@ -1,41 +1,8 @@
 import { it, describe, expect } from 'vitest'
 import sortDependencies from '../utils/sortDependencies'
 
-describe('should output correct sorted value', () => {
-  it('#1', () => {
-    const packageJson = {
-      "devDependencies": {
-        "@vitejs/plugin-vue": "^4.4.0",
-        "@vitejs/plugin-vue-jsx": "^3.0.2",
-        "eslint": "^8.49.0",
-        "eslint-plugin-cypress": "^2.15.1",
-        "vite": "^4.4.11",
-        "vitest": "^0.34.6",
-        "@vue/test-utils": "^2.4.1",
-        "cypress": "^13.3.1",
-        "eslint-plugin-vue": "^9.17.0",
-        "jsdom": "^22.1.0",
-        "start-server-and-test": "^2.0.1",
-      }
-    }
-    expect(sortDependencies(packageJson)).toStrictEqual({
-      "devDependencies": {
-        "@vitejs/plugin-vue": "^4.4.0",
-        "@vitejs/plugin-vue-jsx": "^3.0.2",
-        "@vue/test-utils": "^2.4.1",
-        "cypress": "^13.3.1",
-        "eslint": "^8.49.0",
-        "eslint-plugin-cypress": "^2.15.1",
-        "eslint-plugin-vue": "^9.17.0",
-        "jsdom": "^22.1.0",
-        "start-server-and-test": "^2.0.1",
-        "vite": "^4.4.11",
-        "vitest": "^0.34.6"
-      }
-    }
-    )
-  })
-  it('#2', () => {
+describe('sortDependencies', () => {
+  it('should sort dependencies and dev dependencies', () => {
     const packageJson = {
       "dependencies": {
         "vue": "^3.3.4",
