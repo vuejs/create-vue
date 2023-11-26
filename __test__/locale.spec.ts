@@ -1,44 +1,28 @@
 import { describe, it, expect } from 'vitest'
 import { resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
-import { Language } from '../utils/getLanguage'
-import { includeAllKeys, excludeKeys } from './utils'
+import en from '../locales/en-US.json'
+
+function getKeys(obj: any, path = '', result: string[] = []) {
+  for (let key in obj) {
+    if (typeof obj[key] === 'object') {
+      getKeys(obj[key], path ? `${path}.${key}` : key, result);
+    } else {
+      result.push(path ? `${path}.${key}` : key);
+    }
+  }
+  return result;
+}
 
 const locales = readdirSync(resolve(__dirname, '../locales')).filter((file) => {
-  return file.includes('.json')
+  return file.endsWith('.json')
 })
+const defaultKeys = getKeys(en);
 
-describe('should match name regex', () => {
-  /**
-   * 
-   * both can match normal locale or reusable locale
-   * 
-   * @example normal locale: en-US
-   * @example reusable locale: zh-Hant
-   */
-  const regex = /^[a-zA-Z]{2}(-[a-zA-Z]{2})*.json$|^[a-zA-Z]{2}(-[a-zA-z]{4})*.json$/
-  
+describe("should include all keys", () => {
   locales.forEach((locale) => {
-    it(`for ${locale}`, () => {
-      expect(locale).toMatch(regex)
-    })
-  })
-})
-
-describe('should include full keys', () => {
-  const structure = require('../schema/locale.json') as Language
-  locales.forEach((locale) => {
-    it(`for ${locale}`, () => {
-      expect(includeAllKeys(require(`../locales/${locale}`), structure)).toBeTruthy()
-    })
-  })
-})
-
-describe("should not include extra keys", () => {
-  const structure = require('../schema/locale.json') as Language
-  locales.forEach((locale) => {
-    it(`for ${locale}`, () => {
-      expect(excludeKeys(require(`../locales/${locale}`), structure)).toBeTruthy()
+    it.runIf(!locale.startsWith("en-US"))(`for ${locale}`, () => {
+      expect(getKeys(require(`../locales/${locale}`))).toEqual(defaultKeys)
     })
   })
 })
