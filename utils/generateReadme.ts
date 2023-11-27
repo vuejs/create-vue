@@ -20,7 +20,9 @@ export default function generateReadme({
   packageManager,
   needsTypeScript,
   needsCypress,
+  needsNightwatch,
   needsCypressCT,
+  needsNightwatchCT,
   needsPlaywright,
   needsVitest,
   needsEslint
@@ -97,6 +99,37 @@ But it's still recommended to test the production build with \`test:e2e\` before
 \`\`\`sh
 ${commandFor('build')}
 ${commandFor('test:e2e')}
+\`\`\`
+`
+  }
+
+  if (needsNightwatch) {
+    npmScriptsDescriptions += `
+### Run End-to-End Tests with [Nightwatch](https://nightwatchjs.org/)
+
+\`\`\`sh
+# When using CI, the project must be built first.
+${commandFor('build')}
+
+# Runs the end-to-end tests
+${commandFor('test:e2e')}
+# Runs the tests only on Chrome
+${commandFor('test:e2e', '--env chrome')}
+# Runs the tests of a specific file
+${commandFor('test:e2e', `tests/e2e/example.${needsTypeScript ? 'ts' : 'js'}`)}
+# Runs the tests in debug mode
+${commandFor('test:e2e', '--debug')}
+\`\`\`
+    `
+  }
+
+  if (needsNightwatch) {
+    npmScriptsDescriptions += `
+### Run Headed Component Tests with [Nightwatch Component Testing](https://nightwatchjs.org/guide/component-testing/introduction.html)
+  
+\`\`\`sh
+${commandFor('test:unit')}
+${commandFor('test:unit -- --headless # for headless testing')}
 \`\`\`
 `
   }

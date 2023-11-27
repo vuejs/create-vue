@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build the package
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
-      - uses: actions/setup-node@v3
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'pnpm'
@@ -27,6 +27,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
       - run: pnpm build
+      - run: pnpm test:unit
 
       # Use cache to share the output across different jobs
       # No need to cache node_modules because they are all bundled
@@ -101,11 +102,11 @@ jobs:
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
-      - uses: actions/setup-node@v3
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -131,7 +132,8 @@ jobs:
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
           echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
-      - name: Cache Cypress binaries
+      - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
+        name: Cache Cypress binaries
         id: cache-cypress
         uses: actions/cache@v3
         with:
@@ -139,7 +141,8 @@ jobs:
           key: ${{ runner.os }}-cypress-bin
           path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-      - name: Cache Playwright's binary
+      - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
+        name: Cache Playwright's binary
         uses: actions/cache@v3
         with:
           # Playwright removes unused browsers automatically

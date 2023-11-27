@@ -7,13 +7,17 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
+import ejs from 'ejs'
+
 import * as banners from './utils/banners'
 
 import renderTemplate from './utils/renderTemplate'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
+import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
+import { FILES_TO_FILTER } from './utils/filterList'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -75,6 +79,7 @@ async function init() {
   // --with-tests / --tests (equals to `--vitest --cypress`)
   // --vitest
   // --cypress
+  // --nightwatch
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
@@ -101,6 +106,7 @@ async function init() {
       argv.tests ??
       argv.vitest ??
       argv.cypress ??
+      argv.nightwatch ??
       argv.playwright ??
       argv.eslint
     ) === 'boolean'
@@ -109,6 +115,8 @@ async function init() {
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
+
+  const language = getLanguage()
 
   let result: {
     projectName?: string
@@ -119,7 +127,7 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
-    needsE2eTesting?: false | 'cypress' | 'playwright'
+    needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
   } = {}
@@ -134,6 +142,7 @@ async function init() {
     // - Install Vue Router for SPA development?
     // - Install Pinia for state management?
     // - Add Cypress for testing?
+    // - Add Nightwatch for testing?
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
@@ -142,25 +151,30 @@ async function init() {
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
-          message: 'Project name:',
+          message: language.projectName.message,
           initial: defaultProjectName,
           onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'toggle'),
           message: () => {
             const dirForPrompt =
-              targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
+              targetDir === '.'
+                ? language.shouldOverwrite.dirForPrompts.current
+                : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
 
-            return `${dirForPrompt} is not empty. Remove existing files and continue?`
-          }
+            return `${dirForPrompt} ${language.shouldOverwrite.message}`
+          },
+          initial: true,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'overwriteChecker',
           type: (prev, values) => {
             if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ' Operation cancelled')
+              throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
             }
             return null
           }
@@ -168,66 +182,77 @@ async function init() {
         {
           name: 'packageName',
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: 'Package name:',
+          message: language.packageName.message,
           initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
+          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
           name: 'needsTypeScript',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add TypeScript?',
+          message: language.needsTypeScript.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add JSX Support?',
+          message: language.needsJsx.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vue Router for Single Page Application development?',
+          message: language.needsRouter.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Pinia for state management?',
+          message: language.needsPinia.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsVitest',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vitest for Unit Testing?',
+          message: language.needsVitest.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: 'Add an End-to-End Testing Solution?',
+          hint: language.needsE2eTesting.hint,
+          message: language.needsE2eTesting.message,
           initial: 0,
           choices: (prev, answers) => [
-            { title: 'No', value: false },
             {
-              title: 'Cypress',
+              title: language.needsE2eTesting.selectOptions.negative.title,
+              value: false
+            },
+            {
+              title: language.needsE2eTesting.selectOptions.cypress.title,
               description: answers.needsVitest
                 ? undefined
-                : 'also supports unit testing with Cypress Component Testing',
+                : language.needsE2eTesting.selectOptions.cypress.desc,
               value: 'cypress'
             },
             {
-              title: 'Playwright',
+              title: language.needsE2eTesting.selectOptions.nightwatch.title,
+              description: answers.needsVitest
+                ? undefined
+                : language.needsE2eTesting.selectOptions.nightwatch.desc,
+              value: 'nightwatch'
+            },
+            {
+              title: language.needsE2eTesting.selectOptions.playwright.title,
               value: 'playwright'
             }
           ]
@@ -235,10 +260,10 @@ async function init() {
         {
           name: 'needsEslint',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add ESLint for code quality?',
+          message: language.needsEslint.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsPrettier',
@@ -248,15 +273,15 @@ async function init() {
             }
             return 'toggle'
           },
-          message: 'Add Prettier for code formatting?',
+          message: language.needsPrettier.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
         onCancel: () => {
-          throw new Error(red('✖') + ' Operation cancelled')
+          throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
         }
       }
     )
@@ -283,6 +308,8 @@ async function init() {
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
+  const needsNightwatch = argv.nightwatch || needsE2eTesting === 'nightwatch'
+  const needsNightwatchCT = needsNightwatch && !needsVitest
   const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
 
   const root = path.join(cwd, targetDir)
@@ -293,7 +320,7 @@ async function init() {
     fs.mkdirSync(root)
   }
 
-  console.log(`\nScaffolding project in ${root}...`)
+  console.log(`\n${language.infos.scaffolding} ${root}...`)
 
   const pkg = { name: packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
@@ -303,9 +330,10 @@ async function init() {
   // when bundling for node and the format is cjs
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template')
+  const callbacks = []
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
-    renderTemplate(templateDir, root)
+    renderTemplate(templateDir, root, callbacks)
   }
   // Render base template
   render('base')
@@ -329,6 +357,12 @@ async function init() {
   if (needsCypressCT) {
     render('config/cypress-ct')
   }
+  if (needsNightwatch) {
+    render('config/nightwatch')
+  }
+  if (needsNightwatchCT) {
+    render('config/nightwatch-ct')
+  }
   if (needsPlaywright) {
     render('config/playwright')
   }
@@ -348,6 +382,12 @@ async function init() {
     }
     if (needsVitest) {
       render('tsconfig/vitest')
+    }
+    if (needsNightwatch) {
+      render('tsconfig/nightwatch')
+    }
+    if (needsNightwatchCT) {
+      render('tsconfig/nightwatch-ct')
     }
   }
 
@@ -374,6 +414,29 @@ async function init() {
     render('entry/default')
   }
 
+  // An external data store for callbacks to share data
+  const dataStore = {}
+  // Process callbacks
+  for (const cb of callbacks) {
+    await cb(dataStore)
+  }
+
+  // EJS template rendering
+  preOrderDirectoryTraverse(
+    root,
+    () => {},
+    (filepath) => {
+      if (filepath.endsWith('.ejs')) {
+        const template = fs.readFileSync(filepath, 'utf-8')
+        const dest = filepath.replace(/\.ejs$/, '')
+        const content = ejs.render(template, dataStore[dest])
+
+        fs.writeFileSync(dest, content)
+        fs.unlinkSync(filepath)
+      }
+    }
+  )
+
   // Cleanup.
 
   // We try to share as many files between TypeScript and JavaScript as possible.
@@ -393,7 +456,7 @@ async function init() {
       root,
       () => {},
       (filepath) => {
-        if (filepath.endsWith('.js')) {
+        if (filepath.endsWith('.js') && !FILES_TO_FILTER.includes(path.basename(filepath))) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
           if (fs.existsSync(tsFilePath)) {
             fs.unlinkSync(filepath)
@@ -437,13 +500,15 @@ async function init() {
       needsTypeScript,
       needsVitest,
       needsCypress,
+      needsNightwatch,
       needsPlaywright,
+      needsNightwatchCT,
       needsCypressCT,
       needsEslint
     })
   )
 
-  console.log(`\nDone. Now run:\n`)
+  console.log(`\n${language.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(

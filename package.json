@@ -1,12 +1,13 @@
 {
   "name": "create-vue",
-  "version": "3.6.3",
+  "version": "3.8.0",
   "description": "An easy way to start a Vue project",
   "type": "module",
   "bin": {
     "create-vue": "outfile.cjs"
   },
   "files": [
+    "locales",
     "outfile.cjs",
     "template"
   ],
@@ -20,6 +21,7 @@
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
+    "test:unit": "vitest",
     "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "repository": {
@@ -34,22 +36,24 @@
   },
   "homepage": "https://github.com/vuejs/create-vue#readme",
   "devDependencies": {
-    "@tsconfig/node18": "^2.0.1",
-    "@types/eslint": "^8.37.0",
-    "@types/node": "^18.16.8",
-    "@types/prompts": "^2.4.4",
-    "@vue/create-eslint-config": "^0.2.1",
+    "@tsconfig/node18": "^18.2.2",
+    "@types/eslint": "^8.44.7",
+    "@types/node": "^18.18.10",
+    "@types/prompts": "^2.4.8",
+    "@vue/create-eslint-config": "^0.3.2",
     "@vue/tsconfig": "^0.4.0",
-    "esbuild": "^0.17.18",
+    "ejs": "^3.1.9",
+    "esbuild": "^0.18.20",
     "esbuild-plugin-license": "^1.2.2",
     "husky": "^8.0.3",
     "kolorist": "^1.8.0",
-    "lint-staged": "^13.2.2",
+    "lint-staged": "^15.1.0",
     "minimist": "^1.2.8",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.8",
+    "npm-run-all2": "^6.1.1",
+    "prettier": "^3.1.0",
     "prompts": "^2.4.2",
-    "zx": "^4.3.0"
+    "vitest": "^0.34.6",
+    "zx": "^7.2.3"
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [

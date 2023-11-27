@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "composite": true,
+    "rootDir": "../",
+    "lib": ["ESNext", "dom"],
+    "types": ["nightwatch"]
+  },
+  "include": ["../node_modules/@nightwatch/**/*", "../src/components/**/*", "../tests/e2e/**/*"],
+  "ts-node": {
+    "transpileOnly": true
+  },
+  "files": ["nightwatch.d.ts"]
+}
