@@ -1,0 +1,64 @@
+{
+  "projectName": {
+    "message": "Proje adı:"
+  },
+  "shouldOverwrite": {
+    "dirForPrompts": {
+      "current": "Geçerli dizin",
+      "target": "Hedef dizin"
+    },
+    "message": "boş değil. Varolan dosyalar silinip devam edilsin mi?"
+  },
+  "packageName": {
+    "message": "Paket adı:",
+    "invalidMessage": "Geçersiz package.json adı"
+  },
+  "needsTypeScript": {
+    "message": "TypeScript Eklensin mi?"
+  },
+  "needsJsx": {
+    "message": "JSX Desteği Eklensin mi?"
+  },
+  "needsRouter": {
+    "message": "Tek Sayfa Uygulama geliştirilmesi için Vue Router eklensin mi?"
+  },
+  "needsPinia": {
+    "message": "Durum yönetimi için Pinia eklensin mi?"
+  },
+  "needsVitest": {
+    "message": "Birim Testi için Vitest eklensin mi?"
+  },
+  "needsE2eTesting": {
+    "message": "Uçtan Uca Test Çözümü Eklensin mi?",
+    "hint": "- Ok tuşlarını kullan. Gönderime geri dön.",
+    "selectOptions": {
+      "negative": { "title": "Hayır" },
+      "cypress": {
+        "title": "Cypress",
+        "desc": "ayrıca Cypress Bileşen Testi ile birim testini de destekler"
+      },
+      "nightwatch": {
+        "title": "Nightwatch",
+        "desc": "ayrıca Nightwatch Bileşen Testi ile birim testini de destekler"
+      },
+      "playwright": { "title": "Playwright" }
+    }
+  },
+  "needsEslint": {
+    "message": "Kod kalitesi için ESLint eklensin mi?"
+  },
+  "needsPrettier": {
+    "message": "Kod formatlama için Prettier eklensin mi?"
+  },
+  "errors": {
+    "operationCancelled": "İşlem iptal edildi"
+  },
+  "defaultToggleOptions": {
+    "active": "Evet",
+    "inactive": "Hayır"
+  },
+  "infos": {
+    "scaffolding": "İskele projesi",
+    "done": "Tamamlandı. Şimdi bunu çalıştır:"
+  }
+}
