@@ -14,14 +14,14 @@ function getKeys(obj: any, path = '', result: string[] = []) {
   return result;
 }
 
-const locales = readdirSync(resolve(__dirname, '../locales')).filter((file) => {
-  return file.endsWith('.json')
+const localesOtherThanEnglish = readdirSync(resolve(__dirname, '../locales')).filter((file) => {
+  return file.endsWith('.json') && !file.startsWith('en-US')
 })
 const defaultKeys = getKeys(en);
 
-describe("should include all keys", () => {
-  locales.forEach((locale) => {
-    it.runIf(!locale.startsWith("en-US"))(`for ${locale}`, () => {
+describe("locale files should include all keys", () => {
+  localesOtherThanEnglish.forEach((locale) => {
+    it(`for ${locale}`, () => {
       expect(getKeys(require(`../locales/${locale}`))).toEqual(defaultKeys)
     })
   })
