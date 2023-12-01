@@ -1,9 +1,6 @@
 #!/usr/bin/env zx
 import 'zx/globals'
 
-// Vitest would otherwise enable watch mode by default.
-process.env.CI = '1'
-
 const playgroundDir = path.resolve(__dirname, '../playground/')
 let projects = fs
   .readdirSync(playgroundDir, { withFileTypes: true })
@@ -21,7 +18,13 @@ for (const projectName of projects) {
   cd(path.resolve(playgroundDir, projectName))
   const packageJSON = require(path.resolve(playgroundDir, projectName, 'package.json'))
 
-  console.log(`Building ${projectName}`)
+  console.log(`
+  
+#####
+Building ${projectName}
+#####
+  
+  `)
   await $`pnpm build`
 
   if ('@playwright/test' in packageJSON.devDependencies) {
@@ -35,6 +38,16 @@ for (const projectName of projects) {
 
   if ('test:unit' in packageJSON.scripts) {
     console.log(`Running unit tests in ${projectName}`)
-    await $`pnpm test:unit`
+    if (projectName.includes('vitest') || projectName.includes('with-tests')) {
+      // Vitest would otherwise enable watch mode by default.
+      await $`CI=1 pnpm test:unit`
+    } else {
+      await $`pnpm test:unit`
+    }
+  }
+
+  if ('type-check' in packageJSON.scripts) {
+    console.log(`Running type-check in ${projectName}`)
+    await $`pnpm type-check`
   }
 }
