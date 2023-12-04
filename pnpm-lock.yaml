@@ -120,14 +120,14 @@ importers:
         specifier: ^4.5.1
         version: 4.5.1(vite@5.0.5)(vue@3.3.10)
       chromedriver:
-        specifier: ^119.0.0
-        version: 119.0.0
+        specifier: ^119.0.1
+        version: 119.0.1
       geckodriver:
         specifier: ^4.2.1
         version: 4.2.1
       nightwatch:
         specifier: ^3.3.2
-        version: 3.3.2(chromedriver@119.0.0)(geckodriver@4.2.1)
+        version: 3.3.2(chromedriver@119.0.1)(geckodriver@4.2.1)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.19.2)(typescript@5.2.2)
@@ -2000,16 +2000,6 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /axios@1.6.0:
-    resolution: {integrity: sha512-EZ1DYihju9pwVB+jg67ogm+Tmqc6JmhamRN6I4Zt8DfZu5lbcQGw3ozH9lFejSJgs/ibaef3A9PMXPLeefFGJg==}
-    dependencies:
-      follow-redirects: 1.15.3(debug@4.3.4)
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-    dev: true
-
   /axios@1.6.2(debug@4.3.4):
     resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
     dependencies:
@@ -2254,14 +2244,14 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /chromedriver@119.0.0:
-    resolution: {integrity: sha512-3TmabGT7xg57/Jbsg6B/Kqk3HaSbCP1ZHkR5zNft5vT/IWKjZCAGTH9waMI+i5KHSEiMH0zOw/WF98l+1Npkpw==}
+  /chromedriver@119.0.1:
+    resolution: {integrity: sha512-lpCFFLaXPpvElTaUOWKdP74pFb/sJhWtWqMjn7Ju1YriWn8dT5JBk84BGXMPvZQs70WfCYWecxdMmwfIu1Mupg==}
     engines: {node: '>=18'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@testim/chrome-version': 1.1.4
-      axios: 1.6.0
+      axios: 1.6.2(debug@4.3.4)
       compare-versions: 6.1.0
       extract-zip: 2.0.1(supports-color@8.1.1)
       https-proxy-agent: 5.0.1
@@ -4766,7 +4756,7 @@ packages:
       axe-core: 4.8.2
     dev: true
 
-  /nightwatch@3.3.2(chromedriver@119.0.0)(geckodriver@4.2.1):
+  /nightwatch@3.3.2(chromedriver@119.0.1)(geckodriver@4.2.1):
     resolution: {integrity: sha512-qi/1glgvJjWrtHBm1vQJfLc4XocqfSqJ3E27Rlg8ofeYC5mLBnKqmJg4u268voIUg+4fQkMm0UYKDtF/0Es4Ag==}
     engines: {node: '>= 16'}
     hasBin: true
@@ -4793,7 +4783,7 @@ packages:
       boxen: 5.1.2
       chai-nightwatch: 0.5.3
       chalk: 4.1.2
-      chromedriver: 119.0.0
+      chromedriver: 119.0.1
       ci-info: 3.3.0
       cli-table3: 0.6.3
       devtools-protocol: 0.0.1140464
