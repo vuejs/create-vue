@@ -66,12 +66,6 @@ export default function getLanguage() {
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
   const doesLanguageExist = fs.existsSync(languageFilePath)
 
-  if (!doesLanguageExist) {
-    console.warn(
-      `\x1B[33mThe locale langage "${locale}" is not supported, fallback to "en-US".\n\x1B[39m`
-    )
-  }
-
   const lang: Language = doesLanguageExist
     ? require(languageFilePath)
     : require(path.resolve(localesRoot, 'en-US.json'))
