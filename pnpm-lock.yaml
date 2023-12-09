@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      ini:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@tsconfig/node18':
         specifier: ^18.2.2
@@ -14,6 +18,9 @@ importers:
       '@types/eslint':
         specifier: ^8.44.8
         version: 8.44.8
+      '@types/ini':
+        specifier: ^1.3.34
+        version: 1.3.34
       '@types/node':
         specifier: ^18.19.2
         version: 18.19.2
@@ -1355,6 +1362,10 @@ packages:
     dependencies:
       '@types/jsonfile': 6.1.3
       '@types/node': 18.19.2
+    dev: true
+
+  /@types/ini@1.3.34:
+    resolution: {integrity: sha512-FafeLhwmWucTi31ZYg/6aHBZNyrogQ35aDvSW7zMAz3HMhUqQ4G/NBya8c5pe2jwoYsDFwra8O9/yZotong76g==}
     dev: true
 
   /@types/jsdom@21.1.6:
@@ -3770,6 +3781,11 @@ packages:
     resolution: {integrity: sha512-7PnF4oN3CvZF23ADhA5wRaYEQpJ8qygSkbtTXWBeXWXmEVRXK+1ITciHWwHhsjv1TmW0MgacIv6hEi5pX5NQdA==}
     engines: {node: '>=10'}
     dev: true
+
+  /ini@4.1.1:
+    resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+    dev: false
 
   /internal-slot@1.0.6:
     resolution: {integrity: sha512-Xj6dv+PsbtwyPpEflsejS+oIZxmMlV44zAhG479uYu89MsjcYOhCFnNyKrkJrihbsiasQyY0afoCl/9BLR65bg==}

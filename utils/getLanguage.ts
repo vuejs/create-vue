@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { parse } from 'ini'
 
 interface LanguageItem {
   hint?: string
@@ -43,6 +44,20 @@ interface Language {
   }
 }
 
+function linkLocale(locale: string): string {
+  let linkedLocale: string
+  switch (locale) {
+    case 'zh-CN':
+    case 'zh-SG':
+      linkedLocale = 'zh-Hans'
+      break
+    default:
+      linkedLocale = locale
+  }
+
+  return linkedLocale
+}
+
 function getLocale() {
   const shellLocale =
     process.env.LC_ALL || // POSIX locale environment variables
@@ -51,9 +66,7 @@ function getLocale() {
     Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
     'en-US' // Default fallback
 
-  const locale = shellLocale.split('.')[0].replace('_', '-')
-
-  return locale
+  return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 }
 
 export default function getLanguage() {
@@ -66,9 +79,9 @@ export default function getLanguage() {
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
   const doesLanguageExist = fs.existsSync(languageFilePath)
 
-  const lang: Language = doesLanguageExist
-    ? require(languageFilePath)
-    : require(path.resolve(localesRoot, 'en-US.json'))
+  const lang = (
+    doesLanguageExist ? parse(languageFilePath) : parse(path.resolve(localesRoot, 'en-US.json'))
+  ) as Language
 
   return lang
 }
