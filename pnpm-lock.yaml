@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      ini:
-        specifier: ^4.1.1
-        version: 4.1.1
     devDependencies:
       '@tsconfig/node18':
         specifier: ^18.2.2
@@ -45,6 +41,9 @@ importers:
       husky:
         specifier: ^8.0.3
         version: 8.0.3
+      ini:
+        specifier: ^4.1.1
+        version: 4.1.1
       kolorist:
         specifier: ^1.8.0
         version: 1.8.0
@@ -3785,7 +3784,7 @@ packages:
   /ini@4.1.1:
     resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-    dev: false
+    dev: true
 
   /internal-slot@1.0.6:
     resolution: {integrity: sha512-Xj6dv+PsbtwyPpEflsejS+oIZxmMlV44zAhG479uYu89MsjcYOhCFnNyKrkJrihbsiasQyY0afoCl/9BLR65bg==}
