@@ -1,6 +1,5 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { parse } from 'ini'
 
 interface LanguageItem {
   hint?: string
@@ -80,7 +79,9 @@ export default function getLanguage() {
   const doesLanguageExist = fs.existsSync(languageFilePath)
 
   const lang = (
-    doesLanguageExist ? parse(languageFilePath) : parse(path.resolve(localesRoot, 'en-US.json'))
+    doesLanguageExist
+      ? JSON.parse(fs.readFileSync(languageFilePath) as unknown as string)
+      : JSON.parse(fs.readFileSync(path.resolve(localesRoot, 'en-US.json')) as unknown as string)
   ) as Language
 
   return lang

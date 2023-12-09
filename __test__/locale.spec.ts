@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { resolve } from 'node:path'
-import { parse } from 'ini'
-import { readdirSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import en from '../locales/en-US.json'
 
 function getKeys(obj: any, path = '', result: string[] = []) {
@@ -23,7 +22,7 @@ const defaultKeys = getKeys(en);
 describe("locale files should include all keys", () => {
   localesOtherThanEnglish.forEach((locale) => {
     it(`for ${locale}`, () => {
-      expect(getKeys(parse(`../locales/${locale}`))).toEqual(defaultKeys)
+      expect(getKeys(JSON.parse(readFileSync(resolve(__dirname, "../locales", locale)) as unknown as string))).toEqual(defaultKeys)
     })
   })
 })
