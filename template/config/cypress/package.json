@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "test:e2e": "start-server-and-test preview http://localhost:4173/ 'cypress open --e2e'",
-    "test:e2e:ci": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'"
+    "test:e2e": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
+    "test:e2e:ci": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'"
   },
   "devDependencies": {
-    "cypress": "^10.3.0",
-    "start-server-and-test": "^1.14.0"
+    "cypress": "^13.6.1",
+    "start-server-and-test": "^2.0.3"
   }
 }
