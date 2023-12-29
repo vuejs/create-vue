@@ -1,6 +1,11 @@
 #!/usr/bin/env zx
 import 'zx/globals'
 
+/**
+ * @see https://vitest.dev/guide/features.html#watch-mode
+ */
+process.env.CI = 'true'
+
 const playgroundDir = path.resolve(__dirname, '../playground/')
 
 cd(playgroundDir)

@@ -1,7 +1,10 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "include": ["index.ts", "utils/**/*"],
   "compilerOptions": {
-    "strict": false
+    "strict": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "Bundler",
+    "module": "ESNext"
   }
 }
