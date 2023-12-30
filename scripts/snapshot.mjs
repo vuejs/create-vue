@@ -15,7 +15,8 @@ const featureFlags = [
   'vitest',
   'cypress',
   'playwright',
-  'nightwatch'
+  'nightwatch',
+  'tailwind'
 ]
 const featureFlagsDenylist = [
   ['cypress', 'playwright'],

@@ -25,7 +25,8 @@ export default function generateReadme({
   needsNightwatchCT,
   needsPlaywright,
   needsVitest,
-  needsEslint
+  needsEslint,
+  needsTailwind
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -164,6 +165,12 @@ ${commandFor('test:e2e', '--debug')}
 \`\`\`sh
 ${commandFor('lint')}
 \`\`\`
+`
+  }
+
+  if (needsTailwind) {
+    npmScriptsDescriptions += `
+### A utility-first CSS framework packed with classes [Tailwind](https://tailwindcss.com/docs/installation)
 `
   }
 

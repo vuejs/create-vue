@@ -82,6 +82,7 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
+  // --tailwind
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -107,7 +108,8 @@ async function init() {
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv.tailwind
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -129,6 +131,7 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
+    needsTailwind?: boolean
   } = {}
 
   try {
@@ -145,6 +148,7 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+    // - Add tailwind for styling?
     result = await prompts(
       [
         {
@@ -276,6 +280,14 @@ async function init() {
           initial: false,
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive
+        },
+        {
+          name: 'needsTailwind',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add tailwind for styling?',
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
@@ -301,7 +313,8 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    needsTailwind = argv.needsTailwind
   } = result
 
   const { needsE2eTesting } = result
@@ -429,6 +442,9 @@ async function init() {
       'utf-8'
     )
   }
+  if (needsTailwind) {
+    render('config/tailwind')
+  }
 
   // Render ESLint config
   if (needsEslint) {
@@ -543,7 +559,8 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint
+      needsEslint,
+      needsTailwind
     })
   )
 
