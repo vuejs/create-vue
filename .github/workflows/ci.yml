@@ -27,10 +27,11 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
       - run: pnpm build
+      - run: pnpm test:unit
 
       # Use cache to share the output across different jobs
       # No need to cache node_modules because they are all bundled
-      - uses: actions/cache/save@v3
+      - uses: actions/cache/save@v4
         id: cache
         with:
           path: outfile.cjs
@@ -109,7 +110,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         id: cache-restore
         with:
           path: outfile.cjs
@@ -134,7 +135,7 @@ jobs:
       - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -142,7 +143,7 @@ jobs:
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Cache Playwright's binary
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key

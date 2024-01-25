@@ -21,19 +21,20 @@ module.exports = {
   page_objects_path: [],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-custom-commands.html
-  custom_commands_path: ['nightwatch/custom-commands'],
+  custom_commands_path: [],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-custom-assertions.html
-  custom_assertions_path: ['nightwatch/custom-assertions'],
+  custom_assertions_path: [],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-plugins.html
   plugins: ['@nightwatch/vue'],
 
   // See https://nightwatchjs.org/guide/concepts/test-globals.html#external-test-globals
-  globals_path: 'nightwatch/globals.js',
+  globals_path: '',
 
   vite_dev_server: {
-    start_vite: false
+    start_vite: true,
+    port: process.env.CI ? 4173 : 5173
   },
 
   webdriver: {},

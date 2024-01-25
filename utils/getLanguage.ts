@@ -71,11 +71,10 @@ function linkLocale(locale: string) {
 
 function getLocale() {
   const shellLocale =
-    Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
     process.env.LC_ALL || // POSIX locale environment variables
     process.env.LC_MESSAGES ||
     process.env.LANG ||
-    // TODO: Windows support if needed, could consider https://www.npmjs.com/package/os-locale
+    Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
     'en-US' // Default fallback
 
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
@@ -91,15 +90,9 @@ export default function getLanguage() {
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
   const doesLanguageExist = fs.existsSync(languageFilePath)
 
-  if (!doesLanguageExist) {
-    console.warn(
-      `\x1B[33mThe locale langage "${locale}" is not supported, fallback to "en-US".\n\x1B[39m`
-    )
-  }
-
-  const lang = (
-    doesLanguageExist ? require(languageFilePath) : require(path.resolve(localesRoot, 'en-US.json'))
-  ) as Language
+  const lang: Language = doesLanguageExist
+    ? require(languageFilePath)
+    : require(path.resolve(localesRoot, 'en-US.json'))
 
   return lang
 }

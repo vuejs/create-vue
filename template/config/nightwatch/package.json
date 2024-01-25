@@ -1,15 +1,15 @@
 {
   "scripts": {
-    "test:e2e": "nightwatch tests/e2e"
+    "test:e2e": "nightwatch tests/e2e/*"
   },
   "devDependencies": {
-    "nightwatch": "^3.3.0",
-    "@nightwatch/vue": "0.4.5",
-    "@vitejs/plugin-vue": "^4.4.0",
-    "@types/nightwatch": "^2.3.28",
-    "geckodriver": "^4.2.1",
-    "chromedriver": "^119.0.0",
-    "ts-node": "^10.9.1",
-    "wait-on": "^7.1.0"
+    "nightwatch": "^3.3.8",
+    "@nightwatch/vue": "^0.4.5",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "@types/nightwatch": "^2.3.30",
+    "geckodriver": "^4.3.0",
+    "chromedriver": "^120.0.2",
+    "ts-node": "^10.9.2",
+    "vite-plugin-nightwatch": "^0.4.6"
   }
 }
