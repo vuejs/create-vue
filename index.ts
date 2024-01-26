@@ -432,7 +432,13 @@ async function init() {
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    renderEslint(root, {
+      needsTypeScript,
+      needsCypress,
+      needsCypressCT,
+      needsPrettier,
+      needsPlaywright
+    })
   }
 
   // Render code template.
