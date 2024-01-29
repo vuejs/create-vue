@@ -3,12 +3,16 @@ import 'zx/globals'
 
 const playgroundDir = path.resolve(__dirname, '../playground/')
 
+cd(playgroundDir)
+console.log('Installing playground dependencies')
+await $`pnpm install`
+
 for (const projectName of fs.readdirSync(playgroundDir)) {
   if (projectName.includes('vitest')) {
     cd(path.resolve(playgroundDir, projectName))
 
     console.log(`Running unit tests in ${projectName}`)
-    await $`pnpm test:unit`
+    await $`CI=1 pnpm test:unit`
   }
 
   if (projectName.includes('cypress')) {
@@ -37,7 +41,7 @@ for (const projectName of fs.readdirSync(playgroundDir)) {
     cd(path.resolve(playgroundDir, projectName))
 
     console.log(`Running unit tests in ${projectName}`)
-    await $`pnpm test:unit`
+    await $`CI=1 pnpm test:unit`
 
     console.log(`Building ${projectName}`)
     await $`pnpm build`
