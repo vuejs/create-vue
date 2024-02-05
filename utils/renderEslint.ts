@@ -36,7 +36,13 @@ export default function renderEslint(
   }
 
   if (needsPlaywright) {
-    additionalConfig.extends = ['plugin:playwright/recommended']
+    additionalConfig.overrides = [
+      {
+        files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        extends: ['plugin:playwright/recommended']
+      }
+    ]
+
     additionalDependencies['eslint-plugin-playwright'] = eslintDeps['eslint-plugin-playwright']
   }
 
