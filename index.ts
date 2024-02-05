@@ -3,7 +3,8 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
-import minimist from 'minimist'
+import { parseArgs } from 'node:util'
+
 import prompts from 'prompts'
 import { red, green, bold } from 'kolorist'
 
@@ -83,26 +84,34 @@ async function init() {
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
-  const argv = minimist(process.argv.slice(2), {
-    alias: {
-      typescript: ['ts'],
-      'with-tests': ['tests'],
-      router: ['vue-router']
-    },
-    string: ['_'],
-    // all arguments are treated as booleans
-    boolean: true
-  })
 
+  const args = process.argv.slice(2)
+
+  // alias is not supported by parseArgs
+  const options = {
+    typescript: { type: 'boolean' },
+    ts: { type: 'boolean' },
+    'with-tests': { type: 'boolean' },
+    tests: { type: 'boolean' },
+    'vue-router': { type: 'boolean' },
+    router: { type: 'boolean' }
+  } as const
+
+  const { values: argv } = parseArgs({
+    args,
+    options,
+    strict: false
+  })
+  // Prints: [Object: null prototype] { foo: true, bar: 'b' } []
   // if any of the feature flags is set, we would skip the feature prompts
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      argv.ts ??
+      (argv.ts || argv.typescript) ??
       argv.jsx ??
-      argv.router ??
+      (argv.router || argv['vue-router']) ??
       argv.pinia ??
-      argv.tests ??
+      (argv.tests || argv['with-tests']) ??
       argv.vitest ??
       argv.cypress ??
       argv.nightwatch ??
@@ -110,7 +119,7 @@ async function init() {
       argv.eslint
     ) === 'boolean'
 
-  let targetDir = argv._[0]
+  let targetDir = args[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
