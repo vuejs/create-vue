@@ -102,7 +102,7 @@ async function init() {
     options,
     strict: false
   })
-  // Prints: [Object: null prototype] { foo: true, bar: 'b' } []
+
   // if any of the feature flags is set, we would skip the feature prompts
   const isFeatureFlagsUsed =
     typeof (
