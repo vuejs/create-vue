@@ -13,7 +13,7 @@ const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier }
+  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier, needsPlaywright }
 ) {
   const additionalConfig: Linter.Config = {}
   const additionalDependencies = {}
@@ -33,6 +33,17 @@ export default function renderEslint(
     ]
 
     additionalDependencies['eslint-plugin-cypress'] = eslintDeps['eslint-plugin-cypress']
+  }
+
+  if (needsPlaywright) {
+    additionalConfig.overrides = [
+      {
+        files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        extends: ['plugin:playwright/recommended']
+      }
+    ]
+
+    additionalDependencies['eslint-plugin-playwright'] = eslintDeps['eslint-plugin-playwright']
   }
 
   const { pkg, files } = createESLintConfig({
