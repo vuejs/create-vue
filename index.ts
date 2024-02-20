@@ -450,6 +450,9 @@ async function init() {
     })
   }
 
+  if (needsPrettier) {
+    render('config/prettier')
+  }
   // Render code template.
   // prettier-ignore
   const codeTemplate =
