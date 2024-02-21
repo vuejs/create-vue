@@ -51,8 +51,9 @@ interface Language {
  * @returns locale that linked with correct name
  */
 function linkLocale(locale: string) {
-  let linkedLocale: string
-  switch (locale) {
+  // @ts-ignore
+  let linkedLocale: string = Intl.getCanonicalLocales(locale)[0]
+  switch (linkedLocale) {
     case 'zh-TW':
     case 'zh-HK':
     case 'zh-MO':
@@ -62,8 +63,6 @@ function linkLocale(locale: string) {
     case 'zh-SG':
       linkedLocale = 'zh-Hans'
       break
-    default:
-      linkedLocale = locale
   }
 
   return linkedLocale

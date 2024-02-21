@@ -61,6 +61,9 @@ function emptyDir(dir) {
 }
 
 async function init() {
+  // The language information obtained may be incorrect. In this case, an error should be thrown and the banner information should not be printed.
+  const language = getLanguage()
+
   console.log()
   console.log(
     process.stdout.isTTY && process.stdout.getColorDepth() > 8
@@ -123,8 +126,6 @@ async function init() {
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
-
-  const language = getLanguage()
 
   let result: {
     projectName?: string
