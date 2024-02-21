@@ -123,7 +123,7 @@ ${commandFor('test:e2e', '--debug')}
     `
   }
 
-  if (needsNightwatch) {
+  if (needsNightwatchCT) {
     npmScriptsDescriptions += `
 ### Run Headed Component Tests with [Nightwatch Component Testing](https://nightwatchjs.org/guide/component-testing/introduction.html)
   
