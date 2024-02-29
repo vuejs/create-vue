@@ -52,7 +52,13 @@ interface Language {
  */
 function linkLocale(locale: string) {
   let linkedLocale: string
-  switch (locale) {
+  try {
+    // @ts-ignore
+    linkedLocale = Intl.getCanonicalLocales(locale)[0]
+  } catch (error) {
+    console.log(`${error.toString()}\n`)
+  }
+  switch (linkedLocale) {
     case 'zh-TW':
     case 'zh-HK':
     case 'zh-MO':
