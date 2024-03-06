@@ -68,7 +68,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-            flag-for-vue-devtools: 'vue-devtools'
+            flag-for-vue-devtools: '--vue-devtools'
 
           - node-version: 18
             os: macos-latest
@@ -78,7 +78,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-            flag-for-vue-devtools: 'vue-devtools'
+            flag-for-vue-devtools: '--vue-devtools'
 
           - node-version: 20
             os: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-            flag-for-vue-devtools: 'vue-devtools'
+            flag-for-vue-devtools: '--vue-devtools'
 
           - node-version: 16
             os: ubuntu-latest
@@ -98,7 +98,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-            flag-for-vue-devtools: 'vue-devtools'
+            flag-for-vue-devtools: '--vue-devtools'
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
