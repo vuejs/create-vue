@@ -83,6 +83,7 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
+  // --vue-devtools
   // --force (for force overwriting)
 
   const args = process.argv.slice(2)
@@ -116,7 +117,8 @@ async function init() {
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv['vue-devtools']
     ) === 'boolean'
 
   let targetDir = args[0]
@@ -138,6 +140,7 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
+    needsVueDevtools?: boolean
   } = {}
 
   try {
@@ -154,6 +157,7 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+    // - Add VueDevtools extension for debugging? (experimental)
     result = await prompts(
       [
         {
@@ -285,6 +289,14 @@ async function init() {
           initial: false,
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive
+        },
+        {
+          name: 'needsVueDevtools',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: language.needsVueDevtools.message,
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
@@ -310,7 +322,8 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
+    needsVueDevtools = argv['vue-devtools']
   } = result
 
   const { needsE2eTesting } = result
@@ -452,6 +465,10 @@ async function init() {
 
   if (needsPrettier) {
     render('config/prettier')
+  }
+
+  if (needsVueDevtools) {
+    render('config/vue-devtools')
   }
   // Render code template.
   // prettier-ignore
