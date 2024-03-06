@@ -157,7 +157,7 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
-    // - Add VueDevtools extension for debugging? (experimental)
+    // - Add Vue Devtools extension for debugging? (experimental)
     result = await prompts(
       [
         {
