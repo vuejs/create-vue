@@ -16,7 +16,7 @@ const featureFlags = [
   'cypress',
   'playwright',
   'nightwatch',
-  'vue-devtools'
+  'devtools'
 ]
 const featureFlagsDenylist = [
   ['cypress', 'playwright'],
