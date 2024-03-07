@@ -319,13 +319,13 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.typescript,
-    needsRouter = argv.router,
+    needsTypeScript = argv.ts || argv.typescript,
+    needsRouter = argv.router || argv['vue-router'],
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
-    needsDevTools = argv.devtools
+    needsDevTools = argv.devtools || argv['vue-devtools']
   } = result
 
   const { needsE2eTesting } = result
