@@ -16,7 +16,7 @@ jobs:
     name: Build the package
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -108,7 +108,7 @@ jobs:
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - uses: actions/setup-node@v4
