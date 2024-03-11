@@ -100,7 +100,7 @@ async function init() {
     devtools: { type: 'boolean' }
   } as const
 
-  const { values: argv } = parseArgs({
+  const { values: argv, positionals } = parseArgs({
     args,
     options,
     strict: false
@@ -123,7 +123,7 @@ async function init() {
       (argv.devtools || argv['vue-devtools'])
     ) === 'boolean'
 
-  let targetDir = args[0]
+  let targetDir = positionals[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
