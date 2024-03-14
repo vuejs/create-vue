@@ -120,6 +120,7 @@ async function init() {
       argv.nightwatch ??
       argv.playwright ??
       argv.eslint ??
+      argv['eslint-with-prettier'] ??
       (argv.devtools || argv['vue-devtools'])
     ) === 'boolean'
 
@@ -463,6 +464,7 @@ async function init() {
       needsPrettier,
       needsPlaywright
     })
+    render('config/eslint')
   }
 
   if (needsPrettier) {
