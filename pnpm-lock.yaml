@@ -76,8 +76,8 @@ importers:
   template/config/cypress:
     devDependencies:
       cypress:
-        specifier: ^13.6.1
-        version: 13.6.2
+        specifier: ^13.7.0
+        version: 13.7.0
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3
@@ -89,8 +89,8 @@ importers:
         version: 2.7.16
     devDependencies:
       cypress:
-        specifier: ^13.6.1
-        version: 13.6.2
+        specifier: ^13.7.0
+        version: 13.7.0
 
   template/config/jsx:
     dependencies:
@@ -2767,15 +2767,14 @@ packages:
   /csstype@3.1.0:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
 
-  /cypress@13.6.2:
-    resolution: {integrity: sha512-TW3bGdPU4BrfvMQYv1z3oMqj71YI4AlgJgnrycicmPZAXtvywVFZW9DAToshO65D97rCWfG/kqMFsYB6Kp91gQ==}
+  /cypress@13.7.0:
+    resolution: {integrity: sha512-UimjRSJJYdTlvkChcdcfywKJ6tUYuwYuk/n1uMMglrvi+ZthNhoRYcxnWgTqUtkl17fXrPAsD5XT2rcQYN1xKA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@cypress/request': 3.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
-      '@types/node': 18.19.3
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.3
       arch: 2.2.0
