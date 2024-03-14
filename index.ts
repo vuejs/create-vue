@@ -311,15 +311,54 @@ async function init() {
 
     // Render tsconfigs
     render('tsconfig/base')
+
+    // The content of the root `tsconfig.json` is a bit complicated,
+    // So here we are programmatically generating it.
+    const rootTsConfig = {
+      // It doesn't target any specific files because they are all configured in the referenced ones.
+      files: [],
+      // All templates contain at least a `.node` and a `.app` tsconfig.
+      references: [
+        {
+          path: './tsconfig.node.json'
+        },
+        {
+          path: './tsconfig.app.json'
+        }
+      ]
+    }
+
     if (needsCypress) {
       render('tsconfig/cypress')
+      // Cypress uses `ts-node` internally, which doesn't support solution-style tsconfig.
+      // So we have to set a dummy `compilerOptions` in the root tsconfig to make it work.
+      // I use `NodeNext` here instead of `ES2015` because that's what the actual environment is.
+      // (Cypress uses the ts-node/esm loader when `type: module` is specified in package.json.)
+      // @ts-ignore
+      rootTsConfig.compilerOptions = {
+        module: 'NodeNext'
+      }
     }
     if (needsCypressCT) {
       render('tsconfig/cypress-ct')
+      // Cypress Component Testing needs a standalone tsconfig.
+      rootTsConfig.references.push({
+        path: './tsconfig.cypress-ct.json'
+      })
     }
     if (needsVitest) {
       render('tsconfig/vitest')
+      // Vitest needs a standalone tsconfig.
+      rootTsConfig.references.push({
+        path: './tsconfig.vitest.json'
+      })
     }
+
+    fs.writeFileSync(
+      path.resolve(root, 'tsconfig.json'),
+      JSON.stringify(rootTsConfig, null, 2) + '\n',
+      'utf-8'
+    )
   }
 
   // Render ESLint config

@@ -3,13 +3,13 @@ import * as path from 'node:path'
 
 import type { Linter } from 'eslint'
 
-import { devDependencies as allEslintDeps } from '../template/eslint/package.json' assert { type: 'json' }
+import eslintTemplatePackage from '../template/eslint/package.json' assert { type: 'json' }
 import deepMerge from './deepMerge'
 import sortDependencies from './sortDependencies'
 
 const dependencies = {}
 function addEslintDependency(name) {
-  dependencies[name] = allEslintDeps[name]
+  dependencies[name] = eslintTemplatePackage.devDependencies[name]
 }
 
 addEslintDependency('eslint')
