@@ -15,7 +15,7 @@
     "node": ">=v16.20.0"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "format": "prettier --write .",
     "build": "zx ./scripts/build.mjs",
     "snapshot": "zx ./scripts/snapshot.mjs",
@@ -42,7 +42,7 @@
     "@vue/tsconfig": "^0.5.1",
     "esbuild": "^0.19.10",
     "esbuild-plugin-license": "^1.2.2",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "kolorist": "^1.8.0",
     "lint-staged": "^15.2.0",
     "minimist": "^1.2.8",
