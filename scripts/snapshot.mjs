@@ -54,7 +54,7 @@ function fullCombination(arr) {
 }
 
 let flagCombinations = fullCombination(featureFlags)
-flagCombinations.push(['default'], ['devtools'])
+flagCombinations.push(['default'], ['devtools'], ['eslint'], ['eslint-with-prettier'])
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
