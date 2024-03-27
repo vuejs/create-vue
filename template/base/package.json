@@ -1,6 +1,9 @@
 {
   "private": true,
   "type": "module",
+  "imports": {
+    "#src/": "./src/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
