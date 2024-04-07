@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ### Please describe
-Please provide us with a clear and concise description.
+<!-- Please provide us with a clear and concise description. -->
 
 ### Additional context
-Add any other context or screenshots about the feature request here. (If applicable)
+<!-- Add any other context or screenshots about the feature request here. (If applicable) -->
