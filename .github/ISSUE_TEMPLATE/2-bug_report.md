@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-<!-- This form is only for submitting bug reports. -->
+<!-- This form is only for submitting bug reports related to this repository (create-vue). -->
 
 ### Describe the bug
 <!-- Please provide us with a clear and concise description of what the bug is. -->
