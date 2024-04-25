@@ -54,7 +54,6 @@ interface Language {
 function linkLocale(locale: string) {
   let linkedLocale: string
   try {
-    // @ts-ignore
     linkedLocale = Intl.getCanonicalLocales(locale)[0]
   } catch (error) {
     console.log(`${error.toString()}\n`)
