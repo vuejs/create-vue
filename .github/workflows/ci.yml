@@ -87,6 +87,16 @@ jobs:
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
             flag-for-devtools: '--devtools'
+
+          - node-version: 22
+            os: ubuntu-latest
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress'
+            flag-for-devtools: '--devtools'
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
