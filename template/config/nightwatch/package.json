@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test:e2e": "nightwatch tests/e2e/*"
+    "test:e2e": "nightwatch tests/e2e/*",
+    "test": "npm run test:e2e"
   },
   "devDependencies": {
     "nightwatch": "^3.6.3",
