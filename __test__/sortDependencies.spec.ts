@@ -20,7 +20,8 @@ describe('sortDependencies', () => {
         '@vitejs/plugin-vue': '^4.4.0',
         'eslint-plugin-cypress': '^2.15.1',
         'eslint-plugin-vue': '^9.17.0',
-        vitest: '^0.34.6'
+        vitest: '^0.34.6',
+        'vue-i18n': '^9.13.1'
       }
     }
     expect(sortDependencies(packageJson)).toStrictEqual({
@@ -40,7 +41,8 @@ describe('sortDependencies', () => {
         jsdom: '^22.1.0',
         'start-server-and-test': '^2.0.1',
         vite: '^4.4.11',
-        vitest: '^0.34.6'
+        vitest: '^0.34.6',
+        'vue-i18n': '^9.13.1'
       }
     })
   })
