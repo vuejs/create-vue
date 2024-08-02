@@ -31,6 +31,7 @@ interface Language {
   needsEslint: LanguageItem
   needsPrettier: LanguageItem
   needsDevTools: LanguageItem
+  needsVueI18n: LanguageItem
   errors: {
     operationCancelled: string
   }

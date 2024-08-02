@@ -97,7 +97,9 @@ async function init() {
     'vue-router': { type: 'boolean' },
     router: { type: 'boolean' },
     'vue-devtools': { type: 'boolean' },
-    devtools: { type: 'boolean' }
+    devtools: { type: 'boolean' },
+    'vue-i18n': { type: 'boolean' },
+    i18n: { type: 'boolean' }
   } as const
 
   const { values: argv, positionals } = parseArgs({
@@ -121,7 +123,9 @@ async function init() {
       argv.playwright ??
       argv.eslint ??
       argv['eslint-with-prettier'] ??
-      (argv.devtools || argv['vue-devtools'])
+      (argv.devtools || argv['vue-devtools']) ??
+      argv['vue-i18n'] ??
+      argv.i18n
     ) === 'boolean'
 
   let targetDir = positionals[0]
@@ -144,6 +148,7 @@ async function init() {
     needsEslint?: boolean
     needsPrettier?: boolean
     needsDevTools?: boolean
+    needsVueI18n?: boolean
   } = {}
 
   try {
@@ -300,6 +305,14 @@ async function init() {
           initial: false,
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive
+        },
+        {
+          name: 'needsVueI18n',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: language.needsVueI18n.message,
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
@@ -326,7 +339,8 @@ async function init() {
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
-    needsDevTools = argv.devtools || argv['vue-devtools']
+    needsDevTools = argv.devtools || argv['vue-devtools'],
+    needsVueI18n = argv['vue-i18n'] || argv.i18n
   } = result
 
   const { needsE2eTesting } = result
@@ -474,6 +488,10 @@ async function init() {
   if (needsDevTools) {
     render('config/devtools')
   }
+
+  if (needsVueI18n) {
+    render('config/vue-i18n')
+  }
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -488,6 +506,8 @@ async function init() {
     render('entry/pinia')
   } else if (needsRouter) {
     render('entry/router')
+  } else if (needsVueI18n) {
+    render('entry/i18n')
   } else {
     render('entry/default')
   }
@@ -520,7 +540,7 @@ async function init() {
   // We try to share as many files between TypeScript and JavaScript as possible.
   // If that's not possible, we put `.ts` version alongside the `.js` one in the templates.
   // So after all the templates are rendered, we need to clean up the redundant files.
-  // (Currently it's only `cypress/plugin/index.ts`, but we might add more in the future.)
+  // (Currently it's only `cypress/plugin/index.js`, but we might add more in the future.)
   // (Or, we might completely get rid of the plugins folder as Cypress 10 supports `cypress.config.ts`)
 
   if (needsTypeScript) {
