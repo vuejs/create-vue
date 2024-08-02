@@ -26,7 +26,7 @@ SOFTWARE.
 
 await esbuild.build({
   bundle: true,
-  entryPoints: ['index.ts'],
+  entryPoints: ['index.js'],
   external: ['locales/*'],
   outfile: 'outfile.cjs',
   format: 'cjs',
