@@ -1,15 +1,17 @@
 {
   "extends": "./tsconfig.app.json",
   "include": [
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue",
+    "src/**/__tests__/*",
     "cypress/support/component.*",
     "cypress/support/commands.ts"
   ],
   "exclude": [],
   "compilerOptions": {
     "composite": true,
+    "outDir": "./node_modules/.tmp/cypress-ct",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.cypress-ct.tsbuildinfo"
-  }
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" }
+  ]
 }
