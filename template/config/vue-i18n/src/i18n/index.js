@@ -1,15 +1,9 @@
 import { createI18n } from 'vue-i18n'
+import enUS from './en.json'
 
-const messages = {
-  en: {
-    // English Transtlations
+const i18n = createI18n({
+  locale: 'en-US',
+  messages: {
+    'en-US': enUS
   }
-}
-
-export default createI18n({
-  legacy: false,
-  globalInjection: true,
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages
 })
