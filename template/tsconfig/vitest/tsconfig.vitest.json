@@ -1,14 +1,15 @@
 {
-  "extends": "./tsconfig.app.json",
-  "include": [
-    "src/**/__tests__/*"
-  ],
-  "exclude": [],
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
     "outDir": "./node_modules/.tmp/vitest",
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
-
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "lib": [],
     "types": ["node", "jsdom"]
   },
