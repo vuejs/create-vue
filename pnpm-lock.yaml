@@ -120,14 +120,14 @@ importers:
         specifier: ^5.1.2
         version: 5.1.2(vite@4.5.2(@types/node@20.14.14))(vue@3.4.35(typescript@5.5.3))
       chromedriver:
-        specifier: ^126.0.5
-        version: 126.0.5
+        specifier: ^127.0.1
+        version: 127.0.1
       geckodriver:
         specifier: ^4.4.2
         version: 4.4.2
       nightwatch:
         specifier: ^3.7.0
-        version: 3.7.0(chromedriver@126.0.5)(geckodriver@4.4.2)
+        version: 3.7.0(chromedriver@127.0.1)(geckodriver@4.4.2)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.14.14)(typescript@5.5.3)
@@ -1475,8 +1475,8 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
 
-  chromedriver@126.0.5:
-    resolution: {integrity: sha512-xXVxwxd8CJ6yg2KEvFqLQi7V0RvF78xFnLB+xo9g9MoJNHMQccD7b4OWaxtKDy5RXrMgQ6Jb6vUN3SjTYXHLEQ==}
+  chromedriver@127.0.1:
+    resolution: {integrity: sha512-j57OWXsxdhwK+faTWA2pi+8hf052qVjZjP0wXnjqY/QglHtlOXWhRj4s7/+ybJRNgs1zQ5csfOyV6sQQdH+Fnw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5164,7 +5164,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromedriver@126.0.5:
+  chromedriver@127.0.1:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.6.7(debug@4.3.6)
@@ -6491,7 +6491,7 @@ snapshots:
     dependencies:
       axe-core: 4.8.3
 
-  nightwatch@3.7.0(chromedriver@126.0.5)(geckodriver@4.4.2):
+  nightwatch@3.7.0(chromedriver@127.0.1)(geckodriver@4.4.2):
     dependencies:
       '@nightwatch/chai': 5.0.3
       '@nightwatch/html-reporter-template': 0.3.0
@@ -6528,7 +6528,7 @@ snapshots:
       untildify: 4.0.0
       uuid: 8.3.2
     optionalDependencies:
-      chromedriver: 126.0.5
+      chromedriver: 127.0.1
       geckodriver: 4.4.2
     transitivePeerDependencies:
       - bufferutil
@@ -6668,7 +6668,7 @@ snapshots:
       debug: 4.3.6(supports-color@8.1.1)
       get-uri: 6.0.3
       http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.4
+      https-proxy-agent: 7.0.5
       pac-resolver: 7.0.1
       socks-proxy-agent: 8.0.2
     transitivePeerDependencies:
@@ -6773,9 +6773,9 @@ snapshots:
   proxy-agent@6.4.0:
     dependencies:
       agent-base: 7.1.0
-      debug: 4.3.5
+      debug: 4.3.6(supports-color@8.1.1)
       http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.4
+      https-proxy-agent: 7.0.5
       lru-cache: 7.18.3
       pac-proxy-agent: 7.0.1
       proxy-from-env: 1.1.0
