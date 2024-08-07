@@ -1,4 +1,5 @@
 #!/usr/bin/env zx
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import 'zx/globals'
 
@@ -91,5 +92,5 @@ for (const flags of flagCombinations) {
   const projectName = flags.join('-')
 
   console.log(`Creating project ${projectName}`)
-  await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
+  execSync(`node ${bin} ${projectName} ${flags.map((flag) => `--${flag}`).join(' ')} --force`)
 }
