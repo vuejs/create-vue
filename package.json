@@ -20,7 +20,7 @@
     "format": "prettier --write .",
     "build": "zx ./scripts/build.mjs",
     "snapshot": "zx ./scripts/snapshot.mjs",
-    "pretest": "run-s build snapshot",
+    "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
     "test:unit": "vitest",
     "prepublishOnly": "zx ./scripts/prepublish.mjs"
@@ -49,7 +49,6 @@
     "husky": "^9.1.4",
     "kolorist": "^1.8.0",
     "lint-staged": "^15.2.8",
-    "npm-run-all2": "^6.2.2",
     "prettier": "^3.3.3",
     "prompts": "^2.4.2",
     "vitest": "^2.0.5",
