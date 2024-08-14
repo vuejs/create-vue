@@ -459,6 +459,7 @@ async function init() {
   if (needsEslint) {
     renderEslint(root, {
       needsTypeScript,
+      needsVitest,
       needsCypress,
       needsCypressCT,
       needsPrettier,
