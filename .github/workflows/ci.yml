@@ -66,6 +66,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
             flag-for-devtools: '--devtools'
 
           - node-version: 18
@@ -76,6 +77,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
             flag-for-devtools: '--devtools'
 
           - node-version: 20
@@ -86,6 +88,7 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
             flag-for-devtools: '--devtools'
 
           - node-version: 22
@@ -96,11 +99,12 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
             flag-for-devtools: '--devtools'
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-devtools}}
+      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-eslint}} ${{matrix.flag-for-devtools}}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
@@ -189,3 +193,8 @@ jobs:
         name: Run e2e test script
         working-directory: ../sample-project
         run: pnpm test:e2e
+
+      - if: ${{ contains(matrix.flag-for-eslint, '--') }}
+        name: Run lint script
+        working-directory: ../sample-project
+        run: pnpm lint --no-fix --max-warnings=0
