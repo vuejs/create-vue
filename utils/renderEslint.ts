@@ -13,9 +13,10 @@ const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsCypress, needsCypressCT, needsPrettier, needsPlaywright }
+  { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright }
 ) {
   const { additionalConfig, additionalDependencies } = getAdditionalConfigAndDependencies({
+    needsVitest,
     needsCypress,
     needsCypressCT,
     needsPlaywright
@@ -64,12 +65,24 @@ export default function renderEslint(
 
 // visible for testing
 export function getAdditionalConfigAndDependencies({
+  needsVitest,
   needsCypress,
   needsCypressCT,
   needsPlaywright
 }) {
   const additionalConfig: Linter.Config = {}
   const additionalDependencies = {}
+
+  if (needsVitest) {
+    additionalConfig.overrides = [
+      {
+        files: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        extends: ['plugin:@vitest/legacy-recommended']
+      }
+    ]
+
+    additionalDependencies['@vitest/eslint-plugin'] = eslintDeps['@vitest/eslint-plugin']
+  }
 
   if (needsCypress) {
     additionalConfig.overrides = [
