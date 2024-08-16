@@ -7,3 +7,4 @@ const i18n = createI18n({
     'en-US': enUS
   }
 })
+export default i18n
