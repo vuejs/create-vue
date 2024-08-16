@@ -54,9 +54,16 @@ function fullCombination(arr) {
 }
 
 let flagCombinations = fullCombination(featureFlags)
-flagCombinations.push(['default'], ['devtools', 'router', 'pinia'], ['eslint'], ['eslint-with-prettier'])
-// vue-i18n flag combinations
-flagCombinations.push(['vue-i18n'], ['vue-i18n', 'typescript'], ['vue-i18n', 'router', 'pinia'])
+
+flagCombinations.push(
+  ['default'],
+  ['devtools', 'router', 'pinia'],
+  ['eslint'],
+  ['eslint-with-prettier'],
+  ['vue-i18n'],
+  ['vue-i18n', 'typescript'], 
+  ['vue-i18n', 'router', 'pinia']
+)
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
