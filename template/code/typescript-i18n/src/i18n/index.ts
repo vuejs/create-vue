@@ -9,3 +9,5 @@ const i18n = createI18n<[MessageSchema], 'en-US'>({
     'en-US': enUS
   }
 })
+
+export default i18n
