@@ -44,6 +44,7 @@ jobs:
         flag-for-router: ['', '--router']
         flag-for-pinia: ['', '--pinia']
         flag-for-vitest: ['', '--vitest']
+        flag-for-i18n: ['', '--vue-i18n']
 
         # It's quite costly to install Cypress & Playwright even with cache.
         # Maybe we can split them into another job so that all the projects
