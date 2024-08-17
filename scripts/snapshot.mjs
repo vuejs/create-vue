@@ -54,18 +54,22 @@ function fullCombination(arr) {
 }
 
 let flagCombinations = fullCombination(featureFlags)
+
 flagCombinations.push(
   ['default'],
   ['devtools', 'router', 'pinia'],
   ['eslint'],
-  ['eslint-with-prettier']
+  ['eslint-with-prettier'],
+  ['vue-i18n'],
+  ['vue-i18n', 'typescript'], 
+  ['vue-i18n', 'router', 'pinia']
 )
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
 // Here we generate the snapshots only for the sake of easier comparison with older templates.
 // They may be removed in later releases.
-const withTestsFlags = fullCombination(['typescript', 'jsx', 'router', 'pinia']).map((args) => [
+const withTestsFlags = fullCombination(['typescript', 'jsx', 'router', 'pinia', 'vue-i18n']).map((args) => [
   ...args,
   'with-tests'
 ])
