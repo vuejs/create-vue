@@ -117,14 +117,14 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@4.5.2(@types/node@20.16.5))(vue@3.5.8(typescript@5.6.2))
       chromedriver:
-        specifier: ^128.0.3
-        version: 128.0.3
+        specifier: ^129.0.0
+        version: 129.0.0
       geckodriver:
         specifier: ^4.4.4
         version: 4.4.4
       nightwatch:
         specifier: ^3.8.0
-        version: 3.8.0(chromedriver@128.0.3)(geckodriver@4.4.4)
+        version: 3.8.0(chromedriver@129.0.0)(geckodriver@4.4.4)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.16.5)(typescript@5.6.2)
@@ -1323,9 +1323,6 @@ packages:
     resolution: {integrity: sha512-d5ZQHPSPkF9Tw+yfyDcRoUOc4g/8UloJJe5J8m4L5+c7AtDdjDLRxew/knnI4CxvtdxEUVgWz4x3OIQUIFiMfw==}
     engines: {node: '>=4'}
 
-  axios@1.7.5:
-    resolution: {integrity: sha512-fZu86yCo+svH3uqJ/yTdQ0QHpQu5oL+/QE+QPSv6BZSkDAoky9vytxp7u5qk83OJFS3kEBcesWni9WTZAv3tSw==}
-
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
 
@@ -1469,8 +1466,8 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
 
-  chromedriver@128.0.3:
-    resolution: {integrity: sha512-Xn/bknOpGlY9tKinwS/hVWeNblSeZvbbJbF8XZ73X1jeWfAFPRXx3fMLdNNz8DqruDbx3cKEJ5wR3mnst6G3iw==}
+  chromedriver@129.0.0:
+    resolution: {integrity: sha512-B1ccqD6hDjNrw94FeqdynIotn1ZV/TnFrkRz2Rync2kzSnq6D6IrSkN1w5Pnuvnc98QhN2xujxDXxkqEqy/PWg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5018,14 +5015,6 @@ snapshots:
 
   axe-core@4.8.3: {}
 
-  axios@1.7.5:
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.7)
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-
   axios@1.7.7(debug@4.3.7):
     dependencies:
       follow-redirects: 1.15.6(debug@4.3.7)
@@ -5191,10 +5180,10 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromedriver@128.0.3:
+  chromedriver@129.0.0:
     dependencies:
       '@testim/chrome-version': 1.1.4
-      axios: 1.7.5
+      axios: 1.7.7(debug@4.3.7)
       compare-versions: 6.1.0
       extract-zip: 2.0.1(supports-color@8.1.1)
       proxy-agent: 6.4.0
@@ -6545,7 +6534,7 @@ snapshots:
     dependencies:
       axe-core: 4.8.3
 
-  nightwatch@3.8.0(chromedriver@128.0.3)(geckodriver@4.4.4):
+  nightwatch@3.8.0(chromedriver@129.0.0)(geckodriver@4.4.4):
     dependencies:
       '@nightwatch/chai': 5.0.3
       '@nightwatch/html-reporter-template': 0.3.0
@@ -6582,7 +6571,7 @@ snapshots:
       untildify: 4.0.0
       uuid: 8.3.2
     optionalDependencies:
-      chromedriver: 128.0.3
+      chromedriver: 129.0.0
       geckodriver: 4.4.4
     transitivePeerDependencies:
       - bufferutil
