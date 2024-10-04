@@ -26,7 +26,7 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #heading>Tooling</template>
 
     This project is served and bundled with
-    <a href="https://vitejs.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
+    <a href="https://vite.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
     recommended IDE setup is
     <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a> +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank" rel="noopener">Volar</a>. If

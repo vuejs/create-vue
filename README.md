@@ -28,9 +28,9 @@ npm create vue@legacy
 
 ## Difference from Vue CLI
 
-- Vite-Powered: Vue CLI is based on webpack, while `create-vue` is based on [Vite](https://vitejs.dev/). Vite supports most of the configured conventions found in Vue CLI projects out of the box, and provides a significantly better development experience due to its extremely fast startup and hot-module replacement speed. Learn more about why we recommend Vite over webpack [here](https://vitejs.dev/guide/why.html).
+- Vite-Powered: Vue CLI is based on webpack, while `create-vue` is based on [Vite](https://vite.dev/). Vite supports most of the configured conventions found in Vue CLI projects out of the box, and provides a significantly better development experience due to its extremely fast startup and hot-module replacement speed. Learn more about why we recommend Vite over webpack [here](https://vite.dev/guide/why.html).
 
-- Scaffolding Tool: Unlike Vue CLI, `create-vue` itself is just a scaffolding tool. It creates a pre-configured project based on the features you choose, and delegates the rest to Vite. Projects scaffolded this way can directly leverage the [Vite plugin ecosystem](https://vitejs.dev/plugins/) which is Rollup-compatible.
+- Scaffolding Tool: Unlike Vue CLI, `create-vue` itself is just a scaffolding tool. It creates a pre-configured project based on the features you choose, and delegates the rest to Vite. Projects scaffolded this way can directly leverage the [Vite plugin ecosystem](https://vite.dev/plugins/) which is Rollup-compatible.
 
 ## Migrating from Vue CLI
 
