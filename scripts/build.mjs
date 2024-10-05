@@ -55,7 +55,7 @@ await esbuild.build({
       setup(build) {
         // Update esbuild to support the import attributes syntax in this PR is too risky.
         // TODO: update esbuild and remove the hack.
-        build.onLoad({ filter: /@vue\/create-eslint-config\/index.js$/ }, (args) => {
+        build.onLoad({ filter: /@vue.create-eslint-config.index.js$/ }, (args) => {
           const text = fs.readFileSync(args.path, 'utf8')
           return {
             contents: text.replace(`with { type: 'json' }`, ''),
@@ -65,7 +65,7 @@ await esbuild.build({
 
         // The renderEjsFile.js module uses file system APIs therefore after bundling it will not work.
         // So we need to preprocess it to remove the file system APIs.
-        build.onLoad({ filter: /@vue\/create-eslint-config\/renderEjsFile.js$/ }, (args) => {
+        build.onLoad({ filter: /@vue.create-eslint-config.renderEjsFile\.js$/ }, (args) => {
           const pkgDir = path.dirname(args.path)
           const templatesDir = path.resolve(pkgDir, './templates')
 
