@@ -175,11 +175,11 @@ importers:
         specifier: ^6.2.3
         version: 6.2.3
       typescript:
-        specifier: ~5.6.0
-        version: 5.6.2
+        specifier: ~5.5.4
+        version: 5.5.4
       vue-tsc:
         specifier: ^2.1.6
-        version: 2.1.6(typescript@5.6.2)
+        version: 2.1.6(typescript@5.5.4)
 
   template/config/vitest:
     dependencies:
@@ -3438,6 +3438,11 @@ packages:
     resolution: {integrity: sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==}
     engines: {node: '>=8'}
 
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
     engines: {node: '>=14.17'}
@@ -4713,7 +4718,7 @@ snapshots:
     dependencies:
       rfdc: 1.4.1
 
-  '@vue/language-core@2.1.6(typescript@5.6.2)':
+  '@vue/language-core@2.1.6(typescript@5.5.4)':
     dependencies:
       '@volar/language-core': 2.4.2
       '@vue/compiler-dom': 3.5.8
@@ -4724,7 +4729,7 @@ snapshots:
       muggle-string: 0.4.1
       path-browserify: 1.0.1
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.5.4
 
   '@vue/reactivity@3.5.10':
     dependencies:
@@ -7207,6 +7212,8 @@ snapshots:
 
   type-fest@0.7.1: {}
 
+  typescript@5.5.4: {}
+
   typescript@5.6.2: {}
 
   undici-types@6.19.8: {}
@@ -7392,12 +7399,12 @@ snapshots:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.10(typescript@5.6.2)
 
-  vue-tsc@2.1.6(typescript@5.6.2):
+  vue-tsc@2.1.6(typescript@5.5.4):
     dependencies:
       '@volar/typescript': 2.4.2
-      '@vue/language-core': 2.1.6(typescript@5.6.2)
+      '@vue/language-core': 2.1.6(typescript@5.5.4)
       semver: 7.5.4
-      typescript: 5.6.2
+      typescript: 5.5.4
 
   vue@3.5.10(typescript@5.6.2):
     dependencies:
