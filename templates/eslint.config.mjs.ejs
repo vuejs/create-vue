@@ -1,0 +1,23 @@
+<%_ for (const { importer } of configsBeforeVuePlugin) { _%>
+<%- importer %>
+<%_ } _%>
+import pluginVue from 'eslint-plugin-vue'
+<%_ for (const { importer } of configsAfterVuePlugin) { _%>
+<%- importer %>
+<%_ } _%>
+
+export default [
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{<%= fileExtensions.join(',') %>}'],
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+  },
+
+  <%_ for (const { content } of configsBeforeVuePlugin) { _%>
+  <%- content %><%# TODO: auto-indent if content's multi-line %>
+  <%_ } _%>
+  ...pluginVue.configs['flat/essential'],
+  <%_ for (const { content } of configsAfterVuePlugin) { _%>
+  <%- content %><%# TODO: auto-indent if content's multi-line %>
+  <%_ } _%>
+]

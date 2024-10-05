@@ -1,0 +1,38 @@
+<%_ if (styleGuide === 'airbnb') { _%>
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "jsxSingleQuote": false,
+  "printWidth": 100,
+  "proseWrap": "preserve",
+  "quoteProps": "as-needed",
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false
+}
+<%_ } else if (styleGuide === 'standard') { _%>
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "printWidth": 100,
+  "trailingComma": "all"
+}
+<%_ } else { _%>
+<%#
+  The default style follows the one used in the vuejs/core repository
+  <https://github.com/vuejs/core/blob/main/.prettierrc>
+%>
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "singleQuote": true,
+  "arrowParens": "avoid"
+}
+<%_ } _%>

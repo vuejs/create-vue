@@ -1,30 +1,130 @@
-import { stringify } from 'javascript-stringify'
+// @ts-check
+import renderEjsFile from './renderEjsFile.js'
 
-import * as editorconfigs from './templates/editorconfigs.js'
-import * as prettierrcs from './templates/prettierrcs.js'
+import thisPackage from './package.json' with { type: 'json' }
+const versionMap = thisPackage.devDependencies
 
-import versionMap from './versionMap.cjs'
+// This is also used in `create-vue`
+export default function createConfig({
+  styleGuide = 'default', // default ~~| airbnb | standard~~ only the default is supported for now
 
-const CREATE_ALIAS_SETTING_PLACEHOLDER = 'CREATE_ALIAS_SETTING_PLACEHOLDER'
-export { CREATE_ALIAS_SETTING_PLACEHOLDER }
+  hasTypeScript = false,
+  needsPrettier = false,
 
-function stringifyJS (value, styleGuide) {
-  // eslint-disable-next-line no-shadow
-  const result = stringify(value, (val, indent, stringify, key) => {
-    if (key === 'CREATE_ALIAS_SETTING_PLACEHOLDER') {
-      return `(${stringify(val)})`
-    }
+  additionalConfigs = [],
+}) {
+  // This is the pkg object to extend
+  const pickDependencies = (/** @type {string[]} */ keys) =>
+    pickKeysFromObject(versionMap, keys)
 
-    return stringify(val)
-  }, 2)
+  const pkg = {
+    devDependencies: pickDependencies(['eslint', 'eslint-plugin-vue']),
+  }
 
-  return result.replace(
-    'CREATE_ALIAS_SETTING_PLACEHOLDER: ',
-    `...require('@vue/eslint-config-${styleGuide}/createAliasSetting')`
-  )
+  const fileExtensions = ['vue']
+
+  if (hasTypeScript) {
+    // TODO: allowJs option
+    fileExtensions.unshift('ts', 'mts', 'tsx')
+
+    additionalConfigs.unshift({
+      devDependencies: pickDependencies(['@vue/eslint-config-typescript']),
+      afterVuePlugin: [
+        {
+          importer:
+            "import vueTsEslintConfig from '@vue/eslint-config-typescript'",
+          // TODO: supportedScriptLangs
+          content: '...vueTsEslintConfig(),',
+        },
+      ],
+    })
+  } else {
+    fileExtensions.unshift('js', 'mjs', 'jsx')
+    additionalConfigs.unshift({
+      devDependencies: pickDependencies(['@eslint/js']),
+      beforeVuePlugin: [
+        {
+          importer: "import js from '@eslint/js'",
+          content: 'js.configs.recommended,',
+        },
+      ],
+    })
+  }
+
+  if (needsPrettier) {
+    additionalConfigs.push({
+      devDependencies: pickDependencies([
+        'prettier',
+        '@vue/eslint-config-prettier',
+      ]),
+      afterVuePlugin: [
+        {
+          importer:
+            "import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'",
+          content: 'skipFormatting,',
+        },
+      ],
+    })
+  }
+
+  const configsBeforeVuePlugin = [],
+    configsAfterVuePlugin = []
+  for (const config of additionalConfigs) {
+    deepMerge(pkg.devDependencies, config.devDependencies ?? {})
+    configsBeforeVuePlugin.push(...(config.beforeVuePlugin ?? []))
+    configsAfterVuePlugin.push(...(config.afterVuePlugin ?? []))
+  }
+
+  const templateData = {
+    styleGuide,
+    fileExtensions,
+    configsBeforeVuePlugin,
+    configsAfterVuePlugin,
+  }
+
+  const files = {
+    'eslint.config.mjs': renderEjsFile(
+      './templates/eslint.config.mjs.ejs',
+      templateData,
+    ),
+    '.editorconfig': renderEjsFile(
+      './templates/_editorconfig.ejs',
+      templateData,
+    ),
+  }
+
+  // .editorconfig & .prettierrc.json
+  if (needsPrettier) {
+    // Prettier recommends an explicit configuration file to let the editor know that it's used.
+    files['.prettierrc.json'] = renderEjsFile(
+      './templates/_prettierrc.json.ejs',
+      templateData,
+    )
+  }
+
+  return {
+    pkg,
+    files,
+  }
 }
 
-const isObject = (val) => val && typeof val === 'object'
+/**
+ * Picks specified keys from an object.
+ *
+ * @param {Object} obj - The source object.
+ * @param {string[]} keys - The keys to pick from the object.
+ * @returns {Object} - A new object with the picked keys.
+ */
+function pickKeysFromObject(obj, keys) {
+  return keys.reduce((acc, key) => {
+    if (key in obj) {
+      acc[key] = obj[key]
+    }
+    return acc
+  }, {})
+}
+
+const isObject = val => val && typeof val === 'object'
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
 /**
@@ -32,7 +132,7 @@ const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
  * @param {Object} target the existing object
  * @param {Object} obj the new object
  */
-export function deepMerge (target, obj) {
+export function deepMerge(target, obj) {
   for (const key of Object.keys(obj)) {
     const oldVal = target[key]
     const newVal = obj[key]
@@ -47,108 +147,4 @@ export function deepMerge (target, obj) {
   }
 
   return target
-}
-
-// This is also used in `create-vue`
-export default function createConfig ({
-  vueVersion = '3.x', // '2.x' | '3.x' (TODO: 2.7 / vue-demi)
-
-  styleGuide = 'default', // default | airbnb | typescript
-  hasTypeScript = false, // js | ts
-  needsPrettier = false, // true | false
-
-  additionalConfig = {}, // e.g. Cypress, createAliasSetting for Airbnb, etc.
-  additionalDependencies = {} // e.g. eslint-plugin-cypress
-}) {
-  // This is the pkg object to extend
-  const pkg = { devDependencies: {} }
-  const addDependency = (name) => {
-    pkg.devDependencies[name] = versionMap[name]
-  }
-
-  addDependency('eslint')
-  addDependency('eslint-plugin-vue')
-
-  if (styleGuide !== 'default' || hasTypeScript || needsPrettier) {
-    addDependency('@rushstack/eslint-patch')
-  }
-
-  const language = hasTypeScript ? 'typescript' : 'javascript'
-
-  const eslintConfig = {
-    root: true,
-    extends: [
-      vueVersion.startsWith('2')
-        ? 'plugin:vue/essential'
-        : 'plugin:vue/vue3-essential'
-    ]
-  }
-  const addDependencyAndExtend = (name) => {
-    addDependency(name)
-    eslintConfig.extends.push(name)
-  }
-
-  switch (`${styleGuide}-${language}`) {
-    case 'default-javascript':
-      eslintConfig.extends.push('eslint:recommended')
-      break
-    case 'default-typescript':
-      eslintConfig.extends.push('eslint:recommended')
-      addDependencyAndExtend('@vue/eslint-config-typescript')
-      break
-    case 'airbnb-javascript':
-    case 'standard-javascript':
-      addDependencyAndExtend(`@vue/eslint-config-${styleGuide}`)
-      break
-    case 'airbnb-typescript':
-    case 'standard-typescript':
-      addDependencyAndExtend(`@vue/eslint-config-${styleGuide}-with-typescript`)
-      break
-    default:
-      throw new Error(`unexpected combination of styleGuide and language: ${styleGuide}-${language}`)
-  }
-
-  deepMerge(pkg.devDependencies, additionalDependencies)
-  deepMerge(eslintConfig, additionalConfig)
-
-  if (needsPrettier) {
-    addDependency('prettier')
-    addDependency('@vue/eslint-config-prettier')
-    eslintConfig.extends.push('@vue/eslint-config-prettier/skip-formatting')
-  }
-
-  const files = {
-    '.eslintrc.cjs': ''
-  }
-
-  if (styleGuide === 'default') {
-    // Both Airbnb & Standard have already set `env: node`
-    files['.eslintrc.cjs'] += '/* eslint-env node */\n'
-
-    // Both Airbnb & Standard have already set `ecmaVersion`
-    // The default in eslint-plugin-vue is 2020, which doesn't support top-level await
-    eslintConfig.parserOptions = {
-      ecmaVersion: 'latest'
-    }
-  }
-
-  if (pkg.devDependencies['@rushstack/eslint-patch']) {
-    files['.eslintrc.cjs'] += "require('@rushstack/eslint-patch/modern-module-resolution')\n\n"
-  }
-
-  files['.eslintrc.cjs'] += `module.exports = ${stringifyJS(eslintConfig, styleGuide)}\n`
-
-  // .editorconfig & .prettierrc.json
-  if (editorconfigs[styleGuide]) {
-    files['.editorconfig'] = editorconfigs[styleGuide]
-  }
-  if (needsPrettier) {
-    // Prettier recommends an explicit configuration file to let the editor know that it's used.
-    files['.prettierrc.json'] = JSON.stringify(prettierrcs[styleGuide], undefined, 2)
-  }
-
-  return {
-    pkg,
-    files
-  }
 }
