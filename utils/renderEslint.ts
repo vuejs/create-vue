@@ -1,8 +1,6 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
-import type { Linter } from 'eslint'
-
 import createESLintConfig from '@vue/create-eslint-config'
 
 import sortDependencies from './sortDependencies'
@@ -15,7 +13,7 @@ export default function renderEslint(
   rootDir,
   { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright }
 ) {
-  const { additionalConfig, additionalDependencies } = getAdditionalConfigAndDependencies({
+  const additionalConfigs = getAdditionalConfigs({
     needsVitest,
     needsCypress,
     needsCypressCT,
@@ -23,21 +21,15 @@ export default function renderEslint(
   })
 
   const { pkg, files } = createESLintConfig({
-    vueVersion: '3.x',
-    // we currently don't support other style guides
     styleGuide: 'default',
     hasTypeScript: needsTypeScript,
     needsPrettier,
 
-    additionalConfig,
-    additionalDependencies
+    additionalConfigs
   })
 
   const scripts: Record<string, string> = {
-    // Note that we reuse .gitignore here to avoid duplicating the configuration
-    lint: needsTypeScript
-      ? 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore'
-      : 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore'
+    lint: 'eslint . --fix'
   }
 
   // Theoretically, we could add Prettier without requring ESLint.
@@ -54,62 +46,90 @@ export default function renderEslint(
   const packageJsonPath = path.resolve(rootDir, 'package.json')
   const existingPkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   const updatedPkg = sortDependencies(deepMerge(deepMerge(existingPkg, pkg), { scripts }))
-  fs.writeFileSync(packageJsonPath, JSON.stringify(updatedPkg, null, 2) + '\n', 'utf-8')
+  fs.writeFileSync(packageJsonPath, JSON.stringify(updatedPkg, null, 2) + '\n', 'utf8')
 
-  // write to .eslintrc.cjs, .prettierrc.json, etc.
+  // write to eslint.config.mjs, .prettierrc.json, .editorconfig, etc.
   for (const [fileName, content] of Object.entries(files)) {
     const fullPath = path.resolve(rootDir, fileName)
-    fs.writeFileSync(fullPath, content as string, 'utf-8')
+    fs.writeFileSync(fullPath, content as string, 'utf8')
   }
 }
 
+type ConfigItemInESLintTemplate = {
+  importer: string
+  content: string
+}
+type AdditionalConfig = {
+  devDependencies: Record<string, string>
+  beforeVuePlugin?: Array<ConfigItemInESLintTemplate>
+  afterVuePlugin?: Array<ConfigItemInESLintTemplate>
+}
+type AdditionalConfigArray = Array<AdditionalConfig>
+
 // visible for testing
-export function getAdditionalConfigAndDependencies({
+export function getAdditionalConfigs({
   needsVitest,
   needsCypress,
   needsCypressCT,
   needsPlaywright
 }) {
-  const additionalConfig: Linter.Config = {}
-  const additionalDependencies = {}
+  const additionalConfigs: AdditionalConfigArray = []
 
   if (needsVitest) {
-    additionalConfig.overrides = [
-      {
-        files: ['src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-        extends: ['plugin:@vitest/legacy-recommended']
-      }
-    ]
-
-    additionalDependencies['@vitest/eslint-plugin'] = eslintDeps['@vitest/eslint-plugin']
+    additionalConfigs.push({
+      devDependencies: { '@vitest/eslint-plugin': eslintDeps['@vitest/eslint-plugin'] },
+      afterVuePlugin: [
+        {
+          importer: `import pluginVitest from '@vitest/eslint-plugin'`,
+          content: `
+  {
+    ...pluginVitest.configs['recommended'],
+    files: ['src/**/__tests__/*'],
+  },`
+        }
+      ]
+    })
   }
 
   if (needsCypress) {
-    additionalConfig.overrides = [
-      {
-        files: needsCypressCT
-          ? [
-              '**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',
-              'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
-              'cypress/support/**/*.{js,ts,jsx,tsx}'
-            ]
-          : ['cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}', 'cypress/support/**/*.{js,ts,jsx,tsx}'],
-        extends: ['plugin:cypress/recommended']
-      }
-    ]
-
-    additionalDependencies['eslint-plugin-cypress'] = eslintDeps['eslint-plugin-cypress']
+    additionalConfigs.push({
+      devDependencies: { 'eslint-plugin-cypress': eslintDeps['eslint-plugin-cypress'] },
+      afterVuePlugin: [
+        {
+          importer: "import pluginCypress from 'eslint-plugin-cypress/flat'",
+          content: `
+  {
+    ...pluginCypress.configs.recommended,
+    files: [
+      ${[
+        ...(needsCypressCT ? ["'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',"] : []),
+        'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
+        'cypress/support/**/*.{js,ts,jsx,tsx}'
+      ]
+        .map(JSON.stringify.bind(JSON))
+        .join(',\n      ')}
+    ],
+  },`
+        }
+      ]
+    })
   }
 
   if (needsPlaywright) {
-    additionalConfig.overrides = [
-      {
-        files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-        extends: ['plugin:playwright/recommended']
-      }
-    ]
-
-    additionalDependencies['eslint-plugin-playwright'] = eslintDeps['eslint-plugin-playwright']
+    additionalConfigs.push({
+      devDependencies: { 'eslint-plugin-playwright': eslintDeps['eslint-plugin-playwright'] },
+      afterVuePlugin: [
+        {
+          importer: "import pluginPlaywright from 'eslint-plugin-playwright'",
+          content: `
+  {
+    ...pluginPlaywright.configs['flat/recommended'],
+    files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+  },`
+        }
+      ]
+    })
   }
-  return { additionalConfig, additionalDependencies }
+
+  return additionalConfigs
 }

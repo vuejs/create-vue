@@ -21,8 +21,8 @@ importers:
         specifier: ^2.4.9
         version: 2.4.9
       '@vue/create-eslint-config':
-        specifier: ^0.3.3
-        version: 0.3.3
+        specifier: 0.4.0
+        version: 0.4.0
       '@vue/tsconfig':
         specifier: ^0.5.1
         version: 0.5.1
@@ -1072,8 +1072,8 @@ packages:
   '@vue/compiler-vue2@2.7.16':
     resolution: {integrity: sha512-qYC3Psj9S/mfu9uVi5WvNZIzq+xnXMhOwbTFKKDD7b1lhpnn71jXSFdTQ+WsIEk0ONCd7VV2IMm7ONl6tbQ86A==}
 
-  '@vue/create-eslint-config@0.3.3':
-    resolution: {integrity: sha512-eqy1kH6/0++oiRM5EkYrVaGjArrAJAhztdtKLB9FuKlid25jwUQ6nVMyuFXhxxnxl/ypxnGndMUGpVtYfNUX6w==}
+  '@vue/create-eslint-config@0.4.0':
+    resolution: {integrity: sha512-uBld1lYUfpVa/YWepCv4dkSzuPFkwOobKHQ3WtdrXA5TL3g6L6SnodBqqarftSxGtnACSS8iZdn9TUYXhxjSbw==}
     engines: {node: ^16.14.0 || >= 18.0.0}
     hasBin: true
 
@@ -2466,9 +2466,6 @@ packages:
     resolution: {integrity: sha512-ZDi3aP+fG/LchyBzUM804VjddnwfSfsdeYkwt8NcbKRvo4rFkjhs456iLFn3k2ZUWvNe4i48WACDbza8fhq2+w==}
     engines: {node: '>=10'}
     hasBin: true
-
-  javascript-stringify@2.1.0:
-    resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
 
   joi@17.13.3:
     resolution: {integrity: sha512-otDA4ldcIx+ZXsKHWmp0YizCweVRZG96J10b0FevjfuncLO1oX59THoAmHkNubYJ+9gWsYsp5k8v4ib6oDv1fA==}
@@ -4682,10 +4679,10 @@ snapshots:
       de-indent: 1.0.2
       he: 1.2.0
 
-  '@vue/create-eslint-config@0.3.3':
+  '@vue/create-eslint-config@0.4.0':
     dependencies:
+      ejs: 3.1.10
       enquirer: 2.4.1
-      javascript-stringify: 2.1.0
       kolorist: 1.8.0
 
   '@vue/devtools-api@6.6.4': {}
@@ -6113,8 +6110,6 @@ snapshots:
       chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
-
-  javascript-stringify@2.1.0: {}
 
   joi@17.13.3:
     dependencies:
