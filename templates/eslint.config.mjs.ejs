@@ -10,6 +10,10 @@ export default [
   {
     name: 'app/files-to-lint',
     files: ['**/*.{<%= fileExtensions.join(',') %>}'],
+  },
+
+  {
+    name: 'app/files-to-ignore',
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
