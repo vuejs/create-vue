@@ -21,8 +21,8 @@ importers:
         specifier: ^2.4.9
         version: 2.4.9
       '@vue/create-eslint-config':
-        specifier: ^0.3.3
-        version: 0.3.3
+        specifier: 0.4.1
+        version: 0.4.1
       '@vue/tsconfig':
         specifier: ^0.5.1
         version: 0.5.1
@@ -175,11 +175,11 @@ importers:
         specifier: ^6.2.3
         version: 6.2.3
       typescript:
-        specifier: ~5.6.0
-        version: 5.6.2
+        specifier: ~5.5.4
+        version: 5.5.4
       vue-tsc:
         specifier: ^2.1.6
-        version: 2.1.6(typescript@5.6.2)
+        version: 2.1.6(typescript@5.5.4)
 
   template/config/vitest:
     dependencies:
@@ -1072,8 +1072,8 @@ packages:
   '@vue/compiler-vue2@2.7.16':
     resolution: {integrity: sha512-qYC3Psj9S/mfu9uVi5WvNZIzq+xnXMhOwbTFKKDD7b1lhpnn71jXSFdTQ+WsIEk0ONCd7VV2IMm7ONl6tbQ86A==}
 
-  '@vue/create-eslint-config@0.3.3':
-    resolution: {integrity: sha512-eqy1kH6/0++oiRM5EkYrVaGjArrAJAhztdtKLB9FuKlid25jwUQ6nVMyuFXhxxnxl/ypxnGndMUGpVtYfNUX6w==}
+  '@vue/create-eslint-config@0.4.1':
+    resolution: {integrity: sha512-9AQ37YCSTSqP6vRv9rp9jri9Iv34UJP0WLD+FsVNYjDOxT37533zgOGZk4w3sw0KIAX8gxcgYx+5QFDuNQUhoA==}
     engines: {node: ^16.14.0 || >= 18.0.0}
     hasBin: true
 
@@ -2467,9 +2467,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  javascript-stringify@2.1.0:
-    resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
-
   joi@17.13.3:
     resolution: {integrity: sha512-otDA4ldcIx+ZXsKHWmp0YizCweVRZG96J10b0FevjfuncLO1oX59THoAmHkNubYJ+9gWsYsp5k8v4ib6oDv1fA==}
 
@@ -3440,6 +3437,11 @@ packages:
   type-fest@0.7.1:
     resolution: {integrity: sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==}
     engines: {node: '>=8'}
+
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
@@ -4682,10 +4684,10 @@ snapshots:
       de-indent: 1.0.2
       he: 1.2.0
 
-  '@vue/create-eslint-config@0.3.3':
+  '@vue/create-eslint-config@0.4.1':
     dependencies:
+      ejs: 3.1.10
       enquirer: 2.4.1
-      javascript-stringify: 2.1.0
       kolorist: 1.8.0
 
   '@vue/devtools-api@6.6.4': {}
@@ -4716,7 +4718,7 @@ snapshots:
     dependencies:
       rfdc: 1.4.1
 
-  '@vue/language-core@2.1.6(typescript@5.6.2)':
+  '@vue/language-core@2.1.6(typescript@5.5.4)':
     dependencies:
       '@volar/language-core': 2.4.2
       '@vue/compiler-dom': 3.5.8
@@ -4727,7 +4729,7 @@ snapshots:
       muggle-string: 0.4.1
       path-browserify: 1.0.1
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.5.4
 
   '@vue/reactivity@3.5.10':
     dependencies:
@@ -6114,8 +6116,6 @@ snapshots:
       filelist: 1.0.4
       minimatch: 3.1.2
 
-  javascript-stringify@2.1.0: {}
-
   joi@17.13.3:
     dependencies:
       '@hapi/hoek': 9.3.0
@@ -7212,6 +7212,8 @@ snapshots:
 
   type-fest@0.7.1: {}
 
+  typescript@5.5.4: {}
+
   typescript@5.6.2: {}
 
   undici-types@6.19.8: {}
@@ -7397,12 +7399,12 @@ snapshots:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.10(typescript@5.6.2)
 
-  vue-tsc@2.1.6(typescript@5.6.2):
+  vue-tsc@2.1.6(typescript@5.5.4):
     dependencies:
       '@volar/typescript': 2.4.2
-      '@vue/language-core': 2.1.6(typescript@5.6.2)
+      '@vue/language-core': 2.1.6(typescript@5.5.4)
       semver: 7.5.4
-      typescript: 5.6.2
+      typescript: 5.5.4
 
   vue@3.5.10(typescript@5.6.2):
     dependencies:
