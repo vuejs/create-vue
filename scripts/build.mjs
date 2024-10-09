@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import * as esbuild from 'esbuild'
 import esbuildPluginLicense from 'esbuild-plugin-license'
 
