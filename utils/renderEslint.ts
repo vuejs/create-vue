@@ -83,7 +83,7 @@ export function getAdditionalConfigs({
           importer: `import pluginVitest from '@vitest/eslint-plugin'`,
           content: `
   {
-    ...pluginVitest.configs['recommended'],
+    ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
   },`
         }
@@ -107,7 +107,8 @@ export function getAdditionalConfigs({
         'cypress/support/**/*.{js,ts,jsx,tsx}'
       ]
         .map(JSON.stringify.bind(JSON))
-        .join(',\n      ')}
+        .join(',\n      ')
+        .replace(/"/g, "'")} // use single quotes as in the other configs
     ],
   },`
         }
