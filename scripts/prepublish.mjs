@@ -1,6 +1,8 @@
 #!/usr/bin/env zx
 import 'zx/globals'
 
+$.verbose = true
+
 await $`pnpm build`
 await $`pnpm snapshot`
 
