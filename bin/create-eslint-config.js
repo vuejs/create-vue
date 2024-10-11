@@ -205,7 +205,7 @@ const lintCommand = packageManager === 'npm' ? 'npm run lint' : `${packageManage
 
 console.info(
   '\n' +
-  `${bold(yellow('package.json'))} and ${bold(blue('eslint.config.mjs'))} have been updated.\n` +
+  `${bold(yellow('package.json'))} and ${bold(blue('eslint.config.js'))} have been updated.\n` +
   `Now please run ${bold(green(installCommand))} to re-install the dependencies.\n` +
   `Then you can run ${bold(green(lintCommand))} to lint your files.`
 )

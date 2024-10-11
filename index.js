@@ -83,8 +83,8 @@ export default function createConfig({
   }
 
   const files = {
-    'eslint.config.mjs': renderEjsFile(
-      './templates/eslint.config.mjs.ejs',
+    'eslint.config.js': renderEjsFile(
+      './templates/eslint.config.js.ejs',
       templateData,
     ),
     '.editorconfig': renderEjsFile(
