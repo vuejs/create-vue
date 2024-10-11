@@ -54,7 +54,6 @@ await esbuild.build({
     {
       name: '@vue/create-eslint-config fix',
       setup(build) {
-
         // The renderEjsFile.js module uses file system APIs therefore after bundling it will not work.
         // So we need to preprocess it to remove the file system APIs.
         build.onLoad({ filter: /@vue.create-eslint-config.renderEjsFile\.js$/ }, (args) => {
