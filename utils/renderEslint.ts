@@ -108,7 +108,7 @@ export function getAdditionalConfigs({
       ]
         .map(JSON.stringify.bind(JSON))
         .join(',\n      ')
-        .replace(/"/g, "'")} // use single quotes as in the other configs
+        .replace(/"/g, "'" /* use single quotes as in the other configs */)}
     ],
   },`
         }
