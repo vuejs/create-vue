@@ -6,7 +6,7 @@ import * as path from 'node:path'
 import { parseArgs } from 'node:util'
 
 import prompts from 'prompts'
-import { red, green, bold } from 'kolorist'
+import { red, green, bold } from 'kleur/colors'
 
 import ejs from 'ejs'
 
