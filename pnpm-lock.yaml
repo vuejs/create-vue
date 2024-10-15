@@ -41,9 +41,6 @@ importers:
       kleur:
         specifier: ^4.1.5
         version: 4.1.5
-      kolorist:
-        specifier: ^1.8.0
-        version: 1.8.0
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
@@ -4828,14 +4825,6 @@ snapshots:
     optionalDependencies:
       vite: 5.4.8(@types/node@20.16.11)
 
-  '@vitest/mocker@2.1.2(@vitest/spy@2.1.2)(vite@5.4.8(@types/node@22.7.5))':
-    dependencies:
-      '@vitest/spy': 2.1.2
-      estree-walker: 3.0.3
-      magic-string: 0.30.11
-    optionalDependencies:
-      vite: 5.4.8(@types/node@22.7.5)
-
   '@vitest/pretty-format@2.1.2':
     dependencies:
       tinyrainbow: 1.2.0
@@ -7715,7 +7704,7 @@ snapshots:
   vitest@2.1.2(@types/node@22.7.5)(jsdom@25.0.1):
     dependencies:
       '@vitest/expect': 2.1.2
-      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.4.8(@types/node@22.7.5))
+      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.4.8(@types/node@20.16.11))
       '@vitest/pretty-format': 2.1.2
       '@vitest/runner': 2.1.2
       '@vitest/snapshot': 2.1.2
