@@ -372,23 +372,23 @@ async function init() {
   if (needsPinia) {
     render('config/pinia')
   }
-  if (needsVitest) {
-    render('config/vitest')
-  }
   if (needsCypress) {
     render('config/cypress')
-  }
-  if (needsCypressCT) {
-    render('config/cypress-ct')
   }
   if (needsNightwatch) {
     render('config/nightwatch')
   }
-  if (needsNightwatchCT) {
-    render('config/nightwatch-ct')
-  }
   if (needsPlaywright) {
     render('config/playwright')
+  }
+  if (needsVitest) {
+    render('config/vitest')
+  }
+  if (needsCypressCT) {
+    render('config/cypress-ct')
+  }
+  if (needsNightwatchCT) {
+    render('config/nightwatch-ct')
   }
   if (needsTypeScript) {
     render('config/typescript')
