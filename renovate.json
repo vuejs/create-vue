@@ -8,5 +8,11 @@
   ],
   "rangeStrategy": "bump",
   "labels": ["dependencies"],
-  "ignoreDeps": ["typescript"]
+  "packageRules": [
+    {
+      "matchDepNames": ["typescript"],
+      "rangeStrategy": "replace",
+      "groupName": "typescript"
+    }
+  ]
 }
