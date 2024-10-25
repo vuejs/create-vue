@@ -7,7 +7,7 @@ describe('renderEslint', () => {
       needsVitest: false,
       needsCypress: false,
       needsCypressCT: false,
-      needsPlaywright: false
+      needsPlaywright: false,
     })
     expect(additionalConfigs).toStrictEqual([])
   })
@@ -17,7 +17,7 @@ describe('renderEslint', () => {
       needsVitest: true,
       needsCypress: false,
       needsCypressCT: false,
-      needsPlaywright: false
+      needsPlaywright: false,
     })
     expect(additionalConfigs).toHaveLength(1)
     const [additionalVitestConfig] = additionalConfigs
@@ -34,7 +34,7 @@ describe('renderEslint', () => {
       needsVitest: false,
       needsCypress: true,
       needsCypressCT: false,
-      needsPlaywright: false
+      needsPlaywright: false,
     })
     expect(additionalConfigs).toHaveLength(1)
     const [additionalCypressConfig] = additionalConfigs
@@ -42,11 +42,11 @@ describe('renderEslint', () => {
     expect(additionalCypressConfig.afterVuePlugin).toHaveLength(1)
     const [additionalCypressPlugin] = additionalCypressConfig.afterVuePlugin!
     expect(additionalCypressPlugin.importer).toBe(
-      "import pluginCypress from 'eslint-plugin-cypress/flat'"
+      "import pluginCypress from 'eslint-plugin-cypress/flat'",
     )
     expect(additionalCypressPlugin.content).toContain('...pluginCypress.configs.recommended')
     expect(additionalCypressPlugin.content).toContain(
-      "'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'"
+      "'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'",
     )
     expect(additionalCypressPlugin.content).toContain("'cypress/support/**/*.{js,ts,jsx,tsx}'")
   })
@@ -56,7 +56,7 @@ describe('renderEslint', () => {
       needsVitest: false,
       needsCypress: true,
       needsCypressCT: true,
-      needsPlaywright: false
+      needsPlaywright: false,
     })
     expect(additionalConfigs).toHaveLength(1)
     const [additionalCypressConfig] = additionalConfigs
@@ -64,12 +64,12 @@ describe('renderEslint', () => {
     expect(additionalCypressConfig.afterVuePlugin).toHaveLength(1)
     const [additionalCypressPlugin] = additionalCypressConfig.afterVuePlugin!
     expect(additionalCypressPlugin.importer).toBe(
-      "import pluginCypress from 'eslint-plugin-cypress/flat'"
+      "import pluginCypress from 'eslint-plugin-cypress/flat'",
     )
     expect(additionalCypressPlugin.content).toContain('...pluginCypress.configs.recommended')
     expect(additionalCypressPlugin.content).toContain("'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}'")
     expect(additionalCypressPlugin.content).toContain(
-      "'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'"
+      "'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'",
     )
     expect(additionalCypressPlugin.content).toContain("'cypress/support/**/*.{js,ts,jsx,tsx}'")
   })
@@ -79,23 +79,23 @@ describe('renderEslint', () => {
       needsVitest: false,
       needsCypress: false,
       needsCypressCT: false,
-      needsPlaywright: true
+      needsPlaywright: true,
     })
     expect(additionalConfigs).toHaveLength(1)
     const [additionalPlaywrightConfig] = additionalConfigs
     expect(
-      additionalPlaywrightConfig.devDependencies['eslint-plugin-playwright']
+      additionalPlaywrightConfig.devDependencies['eslint-plugin-playwright'],
     ).not.toBeUndefined()
     expect(additionalPlaywrightConfig.afterVuePlugin).toHaveLength(1)
     const [additionalPlaywrightPlugin] = additionalPlaywrightConfig.afterVuePlugin!
     expect(additionalPlaywrightPlugin.importer).toBe(
-      "import pluginPlaywright from 'eslint-plugin-playwright'"
+      "import pluginPlaywright from 'eslint-plugin-playwright'",
     )
     expect(additionalPlaywrightPlugin.content).toContain(
-      "...pluginPlaywright.configs['flat/recommended']"
+      "...pluginPlaywright.configs['flat/recommended']",
     )
     expect(additionalPlaywrightPlugin.content).toContain(
-      "files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}']"
+      "files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}']",
     )
   })
 })

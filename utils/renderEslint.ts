@@ -11,13 +11,13 @@ const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright }
+  { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright },
 ) {
   const additionalConfigs = getAdditionalConfigs({
     needsVitest,
     needsCypress,
     needsCypressCT,
-    needsPlaywright
+    needsPlaywright,
   })
 
   const { pkg, files } = createESLintConfig({
@@ -25,11 +25,11 @@ export default function renderEslint(
     hasTypeScript: needsTypeScript,
     needsPrettier,
 
-    additionalConfigs
+    additionalConfigs,
   })
 
   const scripts: Record<string, string> = {
-    lint: 'eslint . --fix'
+    lint: 'eslint . --fix',
   }
 
   // Theoretically, we could add Prettier without requring ESLint.
@@ -71,13 +71,15 @@ export function getAdditionalConfigs({
   needsVitest,
   needsCypress,
   needsCypressCT,
-  needsPlaywright
+  needsPlaywright,
 }) {
   const additionalConfigs: AdditionalConfigArray = []
 
   if (needsVitest) {
     additionalConfigs.push({
-      devDependencies: { '@vitest/eslint-plugin': eslintDeps['@vitest/eslint-plugin'] },
+      devDependencies: {
+        '@vitest/eslint-plugin': eslintDeps['@vitest/eslint-plugin'],
+      },
       afterVuePlugin: [
         {
           importer: `import pluginVitest from '@vitest/eslint-plugin'`,
@@ -85,15 +87,17 @@ export function getAdditionalConfigs({
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
-  },`
-        }
-      ]
+  },`,
+        },
+      ],
     })
   }
 
   if (needsCypress) {
     additionalConfigs.push({
-      devDependencies: { 'eslint-plugin-cypress': eslintDeps['eslint-plugin-cypress'] },
+      devDependencies: {
+        'eslint-plugin-cypress': eslintDeps['eslint-plugin-cypress'],
+      },
       afterVuePlugin: [
         {
           importer: "import pluginCypress from 'eslint-plugin-cypress/flat'",
@@ -104,21 +108,23 @@ export function getAdditionalConfigs({
       ${[
         ...(needsCypressCT ? ["'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',"] : []),
         'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
-        'cypress/support/**/*.{js,ts,jsx,tsx}'
+        'cypress/support/**/*.{js,ts,jsx,tsx}',
       ]
         .map(JSON.stringify.bind(JSON))
         .join(',\n      ')
         .replace(/"/g, "'" /* use single quotes as in the other configs */)}
     ],
-  },`
-        }
-      ]
+  },`,
+        },
+      ],
     })
   }
 
   if (needsPlaywright) {
     additionalConfigs.push({
-      devDependencies: { 'eslint-plugin-playwright': eslintDeps['eslint-plugin-playwright'] },
+      devDependencies: {
+        'eslint-plugin-playwright': eslintDeps['eslint-plugin-playwright'],
+      },
       afterVuePlugin: [
         {
           importer: "import pluginPlaywright from 'eslint-plugin-playwright'",
@@ -126,9 +132,9 @@ export function getAdditionalConfigs({
   {
     ...pluginPlaywright.configs['flat/recommended'],
     files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-  },`
-        }
-      ]
+  },`,
+        },
+      ],
     })
   }
 

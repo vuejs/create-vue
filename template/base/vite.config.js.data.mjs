@@ -4,8 +4,8 @@ export default function getData() {
       {
         id: 'vue',
         importer: "import vue from '@vitejs/plugin-vue'",
-        initializer: 'vue()'
-      }
-    ]
+        initializer: 'vue()',
+      },
+    ],
   }
 }

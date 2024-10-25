@@ -28,10 +28,12 @@ import SupportIcon from './icons/IconSupport.vue'
     This project is served and bundled with
     <a href="https://vite.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
     recommended IDE setup is
-    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a> +
+    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a>
+    +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank" rel="noopener">Volar</a>. If
     you need to test your components and web pages, check out
-    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a> and
+    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>
+    and
     <a href="https://on.cypress.io/component" target="_blank" rel="noopener"
       >Cypress Component Testing</a
     >.
@@ -69,8 +71,8 @@ import SupportIcon from './icons/IconSupport.vue'
     <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
       >StackOverflow</a
     >. You should also subscribe to
-    <a href="https://news.vuejs.org" target="_blank" rel="noopener">our mailing list</a> and follow
-    the official
+    <a href="https://news.vuejs.org" target="_blank" rel="noopener">our mailing list</a>
+    and follow the official
     <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
     twitter account for latest news in the Vue world.
   </WelcomeItem>

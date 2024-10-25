@@ -84,7 +84,7 @@ function renderTemplate(src, dest, callbacks) {
 
       // Though current `getData` are all sync, we still retain the possibility of async
       dataStore[dest] = await getData({
-        oldData: dataStore[dest] || {}
+        oldData: dataStore[dest] || {},
       })
     })
 

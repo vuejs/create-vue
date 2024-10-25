@@ -44,11 +44,11 @@ await esbuild.build({
           const result = await resolve('prompts/lib/index.js', {
             importer,
             resolveDir,
-            kind: 'import-statement'
+            kind: 'import-statement',
           })
           return result
         })
-      }
+      },
     },
 
     {
@@ -65,7 +65,7 @@ await esbuild.build({
             allTemplateFileNames.map((fileName) => {
               const content = fs.readFileSync(path.resolve(templatesDir, fileName), 'utf8')
               return [`./templates/${fileName}`, content]
-            })
+            }),
           )
 
           return {
@@ -76,10 +76,10 @@ await esbuild.build({
                 return ejs.render(templates[filePath], data, {})
               }
             `,
-            loader: 'js'
+            loader: 'js',
           }
         })
-      }
+      },
     },
 
     esbuildPluginLicense({
@@ -97,7 +97,7 @@ await esbuild.build({
               `\n## Licenses of bundled dependencies\n\n` +
               `The published create-vue artifact additionally contains code with the following licenses:\n` +
               [...new Set(dependencies.map((dependency) => dependency.packageJson.license))].join(
-                ', '
+                ', ',
               ) +
               '\n\n' +
               `## Bundled dependencies\n\n` +
@@ -117,9 +117,9 @@ await esbuild.build({
                 .join('\n\n')
 
             return licenseText
-          }
-        }
-      }
-    })
-  ]
+          },
+        },
+      },
+    }),
+  ],
 })

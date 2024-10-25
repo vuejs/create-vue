@@ -9,8 +9,8 @@ export default function getData({ oldData }) {
 
       return {
         ...plugin,
-        initializer: "nightwatchPlugin({\n      renderPage: './nightwatch/index.html'\n    })"
+        initializer: "nightwatchPlugin({\n      renderPage: './nightwatch/index.html'\n    })",
       }
-    })
+    }),
   }
 }
