@@ -193,6 +193,9 @@ await esbuild.build({
               `# create-vue core license\n\n` +
               `create-vue is released under the MIT license:\n\n` +
               CORE_LICENSE +
+              `\n# License of the files in the directories template in create-vue\n` +
+              `The files in the directories template in create-vue and files\n` +
+              `generated from those files are licensed under the CC0 1.0 Universal license:\n` +
               `\n${cc0LicenseText}\n` +
               `\n## Licenses of bundled dependencies\n\n` +
               `The published create-vue artifact additionally contains code with the following licenses:\n` +
