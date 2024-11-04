@@ -96,29 +96,38 @@ let vueVersion
 try {
   vueVersion = requireInCwd('vue/package.json').version
   console.info(dim(`Detected Vue.js version: ${vueVersion}`))
-} catch (e) {
-  // FIXME: warning that this only support Vue 3
+} catch {}
+
+if (!vueVersion || !/^3/.test(vueVersion)) {
+  const { continueAnyway } = await prompt({
+    type: 'toggle',
+    disabled: 'No',
+    enabled: 'Yes',
+    name: 'continueAnyway',
+    message: 'Vue 3.x is required but not detected. Continue anyway?',
+    initial: false
+  })
+  if (!continueAnyway) { abort() }
 }
 
 // 4. Check TypeScript
 // 4.1 Allow JS?
 // 4.2 Allow JS in Vue? Allow JSX (TSX, if answered no in 4.1) in Vue?
-let hasTypeScript = false
+let detectedTypeScript = false
 try {
   const tsVersion = requireInCwd('typescript/package.json').version
   console.info(dim(`Detected TypeScript version: ${tsVersion}`))
-  hasTypeScript = true
-} catch (e) {
-  const anwsers = await prompt({
-    type: 'toggle',
-    disabled: 'No',
-    enabled: 'Yes',
-    name: 'hasTypeScript',
-    message: 'Does your project use TypeScript?',
-    initial: false
-  })
-  hasTypeScript = anwsers.hasTypeScript
-}
+  detectedTypeScript = true
+} catch {}
+
+const { hasTypeScript } = await prompt({
+  type: 'toggle',
+  disabled: 'No',
+  enabled: 'Yes',
+  name: 'hasTypeScript',
+  message: 'Does your project use TypeScript?',
+  initial: detectedTypeScript
+})
 
 const supportedScriptLangs = {}
 // FIXME: Use a multi-select prompt
