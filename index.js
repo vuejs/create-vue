@@ -84,6 +84,11 @@ export default function createConfig({
         },
       ],
     })
+
+    // Default to only format the `src/` directory to avoid too much noise, and
+    // the need for a `.prettierignore` file.
+    // Users can still append any paths they'd like to format to the command,
+    // e.g. `npm run format cypress/`.
     pkg.scripts.format = 'prettier --write src/'
   }
 
