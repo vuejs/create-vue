@@ -191,10 +191,6 @@ const { pkg: pkgToExtend, files } = createConfig({
   needsOxlint,
 })
 
-// TODO:
-// Add `lint` command to package.json
-// Add a `format` command to package.json when prettier is used
-
 deepMerge(pkg, pkgToExtend)
 
 // Write `package.json` back

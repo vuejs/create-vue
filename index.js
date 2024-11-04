@@ -20,6 +20,7 @@ export default function createConfig({
 
   const pkg = {
     devDependencies: pickDependencies(['eslint', 'eslint-plugin-vue']),
+    scripts: {}
   }
 
   const fileExtensions = ['vue']
@@ -54,7 +55,7 @@ export default function createConfig({
 
   if (needsOxlint) {
     additionalConfigs.push({
-      devDependencies: pickDependencies(['oxlint', 'eslint-plugin-oxlint']),
+      devDependencies: pickDependencies(['oxlint', 'eslint-plugin-oxlint', 'npm-run-all2']),
       afterVuePlugin: [
         {
           importer: "import oxlint from 'eslint-plugin-oxlint'",
@@ -62,6 +63,11 @@ export default function createConfig({
         },
       ],
     })
+    pkg.scripts['lint:eslint'] = 'eslint . --fix'
+    pkg.scripts['lint:oxlint'] = 'oxlint . --fix'
+    pkg.scripts.lint = 'run-s lint:*'
+  } else {
+    pkg.scripts.lint = 'eslint . --fix'
   }
 
   if (needsPrettier) {
@@ -78,6 +84,7 @@ export default function createConfig({
         },
       ],
     })
+    pkg.scripts.format = 'prettier --write src/'
   }
 
   const configsBeforeVuePlugin = [],
@@ -114,6 +121,10 @@ export default function createConfig({
       templateData,
     )
   }
+
+  // TODO:
+  // Add `lint` command to package.json
+  // Add a `format` command to package.json when prettier is used
 
   return {
     pkg,
