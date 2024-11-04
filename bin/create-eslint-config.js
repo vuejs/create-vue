@@ -176,10 +176,19 @@ const { needsPrettier } = await prompt({
   message: 'Do you need Prettier to format your code?'
 })
 
+const { needsOxlint } = await prompt({
+  type: 'toggle',
+  disabled: 'No',
+  enabled: 'Yes',
+  name: 'needsOxlint',
+  message: 'Would you like to supplement ESLint with Oxlint for faster linting (experimental)?'
+})
+
 const { pkg: pkgToExtend, files } = createConfig({
   hasTypeScript,
   supportedScriptLangs,
   needsPrettier,
+  needsOxlint,
 })
 
 // TODO:

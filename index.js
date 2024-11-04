@@ -10,6 +10,7 @@ export default function createConfig({
 
   hasTypeScript = false,
   needsPrettier = false,
+  needsOxlint = false,
 
   additionalConfigs = [],
 }) {
@@ -46,6 +47,18 @@ export default function createConfig({
         {
           importer: "import js from '@eslint/js'",
           content: 'js.configs.recommended,',
+        },
+      ],
+    })
+  }
+
+  if (needsOxlint) {
+    additionalConfigs.push({
+      devDependencies: pickDependencies(['oxlint', 'eslint-plugin-oxlint']),
+      afterVuePlugin: [
+        {
+          importer: "import oxlint from 'eslint-plugin-oxlint'",
+          content: "oxlint.configs['flat/recommended'],",
         },
       ],
     })
