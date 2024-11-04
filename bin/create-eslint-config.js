@@ -11,12 +11,12 @@ const require = createRequire(import.meta.url)
 const Enquirer = require('enquirer')
 const enquirer = new Enquirer()
 
-function abort () {
+function abort() {
   console.error(red('✖') + ' Operation cancelled')
   process.exit(1)
 }
 
-function prompt (questions) {
+function prompt(questions) {
   return enquirer.prompt(questions).catch(abort)
 }
 
@@ -26,16 +26,22 @@ const requireInCwd = createRequire(path.resolve(cwd, 'index.cjs'))
 // Only works in directories that has a `package.json`
 const pkgJsonPath = path.resolve(cwd, 'package.json')
 if (!existsSync(pkgJsonPath)) {
-  console.error(`${bold(yellow('package.json'))} not found in the current directory.`)
+  console.error(
+    `${bold(yellow('package.json'))} not found in the current directory.`,
+  )
   abort()
 }
 
 const rawPkgJson = readFileSync(pkgJsonPath, 'utf-8')
-function inferIndent (rawJson) {
+function inferIndent(rawJson) {
   const lines = rawJson.split('\n')
-  const firstLineWithIndent = lines.find(l => l.startsWith(' ') || l.startsWith('\t'))
+  const firstLineWithIndent = lines.find(
+    l => l.startsWith(' ') || l.startsWith('\t'),
+  )
 
-  if (!firstLineWithIndent) { return '' }
+  if (!firstLineWithIndent) {
+    return ''
+  }
   return /^\s+/.exec(firstLineWithIndent)[0]
 }
 const indent = inferIndent(rawPkgJson)
@@ -61,7 +67,7 @@ for (const fmt of eslintConfigFormats) {
       message:
         `Found existing ESLint config file: ${bold(blue(configFileName))}.\n` +
         'Do you want to remove the config file and continue?',
-      initial: false
+      initial: false,
     })
 
     if (shouldRemove) {
@@ -81,7 +87,7 @@ if (pkg.eslintConfig) {
     message:
       `Found existing ${bold(blue('eslintConfig'))} field in ${bold(yellow('package.json'))}.\n` +
       'Do you want to remove the config field and continue?',
-    initial: false
+    initial: false,
   })
 
   if (shouldRemoveConfigField) {
@@ -105,9 +111,11 @@ if (!vueVersion || !/^3/.test(vueVersion)) {
     enabled: 'Yes',
     name: 'continueAnyway',
     message: 'Vue 3.x is required but not detected. Continue anyway?',
-    initial: false
+    initial: false,
   })
-  if (!continueAnyway) { abort() }
+  if (!continueAnyway) {
+    abort()
+  }
 }
 
 // 4. Check TypeScript
@@ -126,7 +134,7 @@ const { hasTypeScript } = await prompt({
   enabled: 'Yes',
   name: 'hasTypeScript',
   message: 'Does your project use TypeScript?',
-  initial: detectedTypeScript
+  initial: detectedTypeScript,
 })
 
 const supportedScriptLangs = {}
@@ -182,7 +190,7 @@ const { needsPrettier } = await prompt({
   disabled: 'No',
   enabled: 'Yes',
   name: 'needsPrettier',
-  message: 'Do you need Prettier to format your code?'
+  message: 'Do you need Prettier to format your code?',
 })
 
 const { needsOxlint } = await prompt({
@@ -190,7 +198,8 @@ const { needsOxlint } = await prompt({
   disabled: 'No',
   enabled: 'Yes',
   name: 'needsOxlint',
-  message: 'Would you like to supplement ESLint with Oxlint for faster linting (experimental)?'
+  message:
+    'Would you like to supplement ESLint with Oxlint for faster linting (experimental)?',
 })
 
 const { pkg: pkgToExtend, files } = createConfig({
@@ -212,14 +221,20 @@ for (const [name, content] of Object.entries(files)) {
 
 // Prompt: Run `npm install` or `yarn` or `pnpm install`
 const userAgent = process.env.npm_config_user_agent ?? ''
-const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm'
+const packageManager = /pnpm/.test(userAgent)
+  ? 'pnpm'
+  : /yarn/.test(userAgent)
+    ? 'yarn'
+    : 'npm'
 
-const installCommand = packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
-const lintCommand = packageManager === 'npm' ? 'npm run lint' : `${packageManager} lint`
+const installCommand =
+  packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
+const lintCommand =
+  packageManager === 'npm' ? 'npm run lint' : `${packageManager} lint`
 
 console.info(
   '\n' +
-  `${bold(yellow('package.json'))} and ${bold(blue('eslint.config.js'))} have been updated.\n` +
-  `Now please run ${bold(green(installCommand))} to re-install the dependencies.\n` +
-  `Then you can run ${bold(green(lintCommand))} to lint your files.`
+    `${bold(yellow('package.json'))} and ${bold(blue('eslint.config.js'))} have been updated.\n` +
+    `Now please run ${bold(green(installCommand))} to re-install the dependencies.\n` +
+    `Then you can run ${bold(green(lintCommand))} to lint your files.`,
 )

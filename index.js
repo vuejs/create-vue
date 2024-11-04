@@ -20,7 +20,7 @@ export default function createConfig({
 
   const pkg = {
     devDependencies: pickDependencies(['eslint', 'eslint-plugin-vue']),
-    scripts: {}
+    scripts: {},
   }
 
   const fileExtensions = ['vue']
@@ -55,7 +55,11 @@ export default function createConfig({
 
   if (needsOxlint) {
     additionalConfigs.push({
-      devDependencies: pickDependencies(['oxlint', 'eslint-plugin-oxlint', 'npm-run-all2']),
+      devDependencies: pickDependencies([
+        'oxlint',
+        'eslint-plugin-oxlint',
+        'npm-run-all2',
+      ]),
       afterVuePlugin: [
         {
           importer: "import oxlint from 'eslint-plugin-oxlint'",
