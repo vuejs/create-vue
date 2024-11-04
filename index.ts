@@ -141,7 +141,8 @@ async function init() {
     needsPinia?: boolean
     needsVitest?: boolean
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
-    needsEslint?: boolean
+    needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
+    needsOxlint?: boolean
     needsPrettier?: boolean
     needsDevTools?: boolean
   } = {}
@@ -274,11 +275,24 @@ async function init() {
         },
         {
           name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed ? null : 'select'),
+          // FIXME:
           message: language.needsEslint.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
+          initial: 0,
+          choices: [
+            {
+              title: language.needsEslint.selectOptions.negative.title,
+              value: false,
+            },
+            {
+              title: language.needsEslint.selectOptions.eslintOnly.title,
+              value: 'eslintOnly',
+            },
+            {
+              title: language.needsEslint.selectOptions.speedUpWithOxlint.title,
+              value: 'speedUpWithOxlint',
+            },
+          ],
         },
         {
           name: 'needsPrettier',
@@ -324,10 +338,12 @@ async function init() {
     needsRouter = argv.router || argv['vue-router'],
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
-    needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
     needsDevTools = argv.devtools || argv['vue-devtools'],
   } = result
+
+  const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
+  const needsOxlint = result.needsEslint === 'speedUpWithOxlint'
 
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
@@ -459,6 +475,7 @@ async function init() {
   if (needsEslint) {
     renderEslint(root, {
       needsTypeScript,
+      needsOxlint,
       needsVitest,
       needsCypress,
       needsCypressCT,
