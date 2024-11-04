@@ -63,7 +63,7 @@ export default function createConfig({
         },
       ],
     })
-    pkg.scripts['lint:oxlint'] = 'oxlint . --fix'
+    pkg.scripts['lint:oxlint'] = 'oxlint . --fix -D correctness'
     pkg.scripts['lint:eslint'] = 'eslint . --fix'
     pkg.scripts.lint = 'run-s lint:*'
   } else {
