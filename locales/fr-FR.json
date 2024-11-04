@@ -45,7 +45,16 @@
     }
   },
   "needsEslint": {
-    "message": "Ajouter ESLint pour la qualité du code\u00a0?"
+    "message": "Ajouter ESLint pour la qualité du code\u00a0?",
+    "selectOptions": {
+      "negative": { "title": "Non" },
+      "eslintOnly": {
+        "title": "Oui"
+      },
+      "speedUpWithOxlint": {
+        "title": "Oui, et accélérez avec Oxlint (expérimental)"
+      }
+    }
   },
   "needsPrettier": {
     "message": "Ajouter Prettier pour le formatage du code\u00a0?"
