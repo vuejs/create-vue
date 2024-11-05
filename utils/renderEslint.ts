@@ -11,7 +11,15 @@ const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,
-  { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright },
+  {
+    needsTypeScript,
+    needsVitest,
+    needsCypress,
+    needsCypressCT,
+    needsOxlint,
+    needsPrettier,
+    needsPlaywright,
+  },
 ) {
   const additionalConfigs = getAdditionalConfigs({
     needsVitest,
@@ -23,32 +31,20 @@ export default function renderEslint(
   const { pkg, files } = createESLintConfig({
     styleGuide: 'default',
     hasTypeScript: needsTypeScript,
+    needsOxlint,
+    // Theoretically, we could add Prettier without requring ESLint.
+    // But it doesn't seem to be a good practice, so we just let createESLintConfig handle it.
     needsPrettier,
-
     additionalConfigs,
   })
-
-  const scripts: Record<string, string> = {
-    lint: 'eslint . --fix',
-  }
-
-  // Theoretically, we could add Prettier without requring ESLint.
-  // But it doesn't seem to be a good practice, so we just leave it here.
-  if (needsPrettier) {
-    // Default to only format the `src/` directory to avoid too much noise, and
-    // the need for a `.prettierignore` file.
-    // Users can still append any paths they'd like to format to the command,
-    // e.g. `npm run format cypress/`.
-    scripts.format = 'prettier --write src/'
-  }
 
   // update package.json
   const packageJsonPath = path.resolve(rootDir, 'package.json')
   const existingPkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
-  const updatedPkg = sortDependencies(deepMerge(deepMerge(existingPkg, pkg), { scripts }))
+  const updatedPkg = sortDependencies(deepMerge(existingPkg, pkg))
   fs.writeFileSync(packageJsonPath, JSON.stringify(updatedPkg, null, 2) + '\n', 'utf8')
 
-  // write to eslint.config.mjs, .prettierrc.json, .editorconfig, etc.
+  // write to eslint.config.js, .prettierrc.json, .editorconfig, etc.
   for (const [fileName, content] of Object.entries(files)) {
     const fullPath = path.resolve(rootDir, fileName)
     fs.writeFileSync(fullPath, content as string, 'utf8')

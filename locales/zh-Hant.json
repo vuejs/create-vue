@@ -49,7 +49,16 @@
     }
   },
   "needsEslint": {
-    "message": "是否引入 ESLint 用於程式碼品質檢測？"
+    "message": "是否引入 ESLint 用於程式碼品質檢測？",
+    "selectOptions": {
+      "negative": { "title": "否" },
+      "eslintOnly": {
+        "title": "是"
+      },
+      "speedUpWithOxlint": {
+        "title": "是，並同時引入 Oxlint 以加快檢測（試驗性功能）"
+      }
+    }
   },
   "needsPrettier": {
     "message": "是否引入 Prettier 用於程式碼格式化？"
