@@ -131,10 +131,6 @@ export default function createConfig({
     )
   }
 
-  // TODO:
-  // Add `lint` command to package.json
-  // Add a `format` command to package.json when prettier is used
-
   return {
     pkg,
     files,
