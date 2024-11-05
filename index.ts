@@ -276,7 +276,6 @@ async function init() {
         {
           name: 'needsEslint',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          // FIXME:
           message: language.needsEslint.message,
           initial: 0,
           choices: [
