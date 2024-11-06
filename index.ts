@@ -83,7 +83,6 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
-  // --vue-devtools / --devtools
   // --force (for force overwriting)
 
   const args = process.argv.slice(2)
@@ -96,8 +95,6 @@ async function init() {
     tests: { type: 'boolean' },
     'vue-router': { type: 'boolean' },
     router: { type: 'boolean' },
-    'vue-devtools': { type: 'boolean' },
-    devtools: { type: 'boolean' },
   } as const
 
   const { values: argv, positionals } = parseArgs({
@@ -120,8 +117,7 @@ async function init() {
       argv.nightwatch ??
       argv.playwright ??
       argv.eslint ??
-      argv['eslint-with-prettier'] ??
-      (argv.devtools || argv['vue-devtools'])
+      argv['eslint-with-prettier']
     ) === 'boolean'
 
   let targetDir = positionals[0]
@@ -144,7 +140,6 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
-    needsDevTools?: boolean
   } = {}
 
   try {
@@ -161,7 +156,6 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
-    // - Add Vue DevTools 7 extension for debugging? (experimental)
     result = await prompts(
       [
         {
@@ -306,14 +300,6 @@ async function init() {
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive,
         },
-        {
-          name: 'needsDevTools',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsDevTools.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
       ],
       {
         onCancel: () => {
@@ -338,7 +324,6 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
-    needsDevTools = argv.devtools || argv['vue-devtools'],
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
@@ -488,9 +473,6 @@ async function init() {
     render('config/prettier')
   }
 
-  if (needsDevTools) {
-    render('config/devtools')
-  }
   // Render code template.
   // prettier-ignore
   const codeTemplate =
