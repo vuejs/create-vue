@@ -56,7 +56,7 @@ function fullCombination(arr) {
 let flagCombinations = fullCombination(featureFlags)
 flagCombinations.push(
   ['default'],
-  ['devtools', 'router', 'pinia'],
+  ['router', 'pinia'],
   ['eslint'],
   ['eslint-with-prettier'],
 )
