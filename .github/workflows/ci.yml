@@ -19,7 +19,7 @@ jobs:
       - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
       - run: pnpm install
         env:
@@ -53,12 +53,12 @@ jobs:
         # Skip ESLint/Prettier tests as we've reached the limit of job numbers
         # TODO: Find a way to test them without adding new jobs
 
-        node-version: [18]
+        node-version: [22]
         os: [ubuntu-latest]
 
         # Run a few tests on other systems and Node.js versions
         include:
-          - node-version: 18
+          - node-version: 22
             os: windows-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
@@ -68,7 +68,7 @@ jobs:
             flag-for-e2e: '--cypress'
             flag-for-eslint: '--eslint'
 
-          - node-version: 18
+          - node-version: 22
             os: macos-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
@@ -78,7 +78,7 @@ jobs:
             flag-for-e2e: '--cypress'
             flag-for-eslint: '--eslint'
 
-          - node-version: 20
+          - node-version: 18
             os: ubuntu-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
@@ -88,7 +88,7 @@ jobs:
             flag-for-e2e: '--cypress'
             flag-for-eslint: '--eslint'
 
-          - node-version: 22
+          - node-version: 20
             os: ubuntu-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
