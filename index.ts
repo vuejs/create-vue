@@ -445,9 +445,6 @@ async function init() {
         path: './nightwatch/tsconfig.json',
       })
     }
-    if (needsNightwatchCT) {
-      render('tsconfig/nightwatch-ct')
-    }
     fs.writeFileSync(
       path.resolve(root, 'tsconfig.json'),
       JSON.stringify(rootTsConfig, null, 2) + '\n',
