@@ -3,7 +3,7 @@
 The recommended way to start a Vite-powered Vue project
 
 <p align="center">
-  <img width="762" alt="Screenshot 2024-11-10 at 20 49 33" src="https://github.com/user-attachments/assets/3543d014-6402-467b-929d-7457a0b25285">
+  <img width="898" alt="Screenshot 2024-11-10 at 20 58 46" src="https://github.com/user-attachments/assets/ca4a908d-d98c-43a8-bb86-ba0ba9ba7eb1">
 </p>
 
 ## Usage
