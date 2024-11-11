@@ -106,6 +106,7 @@ export default function createConfig({
 
   const templateData = {
     styleGuide,
+    needsPrettier,
     fileExtensions,
     configsBeforeVuePlugin,
     configsAfterVuePlugin,
