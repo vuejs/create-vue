@@ -16,12 +16,10 @@ jobs:
     name: Build the package
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
       - run: pnpm install
         env:
@@ -31,7 +29,7 @@ jobs:
 
       # Use cache to share the output across different jobs
       # No need to cache node_modules because they are all bundled
-      - uses: actions/cache/save@v3
+      - uses: actions/cache/save@v4
         id: cache
         with:
           path: outfile.cjs
@@ -55,12 +53,12 @@ jobs:
         # Skip ESLint/Prettier tests as we've reached the limit of job numbers
         # TODO: Find a way to test them without adding new jobs
 
-        node-version: [18]
+        node-version: [22]
         os: [ubuntu-latest]
 
         # Run a few tests on other systems and Node.js versions
         include:
-          - node-version: 18
+          - node-version: 22
             os: windows-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
@@ -68,8 +66,9 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
 
-          - node-version: 18
+          - node-version: 22
             os: macos-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
@@ -77,6 +76,17 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
+
+          - node-version: 18
+            os: ubuntu-latest
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
 
           - node-version: 20
             os: ubuntu-latest
@@ -86,31 +96,21 @@ jobs:
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-
-          - node-version: 16
-            os: ubuntu-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
+            flag-for-eslint: '--eslint'
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }}
+      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-eslint}}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         id: cache-restore
         with:
           path: outfile.cjs
@@ -135,7 +135,7 @@ jobs:
       - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -143,7 +143,7 @@ jobs:
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Cache Playwright's binary
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
@@ -189,3 +189,8 @@ jobs:
         name: Run e2e test script
         working-directory: ../sample-project
         run: pnpm test:e2e
+
+      - if: ${{ contains(matrix.flag-for-eslint, '--') }}
+        name: Run lint script
+        working-directory: ../sample-project
+        run: pnpm lint --no-fix --max-warnings=0

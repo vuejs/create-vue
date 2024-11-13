@@ -43,6 +43,37 @@ interface Language {
   }
 }
 
+/**
+ *
+ * This function is used to link obtained locale with correct locale file in order to make locales reusable
+ *
+ * @param locale the obtained locale
+ * @returns locale that linked with correct name
+ */
+function linkLocale(locale: string) {
+  let linkedLocale: string
+  try {
+    linkedLocale = Intl.getCanonicalLocales(locale)[0]
+  } catch (error) {
+    console.log(`${error.toString()}\n`)
+  }
+  switch (linkedLocale) {
+    case 'zh-TW':
+    case 'zh-HK':
+    case 'zh-MO':
+      linkedLocale = 'zh-Hant'
+      break
+    case 'zh-CN':
+    case 'zh-SG':
+      linkedLocale = 'zh-Hans'
+      break
+    default:
+      linkedLocale = locale
+  }
+
+  return linkedLocale
+}
+
 function getLocale() {
   const shellLocale =
     process.env.LC_ALL || // POSIX locale environment variables
@@ -51,9 +82,7 @@ function getLocale() {
     Intl.DateTimeFormat().resolvedOptions().locale || // Built-in ECMA-402 support
     'en-US' // Default fallback
 
-  const locale = shellLocale.split('.')[0].replace('_', '-')
-
-  return locale
+  return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 }
 
 export default function getLanguage() {

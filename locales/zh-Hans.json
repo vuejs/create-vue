@@ -45,7 +45,16 @@
     }
   },
   "needsEslint": {
-    "message": "是否引入 ESLint 用于代码质量检测？"
+    "message": "是否引入 ESLint 用于代码质量检测？",
+    "selectOptions": {
+      "negative": { "title": "否" },
+      "eslintOnly": {
+        "title": "是"
+      },
+      "speedUpWithOxlint": {
+        "title": "是，并同时引入 Oxlint 以加快检测（试验阶段）"
+      }
+    }
   },
   "needsPrettier": {
     "message": "是否引入 Prettier 用于代码格式化？"
@@ -58,7 +67,7 @@
     "inactive": "否"
   },
   "infos": {
-    "scaffolding": "正在构建项目",
-    "done": "项目构建完成，可执行以下命令："
+    "scaffolding": "正在初始化项目",
+    "done": "项目初始化完成，可执行以下命令："
   }
 }

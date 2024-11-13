@@ -1,0 +1,77 @@
+{
+  "projectName": {
+    "message": "請輸入專案名稱："
+  },
+  "shouldOverwrite": {
+    "dirForPrompts": {
+      "current": "當前資料夾",
+      "target": "目標資料夾："
+    },
+    "message": "非空，是否覆蓋？"
+  },
+  "packageName": {
+    "message": "請輸入套件名稱：",
+    "invalidMessage": "無效的 package.json 名稱"
+  },
+  "needsTypeScript": {
+    "message": "是否使用 TypeScript？"
+  },
+  "needsJsx": {
+    "message": "是否啟用 JSX 支援？"
+  },
+  "needsRouter": {
+    "message": "是否引入 Vue Router 進行單頁應用程式開發？"
+  },
+  "needsPinia": {
+    "message": "是否引入 Pinia 用於狀態管理？"
+  },
+  "needsVitest": {
+    "message": "是否引入 Vitest 用於單元測試"
+  },
+  "needsE2eTesting": {
+    "message": "是否要引入一款端對端（End to End）測試工具？",
+    "hint": "- 使用箭頭切換按 Enter 確認。",
+    "selectOptions": {
+      "negative": {
+        "title": "不需要"
+      },
+      "cypress": {
+        "title": "Cypress",
+        "desc": "同時支援基於 Cypress Component Testing 的單元測試"
+      },
+      "nightwatch": {
+        "title": "Nightwatch",
+        "desc": "同時支援基於 Nightwatch Component Testing 的單元測試"
+      },
+      "playwright": {
+        "title": "Playwright"
+      }
+    }
+  },
+  "needsEslint": {
+    "message": "是否引入 ESLint 用於程式碼品質檢測？",
+    "selectOptions": {
+      "negative": { "title": "否" },
+      "eslintOnly": {
+        "title": "是"
+      },
+      "speedUpWithOxlint": {
+        "title": "是，並同時引入 Oxlint 以加快檢測（試驗性功能）"
+      }
+    }
+  },
+  "needsPrettier": {
+    "message": "是否引入 Prettier 用於程式碼格式化？"
+  },
+  "errors": {
+    "operationCancelled": "操作取消"
+  },
+  "defaultToggleOptions": {
+    "active": "是",
+    "inactive": "否"
+  },
+  "infos": {
+    "scaffolding": "正在建置專案",
+    "done": "專案建置完成，可執行以下命令："
+  }
+}

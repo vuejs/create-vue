@@ -45,7 +45,16 @@
     }
   },
   "needsEslint": {
-    "message": "Kod kalitesi için ESLint eklensin mi?"
+    "message": "Kod kalitesi için ESLint eklensin mi?",
+    "selectOptions": {
+      "negative": { "title": "Hayır" },
+      "eslintOnly": {
+        "title": "Evet"
+      },
+      "speedUpWithOxlint": {
+        "title": "Evet ve Oxlint ile hızlanın (deneysel)"
+      }
+    }
   },
   "needsPrettier": {
     "message": "Kod formatlama için Prettier eklensin mi?"

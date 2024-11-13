@@ -3,9 +3,10 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
-import minimist from 'minimist'
+import { parseArgs } from 'node:util'
+
 import prompts from 'prompts'
-import { red, green, bold } from 'kolorist'
+import { red, green, bold } from 'kleur/colors'
 
 import ejs from 'ejs'
 
@@ -55,7 +56,7 @@ function emptyDir(dir) {
   postOrderDirectoryTraverse(
     dir,
     (dir) => fs.rmdirSync(dir),
-    (file) => fs.unlinkSync(file)
+    (file) => fs.unlinkSync(file),
   )
 }
 
@@ -64,7 +65,7 @@ async function init() {
   console.log(
     process.stdout.isTTY && process.stdout.getColorDepth() > 8
       ? banners.gradientBanner
-      : banners.defaultBanner
+      : banners.defaultBanner,
   )
   console.log()
 
@@ -83,34 +84,43 @@ async function init() {
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
-  const argv = minimist(process.argv.slice(2), {
-    alias: {
-      typescript: ['ts'],
-      'with-tests': ['tests'],
-      router: ['vue-router']
-    },
-    string: ['_'],
-    // all arguments are treated as booleans
-    boolean: true
+
+  const args = process.argv.slice(2)
+
+  // alias is not supported by parseArgs
+  const options = {
+    typescript: { type: 'boolean' },
+    ts: { type: 'boolean' },
+    'with-tests': { type: 'boolean' },
+    tests: { type: 'boolean' },
+    'vue-router': { type: 'boolean' },
+    router: { type: 'boolean' },
+  } as const
+
+  const { values: argv, positionals } = parseArgs({
+    args,
+    options,
+    strict: false,
   })
 
   // if any of the feature flags is set, we would skip the feature prompts
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      argv.ts ??
+      (argv.ts || argv.typescript) ??
       argv.jsx ??
-      argv.router ??
+      (argv.router || argv['vue-router']) ??
       argv.pinia ??
-      argv.tests ??
+      (argv.tests || argv['with-tests']) ??
       argv.vitest ??
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint
+      argv.eslint ??
+      argv['eslint-with-prettier']
     ) === 'boolean'
 
-  let targetDir = argv._[0]
+  let targetDir = positionals[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
@@ -127,7 +137,8 @@ async function init() {
     needsPinia?: boolean
     needsVitest?: boolean
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
-    needsEslint?: boolean
+    needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
+    needsOxlint?: boolean
     needsPrettier?: boolean
   } = {}
 
@@ -152,7 +163,7 @@ async function init() {
           type: targetDir ? null : 'text',
           message: language.projectName.message,
           initial: defaultProjectName,
-          onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
+          onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName),
         },
         {
           name: 'shouldOverwrite',
@@ -167,7 +178,7 @@ async function init() {
           },
           initial: true,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'overwriteChecker',
@@ -176,14 +187,14 @@ async function init() {
               throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
             }
             return null
-          }
+          },
         },
         {
           name: 'packageName',
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
           message: language.packageName.message,
           initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
+          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage,
         },
         {
           name: 'needsTypeScript',
@@ -191,7 +202,7 @@ async function init() {
           message: language.needsTypeScript.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'needsJsx',
@@ -199,7 +210,7 @@ async function init() {
           message: language.needsJsx.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'needsRouter',
@@ -207,7 +218,7 @@ async function init() {
           message: language.needsRouter.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'needsPinia',
@@ -215,7 +226,7 @@ async function init() {
           message: language.needsPinia.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'needsVitest',
@@ -223,7 +234,7 @@ async function init() {
           message: language.needsVitest.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          inactive: language.defaultToggleOptions.inactive,
         },
         {
           name: 'needsE2eTesting',
@@ -234,35 +245,47 @@ async function init() {
           choices: (prev, answers) => [
             {
               title: language.needsE2eTesting.selectOptions.negative.title,
-              value: false
+              value: false,
             },
             {
               title: language.needsE2eTesting.selectOptions.cypress.title,
               description: answers.needsVitest
                 ? undefined
                 : language.needsE2eTesting.selectOptions.cypress.desc,
-              value: 'cypress'
+              value: 'cypress',
             },
             {
               title: language.needsE2eTesting.selectOptions.nightwatch.title,
               description: answers.needsVitest
                 ? undefined
                 : language.needsE2eTesting.selectOptions.nightwatch.desc,
-              value: 'nightwatch'
+              value: 'nightwatch',
             },
             {
               title: language.needsE2eTesting.selectOptions.playwright.title,
-              value: 'playwright'
-            }
-          ]
+              value: 'playwright',
+            },
+          ],
         },
         {
           name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: () => (isFeatureFlagsUsed ? null : 'select'),
           message: language.needsEslint.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
+          initial: 0,
+          choices: [
+            {
+              title: language.needsEslint.selectOptions.negative.title,
+              value: false,
+            },
+            {
+              title: language.needsEslint.selectOptions.eslintOnly.title,
+              value: 'eslintOnly',
+            },
+            {
+              title: language.needsEslint.selectOptions.speedUpWithOxlint.title,
+              value: 'speedUpWithOxlint',
+            },
+          ],
         },
         {
           name: 'needsPrettier',
@@ -275,14 +298,14 @@ async function init() {
           message: language.needsPrettier.message,
           initial: false,
           active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
-        }
+          inactive: language.defaultToggleOptions.inactive,
+        },
       ],
       {
         onCancel: () => {
           throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-        }
-      }
+        },
+      },
     )
   } catch (cancelled) {
     console.log(cancelled.message)
@@ -296,13 +319,15 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.typescript,
-    needsRouter = argv.router,
+    needsTypeScript = argv.ts || argv.typescript,
+    needsRouter = argv.router || argv['vue-router'],
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
-    needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier']
+    needsPrettier = argv['eslint-with-prettier'],
   } = result
+
+  const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
+  const needsOxlint = result.needsEslint === 'speedUpWithOxlint'
 
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
@@ -378,12 +403,12 @@ async function init() {
       // All templates contain at least a `.node` and a `.app` tsconfig.
       references: [
         {
-          path: './tsconfig.node.json'
+          path: './tsconfig.node.json',
         },
         {
-          path: './tsconfig.app.json'
-        }
-      ]
+          path: './tsconfig.app.json',
+        },
+      ],
     }
     if (needsCypress) {
       render('tsconfig/cypress')
@@ -393,14 +418,14 @@ async function init() {
       // (Cypress uses the ts-node/esm loader when `type: module` is specified in package.json.)
       // @ts-ignore
       rootTsConfig.compilerOptions = {
-        module: 'NodeNext'
+        module: 'NodeNext',
       }
     }
     if (needsCypressCT) {
       render('tsconfig/cypress-ct')
       // Cypress Component Testing needs a standalone tsconfig.
       rootTsConfig.references.push({
-        path: './tsconfig.cypress-ct.json'
+        path: './tsconfig.cypress-ct.json',
       })
     }
     if (needsPlaywright) {
@@ -410,14 +435,14 @@ async function init() {
       render('tsconfig/vitest')
       // Vitest needs a standalone tsconfig.
       rootTsConfig.references.push({
-        path: './tsconfig.vitest.json'
+        path: './tsconfig.vitest.json',
       })
     }
     if (needsNightwatch) {
       render('tsconfig/nightwatch')
       // Nightwatch needs a standalone tsconfig, but in a different folder.
       rootTsConfig.references.push({
-        path: './nightwatch/tsconfig.json'
+        path: './nightwatch/tsconfig.json',
       })
     }
     if (needsNightwatchCT) {
@@ -426,13 +451,26 @@ async function init() {
     fs.writeFileSync(
       path.resolve(root, 'tsconfig.json'),
       JSON.stringify(rootTsConfig, null, 2) + '\n',
-      'utf-8'
+      'utf-8',
     )
   }
 
   // Render ESLint config
   if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    renderEslint(root, {
+      needsTypeScript,
+      needsOxlint,
+      needsVitest,
+      needsCypress,
+      needsCypressCT,
+      needsPrettier,
+      needsPlaywright,
+    })
+    render('config/eslint')
+  }
+
+  if (needsPrettier) {
+    render('config/prettier')
   }
 
   // Render code template.
@@ -473,7 +511,7 @@ async function init() {
         fs.writeFileSync(dest, content)
         fs.unlinkSync(filepath)
       }
-    }
+    },
   )
 
   // Cleanup.
@@ -495,7 +533,7 @@ async function init() {
       root,
       () => {},
       (filepath) => {
-        if (filepath.endsWith('.js')) {
+        if (filepath.endsWith('.js') && !filepath.endsWith('eslint.config.js')) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
           if (fs.existsSync(tsFilePath)) {
             fs.unlinkSync(filepath)
@@ -505,7 +543,7 @@ async function init() {
         } else if (path.basename(filepath) === 'jsconfig.json') {
           fs.unlinkSync(filepath)
         }
-      }
+      },
     )
 
     // Rename entry in `index.html`
@@ -521,14 +559,20 @@ async function init() {
         if (filepath.endsWith('.ts')) {
           fs.unlinkSync(filepath)
         }
-      }
+      },
     )
   }
 
   // Instructions:
-  // Supported package managers: pnpm > yarn > npm
+  // Supported package managers: pnpm > yarn > bun > npm
   const userAgent = process.env.npm_config_user_agent ?? ''
-  const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm'
+  const packageManager = /pnpm/.test(userAgent)
+    ? 'pnpm'
+    : /yarn/.test(userAgent)
+      ? 'yarn'
+      : /bun/.test(userAgent)
+        ? 'bun'
+        : 'npm'
 
   // README generation
   fs.writeFileSync(
@@ -543,15 +587,15 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint
-    })
+      needsEslint,
+    }),
   )
 
   console.log(`\n${language.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(
-      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
+      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`,
     )
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)

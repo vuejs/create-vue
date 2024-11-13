@@ -4,6 +4,8 @@ pnpm-lock.yaml
 # https://github.com/prettier/prettier/issues/7884
 **/*.spec.js
 **/*.spec.ts
+# but let's format our unit tests
+!__test__/**/*.spec.ts
 **/dist
 # https://github.com/prettier/prettier/issues/5246
 **/*.html

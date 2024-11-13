@@ -51,6 +51,15 @@ function renderTemplate(src, dest, callbacks) {
     return
   }
 
+  if (filename === 'settings.json' && fs.existsSync(dest)) {
+    // merge instead of overwriting
+    const existing = JSON.parse(fs.readFileSync(dest, 'utf8'))
+    const newSettings = JSON.parse(fs.readFileSync(src, 'utf8'))
+    const settings = deepMerge(existing, newSettings)
+    fs.writeFileSync(dest, JSON.stringify(settings, null, 2) + '\n')
+    return
+  }
+
   if (filename.startsWith('_')) {
     // rename `_file` to `.file`
     dest = path.resolve(path.dirname(dest), filename.replace(/^_/, '.'))
@@ -75,7 +84,7 @@ function renderTemplate(src, dest, callbacks) {
 
       // Though current `getData` are all sync, we still retain the possibility of async
       dataStore[dest] = await getData({
-        oldData: dataStore[dest] || {}
+        oldData: dataStore[dest] || {},
       })
     })
 

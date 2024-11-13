@@ -17,6 +17,6 @@ export default function sortDependencies(packageJson) {
 
   return {
     ...packageJson,
-    ...sorted
+    ...sorted,
   }
 }
