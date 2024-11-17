@@ -17,4 +17,9 @@ describe('getCommand', () => {
     expect(getCommand('pnpm', 'dev')).toBe('pnpm dev')
     expect(getCommand('pnpm', 'build')).toBe('pnpm build')
   })
+  it('should generate the correct command for bun', () => {
+    expect(getCommand('bun', 'install')).toBe('bun install')
+    expect(getCommand('bun', 'dev')).toBe('bun dev')
+    expect(getCommand('bun', 'build')).toBe('bun run build')
+  })
 })

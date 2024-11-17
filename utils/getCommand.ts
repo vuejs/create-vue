@@ -2,6 +2,11 @@ export default function getCommand(packageManager: string, scriptName: string, a
   if (scriptName === 'install') {
     return packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
   }
+  if (scriptName === 'build') {
+    return packageManager === 'npm' || packageManager === 'bun'
+      ? `${packageManager} run build`
+      : `${packageManager} build`
+  }
 
   if (args) {
     return packageManager === 'npm'
