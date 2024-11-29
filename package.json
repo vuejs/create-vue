@@ -23,7 +23,8 @@
     "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
     "test:unit": "vitest",
-    "prepublishOnly": "zx ./scripts/prepublish.mjs"
+    "postversion": "zx ./scripts/postversion.mjs",
+    "prepublishOnly": "pnpm run build"
   },
   "repository": {
     "type": "git",
@@ -58,5 +59,9 @@
     "*.{js,ts,vue,json}": [
       "prettier --write"
     ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
