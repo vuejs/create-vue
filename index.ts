@@ -140,7 +140,7 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
-    runtime?: 'nodejs' | 'bun'
+    runtime?: 'node' | 'bun'
   } = {}
 
   try {
@@ -168,16 +168,16 @@ async function init() {
           initial: 0,
           choices: [
             {
-              title: language.needsRuntime.selectOptions.nodejs.title,
-              description: language.needsRuntime.selectOptions.nodejs.desc,
-              value: 'nodejs'
+              title: language.needsRuntime.selectOptions.node.title,
+              description: language.needsRuntime.selectOptions.node.desc,
+              value: 'node',
             },
             {
               title: language.needsRuntime.selectOptions.bun.title,
               description: language.needsRuntime.selectOptions.bun.desc,
-              value: 'bun'
-            }
-          ]
+              value: 'bun',
+            },
+          ],
         },
         {
           name: 'projectName',
@@ -345,7 +345,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
-    runtime = 'nodejs',
+    runtime = 'node',
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
@@ -378,8 +378,8 @@ async function init() {
   const templateRoot = path.resolve(__dirname, 'template')
   const callbacks = []
   const render = function render(templateName: string) {
-    let templateDir = fs.existsSync(path.resolve(templateRoot, runtime, templateName))
-    if (!fs.existsSync(targetDir)) {
+    let templateDir = path.resolve(templateRoot, 'others-runtime', runtime, templateName)
+    if (!fs.existsSync(templateDir)) {
       templateDir = path.resolve(templateRoot, templateName)
     }
     renderTemplate(templateDir, root, callbacks)
@@ -428,7 +428,7 @@ async function init() {
       // All templates contain at least a `.node` and a `.app` tsconfig.
       references: [
         {
-          path: './tsconfig.node.json',
+          path: `./tsconfig.${runtime}.json`,
         },
         {
           path: './tsconfig.app.json',
@@ -526,7 +526,7 @@ async function init() {
   // EJS template rendering
   preOrderDirectoryTraverse(
     root,
-    () => { },
+    () => {},
     (filepath) => {
       if (filepath.endsWith('.ejs')) {
         const template = fs.readFileSync(filepath, 'utf-8')
@@ -556,7 +556,7 @@ async function init() {
     // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
     preOrderDirectoryTraverse(
       root,
-      () => { },
+      () => {},
       (filepath) => {
         if (filepath.endsWith('.js') && !filepath.endsWith('eslint.config.js')) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
@@ -579,7 +579,7 @@ async function init() {
     // Remove all the remaining `.ts` files
     preOrderDirectoryTraverse(
       root,
-      () => { },
+      () => {},
       (filepath) => {
         if (filepath.endsWith('.ts')) {
           fs.unlinkSync(filepath)
