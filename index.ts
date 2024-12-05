@@ -140,10 +140,12 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
+    runtime?: 'nodejs' | 'bun'
   } = {}
 
   try {
     // Prompts:
+    // - Choose runtime environment: Node.js / Bun
     // - Project name:
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
@@ -156,8 +158,27 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+
     result = await prompts(
       [
+        {
+          name: 'runtime',
+          type: () => (isFeatureFlagsUsed ? null : 'select'),
+          message: language.needsRuntime.message,
+          initial: 0,
+          choices: [
+            {
+              title: language.needsRuntime.selectOptions.nodejs.title,
+              description: language.needsRuntime.selectOptions.nodejs.desc,
+              value: 'nodejs'
+            },
+            {
+              title: language.needsRuntime.selectOptions.bun.title,
+              description: language.needsRuntime.selectOptions.bun.desc,
+              value: 'bun'
+            }
+          ]
+        },
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
@@ -324,6 +345,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
+    runtime = 'nodejs',
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
@@ -355,8 +377,11 @@ async function init() {
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template')
   const callbacks = []
-  const render = function render(templateName) {
-    const templateDir = path.resolve(templateRoot, templateName)
+  const render = function render(templateName: string) {
+    let templateDir = fs.existsSync(path.resolve(templateRoot, runtime, templateName))
+    if (!fs.existsSync(targetDir)) {
+      templateDir = path.resolve(templateRoot, templateName)
+    }
     renderTemplate(templateDir, root, callbacks)
   }
   // Render base template
@@ -501,7 +526,7 @@ async function init() {
   // EJS template rendering
   preOrderDirectoryTraverse(
     root,
-    () => {},
+    () => { },
     (filepath) => {
       if (filepath.endsWith('.ejs')) {
         const template = fs.readFileSync(filepath, 'utf-8')
@@ -531,7 +556,7 @@ async function init() {
     // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
     preOrderDirectoryTraverse(
       root,
-      () => {},
+      () => { },
       (filepath) => {
         if (filepath.endsWith('.js') && !filepath.endsWith('eslint.config.js')) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
@@ -554,7 +579,7 @@ async function init() {
     // Remove all the remaining `.ts` files
     preOrderDirectoryTraverse(
       root,
-      () => {},
+      () => { },
       (filepath) => {
         if (filepath.endsWith('.ts')) {
           fs.unlinkSync(filepath)

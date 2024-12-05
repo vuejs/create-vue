@@ -30,6 +30,7 @@ interface Language {
   needsE2eTesting: LanguageItem
   needsEslint: LanguageItem
   needsPrettier: LanguageItem
+  needsRuntime: LanguageItem
   errors: {
     operationCancelled: string
   }
