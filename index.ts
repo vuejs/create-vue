@@ -140,6 +140,7 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
+    bare?: boolean
   } = {}
 
   try {
@@ -300,6 +301,14 @@ async function init() {
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive,
         },
+        {
+          name: 'bare',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: language.bare.message,
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive,
+        },
       ],
       {
         onCancel: () => {
@@ -324,6 +333,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
+    bare,
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
@@ -476,8 +486,10 @@ async function init() {
   // Render code template.
   // prettier-ignore
   const codeTemplate =
-    (needsTypeScript ? 'typescript-' : '') +
-    (needsRouter ? 'router' : 'default')
+    bare
+      ? 'bare'
+      : (needsTypeScript ? 'typescript-' : '') +
+        (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
   // Render entry file (main.js/ts).
