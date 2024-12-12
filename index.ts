@@ -370,7 +370,11 @@ async function init() {
     renderTemplate(templateDir, root, callbacks)
   }
   // Render base template
-  render('base')
+  if (bare) {
+    render('bare-base')
+  } else {
+    render('base')
+  }
 
   // Add configs.
   if (needsJsx) {

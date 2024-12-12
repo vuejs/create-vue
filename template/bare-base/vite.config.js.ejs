@@ -1,0 +1,20 @@
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+<%_ for (const { importer } of plugins) { _%>
+<%- importer %>
+<%_ } _%>
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+  <%_ for (const { initializer } of plugins) { _%>
+    <%- initializer _%>,
+  <%_ } _%>
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    },
+  },
+})
