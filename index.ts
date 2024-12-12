@@ -72,6 +72,7 @@ async function init() {
   const cwd = process.cwd()
   // possible options:
   // --default
+  // --minimal
   // --typescript / --ts
   // --jsx
   // --router / --vue-router
@@ -107,6 +108,7 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
+      argv.minimal ??
       (argv.ts || argv.typescript) ??
       argv.jsx ??
       (argv.router || argv['vue-router']) ??
@@ -561,6 +563,31 @@ async function init() {
         }
       },
     )
+  }
+
+  if (argv.minimal) {
+    // Only keep `src/App.vue` and `src/main.js` inside the `src` folder
+    postOrderDirectoryTraverse(
+      path.resolve(root, 'src'),
+      (dir) => {
+        if (path.basename(dir) === 'src') {
+          return
+        }
+        fs.rmdirSync(dir)
+      },
+      (filepath) => {
+        if (!['App.vue', 'main.js'].includes(path.basename(filepath))) fs.unlinkSync(filepath)
+      },
+    )
+    // Replace the content in `src/App.vue` with a minimal template
+    fs.writeFileSync(
+      path.resolve(root, 'src/App.vue'),
+      '<script setup>\n</script>\n\n<template>\n  <h1>Hello World</h1>\n</template>\n\n<style scoped>\n</style>\n',
+    )
+    // Remove CSS import in `src/main.js`
+    const srcMainJsPath = path.resolve(root, 'src/main.js')
+    const srcMainJsContent = fs.readFileSync(srcMainJsPath, 'utf8')
+    fs.writeFileSync(srcMainJsPath, srcMainJsContent.replace("import './assets/main.css'\n\n", ''))
   }
 
   // Instructions:
