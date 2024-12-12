@@ -18,6 +18,7 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
+import trimBoilerplate from './utils/trimBoilerplate'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -72,7 +73,6 @@ async function init() {
   const cwd = process.cwd()
   // possible options:
   // --default
-  // --minimal
   // --typescript / --ts
   // --jsx
   // --router / --vue-router
@@ -85,6 +85,7 @@ async function init() {
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
+  // --bare (for a barebone template)
 
   const args = process.argv.slice(2)
 
@@ -108,7 +109,6 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      argv.minimal ??
       (argv.ts || argv.typescript) ??
       argv.jsx ??
       (argv.router || argv['vue-router']) ??
@@ -321,8 +321,8 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.ts || argv.typescript,
-    needsRouter = argv.router || argv['vue-router'],
+    needsTypeScript = (argv.ts || argv.typescript) as boolean,
+    needsRouter = (argv.router || argv['vue-router']) as boolean,
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
@@ -565,29 +565,8 @@ async function init() {
     )
   }
 
-  if (argv.minimal) {
-    // Only keep `src/App.vue` and `src/main.js` inside the `src` folder
-    postOrderDirectoryTraverse(
-      path.resolve(root, 'src'),
-      (dir) => {
-        if (path.basename(dir) === 'src') {
-          return
-        }
-        fs.rmdirSync(dir)
-      },
-      (filepath) => {
-        if (!['App.vue', 'main.js'].includes(path.basename(filepath))) fs.unlinkSync(filepath)
-      },
-    )
-    // Replace the content in `src/App.vue` with a minimal template
-    fs.writeFileSync(
-      path.resolve(root, 'src/App.vue'),
-      '<script setup>\n</script>\n\n<template>\n  <h1>Hello World</h1>\n</template>\n\n<style scoped>\n</style>\n',
-    )
-    // Remove CSS import in `src/main.js`
-    const srcMainJsPath = path.resolve(root, 'src/main.js')
-    const srcMainJsContent = fs.readFileSync(srcMainJsPath, 'utf8')
-    fs.writeFileSync(srcMainJsPath, srcMainJsContent.replace("import './assets/main.css'\n\n", ''))
+  if (argv.bare) {
+    trimBoilerplate(root, { needsTypeScript, needsRouter })
   }
 
   // Instructions:
