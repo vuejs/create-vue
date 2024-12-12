@@ -26,7 +26,6 @@ export default function trimBoilerplate(rootDir: string, features: Record<string
   for (const filename of fs.readdirSync(srcDir)) {
     // Keep `App.vue`, `main.js/ts`, `router`, and `stores` directories
     if (['App.vue', 'main.js', 'main.ts', 'router', 'stores'].includes(filename)) {
-      console.log('continued')
       continue
     }
     const fullpath = path.resolve(srcDir, filename)
