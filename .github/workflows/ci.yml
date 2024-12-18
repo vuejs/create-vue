@@ -48,8 +48,8 @@ jobs:
       runs-on: ${{ matrix.os }}
       continue-on-error: ${{ matrix.os == 'windows-latest' }}
       env:
-        # Sometimes the Linux runner can't verify Cypress in 30s
-        CYPRESS_VERIFY_TIMEOUT: 60000
+        CYPRESS_INSTALL_BINARY: 0
+        CHROMEDRIVER_SKIP_DOWNLOAD: true
       steps:
         - uses: actions/checkout@v4
         - uses: pnpm/action-setup@v3
@@ -66,15 +66,13 @@ jobs:
               playground
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
-          run: pnpm install && pnpm build && pnpm snapshot
-        - name: Move playground
-          run: echo "{}" > playground/package.json && mv playground ../playground
+          run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
         - name: Install dependencies in playground
-          working-directory: ../playground
+          working-directory: ./playground
           run: pnpm install --no-frozen-lockfile -r
 
         - name: Run build script in playground
-          working-directory: ../playground
+          working-directory: ./playground
           run: pnpm --filter "*" build
 
   # test-vitest:
