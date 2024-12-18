@@ -65,12 +65,15 @@ jobs:
         - name: Build the package on cache miss
           if: steps.cache-restore.outputs.cache-hit != 'true'
           run: pnpm install && pnpm build && pnpm snapshot
+        - name: Move playground to an outside directory to work around working-directory issue
+          if: steps.cache-restore.outputs.cache-hit != 'true'
+          run: mv playground ../playground
         - name: Install dependencies in playground
-          working-directory: ./playground
+          working-directory: ../playground
           run: pnpm install --no-frozen-lockfile
 
         - name: Run build script in playground
-          working-directory: ./playground
+          working-directory: ../playground
           run: pnpm --filter "*" build
 
   test-vitest:
@@ -97,21 +100,24 @@ jobs:
         with:
           path: |
             outfile.cjs
-            playground
+            ../playground
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: pnpm install && pnpm build && pnpm snapshot
+      - name: Move playground to an outside directory to work around working-directory issue
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: mv playground ../playground
       - name: Install dependencies in playground
-        working-directory: ./playground
+        working-directory: ../playground
         run: pnpm install --no-frozen-lockfile
       - name: Run test:unit script in vitest projects
-        working-directory: ./playground
+        working-directory: ../playground
         run: pnpm --filter "{*vitest*}" test:unit
 
       # FIXME: it's failing now
       # - name: Run test:unit script in with-tests projects
-      #   working-directory: ./playground
+      #   working-directory: ../playground
       #   run: pnpm --filter "{*with-tests*}" test:unit
 
   test-e2e:
@@ -144,8 +150,11 @@ jobs:
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: pnpm install && pnpm build && pnpm snapshot
+      - name: Move playground to an outside directory to work around working-directory issue
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: mv playground ../playground
       - name: Install dependencies in playground
-        working-directory: ./playground
+        working-directory: ../playground
         run: pnpm install --no-frozen-lockfile
 
       # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
@@ -180,19 +189,19 @@ jobs:
 
       - name: Download Cypress
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        working-directory: ./playground
+        working-directory: ../playground
         run: |
           pnpm --filter "{cypress}" exec cypress cache list
           pnpm --filter "{cypress}" exec cypress install
 
       - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Install Playwright dependencies
-        working-directory: ./playground
+        working-directory: ../playground
         run: pnpm --filter "{playwright}" exec playwright install --with-deps
 
       # Run `test:e2e` in project folders contain `matrix.e2e-framework`
       - name: Run e2e test script
-        working-directory: ./playground
+        working-directory: ../playground
         run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
 
       # FIXME: `--with-tests` folders
