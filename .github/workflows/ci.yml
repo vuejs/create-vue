@@ -67,13 +67,12 @@ jobs:
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
           run: pnpm install && pnpm build && pnpm snapshot
-        - name: Move playground to work around weird working-directory issue
-          run: rm playground/pnpm-lock.yaml && mv playground ../playground
+        - run: echo "{}" > playground/package.json
         - name: Install dependencies in playground
-          run: pnpm -C ../playground install --no-frozen-lockfile
+          run: pnpm -C ./playground install --no-frozen-lockfile
 
         - name: Run build script in playground
-          run: pnpm -C ../playground --filter "*" build
+          run: pnpm -C ./playground --filter "*" build
 
   # test-vitest:
   #   needs: build
