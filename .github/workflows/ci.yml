@@ -52,6 +52,8 @@ jobs:
         CHROMEDRIVER_SKIP_DOWNLOAD: true
       steps:
         - uses: actions/checkout@v4
+          with:
+            submodules: true
         - uses: pnpm/action-setup@v3
           with:
             standalone: true
