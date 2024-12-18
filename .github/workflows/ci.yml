@@ -68,7 +68,7 @@ jobs:
         - name: Build the package on cache miss
           run: pnpm install && pnpm build && pnpm snapshot
         - name: Move playground to work around weird working-directory issue
-          run: rm playgroun/pnpm-lock.yaml && mv playground ../playground
+          run: rm playground/pnpm-lock.yaml && mv playground ../playground
         - name: Install dependencies in playground
           run: pnpm -C ../playground install --no-frozen-lockfile
 
