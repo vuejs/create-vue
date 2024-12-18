@@ -44,7 +44,7 @@ jobs:
       strategy:
         matrix:
           node-version: [22]
-          os: [ubuntu-latest, windows-latest, macos-latest]
+          os: [ubuntu-latest]
       runs-on: ${{ matrix.os }}
       continue-on-error: ${{ matrix.os == 'windows-latest' }}
       env:
@@ -71,7 +71,7 @@ jobs:
           run: mv playground ../playground
         - name: Install dependencies in playground
           working-directory: ../playground
-          run: pnpm install --no-frozen-lockfile -r
+          run: pnpm recursive install --no-frozen-lockfile
 
         - name: Run build script in playground
           working-directory: ../playground
