@@ -70,12 +70,10 @@ jobs:
         - name: Move playground to work around weird working-directory issue
           run: mv playground ../playground
         - name: Install dependencies in playground
-          working-directory: ../playground
-          run: pnpm recursive install --no-frozen-lockfile
+          run: pnpm -C ../playground install --no-frozen-lockfile
 
         - name: Run build script in playground
-          working-directory: ../playground
-          run: pnpm --filter "*" build
+          run: pnpm -C ../playground --filter "*" build
 
   # test-vitest:
   #   needs: build
