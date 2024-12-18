@@ -160,10 +160,13 @@ jobs:
         working-directory: ./playground/playwright
         run: pnpm exec playwright install --with-deps
 
-      # Run `test:e2e` in project folders contain `matrix.e2e-framework`
+      - name: Run build script
+        working-directory: ./playground
+        run: pnpm --filter "*${{ matrix.e2e-framework }}*" build
+
       - name: Run e2e test script
         working-directory: ./playground
-        run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
+        run: pnpm --filter "*${{ matrix.e2e-framework }}*" test:e2e
 
       # FIXME: `--with-tests` folders
       # FIXME: Cypress component testing for projects without Vitest
