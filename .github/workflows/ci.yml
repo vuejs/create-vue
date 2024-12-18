@@ -11,40 +11,43 @@ on:
     branches:
       - '**'
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   name: Build the package
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v3
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 22
-  #         cache: 'pnpm'
-  #     - run: pnpm install
-  #       env:
-  #         CYPRESS_INSTALL_BINARY: 0
-  #         CHROMEDRIVER_SKIP_DOWNLOAD: true
-  #     - run: pnpm build
-  #     - run: pnpm test:unit
+  build:
+    runs-on: ubuntu-latest
+    name: Build the package
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+          CHROMEDRIVER_SKIP_DOWNLOAD: true
+      - run: pnpm build
+      - run: pnpm test:unit
 
-  #     - run: pnpm snapshot
-  #     # Use cache to share the output across different jobs
-  #     # No need to cache node_modules because they are all bundled
-  #     - uses: actions/cache/save@v4
-  #       id: cache
-  #       with:
-  #         path: |
-  #           outfile.cjs
-  #           playground
-  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm snapshot
+
+      # Use artifact to share the output across different jobs
+      # No need to save node_modules because they are all bundled
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-output
+          path: |
+            outfile.cjs
+            playground
+          retention-days: 3
 
   test-build:
-      # needs: build
+      needs: build
       strategy:
         matrix:
           node-version: [22]
-          os: [ubuntu-latest]
+          os: [ubuntu-latest, windows-latest, macos-latest]
       runs-on: ${{ matrix.os }}
       continue-on-error: ${{ matrix.os == 'windows-latest' }}
       env:
@@ -54,33 +57,27 @@ jobs:
         - uses: actions/checkout@v4
           with:
             submodules: true
-        - uses: pnpm/action-setup@v3
-          with:
-            standalone: true
+        - uses: pnpm/action-setup@v4
         - uses: actions/setup-node@v4
           with:
             node-version: ${{ matrix.node-version }}
             cache: 'pnpm'
 
-        # - uses: actions/cache/restore@v4
-        #   id: cache-restore
-        #   with:
-        #     path: |
-        #       outfile.cjs
-        #       playground
-        #     key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-        - name: Build the package
-          run: pnpm install && pnpm build && pnpm snapshot
-        - run: echo "{}" > playground/package.json
-        - run: mv playground playground-tmp
+        # use artifacts to share the playground across different jobs
+        - uses: actions/download-artifact@v2
+          with:
+            name: build-output
+
         - name: Install dependencies in playground
-          run: pnpm -C ./playground-tmp install --no-frozen-lockfile
+          working-directory: ./playground
+          run: pnpm install --no-frozen-lockfile
 
         - name: Run build script in playground
-          run: pnpm -C ./playground-tmp --filter "*" build
+          working-directory: ./playground
+          run: pnpm --filter "*" build
 
   # test-vitest:
-  #   needs: build
+  #   # needs: build
   #   strategy:
   #     matrix:
   #       node-version: [22]
@@ -92,25 +89,21 @@ jobs:
   #     CHROMEDRIVER_SKIP_DOWNLOAD: true
   #   steps:
   #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v3
+  #       with:
+  #         submodules: true
+  #     - uses: pnpm/action-setup@v4
   #     - uses: actions/setup-node@v4
   #       with:
   #         node-version: ${{ matrix.node-version }}
   #         cache: 'pnpm'
 
-  #     - uses: actions/cache/restore@v4
-  #       id: cache-restore
-  #       with:
-  #         path: outfile.cjs
-  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-  #     - name: Build the package on cache miss
-  #       if: steps.cache-restore.outputs.cache-hit != 'true'
-  #       run: pnpm install && pnpm build
-  #     - name: Snapshot
-  #       run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+  #     # FIXME: use artifacts to share the playground across different jobs
+  #     - name: Build the package
+  #       run: pnpm install && pnpm build && pnpm snapshot
   #     - name: Install dependencies in playground
-  #       working-directory: ../playground
+  #       working-directory: ./playground
   #       run: pnpm install --no-frozen-lockfile
+
   #     - name: Run test:unit script in vitest projects
   #       working-directory: ../playground
   #       run: pnpm --filter "{*vitest*}" test:unit
