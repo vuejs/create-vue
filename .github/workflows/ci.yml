@@ -42,12 +42,19 @@ jobs:
             playground
           retention-days: 3
 
-  verify-build:
+  verify-scripts:
       needs: build
       strategy:
         matrix:
-          node-version: [22]
+          node-version: [18, 20, 22]
           os: [ubuntu-latest, windows-latest, macos-latest]
+          verification-script:
+            - pnpm --filter "\!*typescript*" build
+            - pnpm --filter "*typescript*" build
+            - pnpm --filter "*vitest*" test:unit
+            # FIXME: it's failing now
+            # - pnpm --filter "*with-tests*" test:unit
+            # TODO: lint
       runs-on: ${{ matrix.os }}
       continue-on-error: ${{ matrix.os == 'windows-latest' }}
       env:
@@ -76,129 +83,88 @@ jobs:
 
         - name: Run build script in playground
           working-directory: ./playground
-          run: pnpm --filter "\!*typescript*" build
+          run: ${{ matrix.verification-script }}
 
-  # verify-vitest:
-  #   # needs: build
-  #   strategy:
-  #     matrix:
-  #       node-version: [22]
-  #       os: [ubuntu-latest, windows-latest, macos-latest]
-  #   runs-on: ${{ matrix.os }}
-  #   continue-on-error: ${{ matrix.os == 'windows-latest' }}
-  #   env:
-  #     CYPRESS_INSTALL_BINARY: 0
-  #     CHROMEDRIVER_SKIP_DOWNLOAD: true
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         submodules: true
-  #     - uses: pnpm/action-setup@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'pnpm'
+  verify-e2e:
+    needs: build
+    strategy:
+      matrix:
+        e2e-framework: ['cypress', 'playwright']
+        node-version: [22]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.os == 'windows-latest' }}
+    env:
+      # Sometimes the Linux runner can't verify Cypress in 30s
+      CYPRESS_VERIFY_TIMEOUT: 60000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-  #     # FIXME: use artifacts to share the playground across different jobs
-  #     - name: Build the package
-  #       run: pnpm install && pnpm build && pnpm snapshot
-  #     - name: Install dependencies in playground
-  #       working-directory: ./playground
-  #       run: pnpm install --no-frozen-lockfile
+      - uses: actions/cache/restore@v4
+        id: cache-restore
+        with:
+          path: outfile.cjs
+          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Build the package on cache miss
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: pnpm install && pnpm build
+      - name: Snapshot
+        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+      - name: Install dependencies in playground
+        working-directory: ../playground
+        run: pnpm install --no-frozen-lockfile
 
-  #     - name: Run test:unit script in vitest projects
-  #       working-directory: ../playground
-  #       run: pnpm --filter "{*vitest*}" test:unit
+      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
+      # Install playwright's binary under custom directory to cache
+      - name: Set Playwright & Cypress path
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
+          echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
+      - name: Set Playwright & Cypress path (windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
+          echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
-  #     # FIXME: it's failing now
-  #     # - name: Run test:unit script in with-tests projects
-  #     #   working-directory: ../playground
-  #     #   run: pnpm --filter "{*with-tests*}" test:unit
+      - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        name: Cache Cypress binaries
+        id: cache-cypress
+        uses: actions/cache@v4
+        with:
+          # TODO: avoid snowballing by adding version
+          key: ${{ runner.os }}-cypress-bin
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-  # verify-e2e:
-  #   needs: build
-  #   strategy:
-  #     matrix:
-  #       e2e-framework: ['cypress', 'playwright']
-  #       node-version: [22]
-  #       os: [ubuntu-latest, windows-latest, macos-latest]
-  #   runs-on: ${{ matrix.os }}
-  #   continue-on-error: ${{ matrix.os == 'windows-latest' }}
-  #   env:
-  #     # Sometimes the Linux runner can't verify Cypress in 30s
-  #     CYPRESS_VERIFY_TIMEOUT: 60000
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v3
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'pnpm'
+      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
+        name: Cache Playwright's binary
+        uses: actions/cache@v4
+        with:
+          # Playwright removes unused browsers automatically
+          # So does not need to add playwright version to key
+          key: ${{ runner.os }}-playwright-bin-v1
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
-  #     - uses: actions/cache/restore@v4
-  #       id: cache-restore
-  #       with:
-  #         path: outfile.cjs
-  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-  #     - name: Build the package on cache miss
-  #       if: steps.cache-restore.outputs.cache-hit != 'true'
-  #       run: pnpm install && pnpm build
-  #     - name: Snapshot
-  #       run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
-  #     - name: Install dependencies in playground
-  #       working-directory: ../playground
-  #       run: pnpm install --no-frozen-lockfile
+      - name: Download Cypress
+        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        working-directory: ../playground
+        run: |
+          pnpm --filter "{cypress}" exec cypress cache list
+          pnpm --filter "{cypress}" exec cypress install
 
-  #     # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
-  #     # Install playwright's binary under custom directory to cache
-  #     - name: Set Playwright & Cypress path
-  #       run: |
-  #         echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
-  #         echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
-  #     - name: Set Playwright & Cypress path (windows)
-  #       if: runner.os == 'Windows'
-  #       run: |
-  #         echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
-  #         echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
+      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
+        name: Install Playwright dependencies
+        working-directory: ../playground
+        run: pnpm --filter "{playwright}" exec playwright install --with-deps
 
-  #     - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-  #       name: Cache Cypress binaries
-  #       id: cache-cypress
-  #       uses: actions/cache@v4
-  #       with:
-  #         # TODO: avoid snowballing by adding version
-  #         key: ${{ runner.os }}-cypress-bin
-  #         path: ${{ env.CYPRESS_CACHE_FOLDER }}
+      # Run `test:e2e` in project folders contain `matrix.e2e-framework`
+      - name: Run e2e test script
+        working-directory: ../playground
+        run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
 
-  #     - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-  #       name: Cache Playwright's binary
-  #       uses: actions/cache@v4
-  #       with:
-  #         # Playwright removes unused browsers automatically
-  #         # So does not need to add playwright version to key
-  #         key: ${{ runner.os }}-playwright-bin-v1
-  #         path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
-
-  #     - name: Download Cypress
-  #       if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-  #       working-directory: ../playground
-  #       run: |
-  #         pnpm --filter "{cypress}" exec cypress cache list
-  #         pnpm --filter "{cypress}" exec cypress install
-
-  #     - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-  #       name: Install Playwright dependencies
-  #       working-directory: ../playground
-  #       run: pnpm --filter "{playwright}" exec playwright install --with-deps
-
-  #     # Run `test:e2e` in project folders contain `matrix.e2e-framework`
-  #     - name: Run e2e test script
-  #       working-directory: ../playground
-  #       run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
-
-  #     # FIXME: `--with-tests` folders
-  #     # FIXME: Cypress component testing for projects without Vitest
-
-
-  # # FIXME: verify-lint
-  # # `pnpm lint --no-fix --max-warnings=0`
+      # FIXME: `--with-tests` folders
+      # FIXME: Cypress component testing for projects without Vitest
