@@ -64,7 +64,7 @@ jobs:
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
           if: steps.cache-restore.outputs.cache-hit != 'true'
-          run: pnpm install && pnpm build && pnpm snapshot
+          run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
         - name: Move playground to an outside directory to work around working-directory issue
           if: steps.cache-restore.outputs.cache-hit != 'true'
           run: mv playground ../playground
@@ -104,7 +104,7 @@ jobs:
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot
+        run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
       - name: Move playground to an outside directory to work around working-directory issue
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: mv playground ../playground
@@ -149,7 +149,7 @@ jobs:
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot
+        run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
       - name: Move playground to an outside directory to work around working-directory issue
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: mv playground ../playground
