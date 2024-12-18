@@ -68,11 +68,12 @@ jobs:
         - name: Build the package
           run: pnpm install && pnpm build && pnpm snapshot
         - run: echo "{}" > playground/package.json
+        - run: mv playground playground-tmp
         - name: Install dependencies in playground
-          run: pnpm -C ./playground install --no-frozen-lockfile
+          run: pnpm -C ./playground-tmp install --no-frozen-lockfile
 
         - name: Run build script in playground
-          run: pnpm -C ./playground --filter "*" build
+          run: pnpm -C ./playground-tmp --filter "*" build
 
   # test-vitest:
   #   needs: build
