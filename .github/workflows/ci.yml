@@ -42,7 +42,7 @@ jobs:
             playground
           retention-days: 3
 
-  test-build:
+  verify-build:
       needs: build
       strategy:
         matrix:
@@ -78,7 +78,7 @@ jobs:
           working-directory: ./playground
           run: pnpm --filter "*" build
 
-  # test-vitest:
+  # verify-vitest:
   #   # needs: build
   #   strategy:
   #     matrix:
@@ -115,7 +115,7 @@ jobs:
   #     #   working-directory: ../playground
   #     #   run: pnpm --filter "{*with-tests*}" test:unit
 
-  # test-e2e:
+  # verify-e2e:
   #   needs: build
   #   strategy:
   #     matrix:
@@ -200,5 +200,5 @@ jobs:
   #     # FIXME: Cypress component testing for projects without Vitest
 
 
-  # # FIXME: test-lint
+  # # FIXME: verify-lint
   # # `pnpm lint --no-fix --max-warnings=0`
