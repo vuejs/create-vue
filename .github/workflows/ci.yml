@@ -68,6 +68,8 @@ jobs:
           with:
             name: build-output
 
+        - name: Install dependencies to avoid tsconfig warnings
+          run: pnpm install
         - name: Install dependencies in playground
           working-directory: ./playground
           run: pnpm install --no-frozen-lockfile
