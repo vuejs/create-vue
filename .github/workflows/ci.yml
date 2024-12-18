@@ -170,15 +170,15 @@ jobs:
 
       - name: Download Cypress
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        working-directory: ./playground/cypress
+        working-directory: ./playground
         run: |
-          pnpm exec cypress cache list
-          pnpm exec cypress install
+          pnpm --filter "{cypress}" exec cypress cache list
+          pnpm --filter "{cypress}" exec cypress install
 
       - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Install Playwright dependencies
-        working-directory: ./playground/playwright
-        run: npx playwright install --with-deps
+        working-directory: ./playground
+        run: pnpm --filter "{playwright}" exec playwright install --with-deps
 
       # Run `test:e2e` in project folders contain `matrix.e2e-framework`
       - name: Run e2e test script
