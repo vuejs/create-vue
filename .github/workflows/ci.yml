@@ -58,16 +58,12 @@ jobs:
         - uses: actions/cache/restore@v4
           id: cache-restore
           with:
-            path: |
-              outfile.cjs
-              playground
+            path: outfile.cjs
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
-          if: steps.cache-restore.outputs.cache-hit != 'true'
-          run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
-        - name: Move playground to an outside directory to work around working-directory issue
-          if: steps.cache-restore.outputs.cache-hit != 'true'
-          run: mv playground ../playground
+          run: pnpm install && pnpm build
+        - name: Snapshot
+          run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
         - name: Install dependencies in playground
           working-directory: ../playground
           run: pnpm install --no-frozen-lockfile
@@ -98,16 +94,13 @@ jobs:
       - uses: actions/cache/restore@v4
         id: cache-restore
         with:
-          path: |
-            outfile.cjs
-            ../playground
+          path: outfile.cjs
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
-      - name: Move playground to an outside directory to work around working-directory issue
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: mv playground ../playground
+        run: pnpm install && pnpm build
+      - name: Snapshot
+        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
       - name: Install dependencies in playground
         working-directory: ../playground
         run: pnpm install --no-frozen-lockfile
@@ -143,16 +136,13 @@ jobs:
       - uses: actions/cache/restore@v4
         id: cache-restore
         with:
-          path: |
-            outfile.cjs
-            playground
+          path: outfile.cjs
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot && echo "{}" > playground/package.json
-      - name: Move playground to an outside directory to work around working-directory issue
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: mv playground ../playground
+        run: pnpm install && pnpm build
+      - name: Snapshot
+        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
       - name: Install dependencies in playground
         working-directory: ../playground
         run: pnpm install --no-frozen-lockfile
