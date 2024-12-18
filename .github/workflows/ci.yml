@@ -71,7 +71,7 @@ jobs:
           run: echo "{}" > playground/package.json && mv playground ../playground
         - name: Install dependencies in playground
           working-directory: ../playground
-          run: pnpm install --no-frozen-lockfile
+          run: pnpm install --no-frozen-lockfile -r
 
         - name: Run build script in playground
           working-directory: ../playground
