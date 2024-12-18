@@ -99,24 +99,23 @@ jobs:
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - uses: actions/cache/restore@v4
-        id: cache-restore
+      # use artifacts to share the playground across different jobs
+      - uses: actions/download-artifact@v4
         with:
-          path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Build the package on cache miss
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build
-      - name: Snapshot
-        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+          name: build-output
+
+      - name: Install dependencies to avoid tsconfig warnings
+        run: pnpm install
       - name: Install dependencies in playground
-        working-directory: ../playground
+        working-directory: ./playground
         run: pnpm install --no-frozen-lockfile
 
       # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
@@ -151,19 +150,19 @@ jobs:
 
       - name: Download Cypress
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        working-directory: ../playground
+        working-directory: ./playground/cypress
         run: |
-          pnpm --filter "{cypress}" exec cypress cache list
-          pnpm --filter "{cypress}" exec cypress install
+          pnpm exec cypress cache list
+          pnpm exec cypress install
 
       - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Install Playwright dependencies
-        working-directory: ../playground
-        run: pnpm --filter "{playwright}" exec playwright install --with-deps
+        working-directory: ./playground/playwright
+        run: pnpm exec playwright install --with-deps
 
       # Run `test:e2e` in project folders contain `matrix.e2e-framework`
       - name: Run e2e test script
-        working-directory: ../playground
+        working-directory: ./playground
         run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
 
       # FIXME: `--with-tests` folders
