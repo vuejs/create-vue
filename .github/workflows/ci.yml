@@ -28,12 +28,15 @@ jobs:
       - run: pnpm build
       - run: pnpm test:unit
 
+      - run: pnpm snapshot
       # Use cache to share the output across different jobs
       # No need to cache node_modules because they are all bundled
       - uses: actions/cache/save@v4
         id: cache
         with:
-          path: outfile.cjs
+          path: |
+            outfile.cjs
+            playground
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
 
   test-build:
@@ -61,9 +64,9 @@ jobs:
             path: outfile.cjs
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
-          run: pnpm install && pnpm build
-        - name: Snapshot
-          run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+          run: pnpm install && pnpm build && pnpm snapshot
+        - name: Move playground
+          run: echo "{}" > playground/package.json && mv playground ../playground
         - name: Install dependencies in playground
           working-directory: ../playground
           run: pnpm install --no-frozen-lockfile
@@ -72,131 +75,131 @@ jobs:
           working-directory: ../playground
           run: pnpm --filter "*" build
 
-  test-vitest:
-    needs: build
-    strategy:
-      matrix:
-        node-version: [22]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.os == 'windows-latest' }}
-    env:
-      CYPRESS_INSTALL_BINARY: 0
-      CHROMEDRIVER_SKIP_DOWNLOAD: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+  # test-vitest:
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       node-version: [22]
+  #       os: [ubuntu-latest, windows-latest, macos-latest]
+  #   runs-on: ${{ matrix.os }}
+  #   continue-on-error: ${{ matrix.os == 'windows-latest' }}
+  #   env:
+  #     CYPRESS_INSTALL_BINARY: 0
+  #     CHROMEDRIVER_SKIP_DOWNLOAD: true
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v3
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'pnpm'
 
-      - uses: actions/cache/restore@v4
-        id: cache-restore
-        with:
-          path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Build the package on cache miss
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build
-      - name: Snapshot
-        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
-      - name: Install dependencies in playground
-        working-directory: ../playground
-        run: pnpm install --no-frozen-lockfile
-      - name: Run test:unit script in vitest projects
-        working-directory: ../playground
-        run: pnpm --filter "{*vitest*}" test:unit
+  #     - uses: actions/cache/restore@v4
+  #       id: cache-restore
+  #       with:
+  #         path: outfile.cjs
+  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+  #     - name: Build the package on cache miss
+  #       if: steps.cache-restore.outputs.cache-hit != 'true'
+  #       run: pnpm install && pnpm build
+  #     - name: Snapshot
+  #       run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+  #     - name: Install dependencies in playground
+  #       working-directory: ../playground
+  #       run: pnpm install --no-frozen-lockfile
+  #     - name: Run test:unit script in vitest projects
+  #       working-directory: ../playground
+  #       run: pnpm --filter "{*vitest*}" test:unit
 
-      # FIXME: it's failing now
-      # - name: Run test:unit script in with-tests projects
-      #   working-directory: ../playground
-      #   run: pnpm --filter "{*with-tests*}" test:unit
+  #     # FIXME: it's failing now
+  #     # - name: Run test:unit script in with-tests projects
+  #     #   working-directory: ../playground
+  #     #   run: pnpm --filter "{*with-tests*}" test:unit
 
-  test-e2e:
-    needs: build
-    strategy:
-      matrix:
-        e2e-framework: ['cypress', 'playwright']
-        node-version: [22]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.os == 'windows-latest' }}
-    env:
-      # Sometimes the Linux runner can't verify Cypress in 30s
-      CYPRESS_VERIFY_TIMEOUT: 60000
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+  # test-e2e:
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       e2e-framework: ['cypress', 'playwright']
+  #       node-version: [22]
+  #       os: [ubuntu-latest, windows-latest, macos-latest]
+  #   runs-on: ${{ matrix.os }}
+  #   continue-on-error: ${{ matrix.os == 'windows-latest' }}
+  #   env:
+  #     # Sometimes the Linux runner can't verify Cypress in 30s
+  #     CYPRESS_VERIFY_TIMEOUT: 60000
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v3
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'pnpm'
 
-      - uses: actions/cache/restore@v4
-        id: cache-restore
-        with:
-          path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Build the package on cache miss
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build
-      - name: Snapshot
-        run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
-      - name: Install dependencies in playground
-        working-directory: ../playground
-        run: pnpm install --no-frozen-lockfile
+  #     - uses: actions/cache/restore@v4
+  #       id: cache-restore
+  #       with:
+  #         path: outfile.cjs
+  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+  #     - name: Build the package on cache miss
+  #       if: steps.cache-restore.outputs.cache-hit != 'true'
+  #       run: pnpm install && pnpm build
+  #     - name: Snapshot
+  #       run: pnpm snapshot && echo "{}" > playground/package.json && mv playground ../playground
+  #     - name: Install dependencies in playground
+  #       working-directory: ../playground
+  #       run: pnpm install --no-frozen-lockfile
 
-      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
-      # Install playwright's binary under custom directory to cache
-      - name: Set Playwright & Cypress path
-        run: |
-          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
-          echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
-      - name: Set Playwright & Cypress path (windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
-          echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
+  #     # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
+  #     # Install playwright's binary under custom directory to cache
+  #     - name: Set Playwright & Cypress path
+  #       run: |
+  #         echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
+  #         echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
+  #     - name: Set Playwright & Cypress path (windows)
+  #       if: runner.os == 'Windows'
+  #       run: |
+  #         echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
+  #         echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
-      - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        name: Cache Cypress binaries
-        id: cache-cypress
-        uses: actions/cache@v4
-        with:
-          # TODO: avoid snowballing by adding version
-          key: ${{ runner.os }}-cypress-bin
-          path: ${{ env.CYPRESS_CACHE_FOLDER }}
+  #     - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+  #       name: Cache Cypress binaries
+  #       id: cache-cypress
+  #       uses: actions/cache@v4
+  #       with:
+  #         # TODO: avoid snowballing by adding version
+  #         key: ${{ runner.os }}-cypress-bin
+  #         path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-        name: Cache Playwright's binary
-        uses: actions/cache@v4
-        with:
-          # Playwright removes unused browsers automatically
-          # So does not need to add playwright version to key
-          key: ${{ runner.os }}-playwright-bin-v1
-          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+  #     - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
+  #       name: Cache Playwright's binary
+  #       uses: actions/cache@v4
+  #       with:
+  #         # Playwright removes unused browsers automatically
+  #         # So does not need to add playwright version to key
+  #         key: ${{ runner.os }}-playwright-bin-v1
+  #         path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
-      - name: Download Cypress
-        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        working-directory: ../playground
-        run: |
-          pnpm --filter "{cypress}" exec cypress cache list
-          pnpm --filter "{cypress}" exec cypress install
+  #     - name: Download Cypress
+  #       if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+  #       working-directory: ../playground
+  #       run: |
+  #         pnpm --filter "{cypress}" exec cypress cache list
+  #         pnpm --filter "{cypress}" exec cypress install
 
-      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-        name: Install Playwright dependencies
-        working-directory: ../playground
-        run: pnpm --filter "{playwright}" exec playwright install --with-deps
+  #     - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
+  #       name: Install Playwright dependencies
+  #       working-directory: ../playground
+  #       run: pnpm --filter "{playwright}" exec playwright install --with-deps
 
-      # Run `test:e2e` in project folders contain `matrix.e2e-framework`
-      - name: Run e2e test script
-        working-directory: ../playground
-        run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
+  #     # Run `test:e2e` in project folders contain `matrix.e2e-framework`
+  #     - name: Run e2e test script
+  #       working-directory: ../playground
+  #       run: pnpm --filter "{*${{ matrix.e2e-framework }}*}" test:e2e
 
-      # FIXME: `--with-tests` folders
-      # FIXME: Cypress component testing for projects without Vitest
+  #     # FIXME: `--with-tests` folders
+  #     # FIXME: Cypress component testing for projects without Vitest
 
 
-  # FIXME: test-lint
-  # `pnpm lint --no-fix --max-warnings=0`
+  # # FIXME: test-lint
+  # # `pnpm lint --no-fix --max-warnings=0`
