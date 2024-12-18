@@ -64,7 +64,10 @@ jobs:
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
           if: steps.cache-restore.outputs.cache-hit != 'true'
-          run: pnpm install && pnpm build && pnpm snapshot && cd playground && pnpm install --no-frozen-lockfile
+          run: pnpm install && pnpm build && pnpm snapshot
+        - name: Install dependencies in playground
+          working-directory: ./playground
+          run: pnpm install --no-frozen-lockfile
 
         - name: Run build script in playground
           working-directory: ./playground
@@ -98,7 +101,10 @@ jobs:
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot && cd playground && pnpm install --no-frozen-lockfile
+        run: pnpm install && pnpm build && pnpm snapshot
+      - name: Install dependencies in playground
+        working-directory: ./playground
+        run: pnpm install --no-frozen-lockfile
       - name: Run test:unit script in vitest projects
         working-directory: ./playground
         run: pnpm --filter "{*vitest*}" test:unit
@@ -137,7 +143,11 @@ jobs:
           key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build && pnpm snapshot && cd playground && pnpm install --no-frozen-lockfile
+        run: pnpm install && pnpm build && pnpm snapshot
+      - name: Install dependencies in playground
+        working-directory: ./playground
+        run: pnpm install --no-frozen-lockfile
+
       # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
       # Install playwright's binary under custom directory to cache
       - name: Set Playwright & Cypress path
