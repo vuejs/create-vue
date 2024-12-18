@@ -61,7 +61,9 @@ jobs:
         - uses: actions/cache/restore@v4
           id: cache-restore
           with:
-            path: outfile.cjs
+            path: |
+              outfile.cjs
+              playground
             key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
         - name: Build the package on cache miss
           run: pnpm install && pnpm build && pnpm snapshot
