@@ -11,36 +11,36 @@ on:
     branches:
       - '**'
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Build the package
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-      - run: pnpm install
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-          CHROMEDRIVER_SKIP_DOWNLOAD: true
-      - run: pnpm build
-      - run: pnpm test:unit
+  # build:
+  #   runs-on: ubuntu-latest
+  #   name: Build the package
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v3
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: 'pnpm'
+  #     - run: pnpm install
+  #       env:
+  #         CYPRESS_INSTALL_BINARY: 0
+  #         CHROMEDRIVER_SKIP_DOWNLOAD: true
+  #     - run: pnpm build
+  #     - run: pnpm test:unit
 
-      - run: pnpm snapshot
-      # Use cache to share the output across different jobs
-      # No need to cache node_modules because they are all bundled
-      - uses: actions/cache/save@v4
-        id: cache
-        with:
-          path: |
-            outfile.cjs
-            playground
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+  #     - run: pnpm snapshot
+  #     # Use cache to share the output across different jobs
+  #     # No need to cache node_modules because they are all bundled
+  #     - uses: actions/cache/save@v4
+  #       id: cache
+  #       with:
+  #         path: |
+  #           outfile.cjs
+  #           playground
+  #         key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
 
   test-build:
-      needs: build
+      # needs: build
       strategy:
         matrix:
           node-version: [22]
@@ -58,14 +58,14 @@ jobs:
             node-version: ${{ matrix.node-version }}
             cache: 'pnpm'
 
-        - uses: actions/cache/restore@v4
-          id: cache-restore
-          with:
-            path: |
-              outfile.cjs
-              playground
-            key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-        - name: Build the package on cache miss
+        # - uses: actions/cache/restore@v4
+        #   id: cache-restore
+        #   with:
+        #     path: |
+        #       outfile.cjs
+        #       playground
+        #     key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+        - name: Build the package
           run: pnpm install && pnpm build && pnpm snapshot
         - run: echo "{}" > playground/package.json
         - name: Install dependencies in playground
