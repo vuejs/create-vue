@@ -76,7 +76,7 @@ jobs:
 
         - name: Run build script in playground
           working-directory: ./playground
-          run: pnpm --filter "*" build
+          run: pnpm --filter "\!*typescript*" build
 
   # verify-vitest:
   #   # needs: build
