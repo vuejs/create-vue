@@ -167,10 +167,10 @@ jobs:
 
       - name: Run e2e test script
         working-directory: ./playground
-        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --workspace-concurrency 1 test:e2e
+        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
 
       - name: Cypress component testing for projects without Vitest
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
+        run: pnpm --filter '*cypress*' --filter '!*vitest*' --filter '!*bare*' --workspace-concurrency 1 test:unit
 
       # FIXME: `--with-tests` folders. It's failing now.
