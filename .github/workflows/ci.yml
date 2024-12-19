@@ -168,5 +168,8 @@ jobs:
         working-directory: ./playground
         run: pnpm --filter "*${{ matrix.e2e-framework }}*" --workspace-concurrency 1 test:e2e
 
-      # FIXME: `--with-tests` folders
-      # FIXME: Cypress component testing for projects without Vitest
+      - name: Cypress component testing for projects without Vitest
+        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
+
+      # FIXME: `--with-tests` folders. It's failing now.
