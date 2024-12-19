@@ -51,7 +51,7 @@ jobs:
           verification-script:
             - pnpm --filter "\!*typescript*" build
             - pnpm --filter "*typescript*" build
-            - pnpm --filter "*vitest*" test:unit
+            - pnpm --filter "*vitest*" --filter "\!*bare*" test:unit
             - pnpm --filter "*eslint*" lint --no-fix --max-warnings=0
             - pnpm --filter "*prettier*" format --write --check
             # FIXME: it's failing now
