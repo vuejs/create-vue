@@ -88,6 +88,7 @@ flagCombinations = flagCombinations
         denylist.every((flag) => combination.includes(flag)),
       ),
   )
+  // `--bare` is a supplementary flag and should not be used alone
   .filter((combination) => !(combination.length === 1 && combination[0] === 'bare'))
 
 const bin = path.posix.relative('../playground/', '../outfile.cjs')

@@ -84,8 +84,9 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
-  // --force (for force overwriting)
-  // --bare (for a barebone template)
+  // in addition to the feature flags, you can also pass the following options:
+  // --bare (for a barebone template without example code)
+  // --force (for force overwriting without confirming)
 
   const args = process.argv.slice(2)
 
