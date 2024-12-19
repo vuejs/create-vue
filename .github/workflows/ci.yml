@@ -89,7 +89,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        e2e-framework: ['cypress', 'playwright']
+        e2e-framework: ['cypress', 'playwright', 'nightwatch']
         node-version: [22]
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -169,7 +169,7 @@ jobs:
         run: pnpm --filter "*${{ matrix.e2e-framework }}*" --workspace-concurrency 1 test:e2e
 
       - name: Cypress component testing for projects without Vitest
-        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        if: ${{ contains(matrix.e2e-framework, 'cypress') || contains(matrix.e2e-framework, 'nightwatch') }}
         run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
 
       # FIXME: `--with-tests` folders. It's failing now.
