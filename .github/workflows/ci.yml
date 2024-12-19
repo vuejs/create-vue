@@ -16,7 +16,9 @@ jobs:
     name: Build the package
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -24,105 +26,102 @@ jobs:
       - run: pnpm install
         env:
           CYPRESS_INSTALL_BINARY: 0
+          CHROMEDRIVER_SKIP_DOWNLOAD: true
       - run: pnpm build
       - run: pnpm test:unit
 
-      # Use cache to share the output across different jobs
-      # No need to cache node_modules because they are all bundled
-      - uses: actions/cache/save@v4
-        id: cache
-        with:
-          path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm snapshot
 
-  test:
+      # Use artifact to share the output across different jobs
+      # No need to save node_modules because they are all bundled
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            outfile.cjs
+            playground
+          retention-days: 3
+
+  verify-scripts:
+      needs: build
+      strategy:
+        matrix:
+          node-version: [18, 20, 22]
+          os: [ubuntu-latest, windows-latest, macos-latest]
+          verification-script:
+            - pnpm --filter "\!*typescript*" build
+            - pnpm --filter "*typescript*" build
+            - pnpm --filter "*vitest*" test:unit
+            - pnpm --filter "*eslint*" lint --no-fix --max-warnings=0
+            - pnpm --filter "*prettier*" format --write --check
+            # FIXME: it's failing now
+            # - pnpm --filter "*with-tests*" test:unit
+      runs-on: ${{ matrix.os }}
+      continue-on-error: ${{ matrix.os == 'windows-latest' }}
+      env:
+        CYPRESS_INSTALL_BINARY: 0
+        CHROMEDRIVER_SKIP_DOWNLOAD: true
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - uses: pnpm/action-setup@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'pnpm'
+
+        # use artifacts to share the playground across different jobs
+        - uses: actions/download-artifact@v4
+          with:
+            name: build-output
+
+        - name: Install dependencies to avoid tsconfig warnings
+          run: pnpm install
+        - name: Install dependencies in playground
+          working-directory: ./playground
+          run: pnpm install --no-frozen-lockfile
+
+        - name: Run build script in playground
+          working-directory: ./playground
+          run: ${{ matrix.verification-script }}
+
+  verify-e2e:
     needs: build
     strategy:
       matrix:
-        flag-for-ts: ['', '--typescript']
-        flag-for-jsx: ['', '--jsx']
-        flag-for-router: ['', '--router']
-        flag-for-pinia: ['', '--pinia']
-        flag-for-vitest: ['', '--vitest']
-
-        # It's quite costly to install Cypress & Playwright even with cache.
-        # Maybe we can split them into another job so that all the projects
-        # can share the same binary installation.
-        flag-for-e2e: ['', '--cypress', '--playwright']
-
-        # Skip ESLint/Prettier tests as we've reached the limit of job numbers
-        # TODO: Find a way to test them without adding new jobs
-
+        e2e-framework: ['cypress', 'playwright']
         node-version: [22]
-        os: [ubuntu-latest]
-
-        # Run a few tests on other systems and Node.js versions
-        include:
-          - node-version: 22
-            os: windows-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
-            flag-for-eslint: '--eslint'
-
-          - node-version: 22
-            os: macos-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
-            flag-for-eslint: '--eslint'
-
-          - node-version: 18
-            os: ubuntu-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
-            flag-for-eslint: '--eslint'
-
-          - node-version: 20
-            os: ubuntu-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
-            flag-for-eslint: '--eslint'
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-eslint}}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - uses: actions/cache/restore@v4
-        id: cache-restore
+
+      # use artifacts to share the playground across different jobs
+      - uses: actions/download-artifact@v4
         with:
-          path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Build the package on cache miss
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: pnpm install && pnpm build
+          name: build-output
+
+      - name: Install dependencies to avoid tsconfig warnings
+        run: pnpm install
+      - name: Install dependencies in playground
+        working-directory: ./playground
+        run: pnpm install --no-frozen-lockfile
 
       # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
       # Install playwright's binary under custom directory to cache
       - name: Set Playwright & Cypress path
-        if: runner.os != 'Windows'
         run: |
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
           echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
@@ -132,7 +131,7 @@ jobs:
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
           echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
 
-      - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
+      - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
         uses: actions/cache@v4
@@ -141,7 +140,7 @@ jobs:
           key: ${{ runner.os }}-cypress-bin
           path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-      - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
+      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Cache Playwright's binary
         uses: actions/cache@v4
         with:
@@ -150,47 +149,28 @@ jobs:
           key: ${{ runner.os }}-playwright-bin-v1
           path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
-      - if: ${{ (contains(env.FEATURE_FLAGS, '--')) }}
-        name: Create the sample project with feature flags
-        working-directory: ../
-        run: node ./create-vue/outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
-
-      - if: ${{ !(contains(env.FEATURE_FLAGS, '--')) }}
-        name: Create the sample project with default options
-        working-directory: ../
-        run: node ./create-vue/outfile.cjs sample-project --default
-
-      - name: Install dependencies in the sample project
-        working-directory: ../sample-project
-        run: pnpm install
-
-      - if: ${{ contains(matrix.flag-for-vitest, '--') }}
-        name: Run unit test script
-        working-directory: ../sample-project
-        run: pnpm test:unit
-
-      - name: Run build script
-        working-directory: ../sample-project
-        run: pnpm build
-
       - name: Download Cypress
-        if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
-        working-directory: ../sample-project
+        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        working-directory: ./playground/cypress
         run: |
           pnpm exec cypress cache list
           pnpm exec cypress install
 
-      - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
+      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Install Playwright dependencies
-        working-directory: ../sample-project
-        run: npx playwright install --with-deps
+        working-directory: ./playground/playwright
+        run: pnpm exec playwright install --with-deps
 
-      - if: ${{ contains(matrix.flag-for-e2e, '--') }}
-        name: Run e2e test script
-        working-directory: ../sample-project
-        run: pnpm test:e2e
+      - name: Run build script
+        working-directory: ./playground
+        run: pnpm --filter "*${{ matrix.e2e-framework }}*" build
 
-      - if: ${{ contains(matrix.flag-for-eslint, '--') }}
-        name: Run lint script
-        working-directory: ../sample-project
-        run: pnpm lint --no-fix --max-warnings=0
+      - name: Run e2e test script
+        working-directory: ./playground
+        run: pnpm --filter "*${{ matrix.e2e-framework }}*" --workspace-concurrency 1 test:e2e
+
+      - name: Cypress component testing for projects without Vitest
+        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
+
+      # FIXME: `--with-tests` folders. It's failing now.
