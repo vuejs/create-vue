@@ -18,6 +18,7 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
+import trimBoilerplate from './utils/trimBoilerplate'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -83,7 +84,9 @@ async function init() {
   // --playwright
   // --eslint
   // --eslint-with-prettier (only support prettier through eslint for simplicity)
-  // --force (for force overwriting)
+  // in addition to the feature flags, you can also pass the following options:
+  // --bare (for a barebone template without example code)
+  // --force (for force overwriting without confirming)
 
   const args = process.argv.slice(2)
 
@@ -319,8 +322,8 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.ts || argv.typescript,
-    needsRouter = argv.router || argv['vue-router'],
+    needsTypeScript = (argv.ts || argv.typescript) as boolean,
+    needsRouter = (argv.router || argv['vue-router']) as boolean,
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
@@ -561,6 +564,10 @@ async function init() {
         }
       },
     )
+  }
+
+  if (argv.bare) {
+    trimBoilerplate(root, { needsTypeScript, needsRouter })
   }
 
   // Instructions:
