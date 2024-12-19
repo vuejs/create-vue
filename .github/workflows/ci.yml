@@ -51,6 +51,7 @@ jobs:
           verification-script:
             - pnpm --filter '!*typescript*' build
             - pnpm --filter '*typescript*' build
+            # bare templates only contain vitest configurations, but do not include unit test files
             - pnpm --filter '*vitest*' --filter '!*bare*' test:unit
             - pnpm --filter '*eslint*' lint --no-fix --max-warnings=0
             - pnpm --filter '*prettier*' format --write --check
@@ -167,10 +168,12 @@ jobs:
 
       - name: Run e2e test script
         working-directory: ./playground
+        # bare templates can't pass e2e tests because their page structures don't match the example tests
         run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
 
       - name: Cypress component testing for projects without Vitest
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+        # bare templates only contain test configurations, but do not include component test files
         run: pnpm --filter '*cypress*' --filter '!*vitest*' --filter '!*bare*' --workspace-concurrency 1 test:unit
 
       # FIXME: `--with-tests` folders. It's failing now.
