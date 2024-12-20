@@ -568,6 +568,21 @@ async function init() {
 
   if (argv.bare) {
     trimBoilerplate(root, { needsTypeScript, needsRouter })
+    render('bare/base')
+
+    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
+    if (needsTypeScript) {
+      render('bare/typescript')
+    }
+    if (needsVitest) {
+      render('bare/vitest')
+    }
+    if (needsCypressCT) {
+      render('bare/cypress-ct')
+    }
+    if (needsNightwatchCT) {
+      render('bare/nightwatch-ct')
+    }
   }
 
   // Instructions:
