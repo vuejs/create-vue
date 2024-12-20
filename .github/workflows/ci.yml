@@ -49,13 +49,13 @@ jobs:
           node-version: [18, 20, 22]
           os: [ubuntu-latest, windows-latest, macos-latest]
           verification-script:
-            - pnpm --filter "\!*typescript*" build
-            - pnpm --filter "*typescript*" build
-            - pnpm --filter "*vitest*" test:unit
-            - pnpm --filter "*eslint*" lint --no-fix --max-warnings=0
-            - pnpm --filter "*prettier*" format --write --check
+            - pnpm --filter '!*typescript*' build
+            - pnpm --filter '*typescript*' build
+            - pnpm --filter '*vitest*' test:unit
+            - pnpm --filter '*eslint*' lint --no-fix --max-warnings=0
+            - pnpm --filter '*prettier*' format --write --check
             # FIXME: it's failing now
-            # - pnpm --filter "*with-tests*" test:unit
+            # - pnpm --filter '*with-tests*' test:unit
       runs-on: ${{ matrix.os }}
       continue-on-error: ${{ matrix.os == 'windows-latest' }}
       env:
@@ -163,11 +163,12 @@ jobs:
 
       - name: Run build script
         working-directory: ./playground
-        run: pnpm --filter "*${{ matrix.e2e-framework }}*" build
+        run: pnpm --filter '*${{ matrix.e2e-framework }}*' build
 
       - name: Run e2e test script
         working-directory: ./playground
-        run: pnpm --filter "*${{ matrix.e2e-framework }}*" --workspace-concurrency 1 test:e2e
+        # bare templates can't pass e2e tests because their page structures don't match the example tests
+        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
 
       - name: Cypress component testing for projects without Vitest
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
