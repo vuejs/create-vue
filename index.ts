@@ -83,9 +83,9 @@ Available feature flags:
   --default
     Create a project with the default configuration without any additional features.
   --ts, --typescript
-    Add TypeScript Support.
+    Add TypeScript support.
   --jsx
-    Add JSX Support.
+    Add JSX support.
   --router, --vue-router
     Add Vue Router for SPA development.
   --pinia
@@ -103,7 +103,7 @@ Available feature flags:
   --eslint
     Add ESLint for code quality.
   --eslint-with-prettier
-    Add Prettier for code formatting.
+    Add Prettier for code formatting in addition to ESLint.
 
 Unstable feature flags:
   --tests, --with-tests
