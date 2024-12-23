@@ -6,7 +6,7 @@ import * as path from 'node:path'
 import { parseArgs } from 'node:util'
 
 import prompts from 'prompts'
-import { red, green, bold } from 'kleur/colors'
+import { red, green, cyan, bold } from 'kleur/colors'
 
 import ejs from 'ejs'
 
@@ -19,6 +19,8 @@ import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
 import trimBoilerplate from './utils/trimBoilerplate'
+
+import cliPackageJson from './package.json'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -61,33 +63,56 @@ function emptyDir(dir) {
   )
 }
 
+const helpMessage = `\
+Usage: create-vue [FEATURE_FLGAS...] [OPTIONS...] [DIRECTORY]
+
+Create a new Vue.js project.
+Start the CLI in interactive mode when no FEATURE_FLAGS is provided, or if the DIRECTORY argument is not a valid package name.
+
+Options:
+  --force
+    Create the project even if the directory is not empty.
+  --bare
+    Create a barebone project without example code.
+  --help
+    Display this help message.
+  --version
+    Display the version number of this CLI.
+
+Available feature flags:
+  --default
+    Create a project with the default configuration without any additional features.
+  --ts, --typescript
+    Add TypeScript support.
+  --jsx
+    Add JSX support.
+  --router, --vue-router
+    Add Vue Router for SPA development.
+  --pinia
+    Add Pinia for state management.
+  --vitest
+    Add Vitest for unit testing.
+  --cypress
+    Add Cypress for end-to-end testing.
+    If used without ${cyan('--vitest')}, it will also add Cypress Component Testing.
+  --playwright
+    Add Playwright for end-to-end testing.
+  --nightwatch
+    Add Nightwatch for end-to-end testing.
+    If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
+  --eslint
+    Add ESLint for code quality.
+  --eslint-with-prettier
+    Add Prettier for code formatting in addition to ESLint.
+
+Unstable feature flags:
+  --tests, --with-tests
+    Add both unit testing and end-to-end testing support.
+    Currently equivalent to ${cyan('--vitest --cypress')}, but may change in the future.
+`
+
 async function init() {
-  console.log()
-  console.log(
-    process.stdout.isTTY && process.stdout.getColorDepth() > 8
-      ? banners.gradientBanner
-      : banners.defaultBanner,
-  )
-  console.log()
-
   const cwd = process.cwd()
-  // possible options:
-  // --default
-  // --typescript / --ts
-  // --jsx
-  // --router / --vue-router
-  // --pinia
-  // --with-tests / --tests (equals to `--vitest --cypress`)
-  // --vitest
-  // --cypress
-  // --nightwatch
-  // --playwright
-  // --eslint
-  // --eslint-with-prettier (only support prettier through eslint for simplicity)
-  // in addition to the feature flags, you can also pass the following options:
-  // --bare (for a barebone template without example code)
-  // --force (for force overwriting without confirming)
-
   const args = process.argv.slice(2)
 
   // alias is not supported by parseArgs
@@ -105,6 +130,16 @@ async function init() {
     options,
     strict: false,
   })
+
+  if (argv.help) {
+    console.log(helpMessage)
+    process.exit(0)
+  }
+
+  if (argv.version) {
+    console.log(`${cliPackageJson.name} v${cliPackageJson.version}`)
+    process.exit(0)
+  }
 
   // if any of the feature flags is set, we would skip the feature prompts
   const isFeatureFlagsUsed =
@@ -144,6 +179,14 @@ async function init() {
     needsOxlint?: boolean
     needsPrettier?: boolean
   } = {}
+
+  console.log()
+  console.log(
+    process.stdout.isTTY && process.stdout.getColorDepth() > 8
+      ? banners.gradientBanner
+      : banners.defaultBanner,
+  )
+  console.log()
 
   try {
     // Prompts:
