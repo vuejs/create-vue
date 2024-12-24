@@ -17,7 +17,7 @@ npm create vue@latest
 > [!NOTE]
 > (`@latest` or `@legacy`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
 
-By default the command will run in interactive mode, but you can also provide feature flags in the CLI arguments to skip the prompts. Run `npm create vue@latest --help` to see all available options.
+By default the command will run in interactive mode, but you can also provide feature flags in the CLI arguments to skip the prompts. Run `npm create vue@latest -- --help` to see all available options.
 
 If you need to support IE11, you can create a Vue 2 project with:
 
