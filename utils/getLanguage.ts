@@ -55,7 +55,7 @@ function linkLocale(locale: string) {
   try {
     linkedLocale = Intl.getCanonicalLocales(locale)[0]
   } catch (error) {
-    console.log(`${error.toString()}\n`)
+    console.log(`${error.toString()}, invalid language tag: "${locale}"\n`)
   }
   switch (linkedLocale) {
     case 'zh-TW':
