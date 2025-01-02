@@ -18,7 +18,7 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
-import trimBoilerplate from './utils/trimBoilerplate'
+import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 
 import cliPackageJson from './package.json'
 
@@ -560,6 +560,24 @@ async function init() {
     },
   )
 
+  if (argv.bare) {
+    trimBoilerplate(root)
+    render('bare/base')
+    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
+    if (needsTypeScript) {
+      render('bare/typescript')
+    }
+    if (needsVitest) {
+      render('bare/vitest')
+    }
+    if (needsCypressCT) {
+      render('bare/cypress-ct')
+    }
+    if (needsNightwatchCT) {
+      render('bare/nightwatch-ct')
+    }
+  }
+
   // Cleanup.
 
   // We try to share as many files between TypeScript and JavaScript as possible.
@@ -610,21 +628,9 @@ async function init() {
   }
 
   if (argv.bare) {
-    trimBoilerplate(root, { needsTypeScript, needsRouter })
-    render('bare/base')
-
-    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
-    if (needsTypeScript) {
-      render('bare/typescript')
-    }
-    if (needsVitest) {
-      render('bare/vitest')
-    }
-    if (needsCypressCT) {
-      render('bare/cypress-ct')
-    }
-    if (needsNightwatchCT) {
-      render('bare/nightwatch-ct')
+    removeCSSImport(root, needsTypeScript)
+    if (needsRouter) {
+      emptyRouterConfig(root, needsTypeScript)
     }
   }
 
