@@ -64,7 +64,7 @@ function emptyDir(dir) {
 }
 
 const helpMessage = `\
-Usage: create-vue [FEATURE_FLGAS...] [OPTIONS...] [DIRECTORY]
+Usage: create-vue [FEATURE_FLAGS...] [OPTIONS...] [DIRECTORY]
 
 Create a new Vue.js project.
 Start the CLI in interactive mode when no FEATURE_FLAGS is provided, or if the DIRECTORY argument is not a valid package name.
