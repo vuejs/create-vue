@@ -51,6 +51,18 @@ interface Language {
  * @returns locale that linked with correct name
  */
 function linkLocale(locale: string) {
+  // The C locale is the default system locale for POSIX systems.
+  // https://docs.oracle.com/cd/E36784_01/html/E36823/glmar.html
+  // https://sourceware.org/glibc/wiki/Proposals/C.UTF-8
+  // It is common among containerized environments or minimal virtual environments
+  // though most user-facing systems would have a more specific locale set.
+  // The problem here is that the C locale is not a valid language tag for the Intl API.
+  // But it is not desirable to throw an error in this case.
+  // So we map it to 'en-US'.
+  if (locale === 'C') {
+    return 'en-US'
+  }
+
   let linkedLocale: string
   try {
     linkedLocale = Intl.getCanonicalLocales(locale)[0]
