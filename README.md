@@ -19,6 +19,9 @@ npm create vue@latest
 
 By default the command will run in interactive mode, but you can also provide feature flags in the CLI arguments to skip the prompts. Run `npm create vue@latest -- --help` to see all available options.
 
+> [!NOTE]
+> If you're using PowerShell, you'll need to quote the `--`, that is, run `npm create vue@latest '--' --help`.
+
 If you need to support IE11, you can create a Vue 2 project with:
 
 ```sh
