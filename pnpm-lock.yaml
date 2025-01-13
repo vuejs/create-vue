@@ -114,14 +114,14 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(vite@6.0.7(@types/node@22.10.5)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
       chromedriver:
-        specifier: ^131.0.4
-        version: 131.0.4
+        specifier: ^131.0.5
+        version: 131.0.5
       geckodriver:
         specifier: ^5.0.0
         version: 5.0.0
       nightwatch:
-        specifier: ^3.10.0
-        version: 3.10.0(chromedriver@131.0.4)(geckodriver@5.0.0)
+        specifier: ^3.10.2
+        version: 3.10.2(chromedriver@131.0.5)(geckodriver@5.0.0)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.10.5)(typescript@5.7.2)
@@ -1639,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
 
-  chromedriver@131.0.4:
-    resolution: {integrity: sha512-JgIkept8YrnqT05ldLaOzxxEJDUV1t3PFIIMO/gQz9AbnpZx7Pl1zq6tQTTz2HoY5T2JKZ5kyiEWwc48g4fJ5w==}
+  chromedriver@131.0.5:
+    resolution: {integrity: sha512-OQY4BHUe9JedxH4aAsPZJcf8Y0lMlE7y+3tiCvQSCQ6qDz2b99R0qsqyqzUUSW2DFx0bg4YxmK8CDVMKb9u5kg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3027,8 +3027,8 @@ packages:
   nightwatch-axe-verbose@2.3.1:
     resolution: {integrity: sha512-C6N95bwPHsRnv04eVIwJ6w5m6X1+Pddvo6nzpzOHQlO0j+pYRVU7zaQmFUJ0L4cqeUxReNEXyTUg/R9WWfHk7w==}
 
-  nightwatch@3.10.0:
-    resolution: {integrity: sha512-7FIYCZs9/1tLzH30Snaf2d70EJqm7UybDAdqeOfF69VG47L3zxTCH8eHurJgoB2dFw66GGWmYin8Y4Z9oqKzjA==}
+  nightwatch@3.10.2:
+    resolution: {integrity: sha512-4mtiHau8tpuLYKK6sStUfgGTJnSZkwv0CS/frsSjOMwPqJyMrCsmRq6x6LSXZuZhCuBYR8C+3CA/3i3ocE2U2Q==}
     engines: {node: '>= 16'}
     hasBin: true
     peerDependencies:
@@ -5478,7 +5478,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromedriver@131.0.4:
+  chromedriver@131.0.5:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.7.7(debug@4.4.0)
@@ -6914,7 +6914,7 @@ snapshots:
     dependencies:
       axe-core: 4.10.0
 
-  nightwatch@3.10.0(chromedriver@131.0.4)(geckodriver@5.0.0):
+  nightwatch@3.10.2(chromedriver@131.0.5)(geckodriver@5.0.0):
     dependencies:
       '@nightwatch/chai': 5.0.3
       '@nightwatch/html-reporter-template': 0.3.0
@@ -6951,7 +6951,7 @@ snapshots:
       untildify: 4.0.0
       uuid: 8.3.2
     optionalDependencies:
-      chromedriver: 131.0.4
+      chromedriver: 131.0.5
       geckodriver: 5.0.0
     transitivePeerDependencies:
       - bufferutil
