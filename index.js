@@ -28,28 +28,13 @@ export default function createConfig({
   if (hasTypeScript) {
     // TODO: allowJs option
     fileExtensions.unshift('ts', 'mts', 'tsx')
-
     additionalConfigs.unshift({
-      devDependencies: pickDependencies(['@vue/eslint-config-typescript']),
-      afterVuePlugin: [
-        {
-          importer:
-            "import vueTsEslintConfig from '@vue/eslint-config-typescript'",
-          // TODO: supportedScriptLangs
-          content: '...vueTsEslintConfig(),',
-        },
-      ],
+      devDependencies: pickDependencies(['@vue/eslint-config-typescript', 'jiti']),
     })
   } else {
     fileExtensions.unshift('js', 'mjs', 'jsx')
     additionalConfigs.unshift({
       devDependencies: pickDependencies(['@eslint/js']),
-      beforeVuePlugin: [
-        {
-          importer: "import js from '@eslint/js'",
-          content: 'js.configs.recommended,',
-        },
-      ],
     })
   }
 
@@ -113,14 +98,22 @@ export default function createConfig({
   }
 
   const files = {
-    'eslint.config.js': renderEjsFile(
-      './templates/eslint.config.js.ejs',
-      templateData,
-    ),
     '.editorconfig': renderEjsFile(
       './templates/_editorconfig.ejs',
       templateData,
     ),
+  }
+
+  if (hasTypeScript) {
+    files['eslint.config.ts'] = renderEjsFile(
+      './templates/eslint.config.ts.ejs',
+      templateData,
+    )
+  } else {
+    files['eslint.config.js'] = renderEjsFile(
+      './templates/eslint.config.js.ejs',
+      templateData,
+    )
   }
 
   // .editorconfig & .prettierrc.json

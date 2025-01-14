@@ -1,13 +1,16 @@
 <%_ for (const { importer } of configsBeforeVuePlugin) { _%>
 <%- importer %>
 <%_ } _%>
-import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
 <%_ for (const { importer } of configsAfterVuePlugin) { _%>
 <%- importer %>
 <%_ } _%>
 
-export default [
+export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
     files: ['**/*.{<%= fileExtensions.join(',') %>}'],
@@ -21,9 +24,9 @@ export default [
 <%_ for (const { content } of configsBeforeVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>
 <%_ } _%>
-  js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
+  pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
 <%_ for (const { content } of configsAfterVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>
 <%_ } _%>
-]
+)
