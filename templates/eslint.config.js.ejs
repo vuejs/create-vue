@@ -17,11 +17,11 @@ export default [
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
-  <%_ for (const { content } of configsBeforeVuePlugin) { _%>
+<%_ for (const { content } of configsBeforeVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>
-  <%_ } _%>
+<%_ } _%>
   ...pluginVue.configs['flat/essential'],
-  <%_ for (const { content } of configsAfterVuePlugin) { _%>
+<%_ for (const { content } of configsAfterVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>
-  <%_ } _%>
+<%_ } _%>
 ]
