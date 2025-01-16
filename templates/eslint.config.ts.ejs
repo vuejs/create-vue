@@ -2,10 +2,7 @@
 <%- importer %>
 <%_ } _%>
 import pluginVue from 'eslint-plugin-vue'
-import {
-  defineConfigWithVueTs,
-  vueTsConfigs,
-} from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 <%_ for (const { importer } of configsAfterVuePlugin) { _%>
 <%- importer %>
 <%_ } _%>
