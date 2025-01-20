@@ -17,6 +17,7 @@ const featureFlags = [
   'cypress',
   'playwright',
   'nightwatch',
+  'eslint',
 ]
 const featureFlagsDenylist = [
   ['cypress', 'playwright'],
@@ -55,7 +56,7 @@ function fullCombination(arr) {
 }
 
 let flagCombinations = fullCombination(featureFlags)
-flagCombinations.push(['default'], ['bare', 'default'], ['eslint'], ['eslint-with-prettier'])
+flagCombinations.push(['default'], ['bare', 'default'], ['eslint-with-prettier'])
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
