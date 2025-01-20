@@ -99,8 +99,10 @@ export function getAdditionalConfigs({
       afterVuePlugin: [
         {
           importer:
-            (needsTypeScript ? `// @ts-ignore\n` : '') +
-            "import pluginCypress from 'eslint-plugin-cypress/flat'",
+            (needsTypeScript
+              ? `// eslint-disable-next-line @typescript-eslint/ban-ts-comment\n` +
+                `// @ts-ignore\n`
+              : '') + "import pluginCypress from 'eslint-plugin-cypress/flat'",
           content: `
   {
     ...pluginCypress.configs.recommended,
