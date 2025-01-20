@@ -102,7 +102,7 @@ export function getAdditionalConfigs({
     ...pluginCypress.configs.recommended,
     files: [
       ${[
-        ...(needsCypressCT ? ["'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',"] : []),
+        ...(needsCypressCT ? ['**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}'] : []),
         'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
         'cypress/support/**/*.{js,ts,jsx,tsx}',
       ]
