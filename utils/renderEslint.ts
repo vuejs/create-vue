@@ -22,6 +22,7 @@ export default function renderEslint(
   },
 ) {
   const additionalConfigs = getAdditionalConfigs({
+    needsTypeScript,
     needsVitest,
     needsCypress,
     needsCypressCT,
@@ -64,6 +65,7 @@ type AdditionalConfigArray = Array<AdditionalConfig>
 
 // visible for testing
 export function getAdditionalConfigs({
+  needsTypeScript,
   needsVitest,
   needsCypress,
   needsCypressCT,
@@ -96,7 +98,9 @@ export function getAdditionalConfigs({
       },
       afterVuePlugin: [
         {
-          importer: "import pluginCypress from 'eslint-plugin-cypress/flat'",
+          importer:
+            (needsTypeScript ? `// @ts-ignore\n` : '') +
+            "import pluginCypress from 'eslint-plugin-cypress/flat'",
           content: `
   {
     ...pluginCypress.configs.recommended,

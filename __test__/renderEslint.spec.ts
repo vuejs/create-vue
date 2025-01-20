@@ -4,6 +4,7 @@ import { getAdditionalConfigs } from '../utils/renderEslint'
 describe('renderEslint', () => {
   it('should get additional dependencies and config with no test flags', () => {
     const additionalConfigs = getAdditionalConfigs({
+      needsTypeScript: false,
       needsVitest: false,
       needsCypress: false,
       needsCypressCT: false,
@@ -14,6 +15,7 @@ describe('renderEslint', () => {
 
   it('should get additional dependencies and config with for vitest', () => {
     const additionalConfigs = getAdditionalConfigs({
+      needsTypeScript: false,
       needsVitest: true,
       needsCypress: false,
       needsCypressCT: false,
@@ -31,6 +33,7 @@ describe('renderEslint', () => {
 
   it('should get additional dependencies and config with for cypress', () => {
     const additionalConfigs = getAdditionalConfigs({
+      needsTypeScript: false,
       needsVitest: false,
       needsCypress: true,
       needsCypressCT: false,
@@ -53,6 +56,7 @@ describe('renderEslint', () => {
 
   it('should get additional dependencies and config with for cypress with component testing', () => {
     const additionalConfigs = getAdditionalConfigs({
+      needsTypeScript: false,
       needsVitest: false,
       needsCypress: true,
       needsCypressCT: true,
@@ -76,6 +80,7 @@ describe('renderEslint', () => {
 
   it('should get additional dependencies and config with for playwright', () => {
     const additionalConfigs = getAdditionalConfigs({
+      needsTypeScript: false,
       needsVitest: false,
       needsCypress: false,
       needsCypressCT: false,
