@@ -171,6 +171,7 @@ jobs:
         run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
 
       - name: Cypress component testing for projects without Vitest
+        working-directory: ./playground
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
         run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
 

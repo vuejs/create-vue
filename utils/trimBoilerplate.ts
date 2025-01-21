@@ -20,10 +20,24 @@ export function trimBoilerplate(rootDir: string) {
   }
 }
 
-export function removeCSSImport(rootDir: string, needsTypeScript: boolean) {
+export function removeCSSImport(
+  rootDir: string,
+  needsTypeScript: boolean,
+  needsCypressCT: boolean,
+) {
   // Remove CSS import in the entry file
   const entryPath = path.resolve(rootDir, needsTypeScript ? 'src/main.ts' : 'src/main.js')
   replaceContent(entryPath, (content) => content.replace("import './assets/main.css'\n\n", ''))
+
+  if (needsCypressCT) {
+    const ctSetupPath = path.resolve(
+      rootDir,
+      needsTypeScript ? 'cypress/support/component.ts' : 'cypress/support/component.js',
+    )
+    replaceContent(ctSetupPath, (content) =>
+      content.replace("import '@/assets/main.css'", "// import '@/assets/main.css'"),
+    )
+  }
 }
 
 export function emptyRouterConfig(rootDir: string, needsTypeScript: boolean) {

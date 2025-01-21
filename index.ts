@@ -628,7 +628,7 @@ async function init() {
   }
 
   if (argv.bare) {
-    removeCSSImport(root, needsTypeScript)
+    removeCSSImport(root, needsTypeScript, needsCypressCT)
     if (needsRouter) {
       emptyRouterConfig(root, needsTypeScript)
     }
