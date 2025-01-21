@@ -170,9 +170,12 @@ jobs:
         # bare templates can't pass e2e tests because their page structures don't match the example tests
         run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
 
-      - name: Cypress component testing for projects without Vitest
-        working-directory: ./playground
-        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit --browser chrome
+      # FIXME: Component testing is failing in CI after running too many tests.
+      # The workaround in https://github.com/cypress-io/cypress/issues/22208 is not working.
+      # But it seems not affecting real-world projects.
+      # - name: Cypress component testing for projects without Vitest
+      #   working-directory: ./playground
+      #   if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+      #   run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
 
       # FIXME: `--with-tests` folders. It's failing now.
