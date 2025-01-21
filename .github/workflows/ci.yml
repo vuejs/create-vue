@@ -173,6 +173,6 @@ jobs:
       - name: Cypress component testing for projects without Vitest
         working-directory: ./playground
         if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
+        run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit --browser chrome
 
       # FIXME: `--with-tests` folders. It's failing now.
