@@ -7,7 +7,7 @@ describe('App', function () {
     const appComponent = await browser.mountComponent('/src/App.vue');
 
     browser.expect.element(appComponent).to.be.present;
-    browser.expect.element('h1').text.to.contain('Hello World');
+    browser.expect.element('h1').text.to.contain('You did it!');
   })
 
   after((browser) => browser.end())
