@@ -167,8 +167,7 @@ jobs:
 
       - name: Run e2e test script
         working-directory: ./playground
-        # bare templates can't pass e2e tests because their page structures don't match the example tests
-        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --filter '!*bare*' --workspace-concurrency 1 test:e2e
+        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --workspace-concurrency 1 test:e2e
 
       # FIXME: Component testing is failing in CI after running too many tests.
       # The workaround in https://github.com/cypress-io/cypress/issues/22208 is not working.
