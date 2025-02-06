@@ -39,8 +39,14 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 `
 
+  let installCommand = commandFor('install')
+  if (packageManager === 'pnpm' && needsNightwatch) {
+    // TODO: remove the "for pnpm 10+" note when pnpm 10 is widely adopted
+    installCommand += `\npnpm approve-builds # for pnpm 10+`
+  }
+
   let npmScriptsDescriptions = `\`\`\`sh
-${commandFor('install')}
+${installCommand}
 \`\`\`
 
 ### Compile and Hot-Reload for Development
