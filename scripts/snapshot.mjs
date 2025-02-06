@@ -8,6 +8,7 @@ if (!/pnpm/.test(process.env.npm_config_user_agent ?? ''))
   throw new Error("Please use pnpm ('pnpm run snapshot') to generate snapshots!")
 
 const featureFlags = [
+  'bare',
   'typescript',
   'jsx',
   'router',
@@ -16,6 +17,7 @@ const featureFlags = [
   'cypress',
   'playwright',
   'nightwatch',
+  'eslint',
 ]
 const featureFlagsDenylist = [
   ['cypress', 'playwright'],
@@ -54,12 +56,7 @@ function fullCombination(arr) {
 }
 
 let flagCombinations = fullCombination(featureFlags)
-flagCombinations.push(
-  ['default'],
-  ['router', 'pinia'],
-  ['eslint'],
-  ['eslint-with-prettier'],
-)
+flagCombinations.push(['default'], ['bare', 'default'], ['eslint-with-prettier'])
 
 // `--with-tests` are equivalent of `--vitest --cypress`
 // Previously it means `--cypress` without `--vitest`.
@@ -85,10 +82,15 @@ for (const flags of flagCombinations) {
 }
 
 // Filter out combinations that are not allowed
-flagCombinations = flagCombinations.filter(
-  (combination) =>
-    !featureFlagsDenylist.some((denylist) => denylist.every((flag) => combination.includes(flag))),
-)
+flagCombinations = flagCombinations
+  .filter(
+    (combination) =>
+      !featureFlagsDenylist.some((denylist) =>
+        denylist.every((flag) => combination.includes(flag)),
+      ),
+  )
+  // `--bare` is a supplementary flag and should not be used alone
+  .filter((combination) => !(combination.length === 1 && combination[0] === 'bare'))
 
 const bin = path.posix.relative('../playground/', '../outfile.cjs')
 

@@ -22,6 +22,7 @@ export default function renderEslint(
   },
 ) {
   const additionalConfigs = getAdditionalConfigs({
+    needsTypeScript,
     needsVitest,
     needsCypress,
     needsCypressCT,
@@ -64,6 +65,7 @@ type AdditionalConfigArray = Array<AdditionalConfig>
 
 // visible for testing
 export function getAdditionalConfigs({
+  needsTypeScript,
   needsVitest,
   needsCypress,
   needsCypressCT,
@@ -96,13 +98,17 @@ export function getAdditionalConfigs({
       },
       afterVuePlugin: [
         {
-          importer: "import pluginCypress from 'eslint-plugin-cypress/flat'",
+          importer:
+            (needsTypeScript
+              ? `// eslint-disable-next-line @typescript-eslint/ban-ts-comment\n` +
+                `// @ts-ignore\n`
+              : '') + "import pluginCypress from 'eslint-plugin-cypress/flat'",
           content: `
   {
     ...pluginCypress.configs.recommended,
     files: [
       ${[
-        ...(needsCypressCT ? ["'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}',"] : []),
+        ...(needsCypressCT ? ['**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}'] : []),
         'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}',
         'cypress/support/**/*.{js,ts,jsx,tsx}',
       ]

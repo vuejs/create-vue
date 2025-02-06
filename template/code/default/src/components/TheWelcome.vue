@@ -5,6 +5,8 @@ import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+
+const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
 </script>
 
 <template>
@@ -32,15 +34,17 @@ import SupportIcon from './icons/IconSupport.vue'
     +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank" rel="noopener">Volar</a>. If
     you need to test your components and web pages, check out
-    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>
+    <a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest</a>
     and
-    <a href="https://on.cypress.io/component" target="_blank" rel="noopener"
-      >Cypress Component Testing</a
-    >.
+    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>
+    /
+    <a href="https://playwright.dev/" target="_blank" rel="noopener">Playwright</a>.
 
     <br />
 
-    More instructions are available in <code>README.md</code>.
+    More instructions are available in
+    <a href="javascript:void(0)" @click="openReadmeInEditor"><code>README.md</code></a
+    >.
   </WelcomeItem>
 
   <WelcomeItem>
@@ -66,15 +70,15 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #heading>Community</template>
 
     Got stuck? Ask your question on
-    <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>, our official
-    Discord server, or
+    <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>
+    (our official Discord server), or
     <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
       >StackOverflow</a
-    >. You should also subscribe to
-    <a href="https://news.vuejs.org" target="_blank" rel="noopener">our mailing list</a>
-    and follow the official
-    <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
-    twitter account for latest news in the Vue world.
+    >. You should also follow the official
+    <a href="https://bsky.app/profile/vuejs.org" target="_blank" rel="noopener">@vuejs.org</a>
+    Bluesky account or the
+    <a href="https://x.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
+    X account for latest news in the Vue world.
   </WelcomeItem>
 
   <WelcomeItem>
