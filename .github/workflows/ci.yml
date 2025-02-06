@@ -118,6 +118,9 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: pnpm install --no-frozen-lockfile
+        env:
+          # Skip Cypress installation temporarily, we'll install it later with cache
+          CYPRESS_INSTALL_BINARY: 0
 
       # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
       # Install playwright's binary under custom directory to cache
