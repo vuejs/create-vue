@@ -63,6 +63,22 @@ function emptyDir(dir) {
   )
 }
 
+// get now user runtime
+function detectRuntime() {
+  // @ts-ignore
+  if (typeof Bun !== 'undefined') {
+    return 'bun'
+  }
+  if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+    return 'node'
+  }
+  // @ts-ignore
+  if (typeof Deno !== 'undefined') {
+    return 'deno'
+  }
+  return 'unknown'
+}
+
 const helpMessage = `\
 Usage: create-vue [FEATURE_FLAGS...] [OPTIONS...] [DIRECTORY]
 
@@ -105,6 +121,9 @@ Available feature flags:
   --eslint-with-prettier
     Add Prettier for code formatting in addition to ESLint.
 
+  --runtime
+    Show runtime environment selection prompt.
+
 Unstable feature flags:
   --tests, --with-tests
     Add both unit testing and end-to-end testing support.
@@ -123,6 +142,7 @@ async function init() {
     tests: { type: 'boolean' },
     'vue-router': { type: 'boolean' },
     router: { type: 'boolean' },
+    runtime: { type: 'boolean' },
   } as const
 
   const { values: argv, positionals } = parseArgs({
@@ -209,7 +229,7 @@ async function init() {
       [
         {
           name: 'runtime',
-          type: () => (isFeatureFlagsUsed ? null : 'select'),
+          type: () => (argv.runtime ? 'select' : null),
           message: language.needsRuntime.message,
           initial: 0,
           choices: [
@@ -391,7 +411,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
-    runtime = 'node',
+    runtime = detectRuntime(),
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
