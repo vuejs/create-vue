@@ -27,7 +27,7 @@ export function removeCSSImport(
 ) {
   // Remove CSS import in the entry file
   const entryPath = path.resolve(rootDir, needsTypeScript ? 'src/main.ts' : 'src/main.js')
-  replaceContent(entryPath, (content) => content.replace("import './assets/main.css'\n\n", ''))
+  replaceContent(entryPath, (content) => content.replace("import './assets/main.css'\r\n\r\n", ''))
 
   if (needsCypressCT) {
     const ctSetupPath = path.resolve(

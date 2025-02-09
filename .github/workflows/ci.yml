@@ -84,7 +84,7 @@ jobs:
           run: pnpm snapshot
         - name: Install dependencies in playground
           working-directory: ./playground
-          run: pnpm install --no-frozen-lockfile
+          run: pnpm install --no-frozen-lockfile --ignore-scripts
 
         - name: Run build script in playground
           working-directory: ./playground
@@ -123,7 +123,7 @@ jobs:
         run: pnpm snapshot
       - name: Install dependencies in playground
         working-directory: ./playground
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
         env:
           # Skip Cypress installation temporarily, we'll install it later with cache
           CYPRESS_INSTALL_BINARY: 0
