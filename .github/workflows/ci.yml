@@ -37,11 +37,12 @@ jobs:
 
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
-      - uses: actions/upload-artifact@v4
+      - uses: eviden-actions/upload-artifact@v2
         with:
           name: build-output
           path: |
             outfile.cjs
+            playground
           retention-days: 3
 
   verify-scripts:
@@ -74,14 +75,12 @@ jobs:
             cache: 'pnpm'
 
         # use artifacts to share the playground across different jobs
-        - uses: actions/download-artifact@v4
+        - uses: eviden-actions/download-artifact@v2
           with:
             name: build-output
 
         - name: Install dependencies to avoid tsconfig warnings
           run: pnpm install
-        - name: Snapshot
-          run: pnpm snapshot
         - name: Install dependencies in playground
           working-directory: ./playground
           run: pnpm install --no-frozen-lockfile --ignore-scripts
@@ -119,8 +118,6 @@ jobs:
 
       - name: Install dependencies to avoid tsconfig warnings
         run: pnpm install
-      - name: Snapshot
-        run: pnpm snapshot
       - name: Install dependencies in playground
         working-directory: ./playground
         run: pnpm install --no-frozen-lockfile --ignore-scripts
