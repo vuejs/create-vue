@@ -18,7 +18,9 @@ const featureFlags = [
   'playwright',
   'nightwatch',
   'eslint',
-  'eslint-with-oxlint',
+  // Skipped oxlint for now as too many files in playground
+  // caused GitHub Actions to fail with (EMFILE: too many open files)
+  // 'eslint-with-oxlint',
   'prettier',
 ]
 const featureFlagsDenylist = [
