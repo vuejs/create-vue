@@ -37,7 +37,7 @@ jobs:
 
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v3
         with:
           name: build-output
           path: |
@@ -75,7 +75,7 @@ jobs:
             cache: 'pnpm'
 
         # use artifacts to share the playground across different jobs
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v3
           with:
             name: build-output
 
@@ -112,7 +112,7 @@ jobs:
           cache: 'pnpm'
 
       # use artifacts to share the playground across different jobs
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: build-output
 
