@@ -42,7 +42,6 @@ jobs:
           name: build-output
           path: |
             outfile.cjs
-            playground
           retention-days: 3
 
   verify-scripts:
@@ -81,6 +80,8 @@ jobs:
 
         - name: Install dependencies to avoid tsconfig warnings
           run: pnpm install
+        - name: Snapshot
+          run: pnpm snapshot
         - name: Install dependencies in playground
           working-directory: ./playground
           run: pnpm install --no-frozen-lockfile
@@ -118,6 +119,8 @@ jobs:
 
       - name: Install dependencies to avoid tsconfig warnings
         run: pnpm install
+      - name: Snapshot
+        run: pnpm snapshot
       - name: Install dependencies in playground
         working-directory: ./playground
         run: pnpm install --no-frozen-lockfile
