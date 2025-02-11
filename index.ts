@@ -103,7 +103,7 @@ Available feature flags:
   --eslint
     Add ESLint for code quality.
   --eslint-with-oxlint
-    Add ESLint for code quality with OxLint for faster linting.
+    Add ESLint for code quality, and use Oxlint to speed up the linting process.
   --eslint-with-prettier (Deprecated in favor of ${cyan('--eslint --prettier')})
     Add Prettier for code formatting in addition to ESLint.
   --prettier
