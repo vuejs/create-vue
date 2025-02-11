@@ -37,7 +37,7 @@ jobs:
 
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
-      - uses: actions/upload-artifact@v4
+      - uses: eviden-actions/upload-artifact@v2
         with:
           name: build-output
           path: |
@@ -75,7 +75,7 @@ jobs:
             cache: 'pnpm'
 
         # use artifacts to share the playground across different jobs
-        - uses: actions/download-artifact@v4
+        - uses: eviden-actions/download-artifact@v2
           with:
             name: build-output
 
@@ -83,7 +83,7 @@ jobs:
           run: pnpm install
         - name: Install dependencies in playground
           working-directory: ./playground
-          run: pnpm install --no-frozen-lockfile
+          run: pnpm install --no-frozen-lockfile --ignore-scripts
 
         - name: Run build script in playground
           working-directory: ./playground
@@ -120,7 +120,7 @@ jobs:
         run: pnpm install
       - name: Install dependencies in playground
         working-directory: ./playground
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
         env:
           # Skip Cypress installation temporarily, we'll install it later with cache
           CYPRESS_INSTALL_BINARY: 0
