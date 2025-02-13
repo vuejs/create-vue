@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "run-p type-check \"build-only {@}\" --",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.13",
+    "npm-run-all2": "^7.0.2",
+    "typescript": "~5.7.3",
+    "vue-tsc": "^2.2.0"
+  }
+}
