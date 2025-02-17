@@ -1,16 +1,17 @@
 {
   "name": "create-vue",
-  "version": "3.14.1",
+  "version": "3.14.2",
   "description": "🛠️ The recommended way to start a Vite-powered Vue project",
   "type": "module",
-  "packageManager": "pnpm@10.2.0",
+  "packageManager": "pnpm@10.4.1",
   "bin": {
     "create-vue": "outfile.cjs"
   },
   "files": [
     "locales",
     "outfile.cjs",
-    "template"
+    "template",
+    "!template/**/node_modules/.bin/*"
   ],
   "engines": {
     "node": ">=v18.3.0"
@@ -40,17 +41,17 @@
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.4",
     "@types/prompts": "^2.4.9",
-    "@vue/create-eslint-config": "^0.7.2",
+    "@vue/create-eslint-config": "^0.7.3",
     "@vue/tsconfig": "^0.7.0",
     "ejs": "^3.1.10",
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "esbuild-plugin-license": "^1.2.3",
     "husky": "^9.1.7",
     "kleur": "^4.1.5",
     "lint-staged": "^15.4.3",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.1",
     "prompts": "^2.4.2",
     "vitest": "^3.0.5",
     "zx": "^8.3.2"
