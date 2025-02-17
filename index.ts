@@ -63,6 +63,22 @@ function emptyDir(dir) {
   )
 }
 
+// get now user runtime
+function detectRuntime() {
+  // @ts-ignore
+  if (typeof Bun !== 'undefined') {
+    return 'bun'
+  }
+  if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+    return 'node'
+  }
+  // @ts-ignore
+  if (typeof Deno !== 'undefined') {
+    return 'deno'
+  }
+  return 'unknown'
+}
+
 const helpMessage = `\
 Usage: create-vue [FEATURE_FLAGS...] [OPTIONS...] [DIRECTORY]
 
@@ -105,6 +121,9 @@ Available feature flags:
   --eslint-with-prettier
     Add Prettier for code formatting in addition to ESLint.
 
+  --runtime
+    Show runtime environment selection prompt.
+
 Unstable feature flags:
   --tests, --with-tests
     Add both unit testing and end-to-end testing support.
@@ -123,6 +142,7 @@ async function init() {
     tests: { type: 'boolean' },
     'vue-router': { type: 'boolean' },
     router: { type: 'boolean' },
+    runtime: { type: 'boolean' },
   } as const
 
   const { values: argv, positionals } = parseArgs({
@@ -178,6 +198,7 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
+    runtime?: 'node' | 'bun'
   } = {}
 
   console.log()
@@ -190,6 +211,7 @@ async function init() {
 
   try {
     // Prompts:
+    // - Choose runtime environment: Node.js / Bun
     // - Project name:
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
@@ -202,8 +224,27 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+
     result = await prompts(
       [
+        {
+          name: 'runtime',
+          type: () => (argv.runtime ? 'select' : null),
+          message: language.needsRuntime.message,
+          initial: 0,
+          choices: [
+            {
+              title: language.needsRuntime.selectOptions.node.title,
+              description: language.needsRuntime.selectOptions.node.desc,
+              value: 'node',
+            },
+            {
+              title: language.needsRuntime.selectOptions.bun.title,
+              description: language.needsRuntime.selectOptions.bun.desc,
+              value: 'bun',
+            },
+          ],
+        },
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
@@ -370,6 +411,7 @@ async function init() {
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
     needsPrettier = argv['eslint-with-prettier'],
+    runtime = detectRuntime(),
   } = result
 
   const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
@@ -401,8 +443,11 @@ async function init() {
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template')
   const callbacks = []
-  const render = function render(templateName) {
-    const templateDir = path.resolve(templateRoot, templateName)
+  const render = function render(templateName: string) {
+    let templateDir = path.resolve(templateRoot, 'others-runtime', runtime, templateName)
+    if (!fs.existsSync(templateDir)) {
+      templateDir = path.resolve(templateRoot, templateName)
+    }
     renderTemplate(templateDir, root, callbacks)
   }
   // Render base template
@@ -449,7 +494,7 @@ async function init() {
       // All templates contain at least a `.node` and a `.app` tsconfig.
       references: [
         {
-          path: './tsconfig.node.json',
+          path: `./tsconfig.${runtime}.json`,
         },
         {
           path: './tsconfig.app.json',
