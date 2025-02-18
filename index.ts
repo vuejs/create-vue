@@ -102,8 +102,12 @@ Available feature flags:
     If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
   --eslint
     Add ESLint for code quality.
-  --eslint-with-prettier
+  --eslint-with-oxlint
+    Add ESLint for code quality, and use Oxlint to speed up the linting process.
+  --eslint-with-prettier (Deprecated in favor of ${cyan('--eslint --prettier')})
     Add Prettier for code formatting in addition to ESLint.
+  --prettier
+    Add Prettier for code formatting.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -115,20 +119,40 @@ async function init() {
   const cwd = process.cwd()
   const args = process.argv.slice(2)
 
-  // alias is not supported by parseArgs
-  const options = {
-    typescript: { type: 'boolean' },
-    ts: { type: 'boolean' },
-    'with-tests': { type: 'boolean' },
-    tests: { type: 'boolean' },
-    'vue-router': { type: 'boolean' },
-    router: { type: 'boolean' },
-  } as const
+  // // alias is not supported by parseArgs so we declare all the flags altogether
+  const flags = [
+    'default',
+    'typescript',
+    'ts',
+    'jsx',
+    'router',
+    'vue-router',
+    'pinia',
+    'vitest',
+    'cypress',
+    'playwright',
+    'nightwatch',
+    'eslint',
+    'eslint-with-oxlint',
+    'eslint-with-prettier',
+    'prettier',
+    'tests',
+    'with-tests',
+    'force',
+    'bare',
+    'help',
+    'version',
+  ] as const
+  type CLIOptions = {
+    [key in (typeof flags)[number]]: { readonly type: 'boolean' }
+  }
+  const options = Object.fromEntries(flags.map((key) => [key, { type: 'boolean' }])) as CLIOptions
 
   const { values: argv, positionals } = parseArgs({
     args,
     options,
-    strict: false,
+    strict: true,
+    allowPositionals: true,
   })
 
   if (argv.help) {
@@ -145,16 +169,21 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      (argv.ts || argv.typescript) ??
+      argv.ts ??
+      argv.typescript ??
       argv.jsx ??
-      (argv.router || argv['vue-router']) ??
+      argv.router ??
+      argv['vue-router'] ??
       argv.pinia ??
-      (argv.tests || argv['with-tests']) ??
+      argv.tests ??
+      argv['with-tests'] ??
       argv.vitest ??
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
       argv.eslint ??
+      argv.prettier ??
+      argv['eslint-with-oxlint'] ??
       argv['eslint-with-prettier']
     ) === 'boolean'
 
@@ -335,12 +364,7 @@ async function init() {
         },
         {
           name: 'needsPrettier',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsEslint) {
-              return null
-            }
-            return 'toggle'
-          },
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsPrettier.message,
           initial: false,
           active: language.defaultToggleOptions.active,
@@ -363,17 +387,21 @@ async function init() {
   const {
     projectName,
     packageName = projectName ?? defaultProjectName,
-    shouldOverwrite = argv.force,
-    needsJsx = argv.jsx,
+    shouldOverwrite = argv.force as boolean,
+    needsJsx = argv.jsx as boolean,
     needsTypeScript = (argv.ts || argv.typescript) as boolean,
     needsRouter = (argv.router || argv['vue-router']) as boolean,
-    needsPinia = argv.pinia,
-    needsVitest = argv.vitest || argv.tests,
-    needsPrettier = argv['eslint-with-prettier'],
+    needsPinia = argv.pinia as boolean,
+    needsVitest = (argv.vitest || argv.tests) as boolean,
+    needsPrettier = (argv.prettier || argv['eslint-with-prettier']) as boolean,
   } = result
 
-  const needsEslint = Boolean(argv.eslint || argv['eslint-with-prettier'] || result.needsEslint)
-  const needsOxlint = result.needsEslint === 'speedUpWithOxlint'
+  const needsEslint = Boolean(
+    argv.eslint || argv['eslint-with-oxlint'] || argv['eslint-with-prettier'] || result.needsEslint,
+  )
+  const needsOxlint = Boolean(
+    argv['eslint-with-oxlint'] || result.needsEslint === 'speedUpWithOxlint',
+  )
 
   const { needsE2eTesting } = result
   const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
