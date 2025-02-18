@@ -209,16 +209,12 @@ async function init() {
     features?: string[]
   } = {}
 
-  console.log()
-  console.log(
-    process.stdout.isTTY && process.stdout.getColorDepth() > 8
-      ? banners.gradientBanner
-      : banners.defaultBanner,
-  )
-  console.log()
-
   try {
-    intro()
+    intro(
+      process.stdout.isTTY && process.stdout.getColorDepth() > 8
+        ? banners.gradientBanner
+        : banners.defaultBanner,
+    )
 
     if (!targetDir) {
       const projectNameInput = await text({
@@ -671,19 +667,18 @@ async function init() {
     }),
   )
 
-  outro(`${language.infos.done}\n`)
+  let outroMessage = `${language.infos.done}\n\n`
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(
-      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`,
-    )
+    outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
+  outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
   if (needsPrettier) {
-    console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
+    outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
-  console.log()
+  outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}`
+
+  outro(outroMessage)
 }
 
 init().catch((e) => {
