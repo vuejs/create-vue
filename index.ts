@@ -4,9 +4,8 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 
 import { parseArgs } from 'node:util'
-
-import prompts from 'prompts'
-import { red, green, cyan, bold } from 'kleur/colors'
+import { intro, outro, text, confirm, multiselect, select, isCancel } from '@clack/prompts'
+import { red, green, cyan, bold, dim } from 'picocolors'
 
 import ejs from 'ejs'
 
@@ -207,6 +206,7 @@ async function init() {
     needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
     needsOxlint?: boolean
     needsPrettier?: boolean
+    features?: string[]
   } = {}
 
   console.log()
@@ -218,167 +218,148 @@ async function init() {
   console.log()
 
   try {
-    // Prompts:
-    // - Project name:
-    //   - whether to overwrite the existing directory or not?
-    //   - enter a valid package name for package.json
-    // - Project language: JavaScript / TypeScript
-    // - Add JSX Support?
-    // - Install Vue Router for SPA development?
-    // - Install Pinia for state management?
-    // - Add Cypress for testing?
-    // - Add Nightwatch for testing?
-    // - Add Playwright for end-to-end testing?
-    // - Add ESLint for code quality?
-    // - Add Prettier for code formatting?
-    result = await prompts(
-      [
-        {
-          name: 'projectName',
-          type: targetDir ? null : 'text',
-          message: language.projectName.message,
-          initial: defaultProjectName,
-          onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName),
-        },
-        {
-          name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'toggle'),
-          message: () => {
-            const dirForPrompt =
-              targetDir === '.'
-                ? language.shouldOverwrite.dirForPrompts.current
-                : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
+    intro()
 
-            return `${dirForPrompt} ${language.shouldOverwrite.message}`
-          },
-          initial: true,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'overwriteChecker',
-          type: (prev, values) => {
-            if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-            }
-            return null
-          },
-        },
-        {
-          name: 'packageName',
-          type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: language.packageName.message,
-          initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage,
-        },
-        {
-          name: 'needsTypeScript',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsTypeScript.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsJsx',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsJsx.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsRouter',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsRouter.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsPinia',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsPinia.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsVitest',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsVitest.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsE2eTesting',
-          type: () => (isFeatureFlagsUsed ? null : 'select'),
-          hint: language.needsE2eTesting.hint,
-          message: language.needsE2eTesting.message,
-          initial: 0,
-          choices: (prev, answers) => [
+    if (!targetDir) {
+      const projectNameInput = await text({
+        message: language.projectName.message,
+        placeholder: defaultProjectName,
+        validate: (value) => (value.length > 0 ? undefined : 'Should not be empty'),
+      })
+
+      if (isCancel(projectNameInput)) {
+        throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
+      }
+
+      targetDir = projectNameInput
+    }
+
+    if (!canSkipEmptying(targetDir) && !forceOverwrite) {
+      const shouldOverwriteInput = await confirm({
+        message: `${
+          targetDir === '.'
+            ? language.shouldOverwrite.dirForPrompts.current
+            : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
+        } ${language.shouldOverwrite.message}`,
+      })
+
+      if (isCancel(shouldOverwriteInput) || !shouldOverwriteInput) {
+        throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
+      }
+
+      result.shouldOverwrite = shouldOverwriteInput
+    }
+
+    if (!isValidPackageName(targetDir)) {
+      const packageNameInput = await text({
+        message: language.packageName.message,
+        initialValue: toValidPackageName(targetDir),
+        validate: (value) =>
+          isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
+      })
+
+      if (isCancel(packageNameInput)) {
+        throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
+      }
+
+      result.packageName = packageNameInput
+    }
+
+    if (!isFeatureFlagsUsed) {
+      const features = await multiselect({
+        message: `Select the features you want to enable: ${dim('(↑/↓ to navigate, space to select, a to select/unselect all, return to submit)')}`,
+        options: [
+          { value: 'typescript', label: language.needsTypeScript.message },
+          { value: 'jsx', label: language.needsJsx.message },
+          { value: 'router', label: language.needsRouter.message },
+          { value: 'pinia', label: language.needsPinia.message },
+          { value: 'vitest', label: language.needsVitest.message },
+          { value: 'e2e', label: language.needsE2eTesting.message },
+          { value: 'eslint', label: language.needsEslint.message },
+          { value: 'prettier', label: language.needsPrettier.message },
+        ],
+        required: false,
+      })
+
+      if (isCancel(features)) {
+        throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
+      }
+
+      result.features = features
+
+      if (features.includes('e2e')) {
+        const e2eTestingInput = await select({
+          message: `${language.needsE2eTesting.message}: ${dim('(↑/↓ to navigate, return to submit)')}`,
+          options: [
             {
-              title: language.needsE2eTesting.selectOptions.negative.title,
-              value: false,
-            },
-            {
-              title: language.needsE2eTesting.selectOptions.cypress.title,
-              description: answers.needsVitest
+              value: 'cypress',
+              label: language.needsE2eTesting.selectOptions.cypress.title,
+              hint: features.includes('vitest')
                 ? undefined
                 : language.needsE2eTesting.selectOptions.cypress.desc,
-              value: 'cypress',
             },
             {
-              title: language.needsE2eTesting.selectOptions.nightwatch.title,
-              description: answers.needsVitest
+              value: 'nightwatch',
+              label: language.needsE2eTesting.selectOptions.nightwatch.title,
+              hint: features.includes('vitest')
                 ? undefined
                 : language.needsE2eTesting.selectOptions.nightwatch.desc,
-              value: 'nightwatch',
             },
             {
-              title: language.needsE2eTesting.selectOptions.playwright.title,
               value: 'playwright',
+              label: language.needsE2eTesting.selectOptions.playwright.title,
             },
           ],
-        },
-        {
-          name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: language.needsEslint.message,
-          initial: 0,
-          choices: [
-            {
-              title: language.needsEslint.selectOptions.negative.title,
-              value: false,
-            },
-            {
-              title: language.needsEslint.selectOptions.eslintOnly.title,
-              value: 'eslintOnly',
-            },
-            {
-              title: language.needsEslint.selectOptions.speedUpWithOxlint.title,
-              value: 'speedUpWithOxlint',
-            },
-          ],
-        },
-        {
-          name: 'needsPrettier',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsPrettier.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-      ],
-      {
-        onCancel: () => {
+        })
+
+        if (isCancel(e2eTestingInput)) {
           throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-        },
-      },
-    )
+        }
+
+        result.needsE2eTesting = e2eTestingInput
+      }
+
+      if (features.includes('eslint')) {
+        const eslintInput = await select({
+          message: language.needsEslint.message,
+          options: [
+            {
+              value: 'eslintOnly',
+              label: language.needsEslint.selectOptions.eslintOnly.title,
+            },
+            {
+              value: 'speedUpWithOxlint',
+              label: language.needsEslint.selectOptions.speedUpWithOxlint.title,
+            },
+          ],
+        })
+
+        if (isCancel(eslintInput)) {
+          throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
+        }
+
+        result.needsEslint = eslintInput
+      }
+    }
+
+    // Convert multiselect results to individual flags
+    if (result.features) {
+      result.needsTypeScript = result.features.includes('typescript')
+      result.needsJsx = result.features.includes('jsx')
+      result.needsRouter = result.features.includes('router')
+      result.needsPinia = result.features.includes('pinia')
+      result.needsVitest = result.features.includes('vitest')
+      result.needsPrettier = result.features.includes('prettier')
+      // E2E and ESLint are handled by their respective follow-up prompts
+      if (!result.features.includes('e2e')) {
+        result.needsE2eTesting = false
+      }
+      if (!result.features.includes('eslint')) {
+        result.needsEslint = false
+      }
+    }
   } catch (cancelled) {
-    console.log(cancelled.message)
+    outro(cancelled.message)
     process.exit(1)
   }
 
@@ -690,7 +671,7 @@ async function init() {
     }),
   )
 
-  console.log(`\n${language.infos.done}\n`)
+  outro(`${language.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(

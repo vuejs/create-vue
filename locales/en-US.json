@@ -1,35 +1,35 @@
 {
   "projectName": {
-    "message": "Project name:"
+    "message": "Project name (target directory):"
   },
   "shouldOverwrite": {
     "dirForPrompts": {
       "current": "Current directory",
       "target": "Target directory"
     },
-    "message": "is not empty. Remove existing files and continue?"
+    "message": "is not empty. Remove existing files and continue"
   },
   "packageName": {
     "message": "Package name:",
     "invalidMessage": "Invalid package.json name"
   },
   "needsTypeScript": {
-    "message": "Add TypeScript?"
+    "message": "Add TypeScript"
   },
   "needsJsx": {
-    "message": "Add JSX Support?"
+    "message": "Add JSX Support"
   },
   "needsRouter": {
-    "message": "Add Vue Router for Single Page Application development?"
+    "message": "Add Vue Router for Single Page Application development"
   },
   "needsPinia": {
-    "message": "Add Pinia for state management?"
+    "message": "Add Pinia for state management"
   },
   "needsVitest": {
-    "message": "Add Vitest for Unit Testing?"
+    "message": "Add Vitest for Unit Testing"
   },
   "needsE2eTesting": {
-    "message": "Add an End-to-End Testing Solution?",
+    "message": "Add an End-to-End Testing Solution",
     "hint": "- Use arrow-keys. Return to submit.",
     "selectOptions": {
       "negative": { "title": "No" },
@@ -45,11 +45,11 @@
     }
   },
   "needsEslint": {
-    "message": "Add ESLint for code quality?",
+    "message": "Add ESLint for code quality",
     "selectOptions": {
       "negative": { "title": "No" },
       "eslintOnly": {
-        "title": "Yes"
+        "title": "Yes, just ESLint"
       },
       "speedUpWithOxlint": {
         "title": "Yes, and speed up with Oxlint (experimental)"
@@ -57,7 +57,7 @@
     }
   },
   "needsPrettier": {
-    "message": "Add Prettier for code formatting?"
+    "message": "Add Prettier for code formatting"
   },
   "errors": {
     "operationCancelled": "Operation cancelled"
