@@ -48,7 +48,7 @@ export default function createConfig({
       afterVuePlugin: [
         {
           importer: "import oxlint from 'eslint-plugin-oxlint'",
-          content: "oxlint.configs['flat/recommended'],",
+          content: "...oxlint.configs['flat/recommended'],",
         },
       ],
     })
