@@ -263,7 +263,7 @@ async function init() {
 
     if (!isFeatureFlagsUsed) {
       const features = await multiselect({
-        message: `Select the features you want to enable: ${dim('(↑/↓ to navigate, space to select, a to select/unselect all, return to submit)')}`,
+        message: `Select the features you want to enable: ${dim('(↑/↓ to navigate, space to select, a to select/deselect all, return to submit)')}`,
         options: [
           { value: 'typescript', label: language.needsTypeScript.message },
           { value: 'jsx', label: language.needsJsx.message },
