@@ -47,6 +47,7 @@ interface Language {
   infos: {
     scaffolding: string
     done: string
+    optionalGitCommand: string
   }
 }
 

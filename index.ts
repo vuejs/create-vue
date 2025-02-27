@@ -699,7 +699,7 @@ async function init() {
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
 
   outroMessage += `
-${dim('|')} Optional: Initialize Git in your project directory with:
+${dim('|')} ${language.infos.optionalGitCommand}
    
    ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
 
