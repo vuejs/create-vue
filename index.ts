@@ -263,16 +263,44 @@ async function init() {
 
     if (!isFeatureFlagsUsed) {
       const features = await multiselect({
-        message: `Select the features you want to enable: ${dim('(↑/↓ to navigate, space to select, a to select/deselect all, return to submit)')}`,
+        message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
         options: [
-          { value: 'typescript', label: language.needsTypeScript.message },
-          { value: 'jsx', label: language.needsJsx.message },
-          { value: 'router', label: language.needsRouter.message },
-          { value: 'pinia', label: language.needsPinia.message },
-          { value: 'vitest', label: language.needsVitest.message },
-          { value: 'e2e', label: language.needsE2eTesting.message },
-          { value: 'eslint', label: language.needsEslint.message },
-          { value: 'prettier', label: language.needsPrettier.message },
+          {
+            value: 'typescript',
+            label: language.needsTypeScript.message,
+            hint: language.needsTypeScript.hint,
+          },
+          { value: 'jsx', label: language.needsJsx.message, hint: language.needsJsx.hint },
+          {
+            value: 'router',
+            label: language.needsRouter.message,
+            hint: language.needsRouter.hint,
+          },
+          {
+            value: 'pinia',
+            label: language.needsPinia.message,
+            hint: language.needsPinia.hint,
+          },
+          {
+            value: 'vitest',
+            label: language.needsVitest.message,
+            hint: language.needsVitest.hint,
+          },
+          {
+            value: 'e2e',
+            label: language.needsE2eTesting.message,
+            hint: language.needsE2eTesting.hint,
+          },
+          {
+            value: 'eslint',
+            label: language.needsEslint.message,
+            hint: language.needsEslint.hint,
+          },
+          {
+            value: 'prettier',
+            label: language.needsPrettier.message,
+            hint: language.needsPrettier.hint,
+          },
         ],
         required: false,
       })
@@ -285,25 +313,26 @@ async function init() {
 
       if (features.includes('e2e')) {
         const e2eTestingInput = await select({
-          message: `${language.needsE2eTesting.message}: ${dim('(↑/↓ to navigate, return to submit)')}`,
+          message: `${language.e2eSelection.message} ${dim(language.e2eSelection.hint)}`,
           options: [
             {
+              value: 'playwright',
+              label: language.e2eSelection.selectOptions.playwright.title,
+              hint: language.e2eSelection.selectOptions.playwright.desc,
+            },
+            {
               value: 'cypress',
-              label: language.needsE2eTesting.selectOptions.cypress.title,
+              label: language.e2eSelection.selectOptions.cypress.title,
               hint: features.includes('vitest')
-                ? undefined
-                : language.needsE2eTesting.selectOptions.cypress.desc,
+                ? language.e2eSelection.selectOptions.cypress.desc
+                : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
             },
             {
               value: 'nightwatch',
-              label: language.needsE2eTesting.selectOptions.nightwatch.title,
+              label: language.e2eSelection.selectOptions.nightwatch.title,
               hint: features.includes('vitest')
-                ? undefined
-                : language.needsE2eTesting.selectOptions.nightwatch.desc,
-            },
-            {
-              value: 'playwright',
-              label: language.needsE2eTesting.selectOptions.playwright.title,
+                ? language.e2eSelection.selectOptions.nightwatch.desc
+                : language.e2eSelection.selectOptions.nightwatch.hintOnComponentTesting!,
             },
           ],
         })
@@ -316,25 +345,16 @@ async function init() {
       }
 
       if (features.includes('eslint')) {
-        const eslintInput = await select({
-          message: language.needsEslint.message,
-          options: [
-            {
-              value: 'eslintOnly',
-              label: language.needsEslint.selectOptions.eslintOnly.title,
-            },
-            {
-              value: 'speedUpWithOxlint',
-              label: language.needsEslint.selectOptions.speedUpWithOxlint.title,
-            },
-          ],
+        const oxlintInput = await confirm({
+          message: language.needsOxlint.message,
+          initialValue: false,
         })
 
-        if (isCancel(eslintInput)) {
+        if (isCancel(oxlintInput)) {
           throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
         }
 
-        result.needsEslint = eslintInput
+        result.needsOxlint = oxlintInput
       }
     }
 
@@ -676,7 +696,12 @@ async function init() {
   if (needsPrettier) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
-  outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}`
+  outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
+
+  outroMessage += `
+${dim('|')} Optional: Initialize Git in your project directory with:
+   
+   ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
 
   outro(outroMessage)
 }
