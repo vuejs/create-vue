@@ -136,21 +136,6 @@ await esbuild.build({
 
   plugins: [
     {
-      name: 'alias',
-      setup({ onResolve, resolve }) {
-        onResolve({ filter: /^prompts$/, namespace: 'file' }, async ({ importer, resolveDir }) => {
-          // we can always use non-transpiled code since we support 14.16.0+
-          const result = await resolve('prompts/lib/index.js', {
-            importer,
-            resolveDir,
-            kind: 'import-statement',
-          })
-          return result
-        })
-      },
-    },
-
-    {
       name: '@vue/create-eslint-config fix',
       setup(build) {
         // The renderEjsFile.js module uses file system APIs therefore after bundling it will not work.
