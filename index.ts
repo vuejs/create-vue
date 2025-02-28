@@ -222,7 +222,7 @@ async function init() {
   const isFeatureFlagsUsed = FEATURE_FLAGS.some((flag) => typeof argv[flag] === 'boolean')
 
   let targetDir = positionals[0]
-  const defaultProjectName = !targetDir ? 'vue-project' : targetDir
+  const defaultProjectName = targetDir || 'vue-project'
 
   const forceOverwrite = argv.force
 
@@ -249,7 +249,7 @@ async function init() {
           text({
             message: language.projectName.message,
             placeholder: defaultProjectName,
-            validate: (value) => (value.length > 0 ? undefined : 'Should not be empty'),
+            validate: (value) => (value.trim().length > 0 ? undefined : 'Should not be empty'),
           }),
         )
   }
