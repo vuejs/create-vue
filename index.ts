@@ -657,4 +657,5 @@ ${dim('|')} ${language.infos.optionalGitCommand}
 
 init().catch((e) => {
   console.error(e)
+  process.exit(1)
 })
