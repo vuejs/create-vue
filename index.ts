@@ -386,7 +386,7 @@ async function init() {
   // so we still have to assign the default values here
   const {
     projectName,
-    packageName = projectName.trim() || defaultProjectName,
+    packageName = projectName?.trim() || defaultProjectName,
     shouldOverwrite = argv.force as boolean,
     needsJsx = argv.jsx as boolean,
     needsTypeScript = (argv.ts || argv.typescript) as boolean,
@@ -707,4 +707,5 @@ async function init() {
 
 init().catch((e) => {
   console.error(e)
+  process.exit(1)
 })
