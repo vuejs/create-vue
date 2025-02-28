@@ -21,6 +21,72 @@ import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/tri
 
 import cliPackageJson from './package.json'
 
+const language = getLanguage()
+
+const FEATURE_FLAGS = [
+  'default',
+  'ts',
+  'typescript',
+  'jsx',
+  'router',
+  'vue-router',
+  'pinia',
+  'tests',
+  'with-tests',
+  'vitest',
+  'cypress',
+  'nightwatch',
+  'playwright',
+  'eslint',
+  'prettier',
+  'eslint-with-oxlint',
+  'eslint-with-prettier',
+] as const
+
+const FEATURE_OPTIONS = [
+  {
+    value: 'typescript',
+    label: language.needsTypeScript.message,
+  },
+  {
+    value: 'jsx',
+    label: language.needsJsx.message,
+  },
+  {
+    value: 'router',
+    label: language.needsRouter.message,
+  },
+  {
+    value: 'pinia',
+    label: language.needsPinia.message,
+  },
+  {
+    value: 'vitest',
+    label: language.needsVitest.message,
+  },
+  {
+    value: 'e2e',
+    label: language.needsE2eTesting.message,
+  },
+  {
+    value: 'eslint',
+    label: language.needsEslint.message,
+  },
+  {
+    value: 'prettier',
+    label: language.needsPrettier.message,
+  },
+] as const
+
+type PromptResult = {
+  projectName?: string
+  shouldOverwrite?: boolean
+  packageName?: string
+  features?: (typeof FEATURE_OPTIONS)[number]['value'][]
+  e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
+  experimentOxlint?: boolean
+}
+
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
 }
@@ -60,6 +126,16 @@ function emptyDir(dir) {
     (dir) => fs.rmdirSync(dir),
     (file) => fs.unlinkSync(file),
   )
+}
+
+async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | symbol>): Promise<T> {
+  const result = await maybeCancelPromise
+
+  if (isCancel(result)) {
+    cancel(red('✖') + ` ${language.errors.operationCancelled}`)
+    process.exit(0)
+  }
+  return result
 }
 
 const helpMessage = `\
@@ -119,29 +195,7 @@ async function init() {
   const args = process.argv.slice(2)
 
   // // alias is not supported by parseArgs so we declare all the flags altogether
-  const flags = [
-    'default',
-    'typescript',
-    'ts',
-    'jsx',
-    'router',
-    'vue-router',
-    'pinia',
-    'vitest',
-    'cypress',
-    'playwright',
-    'nightwatch',
-    'eslint',
-    'eslint-with-oxlint',
-    'eslint-with-prettier',
-    'prettier',
-    'tests',
-    'with-tests',
-    'force',
-    'bare',
-    'help',
-    'version',
-  ] as const
+  const flags = [...FEATURE_FLAGS, 'force', 'bare', 'help', 'version'] as const
   type CLIOptions = {
     [key in (typeof flags)[number]]: { readonly type: 'boolean' }
   }
@@ -165,234 +219,146 @@ async function init() {
   }
 
   // if any of the feature flags is set, we would skip the feature prompts
-  const isFeatureFlagsUsed =
-    typeof (
-      argv.default ??
-      argv.ts ??
-      argv.typescript ??
-      argv.jsx ??
-      argv.router ??
-      argv['vue-router'] ??
-      argv.pinia ??
-      argv.tests ??
-      argv['with-tests'] ??
-      argv.vitest ??
-      argv.cypress ??
-      argv.nightwatch ??
-      argv.playwright ??
-      argv.eslint ??
-      argv.prettier ??
-      argv['eslint-with-oxlint'] ??
-      argv['eslint-with-prettier']
-    ) === 'boolean'
+  const isFeatureFlagsUsed = FEATURE_FLAGS.some((flag) => typeof argv[flag] === 'boolean')
 
   let targetDir = positionals[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
 
-  const language = getLanguage()
-  async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | symbol>): Promise<T> {
-    const result = await maybeCancelPromise
+  const result: PromptResult = {
+    projectName: defaultProjectName,
+    shouldOverwrite: forceOverwrite,
+    packageName: defaultProjectName,
+    features: [],
+    e2eFramework: undefined,
+    experimentOxlint: false,
+  }
 
-    if (isCancel(result)) {
+  intro(
+    process.stdout.isTTY && process.stdout.getColorDepth() > 8
+      ? banners.gradientBanner
+      : banners.defaultBanner,
+  )
+
+  if (!targetDir) {
+    targetDir =
+      result.projectName =
+      result.packageName =
+        await unwrapPrompt(
+          text({
+            message: language.projectName.message,
+            placeholder: defaultProjectName,
+            validate: (value) => (value.length > 0 ? undefined : 'Should not be empty'),
+          }),
+        )
+  }
+
+  if (!canSkipEmptying(targetDir) && !forceOverwrite) {
+    result.shouldOverwrite = await unwrapPrompt(
+      confirm({
+        message: `${
+          targetDir === '.'
+            ? language.shouldOverwrite.dirForPrompts.current
+            : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
+        } ${language.shouldOverwrite.message}`,
+        initialValue: false,
+      }),
+    )
+
+    if (!result.shouldOverwrite) {
       cancel(red('✖') + ` ${language.errors.operationCancelled}`)
       process.exit(0)
     }
-    return result
   }
 
-  let result: {
-    projectName?: string
-    shouldOverwrite?: boolean
-    packageName?: string
-    needsTypeScript?: boolean
-    needsJsx?: boolean
-    needsRouter?: boolean
-    needsPinia?: boolean
-    needsVitest?: boolean
-    needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
-    needsEslint?: boolean
-    needsOxlint?: boolean
-    needsPrettier?: boolean
-    features?: string[]
-  } = {}
+  if (!isValidPackageName(targetDir)) {
+    result.packageName = await unwrapPrompt(
+      text({
+        message: language.packageName.message,
+        initialValue: toValidPackageName(targetDir),
+        validate: (value) =>
+          isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
+      }),
+    )
+  }
 
-  try {
-    intro(
-      process.stdout.isTTY && process.stdout.getColorDepth() > 8
-        ? banners.gradientBanner
-        : banners.defaultBanner,
+  if (!isFeatureFlagsUsed) {
+    result.features = await unwrapPrompt(
+      multiselect({
+        message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
+        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
+        options: FEATURE_OPTIONS,
+        required: false,
+      }),
     )
 
-    if (!targetDir) {
-      targetDir = await unwrapPrompt(
-        text({
-          message: language.projectName.message,
-          placeholder: defaultProjectName,
-          validate: (value) => (value.length > 0 ? undefined : 'Should not be empty'),
+    if (result.features.includes('e2e')) {
+      const hasVitest = result.features.includes('vitest')
+      result.e2eFramework = await unwrapPrompt(
+        select({
+          message: `${language.e2eSelection.message} ${dim(language.e2eSelection.hint)}`,
+          options: [
+            {
+              value: 'playwright',
+              label: language.e2eSelection.selectOptions.playwright.title,
+              hint: language.e2eSelection.selectOptions.playwright.desc,
+            },
+            {
+              value: 'cypress',
+              label: language.e2eSelection.selectOptions.cypress.title,
+              hint: hasVitest
+                ? language.e2eSelection.selectOptions.cypress.desc
+                : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
+            },
+            {
+              value: 'nightwatch',
+              label: language.e2eSelection.selectOptions.nightwatch.title,
+              hint: hasVitest
+                ? language.e2eSelection.selectOptions.nightwatch.desc
+                : language.e2eSelection.selectOptions.nightwatch.hintOnComponentTesting!,
+            },
+          ],
         }),
       )
     }
 
-    if (!canSkipEmptying(targetDir) && !forceOverwrite) {
-      result.shouldOverwrite = await unwrapPrompt(
+    if (result.features.includes('eslint')) {
+      result.experimentOxlint = await unwrapPrompt(
         confirm({
-          message: `${
-            targetDir === '.'
-              ? language.shouldOverwrite.dirForPrompts.current
-              : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
-          } ${language.shouldOverwrite.message}`,
+          message: language.needsOxlint.message,
           initialValue: false,
         }),
       )
-
-      if (!result.shouldOverwrite) {
-        throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-      }
     }
-
-    if (!isValidPackageName(targetDir)) {
-      result.packageName = await unwrapPrompt(
-        text({
-          message: language.packageName.message,
-          initialValue: toValidPackageName(targetDir),
-          validate: (value) =>
-            isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
-        }),
-      )
-    }
-
-    if (!isFeatureFlagsUsed) {
-      const features = await unwrapPrompt(
-        multiselect({
-          message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
-          options: [
-            {
-              value: 'typescript',
-              label: language.needsTypeScript.message,
-            },
-            { value: 'jsx', label: language.needsJsx.message },
-            {
-              value: 'router',
-              label: language.needsRouter.message,
-            },
-            {
-              value: 'pinia',
-              label: language.needsPinia.message,
-            },
-            {
-              value: 'vitest',
-              label: language.needsVitest.message,
-            },
-            {
-              value: 'e2e',
-              label: language.needsE2eTesting.message,
-            },
-            {
-              value: 'eslint',
-              label: language.needsEslint.message,
-            },
-            {
-              value: 'prettier',
-              label: language.needsPrettier.message,
-            },
-          ],
-          required: false,
-        }),
-      )
-
-      result.features = features
-
-      if (features.includes('e2e')) {
-        result.needsE2eTesting = await unwrapPrompt(
-          select({
-            message: `${language.e2eSelection.message} ${dim(language.e2eSelection.hint)}`,
-            options: [
-              {
-                value: 'playwright',
-                label: language.e2eSelection.selectOptions.playwright.title,
-                hint: language.e2eSelection.selectOptions.playwright.desc,
-              },
-              {
-                value: 'cypress',
-                label: language.e2eSelection.selectOptions.cypress.title,
-                hint: features.includes('vitest')
-                  ? language.e2eSelection.selectOptions.cypress.desc
-                  : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
-              },
-              {
-                value: 'nightwatch',
-                label: language.e2eSelection.selectOptions.nightwatch.title,
-                hint: features.includes('vitest')
-                  ? language.e2eSelection.selectOptions.nightwatch.desc
-                  : language.e2eSelection.selectOptions.nightwatch.hintOnComponentTesting!,
-              },
-            ],
-          }),
-        )
-      }
-
-      if (features.includes('eslint')) {
-        result.needsOxlint = await unwrapPrompt(
-          confirm({
-            message: language.needsOxlint.message,
-            initialValue: false,
-          }),
-        )
-      }
-    }
-
-    // Convert multiselect results to individual flags
-    if (result.features) {
-      result.needsTypeScript = result.features.includes('typescript')
-      result.needsJsx = result.features.includes('jsx')
-      result.needsRouter = result.features.includes('router')
-      result.needsPinia = result.features.includes('pinia')
-      result.needsVitest = result.features.includes('vitest')
-      result.needsPrettier = result.features.includes('prettier')
-      // E2E and ESLint are handled by their respective follow-up prompts
-      if (!result.features.includes('e2e')) {
-        result.needsE2eTesting = false
-      }
-      if (!result.features.includes('eslint')) {
-        result.needsEslint = false
-      }
-    }
-  } catch (cancelled) {
-    outro(cancelled.message)
-    process.exit(1)
   }
 
-  // `initial` won't take effect if the prompt type is null
-  // so we still have to assign the default values here
-  const {
-    projectName,
-    packageName = projectName ?? defaultProjectName,
-    shouldOverwrite = argv.force as boolean,
-    needsJsx = argv.jsx as boolean,
-    needsTypeScript = (argv.ts || argv.typescript) as boolean,
-    needsRouter = (argv.router || argv['vue-router']) as boolean,
-    needsPinia = argv.pinia as boolean,
-    needsVitest = (argv.vitest || argv.tests) as boolean,
-    needsPrettier = (argv.prettier || argv['eslint-with-prettier']) as boolean,
-  } = result
+  const { features } = result
 
-  const needsEslint = Boolean(
-    argv.eslint || argv['eslint-with-oxlint'] || argv['eslint-with-prettier'] || result.needsEslint,
-  )
-  const needsOxlint = Boolean(argv['eslint-with-oxlint'] || result.needsOxlint)
+  const needsTypeScript = argv.ts || argv.typescript || features.includes('typescript')
+  const needsJsx = argv.jsx || features.includes('jsx')
+  const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
+  const needsPinia = argv.pinia || features.includes('pinia')
+  const needsVitest = argv.vitest || argv.tests || features.includes('vitest')
+  const needsEslint =
+    argv.eslint ||
+    argv['eslint-with-oxlint'] ||
+    argv['eslint-with-prettier'] ||
+    features.includes('eslint')
+  const needsPrettier =
+    argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  const needsOxlint = argv['eslint-with-oxlint'] || result.experimentOxlint
 
-  const { needsE2eTesting } = result
-  const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
+  const { e2eFramework } = result
+  const needsCypress = argv.cypress || argv.tests || e2eFramework === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
-  const needsNightwatch = argv.nightwatch || needsE2eTesting === 'nightwatch'
+  const needsNightwatch = argv.nightwatch || e2eFramework === 'nightwatch'
   const needsNightwatchCT = needsNightwatch && !needsVitest
-  const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
+  const needsPlaywright = argv.playwright || e2eFramework === 'playwright'
 
   const root = path.join(cwd, targetDir)
 
-  if (fs.existsSync(root) && shouldOverwrite) {
+  if (fs.existsSync(root) && result.shouldOverwrite) {
     emptyDir(root)
   } else if (!fs.existsSync(root)) {
     fs.mkdirSync(root)
@@ -400,7 +366,7 @@ async function init() {
 
   console.log(`\n${language.infos.scaffolding} ${root}...`)
 
-  const pkg = { name: packageName, version: '0.0.0' }
+  const pkg = { name: result.packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
 
   // todo:
