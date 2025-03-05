@@ -249,7 +249,8 @@ async function init() {
           text({
             message: language.projectName.message,
             placeholder: defaultProjectName,
-            validate: (value) => (value.trim().length > 0 ? undefined : 'Should not be empty'),
+            validate: (value) =>
+              value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
           }),
         )
   }
