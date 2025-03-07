@@ -34,7 +34,7 @@ export default function createConfig({
   } else {
     fileExtensions.unshift('js', 'mjs', 'jsx')
     additionalConfigs.unshift({
-      devDependencies: pickDependencies(['@eslint/js']),
+      devDependencies: pickDependencies(['@eslint/js', 'globals']),
     })
   }
 
