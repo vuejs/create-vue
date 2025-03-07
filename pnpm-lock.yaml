@@ -39,6 +39,9 @@ importers:
       eslint-plugin-vue:
         specifier: ~10.0.0
         version: 10.0.0(eslint@9.21.0(jiti@2.4.2))(vue-eslint-parser@10.1.1(eslint@9.21.0(jiti@2.4.2)))
+      globals:
+        specifier: ^16.0.0
+        version: 16.0.0
       jiti:
         specifier: ^2.4.2
         version: 2.4.2
@@ -475,6 +478,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@16.0.0:
+    resolution: {integrity: sha512-iInW14XItCXET01CQFqudPOWP2jYMl7T+QRQT+UNcR/iQncN/F0UNpgd76iFkBPgNQb4+X3LV9tLJYzwh+Gl3A==}
     engines: {node: '>=18'}
 
   graphemer@1.4.0:
@@ -1219,6 +1226,8 @@ snapshots:
       is-glob: 4.0.3
 
   globals@14.0.0: {}
+
+  globals@16.0.0: {}
 
   graphemer@1.4.0: {}
 
