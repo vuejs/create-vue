@@ -22,6 +22,7 @@ interface Language {
   projectName: LanguageItem
   shouldOverwrite: LanguageItem
   packageName: LanguageItem
+  featureSelection: LanguageItem
   needsTypeScript: LanguageItem
   needsJsx: LanguageItem
   needsRouter: LanguageItem
@@ -30,6 +31,12 @@ interface Language {
   needsE2eTesting: LanguageItem
   needsEslint: LanguageItem
   needsPrettier: LanguageItem
+  e2eSelection: LanguageItem & {
+    selectOptions?: {
+      [key: string]: { title: string; desc?: string; hintOnComponentTesting?: string }
+    }
+  }
+  needsOxlint: LanguageItem
   errors: {
     operationCancelled: string
   }
@@ -40,6 +47,7 @@ interface Language {
   infos: {
     scaffolding: string
     done: string
+    optionalGitCommand: string
   }
 }
 

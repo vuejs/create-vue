@@ -1,6 +1,7 @@
 {
   "projectName": {
-    "message": "Nom du projet\u00a0:"
+    "message": "Nom du projet\u00a0:",
+    "invalidMessage": "Ne doit pas être vide"
   },
   "shouldOverwrite": {
     "dirForPrompts": {
@@ -13,51 +14,53 @@
     "message": "Nom du package\u00a0:",
     "invalidMessage": "Le nom du package.json est invalide"
   },
+  "featureSelection": {
+    "message": "Sélectionnez les fonctionnalités à inclure dans votre projet\u00a0:",
+    "hint": "(↑/↓ pour naviguer, espace pour sélectionner, a pour tout sélectionner, entrée pour confirmer)"
+  },
   "needsTypeScript": {
-    "message": "Ajouter TypeScript\u00a0?"
+    "message": "TypeScript"
   },
   "needsJsx": {
-    "message": "Ajouter le support de JSX\u00a0?"
+    "message": "Support de JSX"
   },
   "needsRouter": {
-    "message": "Ajouter Vue Router pour le développement d'applications _single page_\u00a0?"
+    "message": "Router (développement SPA)"
   },
   "needsPinia": {
-    "message": "Ajouter Pinia pour la gestion de l'état\u00a0?"
+    "message": "Pinia (gestion de l'état)"
   },
   "needsVitest": {
-    "message": "Ajouter Vitest pour les tests unitaires\u00a0?"
+    "message": "Vitest (tests unitaires)"
   },
   "needsE2eTesting": {
-    "message": "Ajouter une solution de test de bout en bout (e2e)\u00a0?",
-    "hint": "- Utilisez les flèches et appuyez sur la touche Entrée pour valider",
+    "message": "Tests de bout en bout"
+  },
+  "needsEslint": {
+    "message": "ESLint (prévention des erreurs)"
+  },
+  "needsPrettier": {
+    "message": "Prettier (formatage du code)"
+  },
+  "e2eSelection": {
+    "message": "Sélectionnez un framework de test de bout en bout\u00a0:",
+    "hint": "(↑/↓ pour naviguer, entrée pour confirmer)",
     "selectOptions": {
-      "negative": { "title": "Non" },
+      "playwright": { "title": "Playwright", "desc": "https://playwright.dev/" },
       "cypress": {
         "title": "Cypress",
-        "desc": "prend également en charge les tests unitaires avec Cypress Component Testing"
+        "desc": "https://www.cypress.io/",
+        "hintOnComponentTesting": "prend également en charge les tests unitaires avec Cypress Component Testing - https://www.cypress.io/"
       },
       "nightwatch": {
         "title": "Nightwatch",
-        "desc": "prend également en charge les tests unitaires avec Nightwatch Component Testing"
-      },
-      "playwright": { "title": "Playwright" }
-    }
-  },
-  "needsEslint": {
-    "message": "Ajouter ESLint pour la qualité du code\u00a0?",
-    "selectOptions": {
-      "negative": { "title": "Non" },
-      "eslintOnly": {
-        "title": "Oui"
-      },
-      "speedUpWithOxlint": {
-        "title": "Oui, et accélérer avec Oxlint (expérimental)"
+        "desc": "https://nightwatchjs.org/",
+        "hintOnComponentTesting": "prend également en charge les tests unitaires avec Nightwatch Component Testing - https://nightwatchjs.org/"
       }
     }
   },
-  "needsPrettier": {
-    "message": "Ajouter Prettier pour le formatage du code\u00a0?"
+  "needsOxlint": {
+    "message": "Installer Oxlint pour un linting plus rapide\u00a0? (expérimental)"
   },
   "errors": {
     "operationCancelled": "Operation annulée"
@@ -68,6 +71,7 @@
   },
   "infos": {
     "scaffolding": "Génération du projet dans",
-    "done": "Terminé. Exécutez maintenant\u00a0:"
+    "done": "Terminé. Exécutez maintenant\u00a0:",
+    "optionalGitCommand": "Optionnel\u00a0: Initialisez Git dans votre répertoire de projet avec\u00a0:"
   }
 }

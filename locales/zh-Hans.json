@@ -1,6 +1,7 @@
 {
   "projectName": {
-    "message": "请输入项目名称："
+    "message": "请输入项目名称：",
+    "invalidMessage": "不能为空"
   },
   "shouldOverwrite": {
     "dirForPrompts": {
@@ -13,51 +14,53 @@
     "message": "请输入包名称：",
     "invalidMessage": "无效的 package.json 名称"
   },
+  "featureSelection": {
+    "message": "请选择要包含的功能：",
+    "hint": "(↑/↓ 切换，空格选择，a 全选，回车确认)"
+  },
   "needsTypeScript": {
-    "message": "是否使用 TypeScript 语法？"
+    "message": "TypeScript"
   },
   "needsJsx": {
-    "message": "是否启用 JSX 支持？"
+    "message": "JSX 支持"
   },
   "needsRouter": {
-    "message": "是否引入 Vue Router 进行单页面应用开发？"
+    "message": "Router（单页面应用开发）"
   },
   "needsPinia": {
-    "message": "是否引入 Pinia 用于状态管理？"
+    "message": "Pinia（状态管理）"
   },
   "needsVitest": {
-    "message": "是否引入 Vitest 用于单元测试？"
+    "message": "Vitest（单元测试）"
   },
   "needsE2eTesting": {
-    "message": "是否要引入一款端到端（End to End）测试工具？",
-    "hint": "- 使用箭头切换按Enter确认。",
+    "message": "端到端测试"
+  },
+  "needsEslint": {
+    "message": "ESLint（错误预防）"
+  },
+  "needsPrettier": {
+    "message": "Prettier（代码格式化）"
+  },
+  "e2eSelection": {
+    "message": "选择一个端到端测试框架：",
+    "hint": "(↑/↓ 切换，回车确认)",
     "selectOptions": {
-      "negative": { "title": "不需要" },
+      "playwright": { "title": "Playwright", "desc": "https://playwright.dev/" },
       "cypress": {
         "title": "Cypress",
-        "desc": "同时支持基于 Cypress Component Testing 的单元测试"
+        "desc": "https://www.cypress.io/",
+        "hintOnComponentTesting": "同时支持基于 Cypress Component Testing 的单元测试 - https://www.cypress.io/"
       },
       "nightwatch": {
         "title": "Nightwatch",
-        "desc": "同时支持基于 Nightwatch Component Testing 的单元测试"
-      },
-      "playwright": { "title": "Playwright" }
-    }
-  },
-  "needsEslint": {
-    "message": "是否引入 ESLint 用于代码质量检测？",
-    "selectOptions": {
-      "negative": { "title": "否" },
-      "eslintOnly": {
-        "title": "是"
-      },
-      "speedUpWithOxlint": {
-        "title": "是，并同时引入 Oxlint 以加快检测（试验阶段）"
+        "desc": "https://nightwatchjs.org/",
+        "hintOnComponentTesting": "同时支持基于 Nightwatch Component Testing 的单元测试 - https://nightwatchjs.org/"
       }
     }
   },
-  "needsPrettier": {
-    "message": "是否引入 Prettier 用于代码格式化？"
+  "needsOxlint": {
+    "message": "是否引入 Oxlint 以加快检测？（试验阶段）"
   },
   "errors": {
     "operationCancelled": "操作取消"
@@ -68,6 +71,7 @@
   },
   "infos": {
     "scaffolding": "正在初始化项目",
-    "done": "项目初始化完成，可执行以下命令："
+    "done": "项目初始化完成，可执行以下命令：",
+    "optionalGitCommand": "可选：使用以下命令在项目目录中初始化 Git："
   }
 }

@@ -1,6 +1,7 @@
 {
   "projectName": {
-    "message": "Proje adı:"
+    "message": "Proje adı:",
+    "invalidMessage": "Boş bırakılamaz"
   },
   "shouldOverwrite": {
     "dirForPrompts": {
@@ -13,51 +14,53 @@
     "message": "Paket adı:",
     "invalidMessage": "Geçersiz package.json adı"
   },
+  "featureSelection": {
+    "message": "Projenize eklenecek özellikleri seçin:",
+    "hint": "(↑/↓ gezinmek için, boşluk seçmek için, a tümünü seçmek için, enter onaylamak için)"
+  },
   "needsTypeScript": {
-    "message": "TypeScript Eklensin mi?"
+    "message": "TypeScript"
   },
   "needsJsx": {
-    "message": "JSX Desteği Eklensin mi?"
+    "message": "JSX Desteği"
   },
   "needsRouter": {
-    "message": "Tek Sayfa Uygulama geliştirilmesi için Vue Router eklensin mi?"
+    "message": "Router (SPA geliştirme)"
   },
   "needsPinia": {
-    "message": "Durum yönetimi için Pinia eklensin mi?"
+    "message": "Pinia (durum yönetimi)"
   },
   "needsVitest": {
-    "message": "Birim Testi için Vitest eklensin mi?"
+    "message": "Vitest (birim testi)"
   },
   "needsE2eTesting": {
-    "message": "Uçtan Uca Test Çözümü Eklensin mi?",
-    "hint": "- Ok tuşlarını kullan. Gönderime geri dön.",
+    "message": "Uçtan Uca Test"
+  },
+  "needsEslint": {
+    "message": "ESLint (hata önleme)"
+  },
+  "needsPrettier": {
+    "message": "Prettier (kod formatlama)"
+  },
+  "e2eSelection": {
+    "message": "Bir Uçtan Uca test çerçevesi seçin:",
+    "hint": "(↑/↓ gezinmek için, enter onaylamak için)",
     "selectOptions": {
-      "negative": { "title": "Hayır" },
+      "playwright": { "title": "Playwright", "desc": "https://playwright.dev/" },
       "cypress": {
         "title": "Cypress",
-        "desc": "ayrıca Cypress Bileşen Testi ile birim testini de destekler"
+        "desc": "https://www.cypress.io/",
+        "hintOnComponentTesting": "ayrıca Cypress Bileşen Testi ile birim testini de destekler - https://www.cypress.io/"
       },
       "nightwatch": {
         "title": "Nightwatch",
-        "desc": "ayrıca Nightwatch Bileşen Testi ile birim testini de destekler"
-      },
-      "playwright": { "title": "Playwright" }
-    }
-  },
-  "needsEslint": {
-    "message": "Kod kalitesi için ESLint eklensin mi?",
-    "selectOptions": {
-      "negative": { "title": "Hayır" },
-      "eslintOnly": {
-        "title": "Evet"
-      },
-      "speedUpWithOxlint": {
-        "title": "Evet ve Oxlint ile hızlanın (deneysel)"
+        "desc": "https://nightwatchjs.org/",
+        "hintOnComponentTesting": "ayrıca Nightwatch Bileşen Testi ile birim testini de destekler - https://nightwatchjs.org/"
       }
     }
   },
-  "needsPrettier": {
-    "message": "Kod formatlama için Prettier eklensin mi?"
+  "needsOxlint": {
+    "message": "Daha hızlı linting için Oxlint eklensin mi? (deneysel)"
   },
   "errors": {
     "operationCancelled": "İşlem iptal edildi"
@@ -68,6 +71,7 @@
   },
   "infos": {
     "scaffolding": "İskele projesi",
-    "done": "Tamamlandı. Şimdi bunu çalıştır:"
+    "done": "Tamamlandı. Şimdi bunu çalıştır:",
+    "optionalGitCommand": "İsteğe bağlı: Proje dizininizde Git'i şununla başlatın:"
   }
 }
