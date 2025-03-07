@@ -19,9 +19,11 @@ export default [
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
-  languageOptions: {
-    globals: {
-      ...globals.browser,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
     },
   },
 
