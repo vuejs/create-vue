@@ -3,7 +3,7 @@
 The recommended way to start a Vite-powered Vue project
 
 <p align="center">
-  <img width="898" alt="Screenshot from terminal" src="https://github.com/vuejs/create-vue/blob/main/media/screenshot-cli.png?raw=true">
+  <img width="898" alt="Screencast from terminal" src="https://github.com/vuejs/create-vue/blob/main/media/screencast-cli.gif?raw=true">
 </p>
 
 ## Usage
