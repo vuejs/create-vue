@@ -242,17 +242,15 @@ async function init() {
   )
 
   if (!targetDir) {
-    targetDir =
-      result.projectName =
-      result.packageName =
-        await unwrapPrompt(
-          text({
-            message: language.projectName.message,
-            placeholder: defaultProjectName,
-            validate: (value) =>
-              value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
-          }),
-        )
+    const _result = await unwrapPrompt(
+      text({
+        message: language.projectName.message,
+        placeholder: defaultProjectName,
+        validate: (value) =>
+          value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
+      }),
+    )
+    targetDir = result.projectName = result.packageName = _result.trim()
   }
 
   if (!canSkipEmptying(targetDir) && !forceOverwrite) {
