@@ -28,7 +28,7 @@ This project should be able to run on all maintained Node.js LTS versions.
 This is ensured by GitHub Actions running the test suite on multiple Node.js versions.
 Once an LTS version reaches its end-of-life, we will drop support for it.
 
-We encourage users to use the latest *active LTS* version for development.
-Consequently, the `@tsconfig/node*` and `@types/node` dependencies used in the generated TypeScript projects are set to be in sync with the latest *active LTS* Node.js version.
+We encourage users to use the latest _active LTS_ version for development.
+Consequently, the `@tsconfig/node*` and `@types/node` dependencies used in the generated TypeScript projects are set to be in sync with the latest _active LTS_ Node.js version.
 
 The Node.js release schedule can be found at [Node.js Release Working Group](https://github.com/nodejs/release#release-schedule).
