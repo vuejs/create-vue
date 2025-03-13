@@ -1,6 +1,7 @@
 <%_ for (const { importer } of configsBeforeVuePlugin) { _%>
 <%- importer %>
 <%_ } _%>
+import { globalIgnores } from 'eslint/config'
 import pluginVue from 'eslint-plugin-vue'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 <%_ for (const { importer } of configsAfterVuePlugin) { _%>
@@ -18,10 +19,7 @@ export default defineConfigWithVueTs(
     files: ['**/*.{<%= fileExtensions.join(',') %>}'],
   },
 
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
-  },
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
 <%_ for (const { content } of configsBeforeVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>

@@ -1,6 +1,7 @@
 <%_ for (const { importer } of configsBeforeVuePlugin) { _%>
 <%- importer %>
 <%_ } _%>
+import { defineConfig, globalIgnores } from 'eslint/config'
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
@@ -8,16 +9,13 @@ import globals from 'globals'
 <%- importer %>
 <%_ } _%>
 
-export default [
+export default defineConfig([
   {
     name: 'app/files-to-lint',
     files: ['**/*.{<%= fileExtensions.join(',') %>}'],
   },
 
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
-  },
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
   {
     languageOptions: {
@@ -35,4 +33,4 @@ export default [
 <%_ for (const { content } of configsAfterVuePlugin) { _%>
   <%- content %><%# TODO: auto-indent if content's multi-line %>
 <%_ } _%>
-]
+])
