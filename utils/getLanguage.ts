@@ -105,19 +105,15 @@ function getLocale() {
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 }
 
-export default function getLanguage() {
+export default async function getLanguage(localesRoot: string) {
   const locale = getLocale()
 
-  // Note here __dirname would not be transpiled,
-  // so it refers to the __dirname of the file `<repositoryRoot>/outfile.cjs`
-  // TODO: use glob import once https://github.com/evanw/esbuild/issues/3320 is fixed
-  const localesRoot = path.resolve(__dirname, 'locales')
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
   const doesLanguageExist = fs.existsSync(languageFilePath)
 
   const lang: Language = doesLanguageExist
-    ? require(languageFilePath)
-    : require(path.resolve(localesRoot, 'en-US.json'))
+    ? (await import(languageFilePath, { with: { type: 'json' } })).default
+    : (await import(path.resolve(localesRoot, 'en-US.json'), { with: { type: 'json' } })).default
 
   return lang
 }
