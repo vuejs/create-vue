@@ -32,12 +32,6 @@ importers:
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
-      esbuild:
-        specifier: ^0.25.1
-        version: 0.25.1
-      esbuild-plugin-license:
-        specifier: ^1.2.3
-        version: 1.2.3(esbuild@0.25.1)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2082,11 +2076,6 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [openbsd]
-
-  esbuild-plugin-license@1.2.3:
-    resolution: {integrity: sha512-/ovWsIFHYIRqapsPCojMRHFppCgU3jFTVSu9r6MjpUArCWukL64+NwYJkX28ZXzYtw/cOYkGmbC3EhX0qwnn9w==}
-    peerDependencies:
-      esbuild: '*'
 
   esbuild-sunos-64@0.15.18:
     resolution: {integrity: sha512-On22LLFlBeLNj/YF3FT+cXcyKPEI263nflYlAhz5crxtp3yRG1Ugfr7ITyxmCmjm4vbN/dGrb/B7w7U8yJR9yw==}
@@ -5942,10 +5931,6 @@ snapshots:
 
   esbuild-openbsd-64@0.15.18:
     optional: true
-
-  esbuild-plugin-license@1.2.3(esbuild@0.25.1):
-    dependencies:
-      esbuild: 0.25.1
 
   esbuild-sunos-64@0.15.18:
     optional: true
