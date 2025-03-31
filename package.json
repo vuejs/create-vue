@@ -5,11 +5,11 @@
   "type": "module",
   "packageManager": "pnpm@10.7.0",
   "bin": {
-    "create-vue": "outfile.cjs"
+    "create-vue": "bundle.js"
   },
   "files": [
     "locales",
-    "outfile.cjs",
+    "bundle.js",
     "template",
     "!template/**/node_modules/.bin/*"
   ],
@@ -19,7 +19,7 @@
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write .",
-    "build": "zx ./scripts/build.mjs",
+    "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
@@ -53,6 +53,8 @@
     "lint-staged": "^15.5.0",
     "picocolors": "^1.1.1",
     "prettier": "3.5.3",
+    "rolldown": "1.0.0-beta.7",
+    "rollup-plugin-license": "^3.6.0",
     "vitest": "^3.1.1",
     "zx": "^8.4.1"
   },
