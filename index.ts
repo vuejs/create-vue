@@ -21,7 +21,7 @@ import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/tri
 
 import cliPackageJson from './package.json'
 
-const language = await getLanguage(path.resolve(import.meta.dirname, 'locales'))
+const language = await getLanguage(fileURLToPath(new URL('./locales', import.meta.url)))
 
 const FEATURE_FLAGS = [
   'default',
