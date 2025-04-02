@@ -2,7 +2,7 @@
 
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-
+import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { intro, outro, text, confirm, multiselect, select, isCancel, cancel } from '@clack/prompts'
 import { red, green, cyan, bold, dim } from 'picocolors'
@@ -368,7 +368,7 @@ async function init() {
   const pkg = { name: result.packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
 
-  const templateRoot = new URL('./template', import.meta.url).pathname
+  const templateRoot = fileURLToPath(new URL('./template', import.meta.url))
   const callbacks = []
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
