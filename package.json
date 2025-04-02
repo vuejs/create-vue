@@ -24,6 +24,7 @@
     "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
     "test:unit": "vitest",
+    "preversion": "git fetch && git status -uno | grep -q 'Your branch is up to date'",
     "postversion": "zx ./scripts/postversion.mjs",
     "prepublishOnly": "pnpm run build"
   },
