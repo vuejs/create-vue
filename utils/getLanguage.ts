@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 interface LanguageItem {
   hint?: string
@@ -105,15 +106,20 @@ function getLocale() {
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 }
 
+async function loadLanguageFile(filePath: string): Promise<Language> {
+  return (await import(pathToFileURL(filePath).toString(), { with: { type: 'json' } })).default
+}
+
 export default async function getLanguage(localesRoot: string) {
   const locale = getLocale()
 
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
-  const doesLanguageExist = fs.existsSync(languageFilePath)
+  const fallbackPath = path.resolve(localesRoot, 'en-US.json')
 
+  const doesLanguageExist = fs.existsSync(languageFilePath)
   const lang: Language = doesLanguageExist
-    ? (await import(languageFilePath, { with: { type: 'json' } })).default
-    : (await import(path.resolve(localesRoot, 'en-US.json'), { with: { type: 'json' } })).default
+    ? await loadLanguageFile(languageFilePath)
+    : await loadLanguageFile(fallbackPath)
 
   return lang
 }
