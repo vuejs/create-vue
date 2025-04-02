@@ -205,8 +205,6 @@ export default defineConfig({
       name: '@vue/create-eslint-config fix',
       async transform(code, id) {
         if (/@vue.create-eslint-config.renderEjsFile\.js$/.test(id)) {
-          console.log(id, id.includes('create-eslint-config'))
-
           const pkgDir = path.dirname(id)
           const templatesDir = path.resolve(pkgDir, './templates')
 
