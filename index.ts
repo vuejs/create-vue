@@ -19,7 +19,7 @@ import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 
-import cliPackageJson from './package.json'
+import cliPackageJson from './package.json' with { type: 'json' }
 
 const language = await getLanguage(fileURLToPath(new URL('./locales', import.meta.url)))
 
