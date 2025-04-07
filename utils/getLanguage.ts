@@ -107,7 +107,12 @@ function getLocale() {
 }
 
 async function loadLanguageFile(filePath: string): Promise<Language> {
-  return (await import(pathToFileURL(filePath).toString(), { with: { type: 'json' } })).default
+  return await fs.promises.readFile(filePath, 'utf-8').then((data) => {
+    const parsedData = JSON.parse(data)
+    if (parsedData) {
+      return parsedData
+    }
+  })
 }
 
 export default async function getLanguage(localesRoot: string) {
