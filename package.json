@@ -16,6 +16,13 @@
   "engines": {
     "node": ">=v18.3.0"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "download",
+      "version": ">= 10.7.1"
+    }
+  },
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write .",
