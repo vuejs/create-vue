@@ -203,8 +203,11 @@ export default defineConfig({
 
     {
       name: '@vue/create-eslint-config fix',
-      async transform(code, id) {
-        if (/@vue.create-eslint-config.renderEjsFile\.js$/.test(id)) {
+      transform: {
+        filter: {
+          id: /@vue.create-eslint-config.renderEjsFile\.js$/,
+        },
+        handler(code, id) {
           const pkgDir = path.dirname(id)
           const templatesDir = path.resolve(pkgDir, './templates')
 
@@ -223,7 +226,7 @@ export default defineConfig({
               return ejs.render(templates[filePath], data, {})
             }
           `
-        }
+        },
       },
     },
   ],
