@@ -207,7 +207,7 @@ export default defineConfig({
         filter: {
           id: /@vue.create-eslint-config.renderEjsFile\.js$/,
         },
-        handler(code, id) {
+        handler(_code, id) {
           const pkgDir = path.dirname(id)
           const templatesDir = path.resolve(pkgDir, './templates')
 
