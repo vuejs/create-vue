@@ -49,7 +49,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        node-version: [20, 22]
+        node-version: [20, 22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
         verification-script:
           - pnpm --filter '!*typescript*' build
