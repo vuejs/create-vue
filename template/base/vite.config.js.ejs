@@ -14,6 +14,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // Deprecated, use `#src` instead (configured in `package.json` `imports` field)
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
