@@ -37,7 +37,10 @@ interface Language {
       [key: string]: { title: string; desc?: string; hintOnComponentTesting?: string }
     }
   }
+  needExperimenttal: LanguageItem
+  needsExperimentalFeatures: LanguageItem
   needsOxlint: LanguageItem
+  needsRolldownVite: LanguageItem
   errors: {
     operationCancelled: string
   }
