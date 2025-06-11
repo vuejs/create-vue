@@ -78,8 +78,8 @@ const FEATURE_OPTIONS = [
     label: language.needsPrettier.message,
   },
   {
-    value: 'experimental features',
-    label: language.needExperimenttal.message,
+    value: 'experimental-features',
+    label: language.needsExperimental.message,
   },
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
@@ -339,7 +339,7 @@ async function init() {
       )
     }
 
-    if (result.features.includes('experimental features')) {
+    if (result.features.includes('experimental-features')) {
       result.experimentFeatures = await unwrapPrompt(
         multiselect({
           message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
