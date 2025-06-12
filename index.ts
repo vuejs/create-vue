@@ -77,10 +77,6 @@ const FEATURE_OPTIONS = [
     value: 'prettier',
     label: language.needsPrettier.message,
   },
-  {
-    value: 'experimental-features',
-    label: language.needsExperimental.message,
-  },
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
@@ -338,17 +334,14 @@ async function init() {
         }),
       )
     }
-
-    if (result.features.includes('experimental-features')) {
-      result.experimentFeatures = await unwrapPrompt(
-        multiselect({
-          message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
-          // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
-          options: EXPERIMENTAL_FEATURE_OPTIONS,
-          required: false,
-        }),
-      )
-    }
+    result.experimentFeatures = await unwrapPrompt(
+      multiselect({
+        message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
+        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
+        options: EXPERIMENTAL_FEATURE_OPTIONS,
+        required: false,
+      }),
+    )
   }
 
   const { features, experimentFeatures } = result
