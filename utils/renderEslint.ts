@@ -102,7 +102,7 @@ export function getAdditionalConfigs({
             (needsTypeScript
               ? `// eslint-disable-next-line @typescript-eslint/ban-ts-comment\n` +
                 `// @ts-ignore\n`
-              : '') + "import pluginCypress from 'eslint-plugin-cypress/flat'",
+              : '') + "import pluginCypress from 'eslint-plugin-cypress'",
           content: `
   {
     ...pluginCypress.configs.recommended,
