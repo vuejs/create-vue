@@ -259,8 +259,11 @@ async function init() {
       text({
         message: language.projectName.message,
         placeholder: defaultProjectName,
+        defaultValue: defaultProjectName,
         validate: (value) =>
-          value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
+          value.length === 0 || value.trim().length > 0
+            ? undefined
+            : language.projectName.invalidMessage,
       }),
     )
     targetDir = result.projectName = result.packageName = _result.trim()
