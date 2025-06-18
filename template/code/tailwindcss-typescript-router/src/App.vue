@@ -48,7 +48,7 @@ import HelloWorld from './components/HelloWorld.vue'
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 /* Router link active styles need to be in CSS due to dynamic class application */
 nav a.router-link-exact-active {
   @apply text-slate-800 dark:text-gray-200;
