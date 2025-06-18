@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Custom styles that complement Tailwind */
+a,
+.green {
+  @apply text-emerald-600 no-underline transition-all duration-400 px-1 py-0.5;
+}
+
+@media (hover: hover) {
+  a:hover {
+    @apply bg-emerald-600/20;
+  }
+}
