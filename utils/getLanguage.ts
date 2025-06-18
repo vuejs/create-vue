@@ -25,6 +25,7 @@ interface Language {
   packageName: LanguageItem
   featureSelection: LanguageItem
   needsTypeScript: LanguageItem
+  needsTailwindCss: LanguageItem
   needsJsx: LanguageItem
   needsRouter: LanguageItem
   needsPinia: LanguageItem

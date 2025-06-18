@@ -27,6 +27,7 @@ const FEATURE_FLAGS = [
   'default',
   'ts',
   'typescript',
+  'tailwindcss',
   'jsx',
   'router',
   'vue-router',
@@ -48,6 +49,10 @@ const FEATURE_OPTIONS = [
   {
     value: 'typescript',
     label: language.needsTypeScript.message,
+  },
+  {
+    value: 'tailwindcss',
+    label: language.needsTailwindCss.message,
   },
   {
     value: 'jsx',
@@ -170,6 +175,8 @@ Available feature flags:
     Create a project with the default configuration without any additional features.
   --ts, --typescript
     Add TypeScript support.
+  --tailwindcss
+    Add Tailwind CSS support.
   --jsx
     Add JSX support.
   --router, --vue-router
@@ -350,6 +357,7 @@ async function init() {
   const { features, experimentFeatures } = result
 
   const needsTypeScript = argv.ts || argv.typescript || features.includes('typescript')
+  const needsTailwindCss = argv.tailwindcss || features.includes('tailwindcss')
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
@@ -399,6 +407,9 @@ async function init() {
   // Add configs.
   if (needsJsx) {
     render('config/jsx')
+  }
+  if (needsTailwindCss) {
+    render('config/tailwindcss')
   }
   if (needsRouter) {
     render('config/router')
@@ -519,6 +530,7 @@ async function init() {
   // Render code template.
   // prettier-ignore
   const codeTemplate =
+    (needsTailwindCss ? 'tailwindcss-' : '') +
     (needsTypeScript ? 'typescript-' : '') +
     (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
