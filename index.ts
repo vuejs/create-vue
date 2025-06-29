@@ -42,6 +42,7 @@ const FEATURE_FLAGS = [
   'eslint-with-prettier',
   'oxlint',
   'rolldown-vite',
+  'i18n',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -76,6 +77,10 @@ const FEATURE_OPTIONS = [
   {
     value: 'prettier',
     label: language.needsPrettier.message,
+  },
+  {
+    value: 'i18n',
+    label: language.needsVueI18n.message,
   },
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
@@ -176,6 +181,8 @@ Available feature flags:
     Add Vue Router for SPA development.
   --pinia
     Add Pinia for state management.
+  --i18n
+    Add Vue I18n for internationalization.
   --vitest
     Add Vitest for unit testing.
   --cypress
@@ -353,6 +360,7 @@ async function init() {
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
+  const needsVueI18n = argv.i18n || features.includes('i18n')
   const needsVitest = argv.vitest || argv.tests || features.includes('vitest')
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
@@ -405,6 +413,9 @@ async function init() {
   }
   if (needsPinia) {
     render('config/pinia')
+  }
+  if (needsVueI18n) {
+    render('config/vue-i18n')
   }
   if (needsVitest) {
     render('config/vitest')
@@ -524,12 +535,20 @@ async function init() {
   render(`code/${codeTemplate}`)
 
   // Render entry file (main.js/ts).
-  if (needsPinia && needsRouter) {
+  if (needsPinia && needsRouter && needsVueI18n) {
+    render('entry/pinia-router-and-i18n')
+  } else if (needsRouter && needsVueI18n) {
+    render('entry/router-and-i18n')
+  } else if (needsPinia && needsVueI18n) {
+    render('entry/pinia-and-i18n')
+  } else if (needsPinia && needsRouter) {
     render('entry/router-and-pinia')
   } else if (needsPinia) {
     render('entry/pinia')
   } else if (needsRouter) {
     render('entry/router')
+  } else if (needsVueI18n) {
+    render('entry/i18n')
   } else {
     render('entry/default')
   }

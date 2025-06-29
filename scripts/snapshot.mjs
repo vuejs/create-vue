@@ -13,6 +13,7 @@ const featureFlags = [
   'jsx',
   'router',
   'pinia',
+  'i18n',
   'vitest',
   'cypress',
   'playwright',
@@ -67,7 +68,7 @@ flagCombinations.push(['default'], ['bare', 'default'])
 // Previously it means `--cypress` without `--vitest`.
 // Here we generate the snapshots only for the sake of easier comparison with older templates.
 // They may be removed in later releases.
-const withTestsFlags = fullCombination(['typescript', 'jsx', 'router', 'pinia']).map((args) => [
+const withTestsFlags = fullCombination(['typescript', 'jsx', 'router', 'pinia','i18n']).map((args) => [
   ...args,
   'with-tests',
 ])
