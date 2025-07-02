@@ -12,7 +12,11 @@ import ejs from 'ejs'
 import * as banners from './utils/banners'
 
 import renderTemplate from './utils/renderTemplate'
-import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
+import {
+  postOrderDirectoryTraverse,
+  preOrderDirectoryTraverse,
+  hasDotGitDirectory,
+} from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
@@ -670,10 +674,12 @@ async function init() {
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
 
-  outroMessage += `
+  if (!hasDotGitDirectory) {
+    outroMessage += `
 ${dim('|')} ${language.infos.optionalGitCommand}
-   
+  
    ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
+  }
 
   outro(outroMessage)
 }
