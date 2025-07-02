@@ -15,7 +15,7 @@ import renderTemplate from './utils/renderTemplate'
 import {
   postOrderDirectoryTraverse,
   preOrderDirectoryTraverse,
-  hasDotGitDirectory,
+  dotGitDirectoryState,
 } from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
@@ -125,6 +125,7 @@ function canSkipEmptying(dir: string) {
     return true
   }
   if (files.length === 1 && files[0] === '.git') {
+    dotGitDirectoryState.hasDotGitDirectory = true
     return true
   }
 
@@ -674,7 +675,7 @@ async function init() {
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
 
-  if (!hasDotGitDirectory) {
+  if (!dotGitDirectoryState.hasDotGitDirectory) {
     outroMessage += `
 ${dim('|')} ${language.infos.optionalGitCommand}
   

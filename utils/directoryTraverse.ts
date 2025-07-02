@@ -19,12 +19,14 @@ export function preOrderDirectoryTraverse(dir, dirCallback, fileCallback) {
   }
 }
 
-export let hasDotGitDirectory = false
+export const dotGitDirectoryState = {
+  hasDotGitDirectory: false,
+}
 
 export function postOrderDirectoryTraverse(dir, dirCallback, fileCallback) {
   for (const filename of fs.readdirSync(dir)) {
     if (filename === '.git') {
-      hasDotGitDirectory = true
+      dotGitDirectoryState.hasDotGitDirectory = true
       continue
     }
     const fullpath = path.resolve(dir, filename)
