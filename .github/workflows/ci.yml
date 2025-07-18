@@ -96,6 +96,11 @@ jobs:
         e2e-framework: ['cypress', 'playwright']
         node-version: [22]
         os: [ubuntu-latest, windows-latest, macos-latest]
+        exclude:
+          # Temporarily exclude Windows + Cypress due to EPERM issues with start-server-and-test
+          # FIXME: move away from `start-server-and-test`
+          - os: windows-latest
+            e2e-framework: cypress
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
