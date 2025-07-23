@@ -1,13 +1,22 @@
-import pluginVue from 'eslint-plugin-vue'
-// Use the TS config here because the default js parser doesn't support import attributes
-import vueTsEslintConfig from '@vue/eslint-config-typescript'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+import js from '@eslint/js'
 
-export default [
+export default defineConfig([
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,ts,mts,tsx,vue}'],
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    files: ['**/*.{js,mjs}'],
   },
-  ...pluginVue.configs['flat/essential'],
-  ...vueTsEslintConfig(),
-]
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
+  js.configs.recommended,
+])

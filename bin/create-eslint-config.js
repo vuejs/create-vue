@@ -102,9 +102,11 @@ let vueVersion
 try {
   vueVersion = requireInCwd('vue/package.json').version
   console.info(dim(`Detected Vue.js version: ${vueVersion}`))
-} catch {}
+} catch {
+  // Vue.js not found, will prompt later
+}
 
-if (!vueVersion || !/^3/.test(vueVersion)) {
+if (!vueVersion || !vueVersion.startsWith('3.')) {
   const { continueAnyway } = await prompt({
     type: 'toggle',
     disabled: 'No',
@@ -126,7 +128,9 @@ try {
   const tsVersion = requireInCwd('typescript/package.json').version
   console.info(dim(`Detected TypeScript version: ${tsVersion}`))
   detectedTypeScript = true
-} catch {}
+} catch {
+  // TypeScript not found, will prompt later
+}
 
 const { hasTypeScript } = await prompt({
   type: 'toggle',
