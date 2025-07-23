@@ -4,14 +4,5 @@ indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
-<%_ if (styleGuide !== 'standard' || needsPrettier) { _%>
-<%#
-// standard doesn't have an opinion on line endings
-// https://github.com/standard/standard/issues/140
-// or maximum line length
-// https://github.com/standard/standard/issues/1559
-// Prettier enforces these things, though.
-%>
 end_of_line = lf
 max_line_length = 100
-<%_ } _%>

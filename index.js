@@ -6,7 +6,7 @@ const versionMap = thisPackage.devDependencies
 
 // This is also used in `create-vue`
 export default function createConfig({
-  styleGuide = 'default', // default ~~| airbnb | standard~~ only the default is supported for now
+  styleGuide = 'default', // only the default is supported for now
 
   hasTypeScript = false,
   needsPrettier = false,
@@ -125,13 +125,11 @@ export default function createConfig({
     )
   }
 
-  if (styleGuide !== 'standard' || needsPrettier) {
-    // TODO:
-    // I used renderEjsFile instead of readFileSync for simplicity and easier integration
-    // with create-vue. But it's ugly.
-    // Should refactor later, or move this project into create-vue.
-    files['.gitattributes'] = renderEjsFile('./templates/_gitattributes', {})
-  }
+  // TODO:
+  // I used renderEjsFile instead of readFileSync for simplicity and easier integration
+  // with create-vue. But it's ugly.
+  // Should refactor later, or move this project into create-vue.
+  files['.gitattributes'] = renderEjsFile('./templates/_gitattributes', {})
 
   return {
     pkg,

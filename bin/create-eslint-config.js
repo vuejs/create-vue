@@ -138,52 +138,6 @@ const { hasTypeScript } = await prompt({
 })
 
 const supportedScriptLangs = {}
-// FIXME: Use a multi-select prompt
-// if (hasTypeScript) {
-//   const { allowJsInVue } = await prompt({
-//     type: 'toggle',
-//     disabled: 'No',
-//     enabled: 'Yes',
-//     name: 'allowJsInVue',
-//     message: `Do you use plain ${yellow('<script>')}s (without ${blue('lang="ts"')}) in ${green('.vue')} files?`,
-//     initial: false
-//   })
-
-//   if (allowJsInVue) {
-//     const { allowJsxInVue } = await prompt({
-//       type: 'toggle',
-//       disabled: 'No',
-//       enabled: 'Yes',
-//       name: 'allowJsxInVue',
-//       message: `Do you use ${yellow('<script lang="jsx">')}s in ${green('.vue')} files (not recommended)?`,
-//       initial: false
-//     })
-
-//     additionalConfig.extends = [
-//       `@vue/eslint-config-${styleGuide}-with-typescript/${
-//         allowJsxInVue
-//           ? 'allow-jsx-in-vue'
-//           : 'allow-js-in-vue'
-//       }`
-//     ]
-//   } else {
-//     const { allowTsxInVue } = await prompt({
-//       type: 'toggle',
-//       disabled: 'No',
-//       enabled: 'Yes',
-//       name: 'allowTsxInVue',
-//       message: `Do you use ${yellow('<script lang="tsx">')}s in ${green('.vue')} files (not recommended)?`,
-//       initial: false
-//     })
-
-//     if (allowTsxInVue) {
-//       additionalConfig.extends = [
-//         `@vue/eslint-config-${styleGuide}-with-typescript/allow-tsx-in-vue`
-//       ]
-//     }
-//   }
-// }
-
 // 5. Do you need Prettier to format your codebase?
 const { needsPrettier } = await prompt({
   type: 'toggle',

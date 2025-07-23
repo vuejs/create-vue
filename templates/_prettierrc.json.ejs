@@ -1,18 +1,3 @@
-<%_ if (styleGuide === 'airbnb') { _%>
-{
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "printWidth": 100,
-  "singleQuote": true
-}
-<%_ } else if (styleGuide === 'standard') { _%>
-{
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "semi": false,
-  "singleQuote": true,
-  "jsxSingleQuote": true,
-  "trailingComma": "none"
-}
-<%_ } else { _%>
 <%#
   The default style follows the one used in the vuejs/create-vue repository
   <https://github.com/vuejs/create-vue/blob/main/.prettierrc>
@@ -23,4 +8,3 @@
   "singleQuote": true,
   "printWidth": 100
 }
-<%_ } _%>
