@@ -81,6 +81,12 @@ export default function createConfig({
     pkg.scripts.format = 'prettier --write src/'
   }
 
+  if (needsOxlint && needsPrettier) {
+    additionalConfigs.push({
+      devDependencies: pickDependencies(['@prettier/plugin-oxc']),
+    })
+  }
+
   const configsBeforeVuePlugin = [],
     configsAfterVuePlugin = []
   for (const config of additionalConfigs) {
@@ -91,6 +97,7 @@ export default function createConfig({
 
   const templateData = {
     styleGuide,
+    needsOxlint,
     needsPrettier,
     fileExtensions,
     configsBeforeVuePlugin,
