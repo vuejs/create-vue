@@ -100,6 +100,7 @@ type PromptResult = {
   features?: (typeof FEATURE_OPTIONS)[number]['value'][]
   e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
+  needsBareboneTemplates?: boolean
 }
 
 function isValidPackageName(projectName) {
@@ -251,6 +252,7 @@ async function init() {
     features: [],
     e2eFramework: undefined,
     experimentFeatures: [],
+    needsBareboneTemplates: false,
   }
 
   intro(
@@ -352,7 +354,19 @@ async function init() {
     )
   }
 
-  const { features, experimentFeatures } = result
+  if (argv.bare) {
+    result.needsBareboneTemplates = true
+  } else {
+    result.needsBareboneTemplates = await unwrapPrompt(
+      confirm({
+        message: language.needsBareboneTemplates.message,
+        // TODO: default to true sometime in the future
+        initialValue: false,
+      }),
+    )
+  }
+
+  const { features, experimentFeatures, needsBareboneTemplates } = result
 
   const needsTypeScript = argv.ts || argv.typescript || features.includes('typescript')
   const needsJsx = argv.jsx || features.includes('jsx')
@@ -562,7 +576,7 @@ async function init() {
     },
   )
 
-  if (argv.bare) {
+  if (needsBareboneTemplates) {
     trimBoilerplate(root)
     render('bare/base')
     // TODO: refactor the `render` utility to avoid this kind of manual mapping?
@@ -629,7 +643,7 @@ async function init() {
     )
   }
 
-  if (argv.bare) {
+  if (needsBareboneTemplates) {
     removeCSSImport(root, needsTypeScript, needsCypressCT)
     if (needsRouter) {
       emptyRouterConfig(root, needsTypeScript)
