@@ -41,6 +41,7 @@ interface Language {
   needsExperimentalFeatures: LanguageItem
   needsOxlint: LanguageItem
   needsRolldownVite: LanguageItem
+  needsBareboneTemplates: LanguageItem
   errors: {
     operationCancelled: string
   }
