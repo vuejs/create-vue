@@ -252,6 +252,8 @@ async function init() {
     features: [],
     e2eFramework: undefined,
     experimentFeatures: [],
+
+    // TODO: default to true sometime in the future
     needsBareboneTemplates: false,
   }
 
@@ -356,7 +358,7 @@ async function init() {
 
   if (argv.bare) {
     result.needsBareboneTemplates = true
-  } else {
+  } else if (!isFeatureFlagsUsed) {
     result.needsBareboneTemplates = await unwrapPrompt(
       confirm({
         message: language.needsBareboneTemplates.message,
