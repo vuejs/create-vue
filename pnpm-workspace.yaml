@@ -1,4 +1,8 @@
 packages:
-  - 'template/base'
-  - 'template/config/**'
-  - 'template/tsconfig/**'
+  - template/base
+  - template/config/**
+  - template/tsconfig/**
+
+ignoredBuiltDependencies:
+  - chromedriver
+  - cypress
