@@ -12,6 +12,7 @@ const playgroundDir = path.resolve(__dirname, '../playground/')
 cd(playgroundDir)
 
 await $`pnpm install`
+await $`pnpm dedupe`
 await $`git add -A .`
 try {
   await $`git commit -m "version ${version} snapshot"`
