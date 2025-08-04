@@ -6,7 +6,7 @@ import createESLintConfig from '@vue/create-eslint-config'
 import sortDependencies from './sortDependencies'
 import deepMerge from './deepMerge'
 
-import eslintTemplatePackage from '../template/eslint/package.json' assert { type: 'json' }
+import eslintTemplatePackage from '../template/eslint/package.json' with { type: 'json' }
 const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
@@ -102,7 +102,7 @@ export function getAdditionalConfigs({
             (needsTypeScript
               ? `// eslint-disable-next-line @typescript-eslint/ban-ts-comment\n` +
                 `// @ts-ignore\n`
-              : '') + "import pluginCypress from 'eslint-plugin-cypress/flat'",
+              : '') + "import pluginCypress from 'eslint-plugin-cypress'",
           content: `
   {
     ...pluginCypress.configs.recommended,

@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 interface LanguageItem {
   hint?: string
@@ -22,6 +23,7 @@ interface Language {
   projectName: LanguageItem
   shouldOverwrite: LanguageItem
   packageName: LanguageItem
+  featureSelection: LanguageItem
   needsTypeScript: LanguageItem
   needsJsx: LanguageItem
   needsRouter: LanguageItem
@@ -30,6 +32,16 @@ interface Language {
   needsE2eTesting: LanguageItem
   needsEslint: LanguageItem
   needsPrettier: LanguageItem
+  e2eSelection: LanguageItem & {
+    selectOptions?: {
+      [key: string]: { title: string; desc?: string; hintOnComponentTesting?: string }
+    }
+  }
+  needsExperimental: LanguageItem
+  needsExperimentalFeatures: LanguageItem
+  needsOxlint: LanguageItem
+  needsRolldownVite: LanguageItem
+  needsBareboneTemplates: LanguageItem
   errors: {
     operationCancelled: string
   }
@@ -40,6 +52,7 @@ interface Language {
   infos: {
     scaffolding: string
     done: string
+    optionalGitCommand: string
   }
 }
 
@@ -97,19 +110,25 @@ function getLocale() {
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'))
 }
 
-export default function getLanguage() {
+async function loadLanguageFile(filePath: string): Promise<Language> {
+  return await fs.promises.readFile(filePath, 'utf-8').then((data) => {
+    const parsedData = JSON.parse(data)
+    if (parsedData) {
+      return parsedData
+    }
+  })
+}
+
+export default async function getLanguage(localesRoot: string) {
   const locale = getLocale()
 
-  // Note here __dirname would not be transpiled,
-  // so it refers to the __dirname of the file `<repositoryRoot>/outfile.cjs`
-  // TODO: use glob import once https://github.com/evanw/esbuild/issues/3320 is fixed
-  const localesRoot = path.resolve(__dirname, 'locales')
   const languageFilePath = path.resolve(localesRoot, `${locale}.json`)
-  const doesLanguageExist = fs.existsSync(languageFilePath)
+  const fallbackPath = path.resolve(localesRoot, 'en-US.json')
 
+  const doesLanguageExist = fs.existsSync(languageFilePath)
   const lang: Language = doesLanguageExist
-    ? require(languageFilePath)
-    : require(path.resolve(localesRoot, 'en-US.json'))
+    ? await loadLanguageFile(languageFilePath)
+    : await loadLanguageFile(fallbackPath)
 
   return lang
 }

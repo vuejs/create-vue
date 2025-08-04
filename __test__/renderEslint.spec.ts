@@ -45,7 +45,7 @@ describe('renderEslint', () => {
     expect(additionalCypressConfig.afterVuePlugin).toHaveLength(1)
     const [additionalCypressPlugin] = additionalCypressConfig.afterVuePlugin!
     expect(additionalCypressPlugin.importer).toBe(
-      "import pluginCypress from 'eslint-plugin-cypress/flat'",
+      "import pluginCypress from 'eslint-plugin-cypress'",
     )
     expect(additionalCypressPlugin.content).toContain('...pluginCypress.configs.recommended')
     expect(additionalCypressPlugin.content).toContain(
@@ -68,7 +68,7 @@ describe('renderEslint', () => {
     expect(additionalCypressConfig.afterVuePlugin).toHaveLength(1)
     const [additionalCypressPlugin] = additionalCypressConfig.afterVuePlugin!
     expect(additionalCypressPlugin.importer).toBe(
-      "import pluginCypress from 'eslint-plugin-cypress/flat'",
+      "import pluginCypress from 'eslint-plugin-cypress'",
     )
     expect(additionalCypressPlugin.content).toContain('...pluginCypress.configs.recommended')
     expect(additionalCypressPlugin.content).toContain("'**/__tests__/*.{cy,spec}.{js,ts,jsx,tsx}'")

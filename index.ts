@@ -2,25 +2,106 @@
 
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-
+import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-
-import prompts from 'prompts'
-import { red, green, cyan, bold } from 'kleur/colors'
+import { intro, outro, text, confirm, multiselect, select, isCancel, cancel } from '@clack/prompts'
+import { red, green, cyan, bold, dim } from 'picocolors'
 
 import ejs from 'ejs'
 
 import * as banners from './utils/banners'
 
 import renderTemplate from './utils/renderTemplate'
-import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
+import {
+  postOrderDirectoryTraverse,
+  preOrderDirectoryTraverse,
+  dotGitDirectoryState,
+} from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 
-import cliPackageJson from './package.json'
+import cliPackageJson from './package.json' with { type: 'json' }
+
+const language = await getLanguage(fileURLToPath(new URL('./locales', import.meta.url)))
+
+const FEATURE_FLAGS = [
+  'default',
+  'ts',
+  'typescript',
+  'jsx',
+  'router',
+  'vue-router',
+  'pinia',
+  'tests',
+  'with-tests',
+  'vitest',
+  'cypress',
+  'nightwatch',
+  'playwright',
+  'eslint',
+  'prettier',
+  'eslint-with-prettier',
+  'oxlint',
+  'rolldown-vite',
+] as const
+
+const FEATURE_OPTIONS = [
+  {
+    value: 'typescript',
+    label: language.needsTypeScript.message,
+  },
+  {
+    value: 'jsx',
+    label: language.needsJsx.message,
+  },
+  {
+    value: 'router',
+    label: language.needsRouter.message,
+  },
+  {
+    value: 'pinia',
+    label: language.needsPinia.message,
+  },
+  {
+    value: 'vitest',
+    label: language.needsVitest.message,
+  },
+  {
+    value: 'e2e',
+    label: language.needsE2eTesting.message,
+  },
+  {
+    value: 'eslint',
+    label: language.needsEslint.message,
+  },
+  {
+    value: 'prettier',
+    label: language.needsPrettier.message,
+  },
+] as const
+const EXPERIMENTAL_FEATURE_OPTIONS = [
+  {
+    value: 'oxlint',
+    label: language.needsOxlint.message,
+  },
+  {
+    value: 'rolldown-vite',
+    label: language.needsRolldownVite.message,
+  },
+] as const
+
+type PromptResult = {
+  projectName?: string
+  shouldOverwrite?: boolean
+  packageName?: string
+  features?: (typeof FEATURE_OPTIONS)[number]['value'][]
+  e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
+  experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
+  needsBareboneTemplates?: boolean
+}
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
@@ -45,6 +126,7 @@ function canSkipEmptying(dir: string) {
     return true
   }
   if (files.length === 1 && files[0] === '.git') {
+    dotGitDirectoryState.hasDotGitDirectory = true
     return true
   }
 
@@ -61,6 +143,16 @@ function emptyDir(dir) {
     (dir) => fs.rmdirSync(dir),
     (file) => fs.unlinkSync(file),
   )
+}
+
+async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | symbol>): Promise<T> {
+  const result = await maybeCancelPromise
+
+  if (isCancel(result)) {
+    cancel(red('✖') + ` ${language.errors.operationCancelled}`)
+    process.exit(0)
+  }
+  return result
 }
 
 const helpMessage = `\
@@ -102,12 +194,14 @@ Available feature flags:
     If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
   --eslint
     Add ESLint for code quality.
-  --eslint-with-oxlint
-    Add ESLint for code quality, and use Oxlint to speed up the linting process.
   --eslint-with-prettier (Deprecated in favor of ${cyan('--eslint --prettier')})
     Add Prettier for code formatting in addition to ESLint.
   --prettier
     Add Prettier for code formatting.
+  --oxlint
+    Add Oxlint for code quality and formatting.
+  --rolldown-vite
+    Use Rolldown Vite instead of Vite for building the project.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -120,29 +214,7 @@ async function init() {
   const args = process.argv.slice(2)
 
   // // alias is not supported by parseArgs so we declare all the flags altogether
-  const flags = [
-    'default',
-    'typescript',
-    'ts',
-    'jsx',
-    'router',
-    'vue-router',
-    'pinia',
-    'vitest',
-    'cypress',
-    'playwright',
-    'nightwatch',
-    'eslint',
-    'eslint-with-oxlint',
-    'eslint-with-prettier',
-    'prettier',
-    'tests',
-    'with-tests',
-    'force',
-    'bare',
-    'help',
-    'version',
-  ] as const
+  const flags = [...FEATURE_FLAGS, 'force', 'bare', 'help', 'version'] as const
   type CLIOptions = {
     [key in (typeof flags)[number]]: { readonly type: 'boolean' }
   }
@@ -166,253 +238,159 @@ async function init() {
   }
 
   // if any of the feature flags is set, we would skip the feature prompts
-  const isFeatureFlagsUsed =
-    typeof (
-      argv.default ??
-      argv.ts ??
-      argv.typescript ??
-      argv.jsx ??
-      argv.router ??
-      argv['vue-router'] ??
-      argv.pinia ??
-      argv.tests ??
-      argv['with-tests'] ??
-      argv.vitest ??
-      argv.cypress ??
-      argv.nightwatch ??
-      argv.playwright ??
-      argv.eslint ??
-      argv.prettier ??
-      argv['eslint-with-oxlint'] ??
-      argv['eslint-with-prettier']
-    ) === 'boolean'
+  const isFeatureFlagsUsed = FEATURE_FLAGS.some((flag) => typeof argv[flag] === 'boolean')
 
   let targetDir = positionals[0]
-  const defaultProjectName = !targetDir ? 'vue-project' : targetDir
+  const defaultProjectName = targetDir || 'vue-project'
 
   const forceOverwrite = argv.force
 
-  const language = getLanguage()
+  const result: PromptResult = {
+    projectName: defaultProjectName,
+    shouldOverwrite: forceOverwrite,
+    packageName: defaultProjectName,
+    features: [],
+    e2eFramework: undefined,
+    experimentFeatures: [],
 
-  let result: {
-    projectName?: string
-    shouldOverwrite?: boolean
-    packageName?: string
-    needsTypeScript?: boolean
-    needsJsx?: boolean
-    needsRouter?: boolean
-    needsPinia?: boolean
-    needsVitest?: boolean
-    needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
-    needsEslint?: false | 'eslintOnly' | 'speedUpWithOxlint'
-    needsOxlint?: boolean
-    needsPrettier?: boolean
-  } = {}
+    // TODO: default to true sometime in the future
+    needsBareboneTemplates: false,
+  }
 
-  console.log()
-  console.log(
+  intro(
     process.stdout.isTTY && process.stdout.getColorDepth() > 8
       ? banners.gradientBanner
       : banners.defaultBanner,
   )
-  console.log()
 
-  try {
-    // Prompts:
-    // - Project name:
-    //   - whether to overwrite the existing directory or not?
-    //   - enter a valid package name for package.json
-    // - Project language: JavaScript / TypeScript
-    // - Add JSX Support?
-    // - Install Vue Router for SPA development?
-    // - Install Pinia for state management?
-    // - Add Cypress for testing?
-    // - Add Nightwatch for testing?
-    // - Add Playwright for end-to-end testing?
-    // - Add ESLint for code quality?
-    // - Add Prettier for code formatting?
-    result = await prompts(
-      [
-        {
-          name: 'projectName',
-          type: targetDir ? null : 'text',
-          message: language.projectName.message,
-          initial: defaultProjectName,
-          onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName),
-        },
-        {
-          name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'toggle'),
-          message: () => {
-            const dirForPrompt =
-              targetDir === '.'
-                ? language.shouldOverwrite.dirForPrompts.current
-                : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
-
-            return `${dirForPrompt} ${language.shouldOverwrite.message}`
-          },
-          initial: true,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'overwriteChecker',
-          type: (prev, values) => {
-            if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-            }
-            return null
-          },
-        },
-        {
-          name: 'packageName',
-          type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: language.packageName.message,
-          initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage,
-        },
-        {
-          name: 'needsTypeScript',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsTypeScript.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsJsx',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsJsx.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsRouter',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsRouter.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsPinia',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsPinia.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsVitest',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsVitest.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-        {
-          name: 'needsE2eTesting',
-          type: () => (isFeatureFlagsUsed ? null : 'select'),
-          hint: language.needsE2eTesting.hint,
-          message: language.needsE2eTesting.message,
-          initial: 0,
-          choices: (prev, answers) => [
-            {
-              title: language.needsE2eTesting.selectOptions.negative.title,
-              value: false,
-            },
-            {
-              title: language.needsE2eTesting.selectOptions.cypress.title,
-              description: answers.needsVitest
-                ? undefined
-                : language.needsE2eTesting.selectOptions.cypress.desc,
-              value: 'cypress',
-            },
-            {
-              title: language.needsE2eTesting.selectOptions.nightwatch.title,
-              description: answers.needsVitest
-                ? undefined
-                : language.needsE2eTesting.selectOptions.nightwatch.desc,
-              value: 'nightwatch',
-            },
-            {
-              title: language.needsE2eTesting.selectOptions.playwright.title,
-              value: 'playwright',
-            },
-          ],
-        },
-        {
-          name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: language.needsEslint.message,
-          initial: 0,
-          choices: [
-            {
-              title: language.needsEslint.selectOptions.negative.title,
-              value: false,
-            },
-            {
-              title: language.needsEslint.selectOptions.eslintOnly.title,
-              value: 'eslintOnly',
-            },
-            {
-              title: language.needsEslint.selectOptions.speedUpWithOxlint.title,
-              value: 'speedUpWithOxlint',
-            },
-          ],
-        },
-        {
-          name: 'needsPrettier',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsPrettier.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive,
-        },
-      ],
-      {
-        onCancel: () => {
-          throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
-        },
-      },
+  if (!targetDir) {
+    const _result = await unwrapPrompt(
+      text({
+        message: language.projectName.message,
+        placeholder: defaultProjectName,
+        defaultValue: defaultProjectName,
+        validate: (value) =>
+          value.length === 0 || value.trim().length > 0
+            ? undefined
+            : language.projectName.invalidMessage,
+      }),
     )
-  } catch (cancelled) {
-    console.log(cancelled.message)
-    process.exit(1)
+    targetDir = result.projectName = result.packageName = _result.trim()
   }
 
-  // `initial` won't take effect if the prompt type is null
-  // so we still have to assign the default values here
-  const {
-    projectName,
-    packageName = projectName ?? defaultProjectName,
-    shouldOverwrite = argv.force as boolean,
-    needsJsx = argv.jsx as boolean,
-    needsTypeScript = (argv.ts || argv.typescript) as boolean,
-    needsRouter = (argv.router || argv['vue-router']) as boolean,
-    needsPinia = argv.pinia as boolean,
-    needsVitest = (argv.vitest || argv.tests) as boolean,
-    needsPrettier = (argv.prettier || argv['eslint-with-prettier']) as boolean,
-  } = result
+  if (!canSkipEmptying(targetDir) && !forceOverwrite) {
+    result.shouldOverwrite = await unwrapPrompt(
+      confirm({
+        message: `${
+          targetDir === '.'
+            ? language.shouldOverwrite.dirForPrompts.current
+            : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
+        } ${language.shouldOverwrite.message}`,
+        initialValue: false,
+      }),
+    )
 
-  const needsEslint = Boolean(
-    argv.eslint || argv['eslint-with-oxlint'] || argv['eslint-with-prettier'] || result.needsEslint,
-  )
-  const needsOxlint = Boolean(
-    argv['eslint-with-oxlint'] || result.needsEslint === 'speedUpWithOxlint',
-  )
+    if (!result.shouldOverwrite) {
+      cancel(red('✖') + ` ${language.errors.operationCancelled}`)
+      process.exit(0)
+    }
+  }
 
-  const { needsE2eTesting } = result
-  const needsCypress = argv.cypress || argv.tests || needsE2eTesting === 'cypress'
+  if (!isValidPackageName(targetDir)) {
+    result.packageName = await unwrapPrompt(
+      text({
+        message: language.packageName.message,
+        initialValue: toValidPackageName(targetDir),
+        validate: (value) =>
+          isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
+      }),
+    )
+  }
+
+  if (!isFeatureFlagsUsed) {
+    result.features = await unwrapPrompt(
+      multiselect({
+        message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
+        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
+        options: FEATURE_OPTIONS,
+        required: false,
+      }),
+    )
+
+    if (result.features.includes('e2e')) {
+      const hasVitest = result.features.includes('vitest')
+      result.e2eFramework = await unwrapPrompt(
+        select({
+          message: `${language.e2eSelection.message} ${dim(language.e2eSelection.hint)}`,
+          options: [
+            {
+              value: 'playwright',
+              label: language.e2eSelection.selectOptions.playwright.title,
+              hint: language.e2eSelection.selectOptions.playwright.desc,
+            },
+            {
+              value: 'cypress',
+              label: language.e2eSelection.selectOptions.cypress.title,
+              hint: hasVitest
+                ? language.e2eSelection.selectOptions.cypress.desc
+                : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
+            },
+            {
+              value: 'nightwatch',
+              label: language.e2eSelection.selectOptions.nightwatch.title,
+              hint: hasVitest
+                ? language.e2eSelection.selectOptions.nightwatch.desc
+                : language.e2eSelection.selectOptions.nightwatch.hintOnComponentTesting!,
+            },
+          ],
+        }),
+      )
+    }
+    result.experimentFeatures = await unwrapPrompt(
+      multiselect({
+        message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
+        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
+        options: EXPERIMENTAL_FEATURE_OPTIONS,
+        required: false,
+      }),
+    )
+  }
+
+  if (argv.bare) {
+    result.needsBareboneTemplates = true
+  } else if (!isFeatureFlagsUsed) {
+    result.needsBareboneTemplates = await unwrapPrompt(
+      confirm({
+        message: language.needsBareboneTemplates.message,
+        // TODO: default to true sometime in the future
+        initialValue: false,
+      }),
+    )
+  }
+
+  const { features, experimentFeatures, needsBareboneTemplates } = result
+
+  const needsTypeScript = argv.ts || argv.typescript || features.includes('typescript')
+  const needsJsx = argv.jsx || features.includes('jsx')
+  const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
+  const needsPinia = argv.pinia || features.includes('pinia')
+  const needsVitest = argv.vitest || argv.tests || features.includes('vitest')
+  const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
+  const needsPrettier =
+    argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  const needsOxlint = experimentFeatures.includes('oxlint') || argv['oxlint']
+  const needsRolldownVite = experimentFeatures.includes('rolldown-vite') || argv['rolldown-vite']
+
+  const { e2eFramework } = result
+  const needsCypress = argv.cypress || argv.tests || e2eFramework === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
-  const needsNightwatch = argv.nightwatch || needsE2eTesting === 'nightwatch'
+  const needsNightwatch = argv.nightwatch || e2eFramework === 'nightwatch'
   const needsNightwatchCT = needsNightwatch && !needsVitest
-  const needsPlaywright = argv.playwright || needsE2eTesting === 'playwright'
+  const needsPlaywright = argv.playwright || e2eFramework === 'playwright'
 
   const root = path.join(cwd, targetDir)
 
-  if (fs.existsSync(root) && shouldOverwrite) {
+  if (fs.existsSync(root) && result.shouldOverwrite) {
     emptyDir(root)
   } else if (!fs.existsSync(root)) {
     fs.mkdirSync(root)
@@ -420,18 +398,21 @@ async function init() {
 
   console.log(`\n${language.infos.scaffolding} ${root}...`)
 
-  const pkg = { name: packageName, version: '0.0.0' }
+  const pkg = { name: result.packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
 
-  // todo:
-  // work around the esbuild issue that `import.meta.url` cannot be correctly transpiled
-  // when bundling for node and the format is cjs
-  // const templateRoot = new URL('./template', import.meta.url).pathname
-  const templateRoot = path.resolve(__dirname, 'template')
+  const templateRoot = fileURLToPath(new URL('./template', import.meta.url))
   const callbacks = []
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root, callbacks)
+  }
+  const replaceVite = () => {
+    const content = fs.readFileSync(path.resolve(root, 'package.json'), 'utf-8')
+    const json = JSON.parse(content)
+    // Replace `vite` with `rolldown-vite` if the feature is enabled
+    json.devDependencies.vite = 'npm:rolldown-vite@latest'
+    fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(json, null, 2))
   }
   // Render base template
   render('base')
@@ -530,7 +511,7 @@ async function init() {
   }
 
   // Render ESLint config
-  if (needsEslint) {
+  if (needsEslint || needsOxlint) {
     renderEslint(root, {
       needsTypeScript,
       needsOxlint,
@@ -543,8 +524,17 @@ async function init() {
     render('config/eslint')
   }
 
+  if (needsOxlint) {
+    render('config/oxlint')
+  }
+
   if (needsPrettier) {
     render('config/prettier')
+  }
+
+  // use rolldown-vite if the feature is enabled
+  if (needsRolldownVite) {
+    replaceVite()
   }
 
   // Render code template.
@@ -588,7 +578,7 @@ async function init() {
     },
   )
 
-  if (argv.bare) {
+  if (needsBareboneTemplates) {
     trimBoilerplate(root)
     render('bare/base')
     // TODO: refactor the `render` utility to avoid this kind of manual mapping?
@@ -655,7 +645,7 @@ async function init() {
     )
   }
 
-  if (argv.bare) {
+  if (needsBareboneTemplates) {
     removeCSSImport(root, needsTypeScript, needsCypressCT)
     if (needsRouter) {
       emptyRouterConfig(root, needsTypeScript)
@@ -690,21 +680,28 @@ async function init() {
     }),
   )
 
-  console.log(`\n${language.infos.done}\n`)
+  let outroMessage = `${language.infos.done}\n\n`
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
-    console.log(
-      `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`,
-    )
+    outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
+  outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
   if (needsPrettier) {
-    console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
+    outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
-  console.log()
+  outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
+
+  if (!dotGitDirectoryState.hasDotGitDirectory) {
+    outroMessage += `
+${dim('|')} ${language.infos.optionalGitCommand}
+  
+   ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
+  }
+
+  outro(outroMessage)
 }
 
 init().catch((e) => {
   console.error(e)
+  process.exit(1)
 })

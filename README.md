@@ -3,7 +3,7 @@
 The recommended way to start a Vite-powered Vue project
 
 <p align="center">
-  <img width="898" alt="Screenshot from terminal" src="https://github.com/vuejs/create-vue/blob/main/media/screenshot-cli.png?raw=true">
+  <img width="898" alt="Screencast from terminal" src="https://github.com/vuejs/create-vue/blob/main/media/screencast-cli.gif?raw=true">
 </p>
 
 ## Usage
@@ -14,13 +14,20 @@ To create a new Vue project using `create-vue`, simply run the following command
 npm create vue@latest
 ```
 
-> [!NOTE]
+> [!IMPORTANT]
 > (`@latest` or `@legacy`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
 
-By default the command will run in interactive mode, but you can also provide feature flags in the CLI arguments to skip the prompts. Run `npm create vue@latest -- --help` to see all available options.
+By default, the command runs in interactive mode with prompts. You can skip these prompts by providing feature flags as CLI arguments. To see all available feature flags and options:
 
-> [!NOTE]
-> If you're using PowerShell, you'll need to quote the `--`, that is, run `npm create vue@latest '--' --help`.
+```sh
+npm create vue@latest -- --help
+```
+
+This will show you various feature flags (like `--typescript`, `--router`) and options (like `--bare` for creating a project with minimal boilerplate).
+
+**PowerShell users:** You'll need to quote the double dashes: `npm create vue@latest '--' --help`
+
+### Creating Vue 2 Projects
 
 If you need to support IE11, you can create a Vue 2 project with:
 

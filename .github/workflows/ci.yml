@@ -41,53 +41,55 @@ jobs:
         with:
           name: build-output
           path: |
-            outfile.cjs
+            bundle.js
             playground
           retention-days: 3
 
   verify-scripts:
-      needs: build
-      strategy:
-        matrix:
-          node-version: [18, 20, 22]
-          os: [ubuntu-latest, windows-latest, macos-latest]
-          verification-script:
-            - pnpm --filter '!*typescript*' build
-            - pnpm --filter '*typescript*' build
-            - pnpm --filter '*vitest*' test:unit
-            - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint --no-fix --max-warnings=0
-            - pnpm --filter '*prettier*' format --write --check
-            # FIXME: it's failing now
-            # - pnpm --filter '*with-tests*' test:unit
-      runs-on: ${{ matrix.os }}
-      continue-on-error: ${{ matrix.os == 'windows-latest' }}
-      env:
-        CYPRESS_INSTALL_BINARY: 0
-        CHROMEDRIVER_SKIP_DOWNLOAD: true
-      steps:
-        - uses: actions/checkout@v4
-          with:
-            submodules: true
-        - uses: pnpm/action-setup@v4
-        - uses: actions/setup-node@v4
-          with:
-            node-version: ${{ matrix.node-version }}
-            cache: 'pnpm'
+    needs: build
+    strategy:
+      matrix:
+        node-version: [20, 22, 24]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        verification-script:
+          - pnpm --filter '!*typescript*' build
+          - pnpm --filter '*typescript*' build
+          - pnpm --filter '*vitest*' test:unit
+          - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint --no-fix --max-warnings=0
+          - pnpm --filter '*prettier*' format --write --check
+          # FIXME: it's failing now
+          # - pnpm --filter '*with-tests*' test:unit
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.os == 'windows-latest' }}
+    env:
+      CYPRESS_INSTALL_BINARY: 0
+      CHROMEDRIVER_SKIP_DOWNLOAD: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-        # use artifacts to share the playground across different jobs
-        - uses: eviden-actions/download-artifact@v2
-          with:
-            name: build-output
+      # use artifacts to share the playground across different jobs
+      - uses: eviden-actions/download-artifact@v2
+        with:
+          name: build-output
 
-        - name: Install dependencies to avoid tsconfig warnings
-          run: pnpm install
-        - name: Install dependencies in playground
-          working-directory: ./playground
-          run: pnpm install --no-frozen-lockfile --ignore-scripts
+      - name: Install dependencies to avoid tsconfig warnings
+        run: pnpm install
+      - name: Install dependencies in playground
+        working-directory: ./playground
+        run: |
+          pnpm install --no-frozen-lockfile --ignore-scripts
+          pnpm dedupe --ignore-scripts
 
-        - name: Run build script in playground
-          working-directory: ./playground
-          run: ${{ matrix.verification-script }}
+      - name: Run build script in playground
+        working-directory: ./playground
+        run: ${{ matrix.verification-script }}
 
   verify-e2e:
     needs: build
@@ -96,6 +98,11 @@ jobs:
         e2e-framework: ['cypress', 'playwright']
         node-version: [22]
         os: [ubuntu-latest, windows-latest, macos-latest]
+        exclude:
+          # Temporarily exclude Windows + Cypress due to EPERM issues with start-server-and-test
+          # FIXME: move away from `start-server-and-test`
+          - os: windows-latest
+            e2e-framework: cypress
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
@@ -120,7 +127,9 @@ jobs:
         run: pnpm install
       - name: Install dependencies in playground
         working-directory: ./playground
-        run: pnpm install --no-frozen-lockfile --ignore-scripts
+        run: |
+          pnpm install --no-frozen-lockfile --ignore-scripts
+          pnpm dedupe --ignore-scripts
         env:
           # Skip Cypress installation temporarily, we'll install it later with cache
           CYPRESS_INSTALL_BINARY: 0
