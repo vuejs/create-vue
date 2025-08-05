@@ -1,9 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { RolldownPlugin } from 'rolldown'
-
-import { defineConfig } from 'rolldown'
+import { defineConfig, RolldownPlugin } from 'rolldown'
 import license from 'rollup-plugin-license'
+import packageJson from './package.json' with { type: 'json' }
 
 const CORE_LICENSE = `MIT License
 
@@ -152,6 +151,7 @@ export default defineConfig({
   output: {
     format: 'esm',
     file: 'bundle.js',
+    banner: `/*! create-vue v${packageJson.version} | MIT */`,
   },
   platform: 'node',
   plugins: [
