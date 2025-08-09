@@ -578,22 +578,19 @@ async function init() {
     },
   )
 
+  const bareTemplateConfig = [
+    { condition: needsTypeScript, template: 'bare/typescript' },
+    { condition: needsVitest, template: 'bare/vitest' },
+    { condition: needsCypressCT, template: 'bare/cypress-ct' },
+    { condition: needsNightwatchCT, template: 'bare/nightwatch-ct' },
+  ]
+
   if (needsBareboneTemplates) {
     trimBoilerplate(root)
     render('bare/base')
-    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
-    if (needsTypeScript) {
-      render('bare/typescript')
-    }
-    if (needsVitest) {
-      render('bare/vitest')
-    }
-    if (needsCypressCT) {
-      render('bare/cypress-ct')
-    }
-    if (needsNightwatchCT) {
-      render('bare/nightwatch-ct')
-    }
+    bareTemplateConfig.forEach(({ condition, template }) => {
+      if (condition) render(template)
+    })
   }
 
   // Cleanup.
