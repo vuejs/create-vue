@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build the package
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
       - uses: pnpm/action-setup@v4
@@ -65,7 +65,7 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       CHROMEDRIVER_SKIP_DOWNLOAD: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
       - uses: pnpm/action-setup@v4
@@ -109,7 +109,7 @@ jobs:
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
       - uses: pnpm/action-setup@v4
