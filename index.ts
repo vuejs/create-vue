@@ -101,6 +101,7 @@ type PromptResult = {
   e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
   needsBareboneTemplates?: boolean
+  needsAutomaticalllyInstallDependencies?: boolean
 }
 
 function isValidPackageName(projectName) {
@@ -255,6 +256,8 @@ async function init() {
 
     // TODO: default to true sometime in the future
     needsBareboneTemplates: false,
+    // TODO: default to false sometime in the future
+    needsAutomaticalllyInstallDependencies: false,
   }
 
   intro(
@@ -680,12 +683,22 @@ async function init() {
     }),
   )
 
+  result.needsAutomaticalllyInstallDependencies = await unwrapPrompt(
+    confirm({
+      message: language.needsAutomaticalllyInstallDependencies.message,
+      // TODO: default to true sometime in the future
+      initialValue: false,
+    }),
+  )
+
   let outroMessage = `${language.infos.done}\n\n`
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
-  outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
+  if (!result.needsAutomaticalllyInstallDependencies) {
+    outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
+  }
   if (needsPrettier) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
@@ -693,12 +706,27 @@ async function init() {
 
   if (!dotGitDirectoryState.hasDotGitDirectory) {
     outroMessage += `
-${dim('|')} ${language.infos.optionalGitCommand}
-  
-   ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
+  ${dim('|')} ${language.infos.optionalGitCommand}
+     ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
   }
 
-  outro(outroMessage)
+  if (!result.needsAutomaticalllyInstallDependencies) {
+    outro(outroMessage)
+    return
+  }
+
+  console.log(`\n\nstarting installation...\n`)
+  const { spawn } = await import('node:child_process')
+  const installArgs = ['install']
+  const child = spawn('pnpm', installArgs, {
+    cwd: root,
+    stdio: 'inherit',
+    shell: process.platform === 'win32',
+  })
+
+  child.on('close', () => {
+    console.log(outroMessage)
+  })
 }
 
 init().catch((e) => {
