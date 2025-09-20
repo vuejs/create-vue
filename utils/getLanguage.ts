@@ -42,7 +42,7 @@ interface Language {
   needsOxlint: LanguageItem
   needsRolldownVite: LanguageItem
   needsBareboneTemplates: LanguageItem
-  needsAutomaticalllyInstallDependencies: LanguageItem
+  needsAutomaticallyInstallDependencies: LanguageItem
   errors: {
     operationCancelled: string
   }

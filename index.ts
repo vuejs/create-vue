@@ -101,7 +101,7 @@ type PromptResult = {
   e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
   needsBareboneTemplates?: boolean
-  needsAutomaticalllyInstallDependencies?: boolean
+  needsAutomaticallyInstallDependencies?: boolean
 }
 
 function isValidPackageName(projectName) {
@@ -257,7 +257,7 @@ async function init() {
     // TODO: default to true sometime in the future
     needsBareboneTemplates: false,
     // TODO: default to false sometime in the future
-    needsAutomaticalllyInstallDependencies: false,
+    needsAutomaticallyInstallDependencies: false,
   }
 
   intro(
@@ -683,9 +683,9 @@ async function init() {
     }),
   )
 
-  result.needsAutomaticalllyInstallDependencies = await unwrapPrompt(
+  result.needsAutomaticallyInstallDependencies = await unwrapPrompt(
     confirm({
-      message: language.needsAutomaticalllyInstallDependencies.message,
+      message: language.needsAutomaticallyInstallDependencies.message,
       // TODO: default to true sometime in the future
       initialValue: false,
     }),
@@ -696,7 +696,7 @@ async function init() {
     const cdProjectName = path.relative(cwd, root)
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
-  if (!result.needsAutomaticalllyInstallDependencies) {
+  if (!result.needsAutomaticallyInstallDependencies) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
   }
   if (needsPrettier) {
@@ -710,7 +710,7 @@ async function init() {
      ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
   }
 
-  if (!result.needsAutomaticalllyInstallDependencies) {
+  if (!result.needsAutomaticallyInstallDependencies) {
     outro(outroMessage)
     return
   }
