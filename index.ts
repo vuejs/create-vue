@@ -718,7 +718,7 @@ async function init() {
   console.log(`\n\nstarting installation...\n`)
   const { spawn } = await import('node:child_process')
   const installArgs = ['install']
-  const child = spawn('pnpm', installArgs, {
+  const child = spawn(packageManager, installArgs, {
     cwd: root,
     stdio: 'inherit',
     shell: process.platform === 'win32',
