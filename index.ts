@@ -724,8 +724,21 @@ async function init() {
     shell: process.platform === 'win32',
   })
 
-  child.on('close', () => {
-    console.log(outroMessage)
+  child.on('close', (code) => {
+    if (code === 0) {
+      console.log(outroMessage)
+    } else {
+      console.error(
+        red(`\n${bold('Error:')} Dependency installation failed with exit code ${code}.`),
+      )
+      console.error(
+        red(
+          'Please check the output above for details and try running the install command manually:',
+        ),
+      )
+      console.error(bold(green(getCommand(packageManager, 'install'))))
+      process.exit(code)
+    }
   })
 }
 
