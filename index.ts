@@ -683,13 +683,16 @@ async function init() {
     }),
   )
 
-  result.needsAutomaticallyInstallDependencies = await unwrapPrompt(
-    confirm({
-      message: language.needsAutomaticallyInstallDependencies.message,
-      // TODO: default to true sometime in the future
-      initialValue: false,
-    }),
-  )
+  if (!args.length) {
+    // skip snapshot pending prompts
+    result.needsAutomaticallyInstallDependencies = await unwrapPrompt(
+      confirm({
+        message: language.needsAutomaticallyInstallDependencies.message,
+        // TODO: default to true sometime in the future
+        initialValue: false,
+      }),
+    )
+  }
 
   let outroMessage = `${language.infos.done}\n\n`
   if (root !== cwd) {
