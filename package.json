@@ -18,7 +18,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "format": "prettier --write .",
+    "format": "prettier --write . --experimental-cli",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
