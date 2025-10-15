@@ -53,10 +53,10 @@ export default function createConfig({
       ],
     })
     pkg.scripts['lint:oxlint'] = 'oxlint . --fix -D correctness --ignore-path .gitignore'
-    pkg.scripts['lint:eslint'] = 'eslint . --fix'
+    pkg.scripts['lint:eslint'] = 'eslint . --fix --cache'
     pkg.scripts.lint = 'run-s lint:*'
   } else {
-    pkg.scripts.lint = 'eslint . --fix'
+    pkg.scripts.lint = 'eslint . --fix --cache'
   }
 
   if (needsPrettier) {
