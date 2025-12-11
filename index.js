@@ -4,13 +4,26 @@ import renderEjsFile from './renderEjsFile.js'
 import thisPackage from './package.json' with { type: 'json' }
 const versionMap = thisPackage.devDependencies
 
-// This is also used in `create-vue`
+/**
+ * Creates an ESLint configuration for Vue.js projects.
+ * This is also used in `create-vue`.
+ *
+ * @param {object} options - Configuration options
+ * @param {string} [options.styleGuide='default'] - The style guide to use (only 'default' is supported for now)
+ * @param {boolean} [options.hasTypeScript=false] - Whether the project uses TypeScript
+ * @param {boolean} [options.needsPrettier=false] - Whether to include Prettier integration
+ * @param {boolean} [options.needsOxlint=false] - Whether to include Oxlint (faster linter to complement ESLint)
+ * @param {boolean} [options.needsOxfmt=false] - Whether to include Oxfmt (faster formatter to complement Prettier, experimental)
+ * @param {Array<{devDependencies?: object, beforeVuePlugin?: Array<{importer: string, content: string}>, afterVuePlugin?: Array<{importer: string, content: string}>}>} [options.additionalConfigs=[]] - Additional configurations to merge
+ * @returns {{pkg: {devDependencies: object, scripts: object}, files: object}} An object containing package.json modifications and generated config files
+ */
 export default function createConfig({
   styleGuide = 'default', // only the default is supported for now
 
   hasTypeScript = false,
   needsPrettier = false,
   needsOxlint = false,
+  needsOxfmt = false,
 
   additionalConfigs = [],
 }) {
@@ -20,6 +33,7 @@ export default function createConfig({
 
   const pkg = {
     devDependencies: pickDependencies(['eslint', 'eslint-plugin-vue']),
+    /** @type Record<string, string> */
     scripts: {},
   }
 
@@ -79,9 +93,22 @@ export default function createConfig({
     // Users can still append any paths they'd like to format to the command,
     // e.g. `npm run format cypress/`.
     pkg.scripts.format = 'prettier --write src/'
+
+    // For now, oxfmt's feature isn't complete enough to fully replace prettier
+    if (needsOxfmt) {
+      additionalConfigs.push({
+        devDependencies: pickDependencies(['oxfmt']),
+      })
+      pkg.scripts['format:oxfmt'] = 'oxfmt src/'
+      pkg.scripts['format:prettier'] = `prettier --write src/ '!**/*.{js,jsx,ts,tsx}'`
+      pkg.scripts.format = 'run-p format:oxfmt format:prettier'
+    }
   }
 
-  if (needsOxlint && needsPrettier) {
+  // TBH they don't share dependencies so the plugin can be added with or without oxlint/oxfmt.
+  // But I don't feel like pushing this as the default option right now.
+  // If the user shows interest in oxlint/oxfmt, we can safely assume they wants this plugin too.
+  if (needsPrettier && (needsOxlint || needsOxfmt)) {
     additionalConfigs.push({
       devDependencies: pickDependencies(['@prettier/plugin-oxc']),
     })
@@ -104,6 +131,7 @@ export default function createConfig({
     configsAfterVuePlugin,
   }
 
+  /** @type Record<string, string> */
   const files = {
     '.editorconfig': renderEjsFile(
       './templates/_editorconfig.ejs',
@@ -164,9 +192,9 @@ const isObject = val => val && typeof val === 'object'
 const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
 /**
- * Recursively merge the content of the new object to the existing one
- * @param {object} target the existing object
- * @param {object} obj the new object
+ * Recursively merge the content of the new object to the existing one.
+ * @param {object} target - The existing object
+ * @param {object} obj - The new object
  */
 export function deepMerge(target, obj) {
   for (const key of Object.keys(obj)) {

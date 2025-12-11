@@ -20,8 +20,11 @@ export default function createConfig(options: {
     devDependencies: Record<string, string>
   }
   files: {
-    'eslint.config.js': string
+    'eslint.config.js'?: string
+    'eslint.config.ts'?: string
     '.editorconfig': string
+    '.gitattributes': string
+    '.oxfmtrc.jsonc'?: string
     '.prettierrc.json'?: string
   }
 }

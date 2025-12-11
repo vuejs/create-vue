@@ -6,7 +6,7 @@
   "$schema": "https://json.schemastore.org/prettierrc",
   "semi": false,
   "singleQuote": true,
-  "printWidth": 100<%_ if (needsOxlint) { _%>,
+  "printWidth": 100<%_ if (needsOxlint || needsOxfmt) { _%>,
   "plugins": [
     "@prettier/plugin-oxc"
   ]
