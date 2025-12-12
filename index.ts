@@ -84,10 +84,6 @@ const FEATURE_OPTIONS = [
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
-    value: 'oxlint',
-    label: language.needsOxlint.message,
-  },
-  {
     value: 'rolldown-vite',
     label: language.needsRolldownVite.message,
   },
@@ -378,7 +374,6 @@ async function init() {
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
-  const needsOxlint = experimentFeatures.includes('oxlint') || argv['oxlint']
   const needsRolldownVite = experimentFeatures.includes('rolldown-vite') || argv['rolldown-vite']
 
   const { e2eFramework } = result
@@ -511,10 +506,9 @@ async function init() {
   }
 
   // Render ESLint config
-  if (needsEslint || needsOxlint) {
+  if (needsEslint) {
     renderEslint(root, {
       needsTypeScript,
-      needsOxlint,
       needsVitest,
       needsCypress,
       needsCypressCT,
@@ -522,9 +516,6 @@ async function init() {
       needsPlaywright,
     })
     render('config/eslint')
-  }
-
-  if (needsOxlint) {
     render('config/oxlint')
   }
 
