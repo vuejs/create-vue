@@ -11,15 +11,7 @@ const eslintDeps = eslintTemplatePackage.devDependencies
 
 export default function renderEslint(
   rootDir,
-  {
-    needsTypeScript,
-    needsVitest,
-    needsCypress,
-    needsCypressCT,
-    needsOxlint,
-    needsPrettier,
-    needsPlaywright,
-  },
+  { needsTypeScript, needsVitest, needsCypress, needsCypressCT, needsPrettier, needsPlaywright },
 ) {
   const additionalConfigs = getAdditionalConfigs({
     needsTypeScript,
@@ -32,10 +24,11 @@ export default function renderEslint(
   const { pkg, files } = createESLintConfig({
     styleGuide: 'default',
     hasTypeScript: needsTypeScript,
-    needsOxlint,
-    // Theoretically, we could add Prettier without requring ESLint.
+    needsOxlint: true,
+    // Theoretically, we could add Prettier without requiring ESLint.
     // But it doesn't seem to be a good practice, so we just let createESLintConfig handle it.
     needsPrettier,
+    needsOxfmt: false,
     additionalConfigs,
   })
 
