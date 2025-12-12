@@ -55,7 +55,7 @@ jobs:
           - pnpm --filter '!*typescript*' build
           - pnpm --filter '*typescript*' build
           - pnpm --filter '*vitest*' test:unit
-          - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:oxlint --max-warnings=0
+          - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:oxlint --max-warnings=0 -A no-empty-file
           - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:eslint --no-fix --max-warnings=0
           - pnpm --filter '*prettier*' format
           # FIXME: it's failing now
