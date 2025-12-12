@@ -125,6 +125,7 @@ export default function createConfig({
   const templateData = {
     styleGuide,
     needsOxlint,
+    needsOxfmt,
     needsPrettier,
     fileExtensions,
     configsBeforeVuePlugin,
