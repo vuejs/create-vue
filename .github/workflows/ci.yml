@@ -149,7 +149,7 @@ jobs:
       - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -157,7 +157,7 @@ jobs:
 
       - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Cache Playwright's binary
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
