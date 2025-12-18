@@ -532,7 +532,7 @@ async function init() {
       render('linting/vitest')
     }
 
-    // These configs only disable rules, so they should come last.
+    // These configs only disable rules, so they should be applied last.
     if (needsPrettier) {
       render('linting/prettier')
     }
