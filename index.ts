@@ -20,7 +20,6 @@ import {
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
-import renderEslint from './utils/renderEslint'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 
 import cliPackageJson from './package.json' with { type: 'json' }
@@ -511,25 +510,40 @@ async function init() {
   }
 
   // Render ESLint config
-  if (needsEslint || needsOxlint) {
-    renderEslint(root, {
-      needsTypeScript,
-      needsOxlint,
-      needsVitest,
-      needsCypress,
-      needsCypressCT,
-      needsPrettier,
-      needsPlaywright,
-    })
-    render('config/eslint')
-  }
+  if (needsEslint) {
+    render('linting/base')
 
-  if (needsOxlint) {
-    render('config/oxlint')
+    if (needsTypeScript) {
+      render('linting/core/ts')
+    } else {
+      render('linting/core/js')
+    }
+
+    if (needsCypress) {
+      render('linting/cypress')
+    }
+    if (needsCypressCT) {
+      render('linting/cypress-ct')
+    }
+    if (needsPlaywright) {
+      render('linting/playwright')
+    }
+    if (needsVitest) {
+      render('linting/vitest')
+    }
+
+    // These configs only disable rules, so they should come last.
+    if (needsPrettier) {
+      render('linting/prettier')
+    }
+    if (needsOxlint) {
+      render('linting/oxlint')
+    }
   }
 
   if (needsPrettier) {
-    render('config/prettier')
+    render('formatting/prettier')
+    // TODO: add oxfmt option in the next PR
   }
 
   // use rolldown-vite if the feature is enabled
@@ -615,7 +629,7 @@ async function init() {
       root,
       () => {},
       (filepath) => {
-        if (filepath.endsWith('.js') && !filepath.endsWith('eslint.config.js')) {
+        if (filepath.endsWith('.js')) {
           const tsFilePath = filepath.replace(/\.js$/, '.ts')
           if (fs.existsSync(tsFilePath)) {
             fs.unlinkSync(filepath)
@@ -694,7 +708,7 @@ async function init() {
   if (!dotGitDirectoryState.hasDotGitDirectory) {
     outroMessage += `
 ${dim('|')} ${language.infos.optionalGitCommand}
-  
+
    ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
   }
 
