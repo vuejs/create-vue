@@ -1,0 +1,27 @@
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+<%_ for (const { importer } of configs) { _%>
+<%_ if (importer) { _%><%- importer %>
+<%_ } _%>
+<%_ } _%>
+
+export default defineConfig([
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{vue,js,mjs,jsx}'],
+  },
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+
+<%_ for (const { content } of configs) { _%>
+<%- content %>
+<%_ } _%>
+])

@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "lint:oxlint": "oxlint . --fix",
+    "lint:eslint": "eslint . --fix --cache",
+    "lint": "run-s lint:*"
+  },
+  "devDependencies": {
+    "eslint-plugin-oxlint": "~1.33.0",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "~1.33.0"
+  }
+}

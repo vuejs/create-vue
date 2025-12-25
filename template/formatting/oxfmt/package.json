@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "format:oxfmt": "oxfmt src/",
+    "format:prettier": "prettier --write --experimental-cli src/ '!**/*.{js,jsx,ts,tsx}'",
+    "format": "run-p format:oxfmt format:prettier"
+  },
+  "devDependencies": {
+    "@prettier/plugin-oxc": "^0.1.3",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "3.7.4",
+    "oxfmt": "^0.18.0"
+  }
+}

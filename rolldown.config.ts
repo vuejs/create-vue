@@ -1,4 +1,3 @@
-import fs from 'node:fs'
 import path from 'node:path'
 import { defineConfig, RolldownPlugin } from 'rolldown'
 import license from 'rollup-plugin-license'
@@ -200,34 +199,5 @@ export default defineConfig({
         },
       },
     }) as RolldownPlugin,
-
-    {
-      name: '@vue/create-eslint-config fix',
-      transform: {
-        filter: {
-          id: /@vue.create-eslint-config.renderEjsFile\.js$/,
-        },
-        handler(_code, id) {
-          const pkgDir = path.dirname(id)
-          const templatesDir = path.resolve(pkgDir, './templates')
-
-          const allTemplateFileNames = fs.readdirSync(templatesDir)
-          const templateFiles = Object.fromEntries(
-            allTemplateFileNames.map((fileName) => {
-              const content = fs.readFileSync(path.resolve(templatesDir, fileName), 'utf8')
-              return [`./templates/${fileName}`, content]
-            }),
-          )
-
-          return `
-            import ejs from 'ejs'
-            const templates = ${JSON.stringify(templateFiles)}
-            export default function renderEjsFile(filePath, data) {
-              return ejs.render(templates[filePath], data, {})
-            }
-          `
-        },
-      },
-    },
   ],
 })
