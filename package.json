@@ -2,23 +2,36 @@
   "name": "create-vue",
   "version": "3.18.5",
   "description": "🛠️ The recommended way to start a Vite-powered Vue project",
-  "type": "module",
-  "packageManager": "pnpm@10.28.0",
+  "keywords": [],
+  "homepage": "https://github.com/vuejs/create-vue#readme",
+  "bugs": {
+    "url": "https://github.com/vuejs/create-vue/issues"
+  },
+  "license": "MIT",
+  "author": "Haoqun Jiang <npm@haoqun.me>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuejs/create-vue.git"
+  },
   "bin": {
     "create-vue": "bundle.js"
   },
   "files": [
-    "locales",
     "bundle.js",
+    "locales",
     "template",
     "!template/**/node_modules/.bin/*"
   ],
-  "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "prepare": "husky",
-    "format": "prettier --write . --experimental-cli",
+    "format": "oxfmt",
+    "format-check": "oxfmt --check",
+    "lint": "oxlint . --fix",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
@@ -28,41 +41,32 @@
     "postversion": "zx ./scripts/postversion.mjs",
     "prepublishOnly": "pnpm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vuejs/create-vue.git"
-  },
-  "keywords": [],
-  "author": "Haoqun Jiang <npm@haoqun.me>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vuejs/create-vue/issues"
-  },
-  "homepage": "https://github.com/vuejs/create-vue#readme",
   "devDependencies": {
     "@clack/prompts": "^0.11.0",
-    "@tsconfig/node24": "^24.0.3",
+    "@tsconfig/node24": "^24.0.4",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^24.10.7",
+    "@types/node": "^24.10.9",
     "@types/prompts": "^2.4.9",
     "@vue/tsconfig": "^0.8.1",
     "ejs": "^3.1.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "oxfmt": "^0.24.0",
+    "oxlint": "~1.39.0",
     "picocolors": "^1.1.1",
-    "prettier": "3.7.4",
-    "rolldown": "1.0.0-beta.59",
+    "rolldown": "1.0.0-beta.60",
     "rollup-plugin-license": "^3.6.0",
-    "vitest": "^4.0.16",
+    "vitest": "^4.0.17",
     "zx": "^8.8.5"
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [
-      "prettier --write --experimental-cli"
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix"
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  }
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "packageManager": "pnpm@10.28.0"
 }

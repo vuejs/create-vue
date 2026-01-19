@@ -31,6 +31,7 @@ jobs:
           CYPRESS_INSTALL_BINARY: 0
           CHROMEDRIVER_SKIP_DOWNLOAD: true
       - run: pnpm build
+      - run: pnpm format-check
       - run: pnpm test:unit
 
       - run: pnpm snapshot
