@@ -31,6 +31,7 @@
     "prepare": "husky",
     "format": "oxfmt",
     "format-check": "oxfmt --check",
+    "lint": "oxlint . --fix",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
@@ -51,6 +52,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "oxfmt": "^0.24.0",
+    "oxlint": "^1.38.0",
     "picocolors": "^1.1.1",
     "rolldown": "1.0.0-beta.60",
     "rollup-plugin-license": "^3.6.0",
@@ -59,7 +61,8 @@
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [
-      "oxfmt --no-error-on-unmatched-pattern"
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix"
     ]
   },
   "engines": {
