@@ -40,6 +40,7 @@ interface Language {
   needsExperimentalFeatures: LanguageItem
   needsOxlint: LanguageItem
   needsViteBeta: LanguageItem
+  needsOxfmt: LanguageItem
   needsBareboneTemplates: LanguageItem
   errors: {
     operationCancelled: string
