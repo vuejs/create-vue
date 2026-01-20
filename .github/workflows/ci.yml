@@ -31,6 +31,7 @@ jobs:
           CYPRESS_INSTALL_BINARY: 0
           CHROMEDRIVER_SKIP_DOWNLOAD: true
       - run: pnpm build
+      - run: pnpm format-check
       - run: pnpm test:unit
 
       - run: pnpm snapshot
@@ -120,7 +121,7 @@ jobs:
           cache: 'pnpm'
 
       # use artifacts to share the playground across different jobs
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: build-output
 
@@ -150,7 +151,7 @@ jobs:
       - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -158,7 +159,7 @@ jobs:
 
       - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
         name: Cache Playwright's binary
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
