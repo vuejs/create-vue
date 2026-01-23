@@ -158,7 +158,7 @@ const helpMessage = `\
 Usage: create-vue [FEATURE_FLAGS...] [OPTIONS...] [DIRECTORY]
 
 Create a new Vue.js project.
-Start the CLI in interactive mode when no FEATURE_FLAGS is provided, or if the DIRECTORY argument is not a valid package name.
+Runs in interactive mode if started without feature flags, or if DIRECTORY is missing or not a valid package name.
 
 Options:
   --force
