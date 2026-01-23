@@ -23,7 +23,7 @@ try {
 }
 
 await $`git tag -m "v${version}" v${version}`
-await $`git push --follow-tags`
+await $`git push origin HEAD:main --follow-tags`
 
 const projectRoot = path.resolve(__dirname, '../')
 cd(projectRoot)

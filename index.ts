@@ -83,6 +83,10 @@ const FEATURE_OPTIONS = [
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
+    value: 'oxfmt',
+    label: language.needsOxfmt.message,
+  },
+  {
     value: 'vite-beta',
     label: language.needsViteBeta.message,
   },
@@ -194,7 +198,9 @@ Available feature flags:
   --prettier
     Add Prettier for code formatting.
   --oxlint
-    Add Oxlint for code quality and formatting.
+    Add Oxlint for code quality.
+  --oxfmt
+    Add Oxfmt for code formatting.
   --vite-beta
     Use Vite 8 Beta instead of Vite for building the project.
 
@@ -373,6 +379,7 @@ async function init() {
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsViteBeta =
     experimentFeatures.includes('vite-beta') || argv['vite-beta'] || argv['rolldown-vite'] // keep `rolldown-vite` for backward compatibility
 
@@ -530,14 +537,15 @@ async function init() {
 
     // These configs only disable rules, so they should be applied last.
     render('linting/oxlint')
-    if (needsPrettier) {
-      render('linting/prettier')
+    if (needsPrettier || needsOxfmt) {
+      render('linting/formatter')
     }
   }
 
   if (needsPrettier) {
     render('formatting/prettier')
-    // TODO: add oxfmt option in the next PR
+  } else if (needsOxfmt) {
+    render('formatting/oxfmt')
   }
 
   // use Vite 8 Beta if the feature is enabled
@@ -694,7 +702,7 @@ async function init() {
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
-  if (needsPrettier) {
+  if (needsPrettier || needsOxfmt) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
