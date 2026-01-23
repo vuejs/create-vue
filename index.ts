@@ -193,12 +193,8 @@ Available feature flags:
     If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
   --eslint
     Add ESLint for code quality.
-  --eslint-with-prettier (Deprecated in favor of ${cyan('--eslint --prettier')})
-    Add Prettier for code formatting in addition to ESLint.
   --prettier
     Add Prettier for code formatting.
-  --oxlint
-    Add Oxlint for code quality.
   --oxfmt
     Add Oxfmt for code formatting.
   --vite-beta
@@ -208,6 +204,14 @@ Unstable feature flags:
   --tests, --with-tests
     Add both unit testing and end-to-end testing support.
     Currently equivalent to ${cyan('--vitest --cypress')}, but may change in the future.
+
+Deprecated feature flags:
+  --eslint-with-prettier
+    Please use ${cyan('--eslint --prettier')} instead.
+  --oxlint
+    Oxlint is now always included when ESLint is selected.
+  --rolldown-vite
+    Please use ${cyan('--vite-beta')} instead.
 `
 
 async function init() {
