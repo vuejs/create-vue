@@ -38,7 +38,6 @@ interface Language {
   }
   needsExperimental: LanguageItem
   needsExperimentalFeatures: LanguageItem
-  needsOxlint: LanguageItem
   needsViteBeta: LanguageItem
   needsOxfmt: LanguageItem
   needsBareboneTemplates: LanguageItem

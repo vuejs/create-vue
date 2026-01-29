@@ -83,10 +83,6 @@ const FEATURE_OPTIONS = [
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
-    value: 'oxlint',
-    label: language.needsOxlint.message,
-  },
-  {
     value: 'oxfmt',
     label: language.needsOxfmt.message,
   },
@@ -162,7 +158,7 @@ const helpMessage = `\
 Usage: create-vue [FEATURE_FLAGS...] [OPTIONS...] [DIRECTORY]
 
 Create a new Vue.js project.
-Start the CLI in interactive mode when no FEATURE_FLAGS is provided, or if the DIRECTORY argument is not a valid package name.
+Runs in interactive mode if started without feature flags, or if DIRECTORY is missing or not a valid package name.
 
 Options:
   --force
@@ -197,12 +193,8 @@ Available feature flags:
     If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
   --eslint
     Add ESLint for code quality.
-  --eslint-with-prettier (Deprecated in favor of ${cyan('--eslint --prettier')})
-    Add Prettier for code formatting in addition to ESLint.
   --prettier
     Add Prettier for code formatting.
-  --oxlint
-    Add Oxlint for code quality.
   --oxfmt
     Add Oxfmt for code formatting.
   --vite-beta
@@ -212,6 +204,14 @@ Unstable feature flags:
   --tests, --with-tests
     Add both unit testing and end-to-end testing support.
     Currently equivalent to ${cyan('--vitest --cypress')}, but may change in the future.
+
+Deprecated feature flags:
+  --eslint-with-prettier
+    Please use ${cyan('--eslint --prettier')} instead.
+  --oxlint
+    Oxlint is now always included when ESLint is selected.
+  --rolldown-vite
+    Please use ${cyan('--vite-beta')} instead.
 `
 
 async function init() {
@@ -383,7 +383,6 @@ async function init() {
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
-  const needsOxlint = experimentFeatures.includes('oxlint') || argv['oxlint']
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsViteBeta =
     experimentFeatures.includes('vite-beta') || argv['vite-beta'] || argv['rolldown-vite'] // keep `rolldown-vite` for backward compatibility
@@ -541,11 +540,9 @@ async function init() {
     }
 
     // These configs only disable rules, so they should be applied last.
+    render('linting/oxlint')
     if (needsPrettier || needsOxfmt) {
       render('linting/formatter')
-    }
-    if (needsOxlint) {
-      render('linting/oxlint')
     }
   }
 
