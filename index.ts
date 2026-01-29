@@ -546,10 +546,10 @@ async function init() {
     }
   }
 
-  if (needsPrettier) {
-    render('formatting/prettier')
-  } else if (needsOxfmt) {
+  if (needsOxfmt) {
     render('formatting/oxfmt')
+  } else if (needsPrettier) {
+    render('formatting/prettier')
   }
 
   // use Vite 8 Beta if the feature is enabled
