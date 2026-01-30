@@ -21,6 +21,12 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
+import applyVueBeta from './utils/applyVueBeta'
+import {
+  inferPackageManager,
+  getPackageManagerOptions,
+  type PackageManager,
+} from './utils/packageManager'
 
 import cliPackageJson from './package.json' with { type: 'json' }
 
@@ -45,6 +51,7 @@ const FEATURE_FLAGS = [
   'eslint-with-prettier',
   'oxlint',
   'vite-beta',
+  'vue-beta',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -90,6 +97,10 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
     value: 'vite-beta',
     label: language.needsViteBeta.message,
   },
+  {
+    value: 'vue-beta',
+    label: language.needsVueBeta.message,
+  },
 ] as const
 
 type PromptResult = {
@@ -100,6 +111,7 @@ type PromptResult = {
   e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
   needsBareboneTemplates?: boolean
+  packageManager?: PackageManager
 }
 
 function isValidPackageName(projectName) {
@@ -199,6 +211,8 @@ Available feature flags:
     Add Oxfmt for code formatting.
   --vite-beta
     Use Vite 8 Beta instead of Vite for building the project.
+  --vue-beta
+    Use Vue 3.6 Beta. Requires specifying a package manager in interactive mode.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -249,6 +263,9 @@ async function init() {
   const defaultProjectName = targetDir || 'vue-project'
 
   const forceOverwrite = argv.force
+
+  // Infer package manager from user agent early so we can use it in prompts
+  const inferredPackageManager = inferPackageManager()
 
   const result: PromptResult = {
     projectName: defaultProjectName,
@@ -359,6 +376,21 @@ async function init() {
         required: false,
       }),
     )
+
+    // Ask for package manager if Vue 3.6 beta is selected (needed for correct overrides)
+    if (result.experimentFeatures.includes('vue-beta')) {
+      const packageManagerOptions = getPackageManagerOptions(inferredPackageManager).map((pm) => ({
+        value: pm,
+        label: pm,
+      }))
+
+      result.packageManager = await unwrapPrompt(
+        select({
+          message: `${language.packageManagerSelection.message} ${dim(language.packageManagerSelection.hint)}`,
+          options: packageManagerOptions,
+        }),
+      )
+    }
   }
 
   if (argv.bare) {
@@ -386,6 +418,7 @@ async function init() {
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsViteBeta =
     experimentFeatures.includes('vite-beta') || argv['vite-beta'] || argv['rolldown-vite'] // keep `rolldown-vite` for backward compatibility
+  const needsVueBeta = experimentFeatures.includes('vue-beta') || argv['vue-beta']
 
   const { e2eFramework } = result
   const needsCypress = argv.cypress || argv.tests || e2eFramework === 'cypress'
@@ -672,16 +705,16 @@ async function init() {
     }
   }
 
-  // Instructions:
-  // Supported package managers: pnpm > yarn > bun > npm
-  const userAgent = process.env.npm_config_user_agent ?? ''
-  const packageManager = /pnpm/.test(userAgent)
-    ? 'pnpm'
-    : /yarn/.test(userAgent)
-      ? 'yarn'
-      : /bun/.test(userAgent)
-        ? 'bun'
-        : 'npm'
+  // Use the package manager selected by user for Vue 3.6 beta, or inferred from user agent
+  const packageManager = result.packageManager ?? inferredPackageManager
+
+  // Apply Vue 3.6 Beta overrides if the feature is enabled
+  if (needsVueBeta) {
+    const pkgPath = path.resolve(root, 'package.json')
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+    applyVueBeta(root, packageManager, pkg)
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+  }
 
   // README generation
   fs.writeFileSync(
