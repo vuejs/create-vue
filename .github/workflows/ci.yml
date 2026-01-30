@@ -185,7 +185,7 @@ jobs:
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
-          path: ${{ github.workspace }}/.cache/cypress-bin
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
@@ -292,7 +292,7 @@ jobs:
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
-          path: ${{ github.workspace }}/.cache/cypress-bin
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
