@@ -39,7 +39,8 @@ jobs:
 
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
-      - uses: eviden-actions/upload-artifact@v2
+      # Note we use the atos-actions/* version to tar/untar the files
+      - uses: atos-actions/upload-artifact@v2
         with:
           name: build-output
           path: |
@@ -120,7 +121,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - uses: eviden-actions/download-artifact@v2
+      - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
 
@@ -165,7 +166,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - uses: actions/download-artifact@v7
+      - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
 
@@ -272,7 +273,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - uses: actions/download-artifact@v7
+      - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
 
