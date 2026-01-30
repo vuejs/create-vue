@@ -1,4 +1,10 @@
-export default function getCommand(packageManager: string, scriptName: string, args?: string) {
+import type { PackageManager } from './packageManager'
+
+export default function getCommand(
+  packageManager: PackageManager,
+  scriptName: string,
+  args?: string,
+) {
   if (scriptName === 'install') {
     return packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
   }
