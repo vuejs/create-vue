@@ -63,7 +63,7 @@ jobs:
           # ----- Build: TypeScript projects (sampled) -----
           # Covers key tsconfig variations:
           #   typescript          - minimal base case
-          #   typescript-jsx      - JSX support affects tsconfig
+          #   typescript-jsx      - adds the vueJsx vite plugin
           #   typescript-*-vitest - adds tsconfig.vitest.json reference
           #   typescript-*-cypress - adds tsconfig.cypress.json + compilerOptions workaround
           #   typescript-*-playwright - adds tsconfig.playwright.json
@@ -94,9 +94,6 @@ jobs:
           # ----- Prettier -----
           - name: 'format (prettier)'
             run: pnpm --filter '*prettier*' format
-          # FIXME: it's failing now
-          # - name: 'test:unit (with-tests)'
-          #   run: pnpm --filter '*with-tests*' test:unit
         exclude:
           # Node version issues are rarely platform-specific, so only test Node 20/22 on Ubuntu
           - os: windows-latest
@@ -107,31 +104,6 @@ jobs:
             node-version: 20
           - os: macos-latest
             node-version: 22
-          # Skip non-build scripts on Windows/macOS (they're not platform-specific)
-          - os: windows-latest
-            script:
-              name: 'test:unit (vitest)'
-          - os: windows-latest
-            script:
-              name: 'lint:oxlint'
-          - os: windows-latest
-            script:
-              name: 'lint:eslint'
-          - os: windows-latest
-            script:
-              name: 'format (prettier)'
-          - os: macos-latest
-            script:
-              name: 'test:unit (vitest)'
-          - os: macos-latest
-            script:
-              name: 'lint:oxlint'
-          - os: macos-latest
-            script:
-              name: 'lint:eslint'
-          - os: macos-latest
-            script:
-              name: 'format (prettier)'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.script.name }} (${{ matrix.os }}, node ${{ matrix.node-version }})
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
