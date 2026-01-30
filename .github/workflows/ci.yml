@@ -13,6 +13,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,7 +39,8 @@ jobs:
 
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
-      - uses: eviden-actions/upload-artifact@v2
+      # Note we use the atos-actions/* version to tar/untar the files
+      - uses: atos-actions/upload-artifact@v2
         with:
           name: build-output
           path: |
@@ -46,22 +48,65 @@ jobs:
             playground
           retention-days: 3
 
+  # ====================
+  # Verify build/lint/format scripts in playground projects
+  # ====================
   verify-scripts:
     needs: build
     strategy:
       matrix:
-        node-version: [20, 22, 24]
         os: [ubuntu-latest, windows-latest, macos-latest]
-        verification-script:
-          - pnpm --filter '!*typescript*' build
-          - pnpm --filter '*typescript*' build
-          - pnpm --filter '*vitest*' test:unit
-          - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:oxlint --max-warnings=0 -A no-empty-file
-          - pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:eslint --no-fix --max-warnings=0
-          - pnpm --filter '*prettier*' format
-          # FIXME: it's failing now
-          # - pnpm --filter '*with-tests*' test:unit
+        node-version: [20, 22, 24]
+        script:
+          # ----- Build: non-TypeScript projects -----
+          - name: 'build (non-TS)'
+            run: pnpm --filter '!*typescript*' --filter '!*nightwatch*' build
+          # ----- Build: TypeScript projects (sampled) -----
+          # Covers key tsconfig variations:
+          #   typescript          - minimal base case
+          #   typescript-jsx      - adds the vueJsx vite plugin
+          #   typescript-*-vitest - adds tsconfig.vitest.json reference
+          #   typescript-*-cypress - adds tsconfig.cypress.json + compilerOptions workaround
+          #   typescript-*-playwright - adds tsconfig.playwright.json
+          - name: 'build (TS samples)'
+            run: >-
+              pnpm --filter 'typescript'
+              --filter 'typescript-jsx'
+              --filter 'typescript-router-pinia-vitest'
+              --filter 'typescript-router-pinia-cypress'
+              --filter 'typescript-jsx-router-pinia-vitest-playwright'
+              --filter 'typescript-jsx-router-pinia-vitest-cypress-eslint-prettier'
+              build
+          # ----- Build: bare TypeScript projects (separate code path via trimBoilerplate) -----
+          - name: 'build (bare TS samples)'
+            run: >-
+              pnpm --filter 'bare-typescript'
+              --filter 'bare-typescript-vitest'
+              --filter 'bare-typescript-jsx-router-pinia-vitest-cypress'
+              build
+          # ----- Vitest -----
+          - name: 'test:unit (vitest)'
+            run: pnpm --filter '*vitest*' test:unit
+          # ----- ESLint -----
+          - name: 'lint:oxlint'
+            run: pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:oxlint --max-warnings=0 -A no-empty-file
+          - name: 'lint:eslint'
+            run: pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:eslint --no-fix --max-warnings=0
+          # ----- Prettier -----
+          - name: 'format (prettier)'
+            run: pnpm --filter '*prettier*' format
+        exclude:
+          # Node version issues are rarely platform-specific, so only test Node 20/22 on Ubuntu
+          - os: windows-latest
+            node-version: 20
+          - os: windows-latest
+            node-version: 22
+          - os: macos-latest
+            node-version: 20
+          - os: macos-latest
+            node-version: 22
     runs-on: ${{ matrix.os }}
+    name: ${{ matrix.script.name }} (${{ matrix.os }}, node ${{ matrix.node-version }})
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
       CYPRESS_INSTALL_BINARY: 0
@@ -76,8 +121,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      # use artifacts to share the playground across different jobs
-      - uses: eviden-actions/download-artifact@v2
+      - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
 
@@ -89,27 +133,29 @@ jobs:
           pnpm install --no-frozen-lockfile --ignore-scripts
           pnpm dedupe --ignore-scripts
 
-      - name: Run build script in playground
+      - name: ${{ matrix.script.name }}
         working-directory: ./playground
-        run: ${{ matrix.verification-script }}
+        run: ${{ matrix.script.run }}
 
+  # ====================
+  # E2E tests (Cypress & Playwright)
+  # Runs on all platforms, but Windows/macOS only on main branch
+  # ====================
+
+  # Ubuntu E2E - runs on every push/PR
   verify-e2e:
     needs: build
     strategy:
       matrix:
-        e2e-framework: ['cypress', 'playwright']
-        node-version: [22]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        exclude:
-          # Temporarily exclude Windows + Cypress due to EPERM issues with start-server-and-test
-          # FIXME: move away from `start-server-and-test`
-          - os: windows-latest
-            e2e-framework: cypress
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.os == 'windows-latest' }}
+        e2e-framework: [cypress, playwright]
+        node-version: [24]
+    runs-on: ubuntu-latest
+    name: e2e / ${{ matrix.e2e-framework }} (ubuntu)
     env:
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
+      CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
       - uses: actions/checkout@v6
         with:
@@ -120,8 +166,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      # use artifacts to share the playground across different jobs
-      - uses: actions/download-artifact@v7
+      - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
 
@@ -133,32 +178,18 @@ jobs:
           pnpm install --no-frozen-lockfile --ignore-scripts
           pnpm dedupe --ignore-scripts
         env:
-          # Skip Cypress installation temporarily, we'll install it later with cache
           CYPRESS_INSTALL_BINARY: 0
 
-      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
-      # Install playwright's binary under custom directory to cache
-      - name: Set Playwright & Cypress path
-        run: |
-          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
-          echo "CYPRESS_CACHE_FOLDER=$HOME/.cache/cypress-bin" >> $GITHUB_ENV
-      - name: Set Playwright & Cypress path (windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
-          echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
-
-      - if: ${{ contains(matrix.e2e-framework, 'cypress') }}
-        name: Cache Cypress binaries
-        id: cache-cypress
+      - name: Cache Cypress binaries
+        if: matrix.e2e-framework == 'cypress'
         uses: actions/cache@v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
           path: ${{ env.CYPRESS_CACHE_FOLDER }}
 
-      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-        name: Cache Playwright's binary
+      - name: Cache Playwright binaries
+        if: matrix.e2e-framework == 'playwright'
         uses: actions/cache@v5
         with:
           # Playwright removes unused browsers automatically
@@ -166,32 +197,137 @@ jobs:
           key: ${{ runner.os }}-playwright-bin-v1
           path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
-      - name: Download Cypress
-        if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+      - name: Install Cypress
+        if: matrix.e2e-framework == 'cypress'
         working-directory: ./playground/cypress
         run: |
           pnpm exec cypress cache list
           pnpm exec cypress install
 
-      - if: ${{ contains(matrix.e2e-framework, 'playwright') }}
-        name: Install Playwright dependencies
+      - name: Install Playwright
+        if: matrix.e2e-framework == 'playwright'
         working-directory: ./playground/playwright
         run: pnpm exec playwright install --with-deps
 
-      - name: Run build script
+      - name: Build sample projects
         working-directory: ./playground
-        run: pnpm --filter '*${{ matrix.e2e-framework }}*' build
+        run: >-
+          pnpm --filter '${{ matrix.e2e-framework }}'
+          --filter 'typescript-${{ matrix.e2e-framework }}'
+          --filter 'router-${{ matrix.e2e-framework }}'
+          --filter 'typescript-router-pinia-${{ matrix.e2e-framework }}'
+          --filter 'typescript-jsx-router-pinia-vitest-${{ matrix.e2e-framework }}'
+          --filter 'typescript-jsx-router-pinia-vitest-${{ matrix.e2e-framework }}-eslint-prettier'
+          build
 
-      - name: Run e2e test script
+      - name: Run E2E tests
         working-directory: ./playground
-        run: pnpm --filter '*${{ matrix.e2e-framework }}*' --workspace-concurrency 1 test:e2e
+        run: >-
+          pnpm --filter '${{ matrix.e2e-framework }}'
+          --filter 'typescript-${{ matrix.e2e-framework }}'
+          --filter 'router-${{ matrix.e2e-framework }}'
+          --filter 'typescript-router-pinia-${{ matrix.e2e-framework }}'
+          --filter 'typescript-jsx-router-pinia-vitest-${{ matrix.e2e-framework }}'
+          --filter 'typescript-jsx-router-pinia-vitest-${{ matrix.e2e-framework }}-eslint-prettier'
+          --workspace-concurrency 1
+          test:e2e
 
       # FIXME: Component testing is failing in CI after running too many tests.
       # The workaround in https://github.com/cypress-io/cypress/issues/22208 is not working.
       # But it seems not affecting real-world projects.
       # - name: Cypress component testing for projects without Vitest
       #   working-directory: ./playground
-      #   if: ${{ contains(matrix.e2e-framework, 'cypress') }}
+      #   if: matrix.e2e-framework == 'cypress'
       #   run: pnpm --filter '*cypress*' --filter '!*vitest*' --workspace-concurrency 1 test:unit
 
       # FIXME: `--with-tests` folders. It's failing now.
+
+  # Windows/macOS E2E - only runs on main branch (slow, less critical for PRs)
+  verify-e2e-cross-platform:
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    strategy:
+      matrix:
+        e2e-framework: [cypress, playwright]
+        os: [windows-latest, macos-latest]
+        node-version: [24]
+        exclude:
+          # Temporarily exclude Windows + Cypress due to EPERM issues with start-server-and-test
+          # FIXME: move away from `start-server-and-test`
+          - os: windows-latest
+            e2e-framework: cypress
+    runs-on: ${{ matrix.os }}
+    name: e2e / ${{ matrix.e2e-framework }} (${{ matrix.os }})
+    continue-on-error: true
+    env:
+      CYPRESS_VERIFY_TIMEOUT: 60000
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
+      CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - uses: atos-actions/download-artifact@v2
+        with:
+          name: build-output
+
+      - name: Install dependencies to avoid tsconfig warnings
+        run: pnpm install
+      - name: Install dependencies in playground
+        working-directory: ./playground
+        run: |
+          pnpm install --no-frozen-lockfile --ignore-scripts
+          pnpm dedupe --ignore-scripts
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+
+      - name: Cache Cypress binaries
+        if: matrix.e2e-framework == 'cypress'
+        uses: actions/cache@v5
+        with:
+          # TODO: avoid snowballing by adding version
+          key: ${{ runner.os }}-cypress-bin
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
+
+      - name: Cache Playwright binaries
+        if: matrix.e2e-framework == 'playwright'
+        uses: actions/cache@v5
+        with:
+          # Playwright removes unused browsers automatically
+          # So does not need to add playwright version to key
+          key: ${{ runner.os }}-playwright-bin-v1
+          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+
+      - name: Install Cypress
+        if: matrix.e2e-framework == 'cypress'
+        working-directory: ./playground/cypress
+        run: |
+          pnpm exec cypress cache list
+          pnpm exec cypress install
+
+      - name: Install Playwright
+        if: matrix.e2e-framework == 'playwright'
+        working-directory: ./playground/playwright
+        run: pnpm exec playwright install --with-deps
+
+      # Minimal sample on non-Linux platforms
+      - name: Build sample projects
+        working-directory: ./playground
+        run: >-
+          pnpm --filter '${{ matrix.e2e-framework }}'
+          --filter 'typescript-${{ matrix.e2e-framework }}'
+          build
+
+      - name: Run E2E tests
+        working-directory: ./playground
+        run: >-
+          pnpm --filter '${{ matrix.e2e-framework }}'
+          --filter 'typescript-${{ matrix.e2e-framework }}'
+          --workspace-concurrency 1
+          test:e2e
