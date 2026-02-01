@@ -577,7 +577,7 @@ async function init() {
     // Provide data for the oxlintrc.json template
     callbacks.push(async (dataStore) => {
       const oxlintrcPath = path.resolve(root, '.oxlintrc.json')
-      dataStore[oxlintrcPath] = { needsTypeScript }
+      dataStore[oxlintrcPath] = { needsTypeScript, needsVitest }
     })
     if (needsPrettier || needsOxfmt) {
       render('linting/formatter')
