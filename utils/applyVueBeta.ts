@@ -15,6 +15,7 @@ const CORE_VUE_PACKAGES = [
   '@vue/runtime-dom',
   '@vue/server-renderer',
   '@vue/shared',
+  '@vue/compat',
 ] as const
 
 function generateOverridesMap(): Record<string, string> {
