@@ -541,6 +541,11 @@ async function init() {
 
     // These configs only disable rules, so they should be applied last.
     render('linting/oxlint')
+    // Provide data for the oxlintrc.json template
+    callbacks.push(async (dataStore) => {
+      const oxlintrcPath = path.resolve(root, '.oxlintrc.json')
+      dataStore[oxlintrcPath] = { needsTypeScript }
+    })
     if (needsPrettier || needsOxfmt) {
       render('linting/formatter')
     }
