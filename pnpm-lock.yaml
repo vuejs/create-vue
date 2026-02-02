@@ -114,14 +114,14 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3(vite@7.3.1(@types/node@24.10.9)(jiti@2.6.1)(yaml@2.8.1))(vue@3.5.27(typescript@5.9.3))
       chromedriver:
-        specifier: ^144.0.1
-        version: 144.0.1
+        specifier: ^145.0.0
+        version: 145.0.0
       geckodriver:
         specifier: ^6.1.0
         version: 6.1.0
       nightwatch:
         specifier: ^3.15.0
-        version: 3.15.0(chromedriver@144.0.1)(geckodriver@6.1.0)
+        version: 3.15.0(chromedriver@145.0.0)(geckodriver@6.1.0)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@24.10.9)(typescript@5.9.3)
@@ -2028,8 +2028,8 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
 
-  chromedriver@144.0.1:
-    resolution: {integrity: sha512-8zrTQnW6oxo77MWxGtWBpA3qhjnU+CbUrCrJoyi83/puBUZAXaWZ9zPxVhWl/5K6I6tPIZHvw1kcMDQwfgFbAg==}
+  chromedriver@145.0.0:
+    resolution: {integrity: sha512-rnqHS3u+OEdhaS3PmV7V8KYHBLiIOrIKMkRZSEaQcQXnpqHQTPBrS/1x7r0MJvuywtv2qFQYNbd5yXUmuxFvmg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -6371,7 +6371,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromedriver@144.0.1:
+  chromedriver@145.0.0:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.13.2(debug@4.4.3)
@@ -7903,7 +7903,7 @@ snapshots:
     dependencies:
       axe-core: 4.10.0
 
-  nightwatch@3.15.0(chromedriver@144.0.1)(geckodriver@6.1.0):
+  nightwatch@3.15.0(chromedriver@145.0.0)(geckodriver@6.1.0):
     dependencies:
       '@nightwatch/chai': 5.0.3
       '@nightwatch/html-reporter-template': 0.3.0
@@ -7940,7 +7940,7 @@ snapshots:
       untildify: 4.0.0
       uuid: 8.3.2
     optionalDependencies:
-      chromedriver: 144.0.1
+      chromedriver: 145.0.0
       geckodriver: 6.1.0
     transitivePeerDependencies:
       - bufferutil
