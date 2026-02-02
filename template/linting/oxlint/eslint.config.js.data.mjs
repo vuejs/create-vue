@@ -5,7 +5,7 @@ export default function getData({ oldData }) {
       ...oldData.configs,
       {
         importer: `import pluginOxlint from 'eslint-plugin-oxlint'`,
-        content: `\n  ...pluginOxlint.configs['flat/recommended'],`,
+        content: `\n  ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),`,
       },
     ],
   }
