@@ -50,6 +50,7 @@ const FEATURE_FLAGS = [
   'prettier',
   'eslint-with-prettier',
   'oxlint',
+  'oxfmt',
   'vite-beta',
   'vue-beta',
 ] as const
