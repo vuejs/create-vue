@@ -66,7 +66,7 @@ jobs:
           #   typescript          - minimal base case
           #   typescript-jsx      - adds the vueJsx vite plugin
           #   typescript-*-vitest - adds tsconfig.vitest.json reference
-          #   typescript-*-cypress - adds tsconfig.cypress.json + compilerOptions workaround
+          #   typescript-*-cypress - adds Cypress tsconfig files/references
           #   typescript-*-playwright - adds tsconfig.playwright.json
           - name: 'build (TS samples)'
             run: >-
