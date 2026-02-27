@@ -57,10 +57,6 @@ const FEATURE_FLAGS = [
 
 const FEATURE_OPTIONS = [
   {
-    value: 'typescript',
-    label: language.needsTypeScript.message,
-  },
-  {
     value: 'jsx',
     label: language.needsJsx.message,
   },
@@ -108,6 +104,7 @@ type PromptResult = {
   projectName?: string
   shouldOverwrite?: boolean
   packageName?: string
+  needsTypeScript?: boolean
   features?: (typeof FEATURE_OPTIONS)[number]['value'][]
   e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
@@ -331,6 +328,13 @@ async function init() {
   }
 
   if (!isFeatureFlagsUsed) {
+    result.needsTypeScript = await unwrapPrompt(
+      confirm({
+        message: language.needsTypeScript.message,
+        initialValue: true,
+      }),
+    )
+
     result.features = await unwrapPrompt(
       multiselect({
         message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
@@ -408,7 +412,7 @@ async function init() {
 
   const { features, experimentFeatures, needsBareboneTemplates } = result
 
-  const needsTypeScript = argv.ts || argv.typescript || features.includes('typescript')
+  const needsTypeScript = argv.ts || argv.typescript || result.needsTypeScript
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
