@@ -121,6 +121,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: rm -rf ./playground
+
       - uses: atos-actions/download-artifact@v2
         with:
           name: build-output
@@ -165,6 +168,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: rm -rf ./playground
 
       - uses: atos-actions/download-artifact@v2
         with:
@@ -272,6 +278,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: rm -rf ./playground
 
       - uses: atos-actions/download-artifact@v2
         with:
