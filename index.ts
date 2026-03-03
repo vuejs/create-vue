@@ -416,7 +416,7 @@ async function init() {
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
-  const needsVitest = argv.vitest || argv.tests || features.includes('vitest')
+  const needsVitest = argv.vitest || argv.tests || argv['with-tests'] || features.includes('vitest')
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
@@ -426,7 +426,8 @@ async function init() {
   const needsVueBeta = experimentFeatures.includes('vue-beta') || argv['vue-beta']
 
   const { e2eFramework } = result
-  const needsCypress = argv.cypress || argv.tests || e2eFramework === 'cypress'
+  const needsCypress =
+    argv.cypress || argv.tests || argv['with-tests'] || e2eFramework === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
   const needsNightwatch = argv.nightwatch || e2eFramework === 'nightwatch'
   const needsNightwatchCT = needsNightwatch && !needsVitest
