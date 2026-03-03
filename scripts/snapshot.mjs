@@ -68,12 +68,12 @@ flagCombinations.push(...withTestsFlags)
 const playgroundDir = path.resolve(__dirname, '../playground/')
 cd(playgroundDir)
 
-// remove all previous combinations
-for (const flags of flagCombinations) {
-  const projectName = flags.join('-')
+// remove all previous generated project directories
+for (const entry of fs.readdirSync(playgroundDir, { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue
 
-  console.log(`Removing previously generated project ${projectName}`)
-  fs.rmSync(projectName, { recursive: true, force: true })
+  console.log(`Removing previously generated project ${entry.name}`)
+  fs.rmSync(entry.name, { recursive: true, force: true })
 }
 
 // Filter out combinations that are not allowed
