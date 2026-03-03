@@ -122,7 +122,8 @@ jobs:
           cache: 'pnpm'
 
       - name: remove playground to avoid conflicts with downloaded artifact
-        run: rm -rf ./playground
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:
@@ -170,7 +171,8 @@ jobs:
           cache: 'pnpm'
 
       - name: remove playground to avoid conflicts with downloaded artifact
-        run: rm -rf ./playground
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:
@@ -280,7 +282,8 @@ jobs:
           cache: 'pnpm'
 
       - name: remove playground to avoid conflicts with downloaded artifact
-        run: rm -rf ./playground
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:
