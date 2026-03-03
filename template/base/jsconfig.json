@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
+      // TODO: no longer needed after TS 5.4
+      "#src/*": ["./src/*"],
+      // Deprecated, use `#src` instead (configured in `package.json` `imports` field)
       "@/*": ["./src/*"]
     }
   },
