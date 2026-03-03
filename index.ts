@@ -44,7 +44,6 @@ const FEATURE_FLAGS = [
   'with-tests',
   'vitest',
   'cypress',
-  'nightwatch',
   'playwright',
   'eslint',
   'prettier',
@@ -106,7 +105,7 @@ type PromptResult = {
   packageName?: string
   needsTypeScript?: boolean
   features?: (typeof FEATURE_OPTIONS)[number]['value'][]
-  e2eFramework?: 'cypress' | 'nightwatch' | 'playwright'
+  e2eFramework?: 'cypress' | 'playwright'
   experimentFeatures?: (typeof EXPERIMENTAL_FEATURE_OPTIONS)[number]['value'][]
   needsBareboneTemplates?: boolean
   packageManager?: PackageManager
@@ -198,9 +197,6 @@ Available feature flags:
     If used without ${cyan('--vitest')}, it will also add Cypress Component Testing.
   --playwright
     Add Playwright for end-to-end testing.
-  --nightwatch
-    Add Nightwatch for end-to-end testing.
-    If used without ${cyan('--vitest')}, it will also add Nightwatch Component Testing.
   --eslint
     Add ESLint for code quality.
   --prettier
@@ -362,13 +358,6 @@ async function init() {
                 ? language.e2eSelection.selectOptions.cypress.desc
                 : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
             },
-            {
-              value: 'nightwatch',
-              label: language.e2eSelection.selectOptions.nightwatch.title,
-              hint: hasVitest
-                ? language.e2eSelection.selectOptions.nightwatch.desc
-                : language.e2eSelection.selectOptions.nightwatch.hintOnComponentTesting!,
-            },
           ],
         }),
       )
@@ -429,8 +418,6 @@ async function init() {
   const needsCypress =
     argv.cypress || argv.tests || argv['with-tests'] || e2eFramework === 'cypress'
   const needsCypressCT = needsCypress && !needsVitest
-  const needsNightwatch = argv.nightwatch || e2eFramework === 'nightwatch'
-  const needsNightwatchCT = needsNightwatch && !needsVitest
   const needsPlaywright = argv.playwright || e2eFramework === 'playwright'
 
   const root = path.join(cwd, targetDir)
@@ -481,12 +468,6 @@ async function init() {
   if (needsCypressCT) {
     render('config/cypress-ct')
   }
-  if (needsNightwatch) {
-    render('config/nightwatch')
-  }
-  if (needsNightwatchCT) {
-    render('config/nightwatch-ct')
-  }
   if (needsPlaywright) {
     render('config/playwright')
   }
@@ -529,16 +510,6 @@ async function init() {
       rootTsConfig.references.push({
         path: './tsconfig.vitest.json',
       })
-    }
-    if (needsNightwatch) {
-      render('tsconfig/nightwatch')
-      // Nightwatch needs a standalone tsconfig, but in a different folder.
-      rootTsConfig.references.push({
-        path: './nightwatch/tsconfig.json',
-      })
-    }
-    if (needsNightwatchCT) {
-      render('tsconfig/nightwatch-ct')
     }
     fs.writeFileSync(
       path.resolve(root, 'tsconfig.json'),
@@ -647,9 +618,6 @@ async function init() {
     if (needsCypressCT) {
       render('bare/cypress-ct')
     }
-    if (needsNightwatchCT) {
-      render('bare/nightwatch-ct')
-    }
   }
 
   // Cleanup.
@@ -728,9 +696,7 @@ async function init() {
       needsTypeScript,
       needsVitest,
       needsCypress,
-      needsNightwatch,
       needsPlaywright,
-      needsNightwatchCT,
       needsCypressCT,
       needsEslint,
     }),
