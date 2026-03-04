@@ -60,7 +60,7 @@ jobs:
         script:
           # ----- Build: non-TypeScript projects -----
           - name: 'build (non-TS)'
-            run: pnpm --filter '!*typescript*' --filter '!*nightwatch*' build
+            run: pnpm --filter '!*typescript*' build
           # ----- Build: TypeScript projects (sampled) -----
           # Covers key tsconfig variations:
           #   typescript          - minimal base case
@@ -89,9 +89,9 @@ jobs:
             run: pnpm --filter '*vitest*' test:unit
           # ----- ESLint -----
           - name: 'lint:oxlint'
-            run: pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:oxlint --max-warnings=0 -A no-empty-file
+            run: pnpm --filter '*eslint*' lint:oxlint --max-warnings=0 -A no-empty-file
           - name: 'lint:eslint'
-            run: pnpm --filter '*eslint*' --filter '!*nightwatch*' lint:eslint --no-fix --max-warnings=0
+            run: pnpm --filter '*eslint*' lint:eslint --no-fix --max-warnings=0
           # ----- Prettier -----
           - name: 'format (prettier)'
             run: pnpm --filter '*prettier*' format
@@ -120,6 +120,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:
@@ -165,6 +169,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:
@@ -272,6 +280,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
+      - name: remove playground to avoid conflicts with downloaded artifact
+        run: >-
+          node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
       - uses: atos-actions/download-artifact@v2
         with:

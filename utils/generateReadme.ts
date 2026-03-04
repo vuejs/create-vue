@@ -13,9 +13,7 @@ export default function generateReadme({
   packageManager,
   needsTypeScript,
   needsCypress,
-  needsNightwatch,
   needsCypressCT,
-  needsNightwatchCT,
   needsPlaywright,
   needsVitest,
   needsEslint,
@@ -48,14 +46,8 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 `
 
-  let installCommand = commandFor('install')
-  if (packageManager === 'pnpm' && needsNightwatch) {
-    // TODO: remove the "for pnpm 10+" note when pnpm 10 is widely adopted
-    installCommand += `\npnpm approve-builds # for pnpm 10+`
-  }
-
   let npmScriptsDescriptions = `\`\`\`sh
-${installCommand}
+${commandFor('install')}
 \`\`\`
 
 ### Compile and Hot-Reload for Development
@@ -107,37 +99,6 @@ But it's still recommended to test the production build with \`test:e2e\` before
 \`\`\`sh
 ${commandFor('build')}
 ${commandFor('test:e2e')}
-\`\`\`
-`
-  }
-
-  if (needsNightwatch) {
-    npmScriptsDescriptions += `
-### Run End-to-End Tests with [Nightwatch](https://nightwatchjs.org/)
-
-\`\`\`sh
-# When using CI, the project must be built first.
-${commandFor('build')}
-
-# Runs the end-to-end tests
-${commandFor('test:e2e')}
-# Runs the tests only on Chrome
-${commandFor('test:e2e', '--env chrome')}
-# Runs the tests of a specific file
-${commandFor('test:e2e', `tests/e2e/example.${needsTypeScript ? 'ts' : 'js'}`)}
-# Runs the tests in debug mode
-${commandFor('test:e2e', '--debug')}
-\`\`\`
-    `
-  }
-
-  if (needsNightwatchCT) {
-    npmScriptsDescriptions += `
-### Run Headed Component Tests with [Nightwatch Component Testing](https://nightwatchjs.org/guide/component-testing/introduction.html)
-  
-\`\`\`sh
-${commandFor('test:unit')}
-${commandFor('test:unit -- --headless # for headless testing')}
 \`\`\`
 `
   }
