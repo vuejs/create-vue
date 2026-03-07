@@ -31,7 +31,7 @@
     "prepare": "husky",
     "format": "oxfmt",
     "format-check": "oxfmt --check",
-    "lint": "oxlint . --fix",
+    "lint": "oxlint . --fix --ignore-pattern playground",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
