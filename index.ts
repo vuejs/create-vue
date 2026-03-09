@@ -456,6 +456,9 @@ async function init() {
   if (needsRouter) {
     render('config/router')
   }
+  if (needsRouter && needsTypeScript) {
+    render('config/router-typed')
+  }
   if (needsPinia) {
     render('config/pinia')
   }
@@ -516,6 +519,30 @@ async function init() {
       JSON.stringify(rootTsConfig, null, 2) + '\n',
       'utf-8',
     )
+
+    // Add typed routes configuration to tsconfig.app.json when using Vue Router
+    if (needsRouter) {
+      const tsconfigAppPath = path.resolve(root, 'tsconfig.app.json')
+      const tsconfigApp = JSON.parse(fs.readFileSync(tsconfigAppPath, 'utf-8'))
+
+      // Include the generated typed-router.d.ts
+      tsconfigApp.include = tsconfigApp.include || []
+      tsconfigApp.include.push('typed-router.d.ts')
+
+      // rootDir is needed for the volar plugin
+      tsconfigApp.compilerOptions = tsconfigApp.compilerOptions || {}
+      tsconfigApp.compilerOptions.rootDir = '.'
+
+      // Add volar plugins for automatic useRoute() typing based on file location
+      tsconfigApp.vueCompilerOptions = {
+        plugins: [
+          'vue-router/volar/sfc-typed-router',
+          'vue-router/volar/sfc-route-blocks',
+        ],
+      }
+
+      fs.writeFileSync(tsconfigAppPath, JSON.stringify(tsconfigApp, null, 2) + '\n', 'utf-8')
+    }
   }
 
   // Render ESLint config
