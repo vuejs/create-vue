@@ -286,12 +286,11 @@ async function init() {
         placeholder: defaultProjectName,
         defaultValue: defaultProjectName,
         validate: (value) =>
-          value.length === 0 || value.trim().length > 0
-            ? undefined
-            : language.projectName.invalidMessage,
+          !value || value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
       }),
     )
-    targetDir = result.projectName = result.packageName = _result.trim()
+    const projectName = _result?.trim() || defaultProjectName
+    targetDir = result.projectName = result.packageName = projectName
   }
 
   if (!canSkipEmptying(targetDir) && !forceOverwrite) {
