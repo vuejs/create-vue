@@ -1,4 +1,4 @@
-# create-vue <a href="https://npmx.dev/package/create-vue"><img src="https://npmx.dev/api/registry/badge/version/create-vue" alt="npm package"></a><a href="https://npmx.dev/package/create-vue"><img src="https://npmx.dev/api/registry/badge/downloads-week/create-vue" alt="npm package"></a> <a href="https://nodejs.org/en/about/previous-releases"><img src="https://npmx.dev/api/registry/badge/engines/create-vue" alt="node compatibility"></a>
+# create-vue <a href="https://npmx.dev/package/create-vue"><img src="https://npmx.dev/api/registry/badge/version/create-vue" alt="npm package"></a><a href="https://npmx.dev/package/create-vue"><img src="https://npmx.dev/api/registry/badge/downloads-week/create-vue" alt="npm package"></a><a href="https://nodejs.org/en/about/previous-releases"><img src="https://npmx.dev/api/registry/badge/engines/create-vue" alt="node compatibility"></a>
 
 The recommended way to start a Vite-powered Vue project
 
