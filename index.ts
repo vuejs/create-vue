@@ -50,7 +50,6 @@ const FEATURE_FLAGS = [
   'eslint-with-prettier',
   'oxlint',
   'oxfmt',
-  'vite-beta',
   'vue-beta',
 ] as const
 
@@ -88,10 +87,6 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
     value: 'oxfmt',
     label: language.needsOxfmt.message,
-  },
-  {
-    value: 'vite-beta',
-    label: language.needsViteBeta.message,
   },
   {
     value: 'vue-beta',
@@ -203,8 +198,6 @@ Available feature flags:
     Add Prettier for code formatting.
   --oxfmt
     Add Oxfmt for code formatting.
-  --vite-beta
-    Use Vite 8 Beta instead of Vite for building the project.
   --vue-beta
     Use Vue 3.6 Beta. Requires specifying a package manager in interactive mode.
 
@@ -218,8 +211,6 @@ Deprecated feature flags:
     Please use ${cyan('--eslint --prettier')} instead.
   --oxlint
     Oxlint is now always included when ESLint is selected.
-  --rolldown-vite
-    Please use ${cyan('--vite-beta')} instead.
 `
 
 async function init() {
@@ -409,8 +400,6 @@ async function init() {
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
-  const needsViteBeta =
-    experimentFeatures.includes('vite-beta') || argv['vite-beta'] || argv['rolldown-vite'] // keep `rolldown-vite` for backward compatibility
   const needsVueBeta = experimentFeatures.includes('vue-beta') || argv['vue-beta']
 
   const { e2eFramework } = result
@@ -437,13 +426,6 @@ async function init() {
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root, callbacks)
-  }
-  const replaceVite = () => {
-    const content = fs.readFileSync(path.resolve(root, 'package.json'), 'utf-8')
-    const json = JSON.parse(content)
-    // Replace `vite` version with beta if the feature is enabled
-    json.devDependencies.vite = 'beta'
-    fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(json, null, 2))
   }
   // Render base template
   render('base')
@@ -556,11 +538,6 @@ async function init() {
     render('formatting/oxfmt')
   } else if (needsPrettier) {
     render('formatting/prettier')
-  }
-
-  // use Vite 8 Beta if the feature is enabled
-  if (needsViteBeta) {
-    replaceVite()
   }
 
   // Render code template.
