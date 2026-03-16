@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vite-plus/test'
 import { resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
 import en from '../locales/en-US.json'

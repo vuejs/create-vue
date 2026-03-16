@@ -1,4 +1,4 @@
-import { it, describe, expect } from 'vitest'
+import { it, describe, expect } from 'vite-plus/test'
 import sortDependencies from '../utils/sortDependencies'
 
 describe('sortDependencies', () => {
