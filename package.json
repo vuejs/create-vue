@@ -28,15 +28,15 @@
     "provenance": true
   },
   "scripts": {
-    "prepare": "husky",
-    "format": "oxfmt",
-    "format-check": "oxfmt --check",
-    "lint": "oxlint . --fix --ignore-pattern playground",
+    "prepare": "vp config",
+    "format": "vp fmt",
+    "format-check": "vp fmt --check",
+    "lint": "vp lint . --fix --ignore-pattern playground",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
-    "test:unit": "vitest",
+    "test:unit": "vp test",
     "preversion": "git fetch && git status -uno | grep -q 'Your branch is up to date'",
     "postversion": "zx ./scripts/postversion.mjs",
     "prepublishOnly": "pnpm run build"
@@ -49,21 +49,12 @@
     "@types/prompts": "^2.4.9",
     "@vue/tsconfig": "^0.9.0",
     "ejs": "^3.1.10",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.3.3",
-    "oxfmt": "^0.40.0",
-    "oxlint": "~1.55.0",
     "picocolors": "^1.1.1",
     "rolldown": "1.0.0-rc.8",
     "rollup-plugin-license": "^3.7.0",
-    "vitest": "^4.0.18",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:",
     "zx": "^8.8.5"
-  },
-  "lint-staged": {
-    "*.{js,ts,vue,json}": [
-      "oxfmt --no-error-on-unmatched-pattern",
-      "oxlint --fix"
-    ]
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
