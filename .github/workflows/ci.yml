@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build the package
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -40,7 +40,7 @@ jobs:
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
       # Note we use the atos-actions/* version to tar/untar the files
-      - uses: atos-actions/upload-artifact@v2
+      - uses: atos-actions/upload-artifact@4f7c3eb156926ffc211277b17a03ee562e574b7f # v2
         with:
           name: build-output
           path: |
@@ -112,11 +112,11 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       CHROMEDRIVER_SKIP_DOWNLOAD: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -125,7 +125,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@v2
+      - uses: atos-actions/download-artifact@81ca0cdde49cc2b69d83aad5340d4d836ce8b98d # v2
         with:
           name: build-output
 
@@ -161,11 +161,11 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -174,7 +174,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@v2
+      - uses: atos-actions/download-artifact@81ca0cdde49cc2b69d83aad5340d4d836ce8b98d # v2
         with:
           name: build-output
 
@@ -190,7 +190,7 @@ jobs:
 
       - name: Cache Cypress binaries
         if: matrix.e2e-framework == 'cypress'
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -198,7 +198,7 @@ jobs:
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
@@ -272,11 +272,11 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -285,7 +285,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@v2
+      - uses: atos-actions/download-artifact@81ca0cdde49cc2b69d83aad5340d4d836ce8b98d # v2
         with:
           name: build-output
 
@@ -301,7 +301,7 @@ jobs:
 
       - name: Cache Cypress binaries
         if: matrix.e2e-framework == 'cypress'
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -309,7 +309,7 @@ jobs:
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
