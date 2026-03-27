@@ -28,8 +28,8 @@ importers:
         specifier: ^24.12.0
         version: 24.12.0
       '@vue/tsconfig':
-        specifier: ^0.9.0
-        version: 0.9.0(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))
+        specifier: ^0.9.1
+        version: 0.9.1(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
@@ -251,8 +251,8 @@ importers:
         specifier: ^24.0.4
         version: 24.0.4
       '@vue/tsconfig':
-        specifier: ^0.9.0
-        version: 0.9.0(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))
+        specifier: ^0.9.1
+        version: 0.9.1(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))
 
   template/tsconfig/vitest:
     devDependencies:
@@ -1829,10 +1829,10 @@ packages:
   '@vue/test-utils@2.4.6':
     resolution: {integrity: sha512-FMxEjOpYNYiFe0GkaHsnJPXFHxQ6m4t8vI/ElPGpMWxZKpmRvQ33OIrvRXemy6yha03RxhOlQuy+gZMC3CQSow==}
 
-  '@vue/tsconfig@0.9.0':
-    resolution: {integrity: sha512-RP+v9Cpbsk1ZVXltCHHkYBr7+624x6gcijJXVjIcsYk7JXqvIpRtMwU2ARLvWDhmy9ffdFYxhsfJnPztADBohQ==}
+  '@vue/tsconfig@0.9.1':
+    resolution: {integrity: sha512-buvjm+9NzLCJL29KY1j1991YYJ5e6275OiK+G4jtmfIb+z4POywbdm0wXusT9adVWqe0xqg70TbI7+mRx4uU9w==}
     peerDependencies:
-      typescript: 5.x
+      typescript: '>= 5.8'
       vue: ^3.4.0
     peerDependenciesMeta:
       typescript:
@@ -5187,7 +5187,7 @@ snapshots:
       js-beautify: 1.15.4
       vue-component-type-helpers: 2.2.12
 
-  '@vue/tsconfig@0.9.0(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))':
+  '@vue/tsconfig@0.9.1(typescript@5.9.3)(vue@3.5.31(typescript@5.9.3))':
     optionalDependencies:
       typescript: 5.9.3
       vue: 3.5.31(typescript@5.9.3)
