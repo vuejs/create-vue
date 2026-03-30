@@ -4,6 +4,10 @@
   "exclude": ["./support/component.*"],
   "compilerOptions": {
     "isolatedModules": false,
-    "types": ["cypress"]
+    "types": ["cypress"],
+
+    // FIXME: Remove this when Cypress officially supports TypeScript 6.0
+    // https://github.com/cypress-io/cypress/issues/33511
+    "ignoreDeprecations": "6.0"
   }
 }
