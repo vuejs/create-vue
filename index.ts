@@ -51,6 +51,8 @@ const FEATURE_FLAGS = [
   'oxlint',
   'oxfmt',
   'vue-beta',
+  'tailwind',
+  'tailwindcss',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -81,6 +83,10 @@ const FEATURE_OPTIONS = [
   {
     value: 'prettier',
     label: language.needsPrettier.message,
+  },
+  {
+    value: 'tailwind',
+    label: language.needsTailwind.message,
   },
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
@@ -196,6 +202,8 @@ Available feature flags:
     Add ESLint for code quality.
   --prettier
     Add Prettier for code formatting.
+  --tailwind, --tailwindcss
+    Add Tailwind CSS for utility-first styling.
   --oxfmt
     Add Oxfmt for code formatting.
   --vue-beta
@@ -399,6 +407,7 @@ async function init() {
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  const needsTailwind = argv.tailwind || argv.tailwindcss || features.includes('tailwind')
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsVueBeta = experimentFeatures.includes('vue-beta') || argv['vue-beta']
 
@@ -431,6 +440,9 @@ async function init() {
   render('base')
 
   // Add configs.
+  if (needsTailwind) {
+    render('config/tailwind')
+  }
   if (needsJsx) {
     render('config/jsx')
   }
@@ -596,6 +608,21 @@ async function init() {
     }
   }
 
+  // Add main.css if it does not already exist and write the tailwind import.
+  if (needsTailwind) {
+    const cssPath = path.resolve(root, 'src/assets/main.css')
+
+    if (fs.existsSync(cssPath)) {
+      const content = fs.readFileSync(cssPath, 'utf-8')
+      if (!content.includes('@import "tailwindcss";')) {
+        fs.writeFileSync(cssPath, `@import "tailwindcss";\n${content}`, 'utf-8')
+      }
+    } else {
+      fs.mkdirSync(path.dirname(cssPath), { recursive: true })
+      fs.writeFileSync(cssPath, '@import "tailwindcss";\n', 'utf-8')
+    }
+  }
+
   // Cleanup.
 
   // We try to share as many files between TypeScript and JavaScript as possible.
@@ -646,7 +673,9 @@ async function init() {
   }
 
   if (needsBareboneTemplates) {
-    removeCSSImport(root, needsTypeScript, needsCypressCT)
+    if (!needsTailwind) {
+      removeCSSImport(root, needsTypeScript, needsCypressCT)
+    }
     if (needsRouter) {
       emptyRouterConfig(root, needsTypeScript)
     }
