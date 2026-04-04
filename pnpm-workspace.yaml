@@ -5,9 +5,9 @@ packages:
   - template/linting/**
   - template/tsconfig/**
 
-ignoredBuiltDependencies:
-  - cypress
-  - esbuild
+allowBuilds:
+  cypress: false
+  esbuild: false
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
