@@ -2,7 +2,7 @@
   "scripts": {
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "lint": "run-s lint:*"
+    "lint": "run-s 'lint:*'"
   },
   "devDependencies": {
     "eslint-plugin-oxlint": "~1.63.0",
