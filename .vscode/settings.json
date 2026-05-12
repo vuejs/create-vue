@@ -4,5 +4,16 @@
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
-  }
+  },
+  "files.exclude": {
+    "**/playground": true
+  },
+  "search.exclude": {
+    "**/playground": true
+  },
+  "files.watcherExclude": {
+    "**/playground/**": true
+  },
+  "git.ignoredRepositories": ["playground"],
+  "git.detectSubmodules": false
 }
