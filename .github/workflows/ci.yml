@@ -25,7 +25,7 @@ jobs:
       - uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - run: pnpm install
         env:
@@ -56,7 +56,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [20, 22, 24]
+        node-version: [22, 24, 26]
         script:
           # ----- Build: non-TypeScript projects -----
           - name: 'build (non-TS)'
@@ -96,15 +96,15 @@ jobs:
           - name: 'format (prettier)'
             run: pnpm --filter '*prettier*' format
         exclude:
-          # Node version issues are rarely platform-specific, so only test Node 20/22 on Ubuntu
-          - os: windows-latest
-            node-version: 20
+          # Node version issues are rarely platform-specific, so skip the non-active-LTS Node.js versions on Windows/macOS
           - os: windows-latest
             node-version: 22
           - os: macos-latest
-            node-version: 20
-          - os: macos-latest
             node-version: 22
+          - os: windows-latest
+            node-version: 26
+          - os: macos-latest
+            node-version: 26
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.script.name }} (${{ matrix.os }}, node ${{ matrix.node-version }})
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
