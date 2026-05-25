@@ -137,8 +137,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
 
       - name: ${{ matrix.script.name }}
         working-directory: ./playground
@@ -186,8 +186,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
         env:
           CYPRESS_INSTALL_BINARY: 0
 
@@ -297,8 +297,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
         env:
           CYPRESS_INSTALL_BINARY: 0
 
