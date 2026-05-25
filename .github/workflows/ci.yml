@@ -63,7 +63,7 @@ jobs:
         script:
           # ----- Build: non-TypeScript projects -----
           - name: 'build (non-TS)'
-            run: pnpm --filter '!*typescript*' build
+            run: pnpm --filter '!*typescript*' --workspace-concurrency 2 build
           # ----- Build: TypeScript projects (sampled) -----
           # Covers key tsconfig variations:
           #   typescript          - minimal base case
