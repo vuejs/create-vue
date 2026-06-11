@@ -14,18 +14,21 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build the package
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
       - run: pnpm install
         env:
@@ -56,11 +59,11 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [20, 22, 24]
+        node-version: [22, 24, 26]
         script:
           # ----- Build: non-TypeScript projects -----
           - name: 'build (non-TS)'
-            run: pnpm --filter '!*typescript*' build
+            run: pnpm --filter '!*typescript*' --workspace-concurrency 2 build
           # ----- Build: TypeScript projects (sampled) -----
           # Covers key tsconfig variations:
           #   typescript          - minimal base case
@@ -96,15 +99,15 @@ jobs:
           - name: 'format (prettier)'
             run: pnpm --filter '*prettier*' format
         exclude:
-          # Node version issues are rarely platform-specific, so only test Node 20/22 on Ubuntu
-          - os: windows-latest
-            node-version: 20
+          # Node version issues are rarely platform-specific, so skip the non-active-LTS Node.js versions on Windows/macOS
           - os: windows-latest
             node-version: 22
           - os: macos-latest
-            node-version: 20
-          - os: macos-latest
             node-version: 22
+          - os: windows-latest
+            node-version: 26
+          - os: macos-latest
+            node-version: 26
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.script.name }} (${{ matrix.os }}, node ${{ matrix.node-version }})
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
@@ -112,10 +115,10 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       CHROMEDRIVER_SKIP_DOWNLOAD: true
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ matrix.node-version }}
@@ -134,8 +137,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
 
       - name: ${{ matrix.script.name }}
         working-directory: ./playground
@@ -161,10 +164,10 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ matrix.node-version }}
@@ -183,8 +186,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
         env:
           CYPRESS_INSTALL_BINARY: 0
 
@@ -272,10 +275,10 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           submodules: true
-      - uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ matrix.node-version }}
@@ -294,8 +297,8 @@ jobs:
       - name: Install dependencies in playground
         working-directory: ./playground
         run: |
+          node -e "require('fs').rmSync('pnpm-lock.yaml', { force: true })"
           pnpm install --no-frozen-lockfile --ignore-scripts
-          pnpm dedupe --ignore-scripts
         env:
           CYPRESS_INSTALL_BINARY: 0
 

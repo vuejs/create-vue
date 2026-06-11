@@ -2,7 +2,7 @@ This document explains how to perform the project's maintenance tasks.
 
 ### Creating a new release
 
-Anyone with write access to the main branch of both this repository and [create-vue-templates](https://github.com/vuejs/create-vue-templates/) can request a new release. This includes repository maintainers, repository adminstrators, and Vue.js organization administrators.
+Anyone with write access to the main branch of both this repository and [create-vue-templates](https://github.com/vuejs/create-vue-templates/) can request a new release. This includes repository maintainers, repository administrators, and Vue.js organization administrators.
 
 To do so, follow these steps:
 
