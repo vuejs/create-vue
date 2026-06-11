@@ -165,8 +165,8 @@ importers:
   template/formatting/prettier:
     devDependencies:
       prettier:
-        specifier: 3.8.3
-        version: 3.8.3
+        specifier: 3.8.4
+        version: 3.8.4
 
   template/linting/base:
     devDependencies:
@@ -178,7 +178,7 @@ importers:
         version: 10.9.2(@typescript-eslint/parser@8.61.0)(eslint@10.4.1)(vue-eslint-parser@10.4.1)
       vue-eslint-parser:
         specifier: ^10.0.0
-        version: 10.4.1(eslint@10.4.1)
+        version: 10.4.1(eslint@10.4.1)(supports-color@8.1.1)
 
   template/linting/core/js:
     devDependencies:
@@ -3241,8 +3241,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.8.4:
+    resolution: {integrity: sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -5137,7 +5137,7 @@ snapshots:
       eslint-plugin-vue: 10.9.2(@typescript-eslint/parser@8.61.0)(eslint@10.4.1)(vue-eslint-parser@10.4.1)
       fast-glob: 3.3.3
       typescript-eslint: 8.61.0(eslint@10.4.1)(supports-color@8.1.1)(typescript@6.0.3)
-      vue-eslint-parser: 10.4.1(eslint@10.4.1)
+      vue-eslint-parser: 10.4.1(eslint@10.4.1)(supports-color@8.1.1)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -5603,7 +5603,7 @@ snapshots:
       nth-check: 2.1.1
       postcss-selector-parser: 7.1.1
       semver: 7.8.3
-      vue-eslint-parser: 10.4.1(eslint@10.4.1)
+      vue-eslint-parser: 10.4.1(eslint@10.4.1)(supports-color@8.1.1)
       xml-name-validator: 4.0.0
     optionalDependencies:
       '@typescript-eslint/parser': 8.61.0(eslint@10.4.1)(typescript@6.0.3)
@@ -6490,7 +6490,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.8.3: {}
+  prettier@3.8.4: {}
 
   pretty-bytes@5.6.0: {}
 
@@ -7054,7 +7054,7 @@ snapshots:
 
   vue-component-type-helpers@3.3.4: {}
 
-  vue-eslint-parser@10.4.1(eslint@10.4.1):
+  vue-eslint-parser@10.4.1(eslint@10.4.1)(supports-color@8.1.1):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       eslint: 10.4.1(jiti@2.7.0)(supports-color@8.1.1)
