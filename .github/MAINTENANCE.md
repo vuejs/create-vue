@@ -6,6 +6,6 @@ Anyone with write access to the main branch of both this repository and [create-
 
 To do so, follow these steps:
 
-1. Run `pnpm version <patch|minor|major>` locally to bump the version number and create a new commit / tag. The `postversion` script will automatically push the changes to the repository.
+1. Run `pnpm release <patch|minor|major|x.y.z>` locally and follow the prompts. The release script will bump the version number, create the release commit / tag, and push the changes to the repository.
 2. The release will be automatically published to npm by GitHub Actions once approved by an _administrator_.
 3. Go to <https://github.com/vuejs/create-vue/releases/new> and create a new release with the tag that was just created. Describe the notable changes in the release notes.

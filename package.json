@@ -34,11 +34,10 @@
     "lint": "vp lint . --fix --ignore-pattern playground",
     "build": "rolldown -c rolldown.config.ts",
     "snapshot": "zx ./scripts/snapshot.mjs",
+    "release": "zx ./scripts/release.mjs",
     "pretest": "pnpm run build && pnpm run snapshot",
     "test": "zx ./scripts/test.mjs",
     "test:unit": "vp test",
-    "preversion": "git fetch && git status -uno | grep -q 'Your branch is up to date'",
-    "postversion": "zx ./scripts/postversion.mjs",
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
