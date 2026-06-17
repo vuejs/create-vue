@@ -6,14 +6,14 @@ const versionArgs = process.argv.slice(3)
 const projectRoot = path.resolve(__dirname, '../')
 const playgroundDir = path.resolve(projectRoot, 'playground/')
 
-if (versionArgs.length === 0) {
+if (versionArgs.length !== 1) {
   throw new Error('Usage: pnpm release <major|minor|patch|x.y.z>')
 }
 
 await runReleasePreflight()
 
 $.verbose = true
-await $`pnpm version --no-git-checks --no-git-tag-version --ignore-scripts ${versionArgs}`
+await $`pnpm version --no-git-checks --no-git-tag-version ${versionArgs}`
 
 const { version } = JSON.parse(await fs.readFile(path.resolve(projectRoot, 'package.json'), 'utf8'))
 
