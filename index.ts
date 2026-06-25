@@ -27,6 +27,7 @@ import {
   getPackageManagerOptions,
   type PackageManager,
 } from './utils/packageManager'
+import { resolveNeedsTypeScript } from './utils/resolveFeatures'
 
 import cliPackageJson from './package.json' with { type: 'json' }
 
@@ -391,7 +392,7 @@ async function init() {
 
   const { features, experimentFeatures, needsBareboneTemplates } = result
 
-  const needsTypeScript = argv.ts || argv.typescript || result.needsTypeScript
+  const needsTypeScript = resolveNeedsTypeScript(argv, result.needsTypeScript)
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
