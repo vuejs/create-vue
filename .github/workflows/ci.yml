@@ -193,7 +193,7 @@ jobs:
 
       - name: Cache Cypress binaries
         if: matrix.e2e-framework == 'cypress'
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -201,7 +201,7 @@ jobs:
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
@@ -304,7 +304,7 @@ jobs:
 
       - name: Cache Cypress binaries
         if: matrix.e2e-framework == 'cypress'
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           # TODO: avoid snowballing by adding version
           key: ${{ runner.os }}-cypress-bin
@@ -312,7 +312,7 @@ jobs:
 
       - name: Cache Playwright binaries
         if: matrix.e2e-framework == 'playwright'
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
