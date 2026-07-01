@@ -1,4 +1,4 @@
-export type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun'
+export type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun' | 'nub'
 
 /**
  * Infers the package manager from the user agent string.
@@ -10,6 +10,7 @@ export function inferPackageManager(): PackageManager {
   if (/pnpm/.test(userAgent)) return 'pnpm'
   if (/yarn/.test(userAgent)) return 'yarn'
   if (/bun/.test(userAgent)) return 'bun'
+  if (/nub/.test(userAgent)) return 'nub'
 
   return 'npm'
 }
@@ -18,6 +19,6 @@ export function inferPackageManager(): PackageManager {
  * Creates an ordered list of package managers with the preferred one first.
  */
 export function getPackageManagerOptions(preferred: PackageManager) {
-  const all: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun']
+  const all: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun', 'nub']
   return [preferred, ...all.filter((pm) => pm !== preferred)]
 }
