@@ -30,6 +30,7 @@ function generateOverridesMap(): Record<string, string> {
  * - npm/bun: uses `overrides` field in package.json
  * - yarn: uses `resolutions` field in package.json
  * - pnpm: uses `overrides` and `peerDependencyRules` in pnpm-workspace.yaml
+ * - nub: uses the neutral `overrides` field in package.json
  */
 export default function applyVueBeta(
   root: string,
@@ -75,5 +76,15 @@ peerDependencyRules:
 `
 
     fs.writeFileSync(path.resolve(root, 'pnpm-workspace.yaml'), yamlContent, 'utf-8')
+  } else if (packageManager === 'nub') {
+    // nub is pnpm-CLI-compatible but reads project config only from neutral,
+    // cross-tool fields — not pnpm-named files like pnpm-workspace.yaml — so its
+    // overrides go in the `overrides` field in package.json. Unlike npm, nub does
+    // not require direct dependencies to be rewritten to match, so the override
+    // map alone is sufficient.
+    pkg.overrides = {
+      ...pkg.overrides,
+      ...overrides,
+    }
   }
 }

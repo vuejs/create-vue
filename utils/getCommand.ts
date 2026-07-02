@@ -9,16 +9,18 @@ export default function getCommand(
     return packageManager === 'yarn' ? 'yarn' : `${packageManager} install`
   }
   if (scriptName === 'build') {
-    return packageManager === 'npm' || packageManager === 'bun'
+    return packageManager === 'npm' || packageManager === 'bun' || packageManager === 'nub'
       ? `${packageManager} run build`
       : `${packageManager} build`
   }
 
   if (args) {
-    return packageManager === 'npm'
-      ? `npm run ${scriptName} -- ${args}`
+    return packageManager === 'npm' || packageManager === 'nub'
+      ? `${packageManager} run ${scriptName} -- ${args}`
       : `${packageManager} ${scriptName} ${args}`
   } else {
-    return packageManager === 'npm' ? `npm run ${scriptName}` : `${packageManager} ${scriptName}`
+    return packageManager === 'npm' || packageManager === 'nub'
+      ? `${packageManager} run ${scriptName}`
+      : `${packageManager} ${scriptName}`
   }
 }
