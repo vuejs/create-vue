@@ -42,6 +42,7 @@ const FEATURE_FLAGS = [
   'vue-router',
   'pinia',
   'emoji',
+  'particles',
   'tests',
   'with-tests',
   'vitest',
@@ -71,6 +72,10 @@ const FEATURE_OPTIONS = [
   {
     value: 'emoji',
     label: language.needsEmoji.message,
+  },
+  {
+    value: 'particles',
+    label: 'Add tsParticles + Fireworks effects (beautiful particle & fireworks animations)',
   },
   {
     value: 'vitest',
@@ -193,6 +198,8 @@ Available feature flags:
     Add Pinia for state management.
   --emoji
     Add animated & interactive emoji support (emoji-mart, animated emoji components).
+  --particles
+    Add tsParticles + Fireworks effects (beautiful particle & fireworks animations).
   --vitest
     Add Vitest for unit testing.
   --cypress
@@ -404,6 +411,7 @@ async function init() {
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
   const needsEmoji = argv.emoji || features.includes('emoji')
+  const needsParticles = argv.particles || features.includes('particles')
   const needsVitest = argv.vitest || argv.tests || argv['with-tests'] || features.includes('vitest')
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
@@ -451,6 +459,9 @@ async function init() {
   }
   if (needsEmoji) {
     render('config/emoji')
+  }
+  if (needsParticles) {
+    render('config/particles')
   }
   if (needsVitest) {
     render('config/vitest')
@@ -565,6 +576,7 @@ async function init() {
   if (needsPinia) entryPlugins.push('pinia')
   if (needsRouter) entryPlugins.push('router')
   if (needsEmoji) entryPlugins.push('emoji')
+  if (needsParticles) entryPlugins.push('particles')
 
   if (entryPlugins.length === 0) {
     render('entry/default')
@@ -575,10 +587,16 @@ async function init() {
       'emoji': 'entry/emoji',
       'pinia': 'entry/pinia',
       'router': 'entry/router',
+      'particles': 'entry/particles',
       'emoji-pinia': 'entry/emoji-and-pinia',
       'emoji-router': 'entry/emoji-and-router',
+      'emoji-particles': 'entry/emoji-and-particles',
+      'pinia-particles': 'entry/particles-and-pinia',
+      'router-particles': 'entry/particles-and-router',
       'pinia-router': 'entry/router-and-pinia',
       'emoji-pinia-router': 'entry/emoji-router-and-pinia',
+      'emoji-particles-router': 'entry/particles-router-and-pinia',
+      'particles-pinia-router': 'entry/particles-router-and-pinia',
     }
     const entryTemplate = entryTemplateMap[entryKey]
     if (entryTemplate) {
@@ -712,6 +730,7 @@ async function init() {
       needsCypressCT,
       needsEslint,
       needsEmoji,
+      needsParticles,
     }),
   )
 

@@ -18,6 +18,7 @@ export default function generateReadme({
   needsVitest,
   needsEslint,
   needsEmoji,
+  needsParticles,
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -80,6 +81,49 @@ import CommitEmoji from './components/CommitEmoji.vue'
   <CommitEmoji @commit="onCommit" />
 </template>
 \`\`\`
+`
+    : ''
+}${
+  needsParticles
+    ? `
+## ✨ Particles & Fireworks Effects
+
+This project includes rich particle and fireworks effects powered by:
+
+- **[@tsparticles/vue3](https://github.com/tsparticles/tsparticles)** — Official Vue 3 component for the powerful tsParticles engine
+- **[tsparticles-slim](https://github.com/tsparticles/tsparticles)** — Lightweight particle engine
+- **[tsparticles-preset-fireworks](https://github.com/tsparticles/tsparticles)** — Ready-made fireworks preset
+- **[@fireworks-js/vue](https://github.com/crashmax-dev/fireworks-js)** — Simple, performant Vue 3 fireworks component
+
+### Components
+
+- \`<ParticlesBackground>\` — Highly customizable particle backgrounds (links, snow, confetti, fireworks, etc.)
+- \`<FireworksCanvas>\` — Lightweight canvas-based fireworks with full control
+
+### Quick Start
+
+\`\`\`vue
+<script setup>
+import ParticlesBackground from './components/ParticlesBackground.vue'
+import FireworksCanvas from './components/FireworksCanvas.vue'
+</script>
+
+<template>
+  <!-- tsParticles background (fireworks preset) -->
+  <ParticlesBackground preset="fireworks" :full-screen="true" />
+
+  <!-- Custom particles -->
+  <ParticlesBackground
+    id="my-particles"
+    :options="{ particles: { color: { value: '#ff0000' } } }"
+  />
+
+  <!-- Fireworks canvas -->
+  <FireworksCanvas :height="300" :options="{ hue: { min: 0, max: 360 } }" />
+</template>
+\`\`\`
+
+Use \`<ParticlesBackground preset="fireworks" />\` or the dedicated \`<FireworksCanvas />\` for beautiful celebration effects.
 `
     : ''
 }
