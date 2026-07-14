@@ -41,6 +41,7 @@ const FEATURE_FLAGS = [
   'router',
   'vue-router',
   'pinia',
+  'emoji',
   'tests',
   'with-tests',
   'vitest',
@@ -66,6 +67,10 @@ const FEATURE_OPTIONS = [
   {
     value: 'pinia',
     label: language.needsPinia.message,
+  },
+  {
+    value: 'emoji',
+    label: language.needsEmoji.message,
   },
   {
     value: 'vitest',
@@ -186,6 +191,8 @@ Available feature flags:
     Add Vue Router for SPA development.
   --pinia
     Add Pinia for state management.
+  --emoji
+    Add animated & interactive emoji support (emoji-mart, animated emoji components).
   --vitest
     Add Vitest for unit testing.
   --cypress
@@ -396,6 +403,7 @@ async function init() {
   const needsJsx = argv.jsx || features.includes('jsx')
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
+  const needsEmoji = argv.emoji || features.includes('emoji')
   const needsVitest = argv.vitest || argv.tests || argv['with-tests'] || features.includes('vitest')
   const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
   const needsPrettier =
@@ -440,6 +448,9 @@ async function init() {
   }
   if (needsPinia) {
     render('config/pinia')
+  }
+  if (needsEmoji) {
+    render('config/emoji')
   }
   if (needsVitest) {
     render('config/vitest')
@@ -549,14 +560,38 @@ async function init() {
   render(`code/${codeTemplate}`)
 
   // Render entry file (main.js/ts).
-  if (needsPinia && needsRouter) {
-    render('entry/router-and-pinia')
-  } else if (needsPinia) {
-    render('entry/pinia')
-  } else if (needsRouter) {
-    render('entry/router')
-  } else {
+  // Build a list of plugins to register, then choose the appropriate entry template.
+  const entryPlugins: string[] = []
+  if (needsPinia) entryPlugins.push('pinia')
+  if (needsRouter) entryPlugins.push('router')
+  if (needsEmoji) entryPlugins.push('emoji')
+
+  if (entryPlugins.length === 0) {
     render('entry/default')
+  } else {
+    // Check if we have a specific template for this plugin combination
+    const entryKey = entryPlugins.sort().join('-')
+    const entryTemplateMap: Record<string, string> = {
+      'emoji': 'entry/emoji',
+      'pinia': 'entry/pinia',
+      'router': 'entry/router',
+      'emoji-pinia': 'entry/emoji-and-pinia',
+      'emoji-router': 'entry/emoji-and-router',
+      'pinia-router': 'entry/router-and-pinia',
+      'emoji-pinia-router': 'entry/emoji-router-and-pinia',
+    }
+    const entryTemplate = entryTemplateMap[entryKey]
+    if (entryTemplate) {
+      render(entryTemplate)
+    } else if (needsPinia && needsRouter) {
+      render('entry/router-and-pinia')
+    } else if (needsPinia) {
+      render('entry/pinia')
+    } else if (needsRouter) {
+      render('entry/router')
+    } else {
+      render('entry/default')
+    }
   }
 
   // An external data store for callbacks to share data
@@ -676,6 +711,7 @@ async function init() {
       needsPlaywright,
       needsCypressCT,
       needsEslint,
+      needsEmoji,
     }),
   )
 

@@ -17,6 +17,7 @@ export default function generateReadme({
   needsPlaywright,
   needsVitest,
   needsEslint,
+  needsEmoji,
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -24,6 +25,64 @@ export default function generateReadme({
   let readme = `# ${projectName}
 
 This template should help get you started developing with Vue 3 in Vite.
+${
+  needsEmoji
+    ? `
+## 🎉 Animated & Interactive Emoji Support
+
+This project includes emoji support powered by:
+
+- **[emoji-mart](https://github.com/missive/emoji-mart)** — Customizable emoji picker with search, skin tones & categories
+- **[noto-emoji](https://github.com/googlefonts/noto-emoji)** — Google's high-quality SVG color emoji assets
+- **[google-emoji](https://github.com/mistydemeo/google-emoji)** — Retro animated pixel-art GIF emojis
+- **[gemoji](https://github.com/github/gemoji)** — Emoji name & alias database
+- **[openmoji](https://github.com/hfg-gmuend/openmoji)** — Open-source SVG/PNG emoji (color & black variants + font)
+- **[gitmoji](https://github.com/carloscuesta/gitmoji)** — Emoji guide for commit messages
+
+### Vue Components
+
+- \`<EmojiPicker>\` — Full emoji picker with search, categories, and skin tone selection
+- \`<AnimatedEmoji>\` — Emoji with CSS animations (bounce, wiggle, pulse, spin, float, shake)
+- \`<InteractiveEmoji>\` — Draggable emoji with particle burst effects, reaction counters, and long-press detail popups
+- \`<GitmojiIcon>\` — Gitmoji renderer with optional code label and tooltip
+- \`<CommitEmoji>\` — Gitmoji-powered commit message builder with search and semver badges
+
+### Composables
+
+- \`useEmoji()\` — Headless emoji search and data access
+- \`useEmojiPicker()\` — Reactive picker state management
+- \`useGitmoji()\` — Gitmoji search, lookup, and commit message formatting
+- \`useOpenmoji()\` — OpenMoji SVG/PNG asset URLs and font loading
+
+### Quick Start
+
+\`\`\`vue
+<script setup>
+import AnimatedEmoji from './components/AnimatedEmoji.vue'
+import InteractiveEmoji from './components/InteractiveEmoji.vue'
+import GitmojiIcon from './components/GitmojiIcon.vue'
+import CommitEmoji from './components/CommitEmoji.vue'
+</script>
+
+<template>
+  <!-- Animated emojis -->
+  <AnimatedEmoji emoji="🎉" animation="bounce" :size="48" />
+  <AnimatedEmoji emoji="❤️" animation="pulse" interactive />
+
+  <!-- Interactive emoji with drag & particles -->
+  <InteractiveEmoji emoji="🔥" :draggable="true" :particles="true" />
+
+  <!-- Gitmoji commit icons -->
+  <GitmojiIcon code=":bug:" show-label />
+  <GitmojiIcon code=":sparkles:" animated />
+
+  <!-- Commit message builder -->
+  <CommitEmoji @commit="onCommit" />
+</template>
+\`\`\`
+`
+    : ''
+}
 
 ## Recommended IDE Setup
 
