@@ -27,6 +27,7 @@ interface Language {
   needsJsx: LanguageItem
   needsRouter: LanguageItem
   needsPinia: LanguageItem
+  needsEmoji: LanguageItem
   needsVitest: LanguageItem
   needsE2eTesting: LanguageItem
   needsEslint: LanguageItem

@@ -13,6 +13,7 @@ const featureFlags = [
   'jsx',
   'router',
   'pinia',
+  'emoji',
   'vitest',
   'cypress',
   'playwright',

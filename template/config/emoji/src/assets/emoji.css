@@ -1,0 +1,176 @@
+/**
+ * Vue Emoji Ecosystem Styles
+ *
+ * Base styles and theming for animated & interactive emoji components.
+ * Uses noto-emoji SVG rendering, google-emoji animated GIFs,
+ * openmoji SVG/PNG + font, and gitmoji commit emoji conventions
+ * as reference design language.
+ *
+ * Data sources:
+ *   - emoji-mart (picker & search)
+ *   - noto-emoji (SVG color emoji)
+ *   - google-emoji (retro animated pixel GIF emojis)
+ *   - gemoji (emoji name/alias database)
+ *   - openmoji (open-source SVG/PNG emoji, color & black variants + font)
+ *   - gitmoji (emoji guide for commit messages)
+ */
+
+:root {
+  /* Emoji sizing scale */
+  --emoji-size-xs: 16px;
+  --emoji-size-sm: 20px;
+  --emoji-size-md: 24px;
+  --emoji-size-lg: 32px;
+  --emoji-size-xl: 48px;
+  --emoji-size-xxl: 64px;
+
+  /* Particle colors */
+  --emoji-particle-1: #ff6b6b;
+  --emoji-particle-2: #ffd93d;
+  --emoji-particle-3: #6bcb77;
+  --emoji-particle-4: #4d96ff;
+  --emoji-particle-5: #ff6bcb;
+
+  /* Glow colors */
+  --emoji-glow-color: rgba(255, 200, 50, 0.3);
+  --emoji-glow-size: 12px;
+
+  /* Animation defaults */
+  --emoji-animation-speed: 1;
+  --emoji-bounce-duration: 0.6s;
+  --emoji-wiggle-duration: 0.5s;
+  --emoji-pulse-duration: 1s;
+  --emoji-spin-duration: 1.5s;
+  --emoji-float-duration: 2s;
+
+  /* Gitmoji semver badge colors */
+  --gitmoji-major-bg: #fee2e2;
+  --gitmoji-major-color: #dc2626;
+  --gitmoji-minor-bg: #fef3c7;
+  --gitmoji-minor-color: #d97706;
+  --gitmoji-patch-bg: #dcfce7;
+  --gitmoji-patch-color: #16a34a;
+}
+
+/* Dark theme adjustments */
+[data-theme='dark'],
+.dark {
+  --emoji-glow-color: rgba(255, 200, 50, 0.2);
+  --emoji-particle-1: #ff8888;
+  --emoji-particle-2: #ffe066;
+  --emoji-particle-3: #7ddf8e;
+  --emoji-particle-4: #6bb3ff;
+  --emoji-particle-5: #ff88dd;
+
+  --gitmoji-major-bg: #451a1a;
+  --gitmoji-major-color: #fca5a5;
+  --gitmoji-minor-bg: #451a03;
+  --gitmoji-minor-color: #fcd34d;
+  --gitmoji-patch-bg: #052e16;
+  --gitmoji-patch-color: #86efac;
+}
+
+/* === OpenMoji Font Faces === */
+/* Load OpenMoji fonts for the 'openmoji' emoji set variant */
+@font-face {
+  font-family: 'OpenMoji-Color';
+  src: url('https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/font/OpenMoji-color.ttf')
+    format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenMoji-Black';
+  src: url('https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/font/OpenMoji-black.ttf')
+    format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* OpenMoji font utility classes */
+.openmoji-color {
+  font-family: 'OpenMoji-Color', 'Noto Color Emoji', sans-serif;
+}
+
+.openmoji-black {
+  font-family: 'OpenMoji-Black', 'Noto Color Emoji', sans-serif;
+}
+
+/* Emoji inline display utility */
+.emoji-inline {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* Emoji glow effect */
+.emoji-glow {
+  filter: drop-shadow(0 0 var(--emoji-glow-size) var(--emoji-glow-color));
+}
+
+/* Emoji retro pixel-art rendering (for google-emoji GIFs) */
+.emoji-retro {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Emoji stack for layered effects */
+.emoji-stack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-stack > * {
+  position: absolute;
+}
+
+/* === Gitmoji Utilities === */
+
+/* Gitmoji semver badge */
+.gitmoji-semver {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.gitmoji-semver--major {
+  background: var(--gitmoji-major-bg);
+  color: var(--gitmoji-major-color);
+}
+
+.gitmoji-semver--minor {
+  background: var(--gitmoji-minor-bg);
+  color: var(--gitmoji-minor-color);
+}
+
+.gitmoji-semver--patch {
+  background: var(--gitmoji-patch-bg);
+  color: var(--gitmoji-patch-color);
+}
+
+/* Gitmoji inline commit style */
+.gitmoji-commit {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.gitmoji-commit__emoji {
+  font-size: 1.1em;
+}
+
+.gitmoji-commit__scope {
+  color: #6b7280;
+}
+
+.gitmoji-commit__message {
+  color: #374151;
+}
