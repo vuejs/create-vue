@@ -21,7 +21,7 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
-import applyVueBeta from './utils/applyVueBeta'
+import applyVueRc from './utils/applyVueRc'
 import {
   inferPackageManager,
   getPackageManagerOptions,
@@ -51,6 +51,8 @@ const FEATURE_FLAGS = [
   'eslint-with-prettier',
   'oxlint',
   'oxfmt',
+  'vue-rc',
+  // Kept as a compatibility alias for the former Vue 3.6 beta feature.
   'vue-beta',
 ] as const
 
@@ -90,8 +92,8 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
     label: language.needsOxfmt.message,
   },
   {
-    value: 'vue-beta',
-    label: language.needsVueBeta.message,
+    value: 'vue-rc',
+    label: language.needsVueRc.message,
   },
 ] as const
 
@@ -199,8 +201,8 @@ Available feature flags:
     Add Prettier for code formatting.
   --oxfmt
     Add Oxfmt for code formatting.
-  --vue-beta
-    Use Vue 3.6 Beta. Requires specifying a package manager in interactive mode.
+  --vue-rc
+    Use Vue 3.6 Release Candidate. Requires specifying a package manager in interactive mode.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -362,8 +364,8 @@ async function init() {
       }),
     )
 
-    // Ask for package manager if Vue 3.6 beta is selected (needed for correct overrides)
-    if (result.experimentFeatures.includes('vue-beta')) {
+    // Ask for package manager if Vue 3.6 RC is selected (needed for correct overrides)
+    if (result.experimentFeatures.includes('vue-rc')) {
       const packageManagerOptions = getPackageManagerOptions(inferredPackageManager).map((pm) => ({
         value: pm,
         label: pm,
@@ -401,7 +403,7 @@ async function init() {
   const needsPrettier =
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
-  const needsVueBeta = experimentFeatures.includes('vue-beta') || argv['vue-beta']
+  const needsVueRc = experimentFeatures.includes('vue-rc') || argv['vue-rc'] || argv['vue-beta']
 
   const { e2eFramework } = result
   const needsCypress =
@@ -653,14 +655,14 @@ async function init() {
     }
   }
 
-  // Use the package manager selected by user for Vue 3.6 beta, or inferred from user agent
+  // Use the package manager selected by user for Vue 3.6 RC, or inferred from user agent
   const packageManager = result.packageManager ?? inferredPackageManager
 
-  // Apply Vue 3.6 Beta overrides if the feature is enabled
-  if (needsVueBeta) {
+  // Apply Vue 3.6 release candidate overrides if the feature is enabled
+  if (needsVueRc) {
     const pkgPath = path.resolve(root, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-    applyVueBeta(root, packageManager, pkg)
+    applyVueRc(root, packageManager, pkg)
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
   }
 

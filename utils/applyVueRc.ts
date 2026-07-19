@@ -21,18 +21,18 @@ const CORE_VUE_PACKAGES = [
 ] as const
 
 function generateOverridesMap(): Record<string, string> {
-  return Object.fromEntries(CORE_VUE_PACKAGES.map((name) => [name, 'beta']))
+  return Object.fromEntries(CORE_VUE_PACKAGES.map((name) => [name, 'rc']))
 }
 
 /**
- * Apply Vue 3.6 beta overrides to the project based on the package manager.
+ * Apply Vue 3.6 release candidate overrides to the project based on the package manager.
  * Different package managers have different mechanisms for version overrides:
  * - npm/bun: uses `overrides` field in package.json
  * - yarn: uses `resolutions` field in package.json
  * - pnpm: uses `overrides` and `peerDependencyRules` in pnpm-workspace.yaml
  * - nub: uses the neutral `overrides` field in package.json
  */
-export default function applyVueBeta(
+export default function applyVueRc(
   root: string,
   packageManager: PackageManager,
   pkg: Record<string, any>,
@@ -41,7 +41,7 @@ export default function applyVueBeta(
 
   if (packageManager === 'npm' || packageManager === 'bun') {
     // https://github.com/npm/rfcs/blob/main/accepted/0036-overrides.md
-    // NPM overrides require exact versions for resolution, but "beta" dist-tag works too
+    // NPM overrides require exact versions for resolution, but the "rc" dist-tag works too
     // Bun also supports the same `overrides` field
     pkg.overrides = {
       ...pkg.overrides,
