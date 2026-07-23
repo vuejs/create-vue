@@ -39,6 +39,7 @@ interface Language {
   needsExperimental: LanguageItem
   needsExperimentalFeatures: LanguageItem
   needsVueRc: LanguageItem
+  needsTsgo: LanguageItem
   needsOxfmt: LanguageItem
   needsBareboneTemplates: LanguageItem
   packageManagerSelection: LanguageItem
