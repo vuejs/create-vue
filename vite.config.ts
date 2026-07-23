@@ -17,6 +17,12 @@ export default defineConfig({
     categories: {
       correctness: 'error',
     },
+    rules: {
+      // This type-aware rule requires strictNullChecks, but the repo sets
+      // `"strict": false` in tsconfig.json (the code relies on evolving array
+      // inference), so the rule cannot function here.
+      'typescript/no-useless-default-assignment': 'off',
+    },
     ignorePatterns: ['playground/**', 'template/**'],
     options: {
       typeAware: true,
