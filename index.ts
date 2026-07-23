@@ -21,7 +21,7 @@ import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
-import applyVueRc from './utils/applyVueRc'
+import applyOverrides from './utils/applyOverrides'
 import {
   inferPackageManager,
   getPackageManagerOptions,
@@ -54,6 +54,7 @@ const FEATURE_FLAGS = [
   'vue-rc',
   // Kept as a compatibility alias for the former Vue 3.6 beta feature.
   'vue-beta',
+  'tsgo',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -94,6 +95,10 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
     value: 'vue-rc',
     label: language.needsVueRc.message,
+  },
+  {
+    value: 'tsgo',
+    label: language.needsTsgo.message,
   },
 ] as const
 
@@ -203,6 +208,9 @@ Available feature flags:
     Add Oxfmt for code formatting.
   --vue-rc
     Use Vue 3.6 Release Candidate. Requires specifying a package manager in interactive mode.
+  --tsgo
+    Replace TypeScript with typescript-native-bridge (tsgo). Requires ${cyan('--typescript')}.
+    Requires specifying a package manager in interactive mode.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -355,17 +363,24 @@ async function init() {
         }),
       )
     }
+    // tsgo replaces TypeScript, so it's only offered when TypeScript is enabled
+    const experimentalFeatureOptions = result.needsTypeScript
+      ? EXPERIMENTAL_FEATURE_OPTIONS
+      : EXPERIMENTAL_FEATURE_OPTIONS.filter(({ value }) => value !== 'tsgo')
     result.experimentFeatures = await unwrapPrompt(
       multiselect({
         message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
         // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
-        options: EXPERIMENTAL_FEATURE_OPTIONS,
+        options: experimentalFeatureOptions,
         required: false,
       }),
     )
 
-    // Ask for package manager if Vue 3.6 RC is selected (needed for correct overrides)
-    if (result.experimentFeatures.includes('vue-rc')) {
+    // Ask for package manager if Vue 3.6 RC or tsgo is selected (needed for correct overrides)
+    if (
+      result.experimentFeatures.includes('vue-rc') ||
+      result.experimentFeatures.includes('tsgo')
+    ) {
       const packageManagerOptions = getPackageManagerOptions(inferredPackageManager).map((pm) => ({
         value: pm,
         label: pm,
@@ -404,6 +419,8 @@ async function init() {
     argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
   const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsVueRc = experimentFeatures.includes('vue-rc') || argv['vue-rc'] || argv['vue-beta']
+  // tsgo replaces the `typescript` package, so it only makes sense with TypeScript enabled
+  const needsTsgo = needsTypeScript && (experimentFeatures.includes('tsgo') || argv.tsgo)
 
   const { e2eFramework } = result
   const needsCypress =
@@ -655,14 +672,14 @@ async function init() {
     }
   }
 
-  // Use the package manager selected by user for Vue 3.6 RC, or inferred from user agent
+  // Use the package manager selected by user for the version overrides, or inferred from user agent
   const packageManager = result.packageManager ?? inferredPackageManager
 
-  // Apply Vue 3.6 release candidate overrides if the feature is enabled
-  if (needsVueRc) {
+  // Apply version overrides for experimental features (Vue 3.6 RC, tsgo) if enabled
+  if (needsVueRc || needsTsgo) {
     const pkgPath = path.resolve(root, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-    applyVueRc(root, packageManager, pkg)
+    applyOverrides(root, packageManager, pkg, { vueRc: needsVueRc, tsgo: needsTsgo })
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
   }
 
