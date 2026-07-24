@@ -4,7 +4,17 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { intro, outro, text, confirm, multiselect, select, isCancel, cancel, log } from '@clack/prompts'
+import {
+  intro,
+  outro,
+  text,
+  confirm,
+  multiselect,
+  select,
+  isCancel,
+  cancel,
+  log,
+} from '@clack/prompts'
 import { red, green, cyan, bold, dim } from 'picocolors'
 
 import ejs from 'ejs'
