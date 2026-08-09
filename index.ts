@@ -474,6 +474,9 @@ async function init() {
   }
   if (needsTypeScript) {
     render('config/typescript')
+    if (needsTsgo) {
+      render('config/tsgo')
+    }
 
     // Render tsconfigs
     render('tsconfig/base')
@@ -690,6 +693,7 @@ async function init() {
       projectName: result.projectName ?? result.packageName ?? defaultProjectName,
       packageManager,
       needsTypeScript,
+      needsTsgo,
       needsVitest,
       needsCypress,
       needsPlaywright,
