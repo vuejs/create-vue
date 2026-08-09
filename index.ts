@@ -209,7 +209,7 @@ Available feature flags:
   --vue-rc
     Use Vue 3.6 Release Candidate. Requires specifying a package manager in interactive mode.
   --tsgo
-    Replace TypeScript with typescript-native-bridge (tsgo). Requires ${cyan('--typescript')}.
+    Add TypeScript support using typescript-native-bridge (tsgo).
     Requires specifying a package manager in interactive mode.
 
 Unstable feature flags:
