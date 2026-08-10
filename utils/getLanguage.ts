@@ -46,6 +46,9 @@ interface Language {
   errors: {
     operationCancelled: string
   }
+  warnings: {
+    tsgoNubReleaseAge: string
+  }
   defaultToggleOptions: {
     active: string
     inactive: string

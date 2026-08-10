@@ -713,6 +713,12 @@ async function init() {
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`
 
+  if (needsTsgo && packageManager === 'nub') {
+    outroMessage += `
+${dim('|')} ${language.warnings.tsgoNubReleaseAge}
+`
+  }
+
   if (!dotGitDirectoryState.hasDotGitDirectory) {
     outroMessage += `
 ${dim('|')} ${language.infos.optionalGitCommand}
