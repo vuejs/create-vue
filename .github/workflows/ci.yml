@@ -43,7 +43,7 @@ jobs:
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
       # Note we use the atos-actions/* version to tar/untar the files
-      - uses: atos-actions/upload-artifact@714596d47dad7c797eb9e77ccce18847c6f552a2 # v2
+      - uses: atos-actions/upload-artifact@bc95671d917afa3395bdd76528d5caa78a27ba63 # v2
         with:
           name: build-output
           path: |
