@@ -64,6 +64,9 @@
   "needsVueRc": {
     "message": "Vue 3.6（發行候選版本）"
   },
+  "needsTsgo": {
+    "message": "使用 typescript-native-bridge（tsgo）替代 TypeScript"
+  },
   "needsOxfmt": {
     "message": "使用 Oxfmt 替代 Prettier"
   },
@@ -72,10 +75,13 @@
   },
   "packageManagerSelection": {
     "message": "專案將使用哪個套件管理器？",
-    "hint": "（需要根據套件管理器生成對應的 Vue 3.6 發行候選版本配置）"
+    "hint": "（所選試驗特性需要根據套件管理器使用不同的版本覆寫配置）"
   },
   "errors": {
     "operationCancelled": "操作取消"
+  },
+  "warnings": {
+    "tsgoNubReleaseAge": "Nub 預設的 24 小時發布冷卻期可能會暫時阻止安裝剛發布的 typescript-native-bridge 版本。瞭解詳情：https://nubjs.com/docs/install#cooling-window"
   },
   "defaultToggleOptions": {
     "active": "是",

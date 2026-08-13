@@ -64,6 +64,9 @@
   "needsVueRc": {
     "message": "Vue 3.6 (sürüm adayı)"
   },
+  "needsTsgo": {
+    "message": "TypeScript'i typescript-native-bridge (tsgo) ile değiştir"
+  },
   "needsOxfmt": {
     "message": "Prettier'ı Oxfmt ile değiştir"
   },
@@ -72,10 +75,13 @@
   },
   "packageManagerSelection": {
     "message": "Hangi paket yöneticisini kullanacaksınız?",
-    "hint": "(Vue 3.6 sürüm adayı, paket yöneticisine özgü sürüm geçersiz kılmaları gerektirir)"
+    "hint": "(Seçilen deneysel özellikler paket yöneticisine özgü sürüm geçersiz kılmaları gerektirir)"
   },
   "errors": {
     "operationCancelled": "İşlem iptal edildi"
+  },
+  "warnings": {
+    "tsgoNubReleaseAge": "Nub'ın varsayılan 24 saatlik bekleme süresi, yeni yayımlanan bir typescript-native-bridge sürümünün yüklenmesini geçici olarak engelleyebilir. Daha fazla bilgi: https://nubjs.com/docs/install#cooling-window"
   },
   "defaultToggleOptions": {
     "active": "Evet",

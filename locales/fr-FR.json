@@ -64,6 +64,9 @@
   "needsVueRc": {
     "message": "Vue 3.6 (version candidate)"
   },
+  "needsTsgo": {
+    "message": "Remplacer TypeScript par typescript-native-bridge (tsgo)"
+  },
   "needsOxfmt": {
     "message": "Remplacer Prettier par Oxfmt"
   },
@@ -72,10 +75,13 @@
   },
   "packageManagerSelection": {
     "message": "Quel gestionnaire de paquets allez-vous utiliser\u00a0?",
-    "hint": "(La version candidate de Vue 3.6 nécessite de forcer certaines versions différemment selon le gestionnaire de paquets)"
+    "hint": "(Les fonctionnalités expérimentales sélectionnées nécessitent de forcer certaines versions différemment selon le gestionnaire de paquets)"
   },
   "errors": {
     "operationCancelled": "Operation annulée"
+  },
+  "warnings": {
+    "tsgoNubReleaseAge": "La période d’attente de 24 heures appliquée par défaut par Nub peut temporairement empêcher l’installation d’une version de typescript-native-bridge récemment publiée. En savoir plus : https://nubjs.com/docs/install#cooling-window"
   },
   "defaultToggleOptions": {
     "active": "Oui",
