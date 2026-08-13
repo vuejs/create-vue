@@ -9,7 +9,5 @@ export function resolveNeedsTypeScript(
   argv: TypeScriptFeatureFlags,
   promptedNeedsTypeScript?: boolean,
 ) {
-  return Boolean(
-    argv.default || argv.ts || argv.typescript || argv.tsgo || promptedNeedsTypeScript,
-  )
+  return Boolean(argv.default || argv.ts || argv.typescript || argv.tsgo || promptedNeedsTypeScript)
 }
