@@ -28,6 +28,7 @@ import {
   type PackageManager,
 } from './utils/packageManager'
 import { resolveNeedsTypeScript } from './utils/resolveFeatures'
+import { addStandardScriptAliases } from './utils/packageScripts'
 
 import cliPackageJson from './package.json' with { type: 'json' }
 
@@ -678,13 +679,19 @@ async function init() {
   // Use the package manager selected by user for the version overrides, or inferred from user agent
   const packageManager = result.packageManager ?? inferredPackageManager
 
+  const pkgPath = path.resolve(root, 'package.json')
+  const generatedPackageJson = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+
   // Apply version overrides for experimental features (Vue 3.6 RC, tsgo) if enabled
   if (needsVueRc || needsTsgo) {
-    const pkgPath = path.resolve(root, 'package.json')
-    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-    applyOverrides(root, packageManager, pkg, { vueRc: needsVueRc, tsgo: needsTsgo })
-    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+    applyOverrides(root, packageManager, generatedPackageJson, {
+      vueRc: needsVueRc,
+      tsgo: needsTsgo,
+    })
   }
+
+  addStandardScriptAliases(generatedPackageJson)
+  fs.writeFileSync(pkgPath, JSON.stringify(generatedPackageJson, null, 2) + '\n')
 
   // README generation
   fs.writeFileSync(
