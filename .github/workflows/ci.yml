@@ -35,6 +35,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
           CHROMEDRIVER_SKIP_DOWNLOAD: true
+      - run: pnpm peers check
       - run: pnpm build
       - run: pnpm format-check
       - run: pnpm test:unit
