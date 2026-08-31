@@ -19,6 +19,7 @@ permissions:
 
 jobs:
   build:
+    if: github.repository == 'vuejs/create-vue'
     runs-on: ubuntu-latest
     name: Build the package
     steps:
@@ -56,6 +57,7 @@ jobs:
   # ====================
   verify-scripts:
     needs: build
+    if: github.repository == 'vuejs/create-vue'
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -152,6 +154,7 @@ jobs:
   # Ubuntu E2E - runs on every push/PR
   verify-e2e:
     needs: build
+    if: github.repository == 'vuejs/create-vue'
     strategy:
       matrix:
         e2e-framework: [cypress, playwright]
@@ -256,7 +259,7 @@ jobs:
   # Windows/macOS E2E - only runs on main branch (slow, less critical for PRs)
   verify-e2e-cross-platform:
     needs: build
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    if: github.repository == 'vuejs/create-vue' && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     strategy:
       matrix:
         e2e-framework: [cypress, playwright]
