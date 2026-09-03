@@ -1,0 +1,914 @@
+/* ============================================================
+   MedHub24 — Bilingual type authority  (LOAD LAST)
+   ------------------------------------------------------------
+   This file is the single source of truth for typography.
+   It deliberately sits after styles.css so that it supersedes
+   the four competing Khmer font stacks that accumulated there
+   (Noto Sans Khmer -> Angkor -> Koh Santepheap -> Moul).
+
+   Two rules govern everything below:
+
+   1. SCRIPT SEPARATION IS ENFORCED BY unicode-range, NOT BY
+      SELECTORS.  The Khmer faces are declared for Khmer
+      codepoints only, so a Latin glyph can never resolve to a
+      Khmer face and a Khmer glyph can never resolve to a Latin
+      face.  Changing Khmer size, weight or spacing therefore
+      cannot move a single English glyph.
+
+   2. Khmer METRICS are scoped to html[lang="km"] only.
+      English metrics live outside that scope and are untouched.
+   ============================================================ */
+
+
+/* ============================================================
+   1. FONT LOADING — fully self-hosted, no CDN dependency
+   ============================================================
+   Khmer codepoints:
+     U+1780-17FF  Khmer
+     U+19E0-19FF  Khmer symbols
+     U+200B       zero-width space (Khmer word delimiter)
+     U+25CC       dotted circle (orphaned diacritic placeholder)
+
+   Place the files in assets/fonts/ — see assets/fonts/FONTS.md.
+   If a local file is missing the browser falls through to the
+   next family in the stack ('Koh Santepheap' from the Google
+   link in <head>), and only then to a device font.
+   ------------------------------------------------------------ */
+
+/* Hanuman — the design system's Khmer body face, self-hosted.
+   Hanuman ships a single weight; 600/700 are mapped to the same file so
+   the browser never synthesises a fake bold (which smears the coeng). */
+@font-face {
+    font-family: 'MedHub Khmer';
+    src: url('../assets/fonts/Hanuman-Regular.ttf') format('truetype');
+    font-weight: 400 500;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+}
+
+@font-face {
+    font-family: 'MedHub Khmer';
+    src: url('../assets/fonts/Hanuman-Regular.ttf') format('truetype');
+    font-weight: 600 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+}
+
+/* Display face for hero headlines only. Angkor is single-weight;
+   font-synthesis is disabled so no browser fakes a bold. */
+@font-face {
+    font-family: 'MedHub Khmer Display';
+    src: url('../assets/fonts/Angkor-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+}
+
+
+/* ============================================================
+   2. THE TWO STACKS
+   ============================================================ */
+
+:root {
+    /* Latin — unchanged from the original design */
+    --medhub-latin-body: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --medhub-latin-heading: 'Poppins', 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+
+    /* Khmer — approved face first, network copy second, device last */
+    --medhub-khmer-body: 'MedHub Khmer', 'Hanuman', 'Noto Sans Khmer', 'Khmer OS Battambang', sans-serif;
+    --medhub-khmer-display: 'MedHub Khmer Display', 'MedHub Khmer', 'Hanuman', sans-serif;
+
+    /* Khmer vertical rhythm. Khmer stacks subscript consonants
+       (coeng) below the baseline and vowel signs above it, so it
+       needs materially more leading than Latin at the same size. */
+    --medhub-khmer-leading-body: 1.9;
+    --medhub-khmer-leading-lead: 1.85;
+    --medhub-khmer-leading-heading: 1.6;
+    --medhub-khmer-leading-display: 1.5;
+    --medhub-khmer-leading-tight: 1.45;
+}
+
+/* Retire the legacy variables by pointing them all at the
+   approved face. Anything in styles.css still reading them
+   now resolves correctly instead of to its own guess. */
+html[lang="km"] {
+    --medhub-font-km-body: var(--medhub-khmer-body);
+    --medhub-font-km-heading: var(--medhub-khmer-body);
+    --medhub-font-km-cover: var(--medhub-khmer-body);
+    --medhub-font-km-display: var(--medhub-khmer-display);
+    --medhub-font-km-moul: var(--medhub-khmer-display);
+
+    /* ---- Khmer size scale ----------------------------------
+       styles.css defines this scale on :root and reads it from
+       #id-bearing rules, which outrank any plain override. So
+       we take ownership of the tokens instead of fighting the
+       selectors: html[lang="km"] (0,1,1) beats :root (0,1,0),
+       including inside its media queries.
+
+       Every value is raised. Khmer carries its meaning in the
+       vowel signs and subscripts, so it reads about one step
+       smaller than Latin at the same nominal size; the previous
+       scale bottomed out at 11.5px labels. Floor is now 13.5px.
+       ------------------------------------------------------- */
+    --medhub-km-hero-size: clamp(2rem, 4.4vw, 3.85rem);
+    --medhub-km-page-title-size: clamp(1.72rem, 3.4vw, 2.85rem);
+    --medhub-km-section-title-size: clamp(1.45rem, 2.6vw, 2.3rem);
+    --medhub-km-card-title-size: clamp(1.09rem, 1.6vw, 1.34rem);
+    --medhub-km-body-size: clamp(1rem, 1.1vw, 1.09rem);        /* 16 – 17.4px */
+    --medhub-km-small-size: clamp(0.875rem, 0.95vw, 0.95rem);  /* 14 – 15.2px */
+    --medhub-km-label-size: clamp(0.845rem, 0.9vw, 0.92rem);   /* 13.5 – 14.7px */
+
+    /* Header. The nav is a horizontally scrollable flex row, so the tabs
+       are free to grow — the row scrolls rather than the type shrinking.
+       styles.css previously set these BELOW their Latin equivalents. */
+    --medhub-km-nav-size: clamp(0.845rem, 1vw, 0.9rem);        /* 13.5 – 14.4px */
+    --medhub-km-brandsub-size: clamp(0.8125rem, 0.85vw, 0.86rem); /* 13 – 13.8px */
+}
+
+@media (max-width: 767px) {
+    html[lang="km"] {
+        --medhub-km-hero-size: clamp(1.72rem, 6.8vw, 2.35rem);
+        --medhub-km-page-title-size: clamp(1.5rem, 6vw, 1.95rem);
+        --medhub-km-section-title-size: clamp(1.3rem, 5.2vw, 1.7rem);
+        --medhub-km-card-title-size: clamp(1.05rem, 4.2vw, 1.18rem);
+        --medhub-km-body-size: clamp(0.97rem, 3.9vw, 1.04rem);
+        --medhub-km-small-size: clamp(0.875rem, 3.5vw, 0.94rem);
+        --medhub-km-label-size: clamp(0.82rem, 2.9vw, 0.875rem);
+        --medhub-km-nav-size: clamp(0.8125rem, 3.2vw, 0.875rem);
+        --medhub-km-brandsub-size: clamp(0.8125rem, 3vw, 0.845rem);
+    }
+}
+
+
+/* ============================================================
+   3. ENGLISH — explicit, and never touched by Khmer rules
+   ============================================================ */
+
+html[lang="en"] body {
+    font-family: var(--medhub-latin-body);
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+}
+
+html[lang="en"] :is(h1, h2, h3, h4) {
+    font-family: var(--medhub-latin-heading);
+    line-height: 1.14;
+    letter-spacing: -0.021em;
+    text-wrap: balance;
+}
+
+html[lang="en"] :is(p, li, .home-lead, .travel-lead, .travel-milestone-desc) {
+    text-wrap: pretty;
+}
+
+/* English hero headlines: the existing clamps were tuned for the shorter
+   previous copy and overflow the measure on a 390px handset. */
+html[lang="en"] body :is(
+    #page-home .home-premium h1,
+    #page-checkup .checkup-showcase h1,
+    #page-surgery .surgery-showcase h1,
+    #page-travel .travel-hero h1,
+    #page-accommodation .stay-hero h1
+) {
+    font-size: clamp(1.75rem, calc(1.15rem + 2.6vw), 3.5rem);
+    line-height: 1.1;
+    text-wrap: balance;
+}
+
+@media (max-width: 480px) {
+    html[lang="en"] body :is(
+        #page-home .home-premium h1,
+        #page-checkup .checkup-showcase h1,
+        #page-surgery .surgery-showcase h1,
+        #page-travel .travel-hero h1,
+        #page-accommodation .stay-hero h1
+    ) {
+        font-size: 1.75rem;
+        line-height: 1.16;
+        letter-spacing: -0.02em;
+    }
+    /* Kickers wrap to two lines at this width; keep the pill legible
+       rather than letting it stretch to the full column. */
+    html[lang="en"] body :is(.home-kicker, .checkup-kicker, .surgery-kicker, .travel-eyebrow, .stay-kicker) {
+        font-size: 0.62rem;
+        letter-spacing: 0.06em;
+        line-height: 1.35;
+    }
+}
+
+/* Latin abbreviations in the trust strips keep their spacing but may
+   wrap at a narrow column rather than overflowing the card. */
+.home-trust-strip strong,
+.stay-trust-strip strong,
+.travel-stat-number {
+    overflow-wrap: break-word;
+}
+
+
+/* ============================================================
+   4. KHMER — one face, correct metrics, safe line breaking
+   ============================================================ */
+
+html[lang="km"] body,
+html[lang="km"] body :is(p, li, a, button, span, strong, b, small, em, label, td, th, input, textarea, select) {
+    font-family: var(--medhub-khmer-body) !important;
+    font-synthesis-weight: none;
+}
+
+html[lang="km"] body {
+    line-height: var(--medhub-khmer-leading-body);
+    /* Khmer is unspaced; never force a negative track. */
+    letter-spacing: 0 !important;
+    /* Let the browser's Khmer dictionary do the breaking, and only
+       fall back to breaking a long unbroken run if it overflows. */
+    word-break: normal;
+    line-break: auto;
+    overflow-wrap: break-word;
+    hyphens: none;
+    /* Balanced/pretty wrapping is tuned for spaced scripts and
+       produces erratic Khmer rag. */
+    text-wrap: initial;
+}
+
+html[lang="km"] body :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--medhub-khmer-body) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: var(--medhub-khmer-leading-heading) !important;
+    text-transform: none !important;
+    text-wrap: initial !important;
+    /* Coeng descends past the em box — without this the tails of
+       ុ ូ ្ត ្ន clip against the next block on tight headings. */
+    padding-block-end: 0.08em;
+    overflow: visible !important;
+}
+
+/* Italic does not exist in Khmer; the <em> in the headline copy is
+   a Latin typographic device. Keep it as emphasis, not as a slant. */
+html[lang="km"] body :is(h1, h2, h3) em {
+    font-family: inherit !important;
+    font-style: normal !important;
+    font-weight: inherit !important;
+}
+
+html[lang="km"] body :is(p, li, .home-lead, .travel-lead, .travel-milestone-desc, .travel-sub, .footer-brand-note) {
+    line-height: var(--medhub-khmer-leading-lead) !important;
+    letter-spacing: 0 !important;
+}
+
+/* Kickers / eyebrows: uppercase + wide tracking is a Latin idiom
+   and it destroys Khmer clusters. Neutralised. */
+html[lang="km"] body :is(.home-kicker, .checkup-kicker, .surgery-kicker, .travel-eyebrow, .stay-kicker, .travel-cta-eyebrow, .travel-stage),
+html[lang="km"] body :is(
+    #page-home .home-kicker, #page-checkup .checkup-kicker, #page-surgery .surgery-kicker,
+    #page-travel .travel-eyebrow, #page-travel .travel-cta-eyebrow, #page-travel .travel-stage,
+    #page-accommodation .stay-kicker
+) {
+    font-family: var(--medhub-khmer-body) !important;
+    font-weight: 700 !important;
+    /* Size comes from --medhub-km-label-size above. A Latin kicker works
+       at 11px because it is uppercase and tracked; Khmer has neither. */
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    line-height: var(--medhub-khmer-leading-tight) !important;
+    padding-block: 0.45em 0.55em;
+    height: auto !important;
+}
+
+/* Buttons and tabs: Khmer needs the extra leading and the taller
+   box, or the descenders sit on the button border. */
+html[lang="km"] body :is(.nav-tab, .home-action, .checkup-action, .surgery-action, .stay-action, .travel-cta-button, .travel-cta-secondary, .mobile-contact-link) {
+    line-height: var(--medhub-khmer-leading-tight) !important;
+    letter-spacing: 0 !important;
+    padding-block: 0.85em;
+    min-height: 48px; /* iOS/Android touch target */
+    height: auto !important;
+    align-items: center;
+    white-space: normal;
+    text-align: center;
+}
+
+html[lang="km"] body :is(.travel-tag, .home-usp-card p, .checkup-story-info p, .surgery-story-card p, .stay-story-card p) {
+    line-height: var(--medhub-khmer-leading-lead) !important;
+    letter-spacing: 0 !important;
+}
+
+/* Khmer optical size floor.
+   Khmer glyphs carry their detail in the vowel signs and subscripts, so a
+   Khmer string set at a Latin size reads noticeably smaller and strains at
+   distance. Several card and step rules in styles.css land at ~12.5px, which
+   is below the floor for a medical audience. 14.5px minimum for body copy,
+   13px for tags and micro-labels. The #id-bearing selectors in styles.css
+   outrank a plain override, so these are matched at equal specificity. */
+html[lang="km"] body :is(
+    #page-home .home-usp-card p,
+    #page-home .home-step-list article p,
+    #page-checkup .checkup-story-info p,
+    #page-surgery .surgery-story-card p,
+    #page-accommodation .stay-story-card p,
+    #page-travel .travel-milestone-desc,
+    #page-travel .travel-sub
+),
+html[lang="km"] body :is(
+    .home-usp-card p,
+    .home-step-list article p,
+    .checkup-story-info p,
+    .surgery-story-card > div > p,
+    .stay-story-card > div > p,
+    .travel-milestone-desc,
+    .travel-sub,
+    .home-service-tile small
+) {
+    line-height: var(--medhub-khmer-leading-lead) !important;
+}
+
+html[lang="km"] body :is(
+    #page-travel .travel-tag,
+    #page-home .home-trust-strip span,
+    #page-accommodation .stay-trust-strip span
+),
+html[lang="km"] body :is(.travel-tag, .home-trust-strip span, .stay-trust-strip span, .checkup-micro-stats span, .surgery-micro-stats span) {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+}
+
+/* Cards must grow with Khmer copy rather than clip it. */
+html[lang="km"] body :is(.home-usp-card, .checkup-story-card, .surgery-story-card, .stay-story-card, .home-step-list article, .travel-story-card, .travel-milestone-content) {
+    height: auto !important;
+    min-height: 0;
+    overflow: visible !important;
+}
+
+
+/* ============================================================
+   5. KHMER HERO HEADLINES — Angkor display face
+   ============================================================
+   Supersedes the Moul block at the end of styles.css and, more
+   importantly, removes `line-break: anywhere` / `overflow-wrap:
+   anywhere` from it. Those two properties break a Khmer
+   consonant away from its own vowel sign mid-cluster, which is
+   what produced the stray marks in the Khmer heroes.
+   ------------------------------------------------------------ */
+
+html[lang="km"] body :is(
+    #page-home .home-premium h1[data-i18n="home.title"],
+    #page-checkup .checkup-showcase h1[data-i18n="checkup.title"],
+    #page-surgery .surgery-showcase h1[data-i18n="surgery.title"],
+    #page-travel .travel-hero h1[data-i18n="travel.title"],
+    #page-accommodation .stay-hero h1[data-i18n="accommodation.title"]
+),
+html[lang="km"] body :is(
+    #page-home .home-premium h1[data-i18n="home.title"],
+    #page-checkup .checkup-showcase h1[data-i18n="checkup.title"],
+    #page-surgery .surgery-showcase h1[data-i18n="surgery.title"],
+    #page-travel .travel-hero h1[data-i18n="travel.title"],
+    #page-accommodation .stay-hero h1[data-i18n="accommodation.title"]
+) * {
+    font-family: var(--medhub-khmer-display) !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-synthesis: none !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+html[lang="km"] body :is(
+    #page-home .home-premium h1[data-i18n="home.title"],
+    #page-checkup .checkup-showcase h1[data-i18n="checkup.title"],
+    #page-surgery .surgery-showcase h1[data-i18n="surgery.title"],
+    #page-travel .travel-hero h1[data-i18n="travel.title"],
+    #page-accommodation .stay-hero h1[data-i18n="accommodation.title"]
+) {
+    display: block !important;
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+    box-sizing: border-box !important;
+    font-size: clamp(1.5rem, calc(1.05rem + 1.9vw), 3rem) !important;
+    line-height: var(--medhub-khmer-leading-display) !important;
+    padding-block-end: 0.12em;
+    white-space: normal !important;
+    overflow: visible !important;
+    /* THE FIX: dictionary breaking, not arbitrary breaking. */
+    word-break: normal !important;
+    line-break: auto !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+    text-wrap: initial !important;
+}
+
+@media (max-width: 767px) {
+    html[lang="km"] body :is(
+        #page-home .home-premium h1[data-i18n="home.title"],
+        #page-checkup .checkup-showcase h1[data-i18n="checkup.title"],
+        #page-surgery .surgery-showcase h1[data-i18n="surgery.title"],
+        #page-travel .travel-hero h1[data-i18n="travel.title"],
+        #page-accommodation .stay-hero h1[data-i18n="accommodation.title"]
+    ) {
+        font-size: clamp(1.35rem, calc(1.05rem + 2.2vw), 1.85rem) !important;
+        line-height: 1.55 !important;
+    }
+}
+
+/* The hero kicker was pinned to Moul with `overflow-wrap: anywhere`
+   too. Same correction. */
+html[lang="km"] body #page-home .home-hero-copy > .home-kicker[data-i18n="home.kicker"] {
+    font-family: var(--medhub-khmer-body) !important;
+    max-inline-size: 100% !important;
+    font-size: clamp(0.78rem, calc(0.7rem + 0.4vw), 0.95rem) !important;
+    line-height: var(--medhub-khmer-leading-tight) !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    line-break: auto !important;
+}
+
+
+/* ------------------------------------------------------------
+   Safety net. styles.css has been repaired in place, but its
+   Khmer rules are keyed on #page-* ids, which outrank a plain
+   html[lang="km"] body selector. These restate the correct
+   breaking behaviour at matching specificity so a future edit
+   to styles.css cannot silently reintroduce cluster-breaking.
+   ------------------------------------------------------------ */
+
+html[lang="km"] body header :is(.nav-tab, .nav-tab span, .brand-logo-sub, .nav-label-full, .nav-label-mobile),
+html[lang="km"] body :is(
+    #page-home, #page-checkup, #page-surgery, #page-travel, #page-accommodation
+) :is(h1, h2, h3, h4, h5, h6, p, li, small, span, strong, a, button, [data-admin-type="title"]) {
+    word-break: normal !important;
+    line-break: auto !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+}
+
+
+/* ============================================================
+   6. LATIN-ONLY ELEMENTS INSIDE KHMER PAGES
+   ============================================================
+   The wordmark, step numerals, phone numbers and country codes
+   are Latin in both languages, so they keep the Latin face even
+   when the page is Khmer. (unicode-range already guarantees the
+   glyphs resolve correctly; this sets the intended Latin design.)
+   ------------------------------------------------------------ */
+
+html[lang="km"] body :is(
+    .brand-logo-word, .brand-logo-word span, .brand-logo-word b,
+    .footer-brand-text, .footer-brand-text span, .footer-brand-text b,
+    .travel-stat-number, .travel-number,
+    .home-step-list article > span,
+    .checkup-story-info span, .surgery-story-card > div > span, .stay-story-card > div > span,
+    .home-trust-strip strong, .stay-trust-strip strong,
+    .language-label, .language-value, .language-divider
+) {
+    font-family: var(--medhub-latin-heading) !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.15 !important;
+}
+
+
+/* ============================================================
+   7. FONT-LOAD FAILURE STATE
+   ============================================================
+   js/khmer-font.js writes data-khmer-font on <html>:
+     "selfhosted" — approved face served by us (target state)
+     "cdn"        — approved face, but via fonts.gstatic.com
+     "fallback"   — a device font is rendering
+   Only in the "fallback" case do we relax the metrics to suit an
+   unknown device font, so a substitution never silently clips.
+   ------------------------------------------------------------ */
+
+html[data-khmer-font="fallback"][lang="km"] body {
+    --medhub-khmer-leading-body: 2;
+    --medhub-khmer-leading-heading: 1.7;
+    --medhub-khmer-leading-display: 1.65;
+}
+
+
+/* ============================================================
+   8. RESPONSIVE + CROSS-BROWSER HARDENING
+   ============================================================ */
+
+/* iOS Safari: stop the landscape text inflation that breaks the
+   Khmer measure, without disabling user zoom. */
+@media screen and (max-device-width: 926px) {
+    html { -webkit-text-size-adjust: 100%; }
+}
+
+/* iPhone notch / home indicator */
+@supports (padding: max(0px)) {
+    footer .footer-shell {
+        padding-bottom: max(0.85rem, env(safe-area-inset-bottom));
+    }
+    header .container,
+    main .container,
+    .home-shell,
+    .stay-shell {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+}
+
+/* Safari <16 has no :has(); nothing here relies on it. Firefox
+   has no Khmer line-break dictionary, so guarantee no overflow. */
+@-moz-document url-prefix() {
+    html[lang="km"] body :is(h1, h2, h3, p, li, .home-lead, .travel-lead) {
+        overflow-wrap: break-word;
+    }
+}
+
+/* No horizontal scroll on any device */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* Every tap target reaches 44px on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .nav-tab,
+    .home-action, .checkup-action, .surgery-action, .stay-action,
+    .travel-cta-button, .travel-cta-secondary,
+    .home-service-tile,
+    .mobile-contact-link,
+    .desktop-language-badge, .mobile-language-toggle {
+        min-height: 44px;
+    }
+}
+
+@media print {
+    header, .desktop-language-badge, .mobile-language-toggle { display: none !important; }
+    .page-content { display: block !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   Khmer header.
+   The nav pills are a fixed-height flex row in styles.css. Khmer
+   needs a taller line box, so the pills are allowed to grow and
+   the row keeps its existing horizontal scroll as the escape.
+   ------------------------------------------------------------ */
+
+html[lang="km"] body header .nav-tab {
+    height: auto !important;
+    align-items: center;
+    line-height: 1.45 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    white-space: nowrap;
+}
+
+html[lang="km"] body header .nav-tab span,
+html[lang="km"] body header :is(.nav-label-full, .nav-label-mobile) {
+    font-size: inherit !important;   /* inherit the token from .nav-tab */
+    line-height: inherit !important;
+    letter-spacing: 0 !important;
+}
+
+html[lang="km"] body header .brand-logo-sub {
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+    height: auto !important;
+}
+
+
+/* ------------------------------------------------------------
+   Manager portrait fallback.
+   The photograph is still served from a signed third-party CDN
+   whose auth_key expires. If the fetch fails, js in the tag
+   removes the <img> and sets data-fallback, and this renders a
+   monogram so the card never shows a broken-image icon.
+   Remove once the file is hosted in assets/images/.
+   ------------------------------------------------------------ */
+.home-manager-photo[data-fallback] {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(140deg, #12324D 0%, #1c4a6e 100%);
+}
+
+.home-manager-photo[data-fallback]::after {
+    content: "CC";
+    font-family: var(--medhub-latin-heading);
+    font-weight: 600;
+    font-size: 1.75rem;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* Visible focus for keyboard users in both languages */
+:where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--medhub-mint, #40B9B0);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+
+/* ============================================================
+   9. KHMER MINIMUM LEGIBLE SIZE — final word
+   ============================================================
+   Two rules in styles.css still won on specificity. Matched
+   here against their own selectors so no Khmer copy renders
+   below 13px, and no supporting copy below 14px.
+   ------------------------------------------------------------ */
+
+html[lang="km"] body #page-travel .travel-milestone-tags .travel-tag,
+html[lang="km"] body .travel-milestone-tags .travel-tag {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.65 !important;
+    padding-block: 0.35em !important;
+    height: auto !important;
+}
+
+html[lang="km"] body footer .footer-brand-note,
+html[lang="km"] body .footer-brand-note {
+    font-size: var(--medhub-km-small-size) !important;
+    line-height: var(--medhub-khmer-leading-lead) !important;
+}
+
+/* Supporting labels. `small` is 80% of its parent by default, which
+   pushes Khmer under the floor wherever the parent is already small. */
+html[lang="km"] body :is(
+    #page-home .home-service-tile small,
+    #page-accommodation .stay-price-panel small,
+    #page-accommodation .stay-panel-row small
+),
+html[lang="km"] body :is(.home-service-tile small, .stay-price-panel small, .stay-panel-row small, .home-trust-strip span, .stay-trust-strip span) {
+    font-size: var(--medhub-km-small-size) !important;
+    line-height: 1.7 !important;
+}
+
+/* The last holdouts. styles.css sizes these from rules of the shape
+   html[lang="km"] :is(#page-*) :is(.class) — specificity (1,2,1). Each
+   selector below carries one id, two classes plus [lang], and three
+   element names, i.e. (1,3,3), so it wins cleanly. Sizes come from the
+   token scale, so there is still one place to change them. */
+
+html[lang="km"] body #page-home .home-manager-card .home-manager-info span,
+html[lang="km"] body #page-travel .travel-hero-stats .travel-stat .travel-stat-label,
+html[lang="km"] body #page-travel .travel-story-card > div > span,
+html[lang="km"] body #page-travel .travel-cta-card .travel-manager-note span,
+html[lang="km"] body #page-surgery .surgery-story-card > div > span,
+html[lang="km"] body #page-accommodation .stay-hero-grid .stay-price-panel > span,
+html[lang="km"] body #page-accommodation .stay-story-card > div > span,
+html[lang="km"] body footer .footer-shell .footer-trust-strip span {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+html[lang="km"] body #page-checkup .checkup-story-card .checkup-story-info p,
+html[lang="km"] body #page-surgery .surgery-story-card > div > p,
+html[lang="km"] body #page-accommodation .stay-story-card > div > p {
+    font-size: var(--medhub-km-small-size) !important;
+    line-height: var(--medhub-khmer-leading-lead) !important;
+}
+
+
+/* ============================================================
+   9. LEGIBILITY FLOOR
+
+   An audit of every page in both locales at 320 / 375 / 390 / 430 /
+   744 / 834 / 1024 / 1440px found live text rendering as small as
+   6.7px. The offenders were mobile rules in styles.css that shrank
+   type to force content into a fixed width — most severely the
+   English nav strip, which stepped 8.8px → 8px → 7.7px → 6.7px as
+   the screen narrowed. medhub-responsive.css removes the width
+   constraint that forced it; this section sets the sizes.
+
+   Floors: 12px Latin, 13.5px Khmer (the existing
+   --medhub-km-label-size). Khmer is never smaller than the Latin it
+   replaces, per the rule in section 4.
+
+   Every selector here carries enough specificity to beat the
+   `!important` mobile rules in styles.css without raising the
+   cascade further than it needs to go.
+   ============================================================ */
+
+:root {
+    /* Latin counterparts to the --medhub-km-* scale. */
+    --medhub-en-nav-size: clamp(0.78rem, 2.7vw, 0.86rem);   /* 12.5 – 13.8px */
+    --medhub-en-label-size: 0.78rem;                        /* 12.5px */
+    --medhub-en-eyebrow-size: 0.75rem;                      /* 12px    */
+}
+
+/* ---- 9.1 Navigation ------------------------------------------------ */
+@media (max-width: 767px) {
+    html body header nav .nav-tab,
+    html body header nav .nav-tab:last-child,
+    html body header nav .nav-tab span {
+        font-size: var(--medhub-en-nav-size) !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+    }
+
+    html[lang="km"] body header nav .nav-tab,
+    html[lang="km"] body header nav .nav-tab:last-child,
+    html[lang="km"] body header nav .nav-tab span {
+        font-size: var(--medhub-km-nav-size) !important;
+        line-height: 1.34 !important;
+    }
+}
+
+/* ---- 9.2 Eyebrows, kickers and pill labels -------------------------- */
+html body :is(
+    .home-kicker,
+    .checkup-kicker,
+    .surgery-kicker,
+    .stay-kicker,
+    .travel-eyebrow,
+    .travel-cta-eyebrow
+) {
+    font-size: var(--medhub-en-eyebrow-size) !important;
+    line-height: 1.4 !important;
+}
+
+html body :is(
+    .travel-tag,
+    .travel-stage,
+    .travel-manager-title,
+    .brand-logo-sub
+) {
+    font-size: var(--medhub-en-label-size) !important;
+    line-height: 1.4 !important;
+}
+
+/* Khmer takes the token scale rather than the Latin floor. */
+html[lang="km"] body :is(
+    .home-kicker,
+    .checkup-kicker,
+    .surgery-kicker,
+    .stay-kicker,
+    .travel-eyebrow,
+    .travel-cta-eyebrow,
+    .travel-tag,
+    .travel-stage,
+    .travel-manager-title
+) {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+html[lang="km"] body .brand-logo-sub {
+    font-size: var(--medhub-km-brandsub-size) !important;
+    line-height: 1.5 !important;
+}
+
+/* ---- 9.3 Card step markers ("01 / Clarify", "01") ------------------- */
+html body :is(
+    .surgery-story-card,
+    .travel-story-card,
+    .stay-story-card,
+    .checkup-story-card
+) :is(div, .checkup-story-info) > span {
+    font-size: var(--medhub-en-label-size) !important;
+    line-height: 1.4 !important;
+}
+
+/* The checkup step number was the smallest text on the site in Khmer
+   (9.3px at 320px). It is a numeral, but it renders in the Khmer face
+   under html[lang="km"], so it takes the Khmer floor. */
+html[lang="km"] body :is(
+    .surgery-story-card,
+    .travel-story-card,
+    .stay-story-card,
+    .checkup-story-card
+) :is(div, .checkup-story-info) > span,
+html[lang="km"] body #page-checkup .checkup-story-card .checkup-story-info > span {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+}
+
+/* ---- 9.4 Hero manager card, price panel ---------------------------- */
+html body .home-manager-card :is(.home-manager-info span, .home-live-badge b),
+html body .stay-hero-grid .stay-price-panel > span {
+    font-size: var(--medhub-en-label-size) !important;
+    line-height: 1.45 !important;
+}
+
+html[lang="km"] body .home-manager-card :is(.home-manager-info span, .home-live-badge b),
+html[lang="km"] body .stay-hero-grid .stay-price-panel > span {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+}
+
+/* ---- 9.5 Footer ----------------------------------------------------- */
+html body footer :is(
+    .footer-trust-strip span,
+    .footer-divider p,
+    .mobile-contact-box h4,
+    .mobile-address-box h4
+) {
+    font-size: var(--medhub-en-label-size) !important;
+    line-height: 1.5 !important;
+}
+
+html[lang="km"] body footer :is(
+    .footer-trust-strip span,
+    .footer-divider p,
+    .mobile-contact-box h4,
+    .mobile-address-box h4
+) {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.7 !important;
+}
+
+/* ---- 9.6 Language toggle ------------------------------------------- */
+/* 11px with line-height: 11px left the pill with no leading at all. */
+html body :is(.mobile-language-toggle, .desktop-language-badge)
+    :is(.language-label, .language-value, .language-divider) {
+    font-size: var(--medhub-en-label-size) !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* ---- 9.7 Specificity holdouts --------------------------------------- */
+/* styles.css sizes these two kickers from id-scoped selectors
+   (#page-checkup .checkup-kicker, specificity 1,1,0), so the class-only
+   rule in 9.2 loses. Same tokens, enough specificity to land. */
+html body #page-checkup :is(.checkup-kicker, .checkup-kicker.dark),
+html body #page-surgery :is(.surgery-kicker, .surgery-kicker.dark),
+html body #page-home :is(.home-kicker, .home-kicker.dark),
+html body #page-travel :is(.travel-eyebrow, .travel-cta-eyebrow),
+html body #page-accommodation :is(.stay-kicker, .stay-kicker.dark) {
+    font-size: var(--medhub-en-eyebrow-size) !important;
+    line-height: 1.4 !important;
+}
+
+html[lang="km"] body #page-checkup :is(.checkup-kicker, .checkup-kicker.dark),
+html[lang="km"] body #page-surgery :is(.surgery-kicker, .surgery-kicker.dark),
+html[lang="km"] body #page-home :is(.home-kicker, .home-kicker.dark),
+html[lang="km"] body #page-travel :is(.travel-eyebrow, .travel-cta-eyebrow),
+html[lang="km"] body #page-accommodation :is(.stay-kicker, .stay-kicker.dark) {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+/* ---- 9.8 Tablet and desktop navigation ------------------------------ */
+/* .nav-tab { font-size: 0.74rem } renders 11.8px — just under the floor.
+   The tab strip has room at these widths, so lift it to the same size
+   the mobile strip now uses. */
+@media (min-width: 768px) {
+    html body header nav .nav-tab,
+    html body header nav .nav-tab span {
+        font-size: 0.82rem !important;   /* 13.1px */
+        line-height: 1.3 !important;
+    }
+
+    html[lang="km"] body header nav .nav-tab,
+    html[lang="km"] body header nav .nav-tab span {
+        font-size: var(--medhub-km-nav-size) !important;
+        line-height: 1.34 !important;
+    }
+}
+
+/* ---- 9.9 Khmer face coverage gap ------------------------------------ */
+/* Section 4 assigns the Khmer family with
+   html[lang="km"] body :is(p, li, a, button, span, strong, b, small,
+   em, label, td, th, input, textarea, select) — the list has no `div`.
+   Any Khmer string held directly by a div therefore kept whatever
+   Latin stack an ancestor set. `.travel-stat-label` is such a div and
+   sits under a container with 'Plus Jakarta Sans', so its Khmer fell
+   through the Latin face to a system fallback: the coeng subscripts
+   detach from their base consonants and the label renders broken.
+
+   Close the gap by element type rather than by patching the one
+   selector, so the next Khmer string put in a div is correct too.
+   The hero display rule above is id-scoped and still wins. */
+html[lang="km"] body :is(
+    div, h1, h2, h3, h4, h5, h6,
+    dt, dd, dl, figcaption, blockquote, summary, time, cite, abbr
+) {
+    font-family: var(--medhub-khmer-body) !important;
+    font-synthesis-weight: none;
+}
+
+/* Khmer needs more leading than the Latin it replaces (section 4), and
+   never carries the Latin tracking or uppercasing these labels use. */
+html[lang="km"] body :is(.travel-stat-label, .travel-stat-number) {
+    font-size: var(--medhub-km-label-size) !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    line-break: auto !important;
+}
+
+/* .travel-stat-number holds Latin ("PNH", "MY SG TH", "24/7") in both
+   locales — keep it on the Latin display face and its own size. */
+html[lang="km"] body .travel-stat-number {
+    font-family: var(--medhub-latin-heading) !important;
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+}

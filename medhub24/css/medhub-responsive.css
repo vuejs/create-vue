@@ -1,0 +1,161 @@
+/* ============================================================
+   MedHub24 — responsive containment & touch ergonomics
+   Loads after styles.css / medhub-theme.css, before
+   medhub-type.css (which remains the typography authority).
+
+   This file changes LAYOUT only. It sets no font sizes.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Horizontal containment
+
+   styles.css relies on `html, body { overflow-x: hidden }` to
+   swallow elements that stick out. On iOS that turns <body>
+   into a scroll container, which can fight the fixed header
+   and swallow scroll-anchoring. `overflow-x: clip` gives the
+   same visual result without creating a scroll container, and
+   `overflow-y: visible` keeps `position: sticky` working.
+   ------------------------------------------------------------ */
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+/* The hero art is `object-fit: cover` under a transform:scale(1.02)
+   bleed. Its wrapper was `overflow: visible`, so the image spilled
+   3–5px past the viewport on every page and was only hidden by the
+   body clip above. Clip it at its own wrapper instead — the bleed is
+   then contained locally rather than depending on a global rule. */
+.home-hero-bg,
+.checkup-showcase-bg,
+.surgery-showcase-bg,
+.travel-hero-bg,
+.stay-hero-bg,
+[class$="-hero-bg"],
+[class$="-showcase-bg"] {
+    overflow: hidden;
+}
+
+/* Any media that escapes its column stays inside it. */
+img,
+svg,
+video,
+iframe {
+    max-width: 100%;
+}
+
+/* ------------------------------------------------------------
+   2. Primary navigation
+
+   The markup ships a scrolling tab strip
+   (`overflow-x-auto no-scrollbar`, tabs `flex-shrink-0`), which is
+   the right pattern for five destinations on a 320px screen.
+   Three mobile media queries in styles.css overrode it with
+   `grid-template-columns: repeat(5, minmax(0, 1fr))` plus
+   `overflow: visible`, forcing all five tabs into the viewport and
+   shrinking the English label to 0.42rem (6.7px) to make them fit.
+   The Khmer nav already opted out of that and reads its token.
+
+   Restore the scrolling strip for every locale so the label can sit
+   at a readable size. Sizes themselves live in medhub-type.css.
+   ------------------------------------------------------------ */
+@media (max-width: 767px) {
+    header nav {
+        display: flex !important;
+        grid-template-columns: none !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        gap: 0.3rem !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        /* Bleed to the screen edge so the strip reads as scrollable,
+           while the first and last tab keep the container gutter. */
+        margin-inline: -1rem !important;
+        padding-inline: 1rem !important;
+        padding-block: 0.4rem !important;
+    }
+
+    header nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    header .nav-tab {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
+        /* 44px is the iOS Human Interface Guidelines minimum. */
+        min-height: 2.75rem !important;
+        padding: 0.42rem 0.62rem !important;
+        white-space: nowrap !important;
+        scroll-snap-align: start;
+    }
+
+    header .nav-tab svg {
+        width: 1rem !important;
+        height: 1rem !important;
+        flex: 0 0 auto;
+    }
+}
+
+/* Khmer labels are longer; give the strip a little more room. */
+@media (max-width: 767px) {
+    html[lang="km"] header .nav-tab {
+        padding: 0.42rem 0.7rem !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   3. Touch targets
+
+   iOS HIG: 44x44pt minimum. The language toggle and the footer
+   contact links sat below it.
+   ------------------------------------------------------------ */
+@media (hover: none) and (pointer: coarse) {
+    .mobile-language-toggle,
+    .desktop-language-badge {
+        min-height: 2.75rem;
+        padding-inline: 0.8rem;
+    }
+
+    footer a[href^="tel:"],
+    footer a[href^="mailto:"],
+    footer a[href^="https://t.me"],
+    footer a[href^="https://www.facebook.com"] {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+    }
+}
+
+/* ------------------------------------------------------------
+   4. Long unbroken strings
+
+   Phone numbers, URLs and email addresses are the usual cause of a
+   card widening past its column on a 320px screen.
+   ------------------------------------------------------------ */
+a[href^="tel:"],
+a[href^="mailto:"],
+.footer-contact-value,
+.home-trust-strip strong,
+.stay-trust-strip strong {
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+/* ------------------------------------------------------------
+   5. Tables and pre, if any are ever added, scroll rather than
+      widen the page.
+   ------------------------------------------------------------ */
+table,
+pre {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}

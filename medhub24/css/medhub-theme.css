@@ -1,0 +1,514 @@
+/* ============================================================
+   MedHub24 — Design system theme layer
+   ------------------------------------------------------------
+   Load order:  tailwind-shim.css → styles.css → THIS → medhub-type.css
+
+   WHY THIS FILE EXISTS
+   styles.css grew five near-duplicate palettes — home, checkup,
+   surgery, travel and accommodation each declared their own
+   teal, mint, gold, ivory and ink at slightly different values
+   (#0e756f / #0f6b72 / #1b7b7a for "teal"; #52d4ca / #63d0c7 /
+   #4fc8bd for "mint"; four different golds). Same intent, five
+   answers — which is what made the site feel assembled rather
+   than designed.
+
+   This layer maps all of them onto the Medhub24 design system:
+   Forest Teal #2a635c primary, Mint #6eca99 accent, Cream
+   #FAF7F2 ground, Sand #D4A574 premium accent, teal-tinted
+   shadows. It redefines the tokens the existing rules already
+   read, so the 11k lines of layout in styles.css are untouched.
+
+   TO REVERT: remove the one <link> to this file in index.html.
+   ============================================================ */
+
+
+/* ============================================================
+   1. DESIGN SYSTEM TOKENS
+   ============================================================ */
+
+:root {
+    /* Brand — Forest Teal */
+    --color-teal-900: #0f2e2b;
+    --color-teal-800: #1a4540;
+    --color-teal-700: #2a635c;   /* PRIMARY */
+    --color-teal-600: #357a72;
+    --color-teal-500: #429089;
+    --color-teal-400: #5aaba3;
+    --color-teal-300: #7ec5be;
+    --color-teal-200: #b2ddd9;
+    --color-teal-100: #d9f0ee;
+    --color-teal-50:  #f0faf9;
+
+    /* Accent — Mint */
+    --color-mint-900: #1a4d33;
+    --color-mint-700: #3a8f5c;
+    --color-mint-600: #52a874;
+    --color-mint-500: #6eca99;   /* ACCENT */
+    --color-mint-400: #8ed8b0;
+    --color-mint-300: #aee4c5;
+    --color-mint-200: #ceeedb;
+    --color-mint-100: #e6f7ed;
+    --color-mint-50:  #f4fcf7;
+
+    /* Warm neutrals */
+    --color-cream:      #faf7f2;
+    --color-cream-dark: #f0eae0;
+    --color-sand:       #d4a574;
+    --color-sand-light: #e8c9a0;
+    --color-coral:      #e87968;
+    --color-border:     #e5dfd5;
+
+    /* Ink */
+    --color-ink:        #1a1a1a;
+    --color-ink-soft:   #3a3a3a;
+    --color-gray:       #6b6b6b;
+    --color-gray-light: #9b9b9b;
+    --color-white:      #ffffff;
+
+    --color-bg-gradient: linear-gradient(135deg, #f5efe4 0%, #efe5d2 100%);
+
+    /* Shadows — always tinted with the primary, never pure black */
+    --shadow-sm: 0 1px 2px rgba(42, 99, 92, 0.06);
+    --shadow-md: 0 4px 12px rgba(42, 99, 92, 0.08);
+    --shadow-lg: 0 12px 30px rgba(42, 99, 92, 0.15);
+    --shadow-xl: 0 24px 60px rgba(42, 99, 92, 0.20);
+
+    /* Radii */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    --radius-full: 9999px;
+
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ============================================================
+   2. THE FIVE PALETTES, UNIFIED
+   ============================================================
+   Every token below already exists in styles.css and is already
+   read by its rules. Redefining them here re-skins the whole
+   site without editing a single layout rule.
+   ------------------------------------------------------------ */
+
+:root,
+.travel-upgrade,
+#page-home, #page-checkup, #page-surgery, #page-travel, #page-accommodation,
+#page-travel .travel-premium-flow {
+    /* ---- Global (mh-*) ---- */
+    --mh-ink: var(--color-ink);
+    --mh-ink-soft: var(--color-gray);
+    --mh-deep: var(--color-teal-900);
+    --mh-teal: var(--color-teal-700);
+    --mh-mint: var(--color-mint-500);
+    --mh-coral: var(--color-coral);
+    --mh-champagne: var(--color-sand);
+    --mh-ivory: var(--color-cream);
+    --mh-porcelain: var(--color-teal-50);
+    --mh-line: var(--color-border);
+    --mh-line-strong: #d6cec0;
+    --mh-shadow: var(--shadow-xl);
+
+    /* ---- Home ---- */
+    --home-deep: var(--color-teal-900);
+    --home-navy: var(--color-teal-700);
+    --home-teal: var(--color-teal-700);
+    --home-mint: var(--color-mint-500);
+    --home-champagne: var(--color-sand-light);
+    --home-coral: var(--color-coral);
+    --home-ivory: var(--color-cream);
+    --home-porcelain: var(--color-teal-50);
+    --home-line: var(--color-border);
+    --home-shadow: var(--shadow-xl);
+
+    /* ---- Checkup ---- */
+    --checkup-ink: var(--color-ink);
+    --checkup-ink-soft: var(--color-gray);
+    --checkup-cream: var(--color-cream);
+    --checkup-card: var(--color-white);
+    --checkup-teal: var(--color-teal-700);
+    --checkup-aqua: var(--color-mint-500);
+    --checkup-coral: var(--color-coral);
+    --checkup-gold: var(--color-sand);
+    --checkup-line: var(--color-border);
+
+    /* ---- Surgery ---- */
+    --surgery-ink: var(--color-ink);
+    --surgery-ink-soft: var(--color-gray);
+    --surgery-muted: var(--color-gray);
+    --surgery-panel: var(--color-white);
+    --surgery-paper: var(--color-white);
+    --surgery-line: var(--color-border);
+    --surgery-line-strong: #d6cec0;
+    --surgery-coral: var(--color-coral);
+    --surgery-mint: var(--color-mint-500);
+    --surgery-teal: var(--color-teal-700);
+    --surgery-deep: var(--color-teal-900);
+    --surgery-champagne: var(--color-sand);
+    --surgery-gold: var(--color-sand);
+    --surgery-ivory: var(--color-cream);
+    --surgery-shadow: var(--shadow-xl);
+
+    /* ---- Travel ---- */
+    --travel-bg: var(--color-cream);
+    --travel-bg-soft: var(--color-cream-dark);
+    --travel-card: var(--color-white);
+    --travel-paper: var(--color-white);
+    --travel-ink: var(--color-ink);
+    --travel-ink-soft: var(--color-gray);
+    --travel-muted: var(--color-gray);
+    --travel-line: var(--color-border);
+    --travel-line-strong: #d6cec0;
+    --travel-petrol: var(--color-teal-700);
+    --travel-petrol-deep: var(--color-teal-900);
+    --travel-petrol-soft: rgba(42, 99, 92, 0.08);
+    --travel-teal: var(--color-teal-700);
+    --travel-deep: var(--color-teal-900);
+    --travel-mint: var(--color-mint-500);
+    --travel-coral: var(--color-coral);
+    --travel-gold: var(--color-sand);
+    --travel-gold-soft: var(--color-sand-light);
+    --travel-cream: var(--color-cream);
+    --travel-ivory: var(--color-cream);
+    --travel-shadow: var(--shadow-xl);
+
+    /* ---- Accommodation ---- */
+    --stay-deep: var(--color-teal-900);
+    --stay-navy: var(--color-teal-700);
+    --stay-teal: var(--color-teal-700);
+    --stay-mint: var(--color-mint-500);
+    --stay-gold: var(--color-sand-light);
+    --stay-coral: var(--color-coral);
+    --stay-ivory: var(--color-cream);
+    --stay-paper: var(--color-white);
+    --stay-muted: var(--color-gray);
+    --stay-line: var(--color-border);
+    --stay-shadow: var(--shadow-xl);
+}
+
+
+/* ============================================================
+   3. GROUND
+   ============================================================
+   The design system is explicit: never pure white. The page sits
+   on warm cream; cards are white so they lift off it.
+   ------------------------------------------------------------ */
+
+html, body, body.bg-white {
+    background: var(--color-cream);
+    color: var(--color-ink);
+}
+
+.page-content { background: transparent; }
+
+header.bg-white\/95,
+header > .container,
+header .border-t {
+    background: rgba(250, 247, 242, 0.94);
+    border-color: var(--color-border);
+}
+
+footer, .bg-navy { background: var(--color-teal-900); }
+
+
+/* ============================================================
+   4. SHADOW DISCIPLINE
+   ============================================================
+   The brief asks for fewer, quieter shadows. styles.css carried
+   ~90 bespoke shadows, many near-black and very large. These are
+   normalised to the four-step teal-tinted scale.
+   ------------------------------------------------------------ */
+
+.home-usp-card, .checkup-story-card, .surgery-story-card,
+.stay-story-card, .travel-story-card, .travel-milestone-content,
+.home-step-list article, .home-service-tile, .stay-price-panel {
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-white);
+    transition: transform var(--duration-base, 250ms) var(--ease-spring),
+                box-shadow var(--duration-base, 250ms) var(--ease-spring),
+                border-color 150ms var(--ease-spring);
+}
+
+.home-usp-card:hover, .checkup-story-card:hover, .surgery-story-card:hover,
+.stay-story-card:hover, .travel-story-card:hover,
+.home-step-list article:hover, .home-service-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-teal-700);
+}
+
+.home-manager-card, .travel-cta-card, .checkup-cta-card, .stay-cta-card {
+    box-shadow: var(--shadow-lg);
+}
+
+
+/* ============================================================
+   5. BUTTONS
+   ============================================================
+   styles.css painted the primary CTA as a coral→gold gradient on
+   every page. The design system reserves coral for alerts and
+   emphasis "used sparingly" — a permanent coral CTA reads as
+   promotional rather than clinical. Primary is Forest Teal.
+   The #page-* selectors in styles.css carry an id, so these are
+   matched at equal weight rather than with !important.
+   ------------------------------------------------------------ */
+
+#page-home .home-action.primary,
+#page-checkup .checkup-action.primary,
+#page-surgery .surgery-action.primary,
+#page-accommodation .stay-action.primary,
+#page-travel .travel-cta-button,
+.home-action.primary, .checkup-action.primary, .surgery-action.primary,
+.stay-action.primary, .travel-cta-button {
+    background-image: none;
+    background-color: var(--color-teal-700);
+    color: var(--color-cream);
+    border: none;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    transition: transform 250ms var(--ease-spring),
+                box-shadow 250ms var(--ease-spring),
+                background-color 150ms ease;
+}
+
+#page-home .home-action.primary:hover,
+#page-checkup .checkup-action.primary:hover,
+#page-surgery .surgery-action.primary:hover,
+#page-accommodation .stay-action.primary:hover,
+#page-travel .travel-cta-button:hover,
+.home-action.primary:hover, .checkup-action.primary:hover,
+.surgery-action.primary:hover, .stay-action.primary:hover,
+.travel-cta-button:hover {
+    background-color: var(--color-teal-800);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.home-action.primary:active, .checkup-action.primary:active,
+.surgery-action.primary:active, .stay-action.primary:active,
+.travel-cta-button:active { transform: translateY(0); }
+
+.home-action.secondary, .checkup-action.secondary, .surgery-action.secondary,
+.stay-action.secondary, .travel-cta-secondary {
+    background: transparent;
+    color: var(--color-teal-700);
+    border: 1.5px solid var(--color-teal-700);
+    border-radius: var(--radius-full);
+    box-shadow: none;
+}
+
+.home-action.secondary:hover, .checkup-action.secondary:hover,
+.surgery-action.secondary:hover, .stay-action.secondary:hover,
+.travel-cta-secondary:hover {
+    background: var(--color-teal-700);
+    color: var(--color-cream);
+    transform: translateY(-1px);
+}
+
+/* Buttons sitting on a dark hero need the light treatment. */
+#page-home .home-premium .home-action.secondary,
+#page-travel .travel-hero .travel-cta-secondary,
+#page-travel .travel-cta-card .travel-cta-secondary {
+    color: var(--color-cream);
+    border-color: rgba(250, 247, 242, 0.5);
+    background: rgba(250, 247, 242, 0.08);
+}
+
+#page-home .home-premium .home-action.secondary:hover,
+#page-travel .travel-hero .travel-cta-secondary:hover,
+#page-travel .travel-cta-card .travel-cta-secondary:hover {
+    background: rgba(250, 247, 242, 0.18);
+    color: var(--color-white);
+}
+
+
+/* ============================================================
+   6. NAVIGATION
+   ============================================================ */
+
+.nav-tab {
+    border-radius: var(--radius-full);
+    color: var(--color-gray);
+    transition: background 150ms ease, color 150ms ease;
+}
+
+.nav-tab:hover { background: rgba(42, 99, 92, 0.06); color: var(--color-teal-700); }
+
+.nav-tab.active {
+    background: var(--color-teal-700);
+    color: var(--color-cream);
+}
+
+.desktop-language-badge, .mobile-language-toggle {
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    color: var(--color-teal-700);
+    background: transparent;
+}
+
+.desktop-language-badge:hover, .mobile-language-toggle:hover {
+    background: rgba(42, 99, 92, 0.06);
+}
+
+
+/* ============================================================
+   7. RADII — one scale, applied consistently
+   ============================================================ */
+
+.home-usp-card, .checkup-story-card, .surgery-story-card, .stay-story-card,
+.travel-story-card, .travel-milestone-content, .home-step-list article,
+.home-manager-card, .travel-cta-card, .checkup-cta-card, .stay-cta-card,
+.home-service-tile, .stay-price-panel { border-radius: var(--radius-xl); }
+
+.home-kicker, .checkup-kicker, .surgery-kicker, .travel-eyebrow, .stay-kicker,
+.travel-cta-eyebrow, .travel-tag, .travel-stage { border-radius: var(--radius-full); }
+
+.home-manager-photo, .home-story-visual, .checkup-story-media,
+.surgery-story-media, .stay-story-media, .travel-story-media {
+    border-radius: var(--radius-lg);
+}
+
+
+/* ============================================================
+   8. KICKERS
+   ============================================================ */
+
+.home-kicker, .checkup-kicker, .surgery-kicker, .travel-eyebrow,
+.stay-kicker, .travel-cta-eyebrow {
+    background: rgba(42, 99, 92, 0.07);
+    color: var(--color-teal-700);
+    border: none;
+}
+
+.home-kicker.dark, .checkup-kicker.dark, .stay-kicker.dark {
+    background: rgba(250, 247, 242, 0.14);
+    color: var(--color-cream);
+}
+
+.travel-tag {
+    background: var(--color-mint-100);
+    color: var(--color-teal-800);
+    border: none;
+}
+
+
+/* ============================================================
+   9. LINKS
+   ============================================================ */
+
+a { color: var(--color-teal-700); }
+a:hover { color: var(--color-teal-800); }
+footer a { color: rgba(250, 247, 242, 0.82); }
+footer a:hover { color: var(--color-mint-500); }
+
+
+/* ============================================================
+   10. SMALL-SCREEN NAVIGATION
+   ============================================================
+   styles.css dropped the English nav label to 0.42rem (6.7px)
+   below 360px to force five tabs onto one row. The row already
+   scrolls horizontally, so the label keeps a legible size and
+   the row scrolls instead.
+   ------------------------------------------------------------ */
+
+@media (max-width: 360px) {
+    header .nav-tab {
+        font-size: 0.78rem;
+        padding-inline: 0.7rem;
+        flex: 0 0 auto;
+        min-width: max-content;
+    }
+    header nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        justify-content: flex-start;
+    }
+    header nav::-webkit-scrollbar { display: none; }
+}
+
+
+/* ============================================================
+   11. FOOTER
+   ============================================================
+   The grid was minmax(0, 1.15fr) minmax(16rem, .82fr) minmax(18rem, 1fr).
+   The first column has no minimum, so once columns 2 and 3 hit
+   theirs the brand note is squeezed to ~118px — one word per line.
+   Giving column 1 a floor and letting the grid reflow fixes it.
+   ------------------------------------------------------------ */
+
+@media (min-width: 901px) {
+    .footer-grid {
+        grid-template-columns: minmax(15rem, 1.1fr) minmax(15rem, 0.9fr) minmax(16rem, 1fr);
+        gap: 1.5rem;
+        align-items: start;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1120px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(15rem, 1fr));
+    }
+    .footer-brand-section { grid-column: 1 / -1; }
+}
+
+.footer-brand-note {
+    max-width: 34ch;
+    text-wrap: pretty;
+}
+
+footer .footer-section {
+    background: rgba(250, 247, 242, 0.05);
+    border: 1px solid rgba(250, 247, 242, 0.12);
+    border-radius: var(--radius-lg);
+}
+
+footer .footer-trust-strip span {
+    background: rgba(250, 247, 242, 0.08);
+    border: 1px solid rgba(250, 247, 242, 0.14);
+    border-radius: var(--radius-full);
+    color: rgba(250, 247, 242, 0.9);
+}
+
+
+/* ============================================================
+   12. LANGUAGE SWITCHER
+   ============================================================
+   This is an interactive control, not a decorative label — it
+   was rendering at 9.9px. Raised to the design system's --text-xs
+   (11px) with a 44px touch target.
+   ------------------------------------------------------------ */
+
+.desktop-language-badge, .mobile-language-toggle {
+    min-height: 44px;
+    padding-inline: 0.85rem;
+}
+
+.desktop-language-badge :is(.language-label, .language-value, .language-divider),
+.mobile-language-toggle :is(.language-label, .language-value, .language-divider) {
+    font-size: 0.6875rem;      /* 11px — --text-xs */
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+
+.desktop-language-badge .language-value[aria-current="true"],
+.desktop-language-badge .language-value.is-active,
+.mobile-language-toggle .language-value.is-active {
+    color: var(--color-teal-700);
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   13. FOCUS + MOTION
+   ============================================================ */
+
+:where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-mint-500);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}

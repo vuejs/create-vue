@@ -1,0 +1,129 @@
+/* ============================================================
+   MedHub24 — Tailwind replacement layer
+   The site previously loaded cdn.tailwindcss.com at runtime.
+   This file implements ONLY the Tailwind utilities that
+   index.html actually uses, so the CDN dependency (and its
+   runtime cost / CSP problems) is gone with no markup changes.
+
+   Load order: tailwind-shim.css  ->  styles.css  ->  medhub-type.css
+   ============================================================ */
+
+:root {
+    /* Brand palette — previously in js/config.js tailwind.config */
+    --medhub-navy: #12324D;
+    --medhub-coral: #D86D61;
+    --medhub-mint: #40B9B0;
+    --medhub-lightbg: #F8F5EE;
+}
+
+/* ---------- Preflight (the parts of Tailwind's reset the layout relies on) ---------- */
+*, *::before, *::after { box-sizing: border-box; border-width: 0; border-style: solid; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -moz-tab-size: 4; tab-size: 4; }
+body { margin: 0; line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+p, figure, blockquote, dl, dd { margin: 0; }
+ol, ul { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: inherit; }
+b, strong { font-weight: bolder; }
+small { font-size: 80%; }
+img, svg, video, canvas, audio, iframe, embed, object { display: block; vertical-align: middle; }
+img, video { max-width: 100%; height: auto; }
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+}
+button, [type='button'], [type='submit'] { -webkit-appearance: button; background-color: transparent; background-image: none; cursor: pointer; }
+:-moz-focusring { outline: auto; }
+[hidden] { display: none; }
+
+/* ---------- Layout ---------- */
+.container { width: 100%; }
+@media (min-width: 640px)  { .container { max-width: 640px; } }
+@media (min-width: 768px)  { .container { max-width: 768px; } }
+@media (min-width: 1024px) { .container { max-width: 1024px; } }
+@media (min-width: 1280px) { .container { max-width: 1280px; } }
+@media (min-width: 1536px) { .container { max-width: 1536px; } }
+
+.fixed { position: fixed; }
+.top-0 { top: 0; }
+.left-0 { left: 0; }
+.z-50 { z-index: 50; }
+.w-full { width: 100%; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.flex { display: flex; }
+.hidden { display: none; }
+.flex-shrink-0 { flex-shrink: 0; }
+.items-center { align-items: center; }
+.justify-start { justify-content: flex-start; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+
+/* ---------- Spacing ---------- */
+.px-0 { padding-left: 0; padding-right: 0; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.pt-0 { padding-top: 0; }
+.pb-0 { padding-bottom: 0; }
+.pt-3 { padding-top: 0.75rem; }
+.pt-32 { padding-top: 8rem; }
+.space-y-1\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.375rem; }
+
+/* ---------- Type ---------- */
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; }
+.leading-relaxed { line-height: 1.625; }
+
+/* ---------- Colour ---------- */
+.bg-white { background-color: #fff; }
+.bg-white\/95 { background-color: rgba(255, 255, 255, 0.95); }
+.bg-navy { background-color: var(--medhub-navy); }
+.text-white { color: #fff; }
+.text-navy { color: var(--medhub-navy); }
+.text-mint { color: var(--medhub-mint); }
+.text-gray-300 { color: #d1d5db; }
+.text-gray-400 { color: #9ca3af; }
+.border-t { border-top-width: 1px; }
+.border-gray-100 { border-color: #f3f4f6; }
+.border-gray-600 { border-color: #4b5563; }
+
+/* ---------- Effects ---------- */
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.backdrop-blur-md { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.transition {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+.hover\:text-white:hover { color: #fff; }
+
+/* ---------- Responsive variants used in the markup ---------- */
+@media (min-width: 640px) {
+    .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 768px) {
+    .md\:inline-flex { display: inline-flex; }
+    .md\:justify-center { justify-content: center; }
+    .md\:gap-2 { gap: 0.5rem; }
+    .md\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .md\:pt-6 { padding-top: 1.5rem; }
+    .md\:pt-36 { padding-top: 9rem; }
+    .md\:pr-4 { padding-right: 1rem; }
+    .md\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+}
+@media (min-width: 1024px) {
+    .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+}

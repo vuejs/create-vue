@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedHub24 | Overseas Medical Treatment Coordination for Cambodian Patients</title>
+    <meta name="description" content="MedHub24 helps Cambodian patients arrange treatment in Malaysia, Singapore and Thailand: matching the right specialist to the condition, arranging travel and accommodation, managing medical records, and continuing follow-up after you return home.">
+    <meta name="theme-color" content="#12324d">
+
+    <!-- Google Fonts: Khmer premium typography + Latin support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Latin faces. Khmer faces are self-hosted (assets/fonts) with these as
+         the network fallback only — see css/medhub-type.css. -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+    <!-- Khmer faces are self-hosted, so they cannot be substituted by a device
+         font and do not depend on a third-party CDN. -->
+    <link rel="preload" href="assets/fonts/Hanuman-Regular.ttf" as="font" type="font/ttf" crossorigin>
+
+    <!-- Tailwind theme config (surgical navy / coral / clinical teal palette + fonts) -->
+    <script src="js/config.js"></script>
+
+    <!-- Locale bundles -->
+    <script src="locales/en/common.js"></script>
+    <script src="locales/km/common.js"></script>
+    <script src="js/i18n.js"></script>
+
+    <!-- Stylesheets. Order matters: the shim replaces the Tailwind CDN,
+         styles.css is the existing design, medhub-type.css is the single
+         typography authority and must stay last. -->
+    <link rel="stylesheet" href="css/tailwind-shim.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/medhub-theme.css">
+    <link rel="stylesheet" href="css/medhub-responsive.css">
+    <link rel="stylesheet" href="css/medhub-type.css">
+
+    <!-- Verifies the approved Khmer webfont actually rendered -->
+    <script src="js/khmer-font.js" defer></script>
+</head>
+<body class="font-body text-navy overflow-x-hidden" data-lang="en">
+
+    <!-- ================= HEADER ================= -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4">
+            <!-- Top Row: Logo Left, Rep Badge Right (Hidden on small) -->
+            <div class="flex justify-between items-center py-3">
+                <a href="#" onclick="navigateTo('home')" class="brand-logo group" data-admin-field="brand.logo" data-admin-type="brand">
+                    <span class="brand-logo-mark" aria-hidden="true">
+                        <svg viewBox="0 0 48 48">
+                            <path class="brand-logo-ring" d="M24 6c9.9 0 18 8.1 18 18s-8.1 18-18 18S6 33.9 6 24 14.1 6 24 6Z"></path>
+                            <path class="brand-logo-pulse" d="M8 24h8l4-8 7 17 4-9h9"></path>
+                        </svg>
+                    </span>
+                    <span class="brand-logo-word">
+                        <span>Med</span><span>Hub</span><b>24</b>
+                    </span>
+                    <span class="brand-logo-sub" data-i18n="brand.sub">Round-the-clock care coordination</span>
+                </a>
+                <button type="button" class="desktop-language-badge hidden md:inline-flex" data-lang="en" onclick="toggleLanguage(this)" aria-label="Switch to Khmer">
+                    <svg class="language-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9M12 3c-2.4 2.5-3.6 5.5-3.6 9s1.2 6.5 3.6 9"></path>
+                    </svg>
+                    <span class="language-label">EN</span>
+                    <span class="language-divider">/</span>
+                    <span class="language-value">KH</span>
+                </button>
+                <button type="button" class="mobile-language-toggle" data-lang="en" onclick="toggleLanguage(this)" aria-label="Switch to Khmer">
+                    <svg class="language-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9s-1.2 6.5-3.6 9M12 3c-2.4 2.5-3.6 5.5-3.6 9s1.2 6.5 3.6 9"></path>
+                    </svg>
+                    <span class="language-label">EN</span>
+                    <span class="language-divider">/</span>
+                    <span class="language-value">KH</span>
+                </button>
+            </div>
+
+            <!-- Horizontal Navigation Tabs (Works on ALL devices) -->
+            <div class="border-t border-gray-100">
+                <nav class="flex justify-start md:justify-center gap-1 md:gap-2 py-2 overflow-x-auto no-scrollbar">
+                    <button onclick="navigateTo('home', this)" class="nav-tab active flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <span data-i18n="nav.home">Home</span>
+                    </button>
+                    <button onclick="navigateTo('checkup', this)" class="nav-tab flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <span data-i18n="nav.checkup">Health check</span>
+                    </button>
+                    <button onclick="navigateTo('surgery', this)" class="nav-tab flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <span data-i18n="nav.surgery">Surgery</span>
+                    </button>
+                    <button onclick="navigateTo('travel', this)" class="nav-tab flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <span data-i18n="nav.travel">Travel</span>
+                    </button>
+                    <button onclick="navigateTo('accommodation', this)" class="nav-tab flex-shrink-0">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 20V8.5A1.5 1.5 0 015.5 7H8l2.5-3h5L17 7h2.5A1.5 1.5 0 0121 8.5V20"></path><path d="M4 20h16"></path><path d="M8 20v-6h8v6"></path></svg>
+                        <span class="nav-label-full" data-i18n="nav.accommodation">Stay</span>
+                        <span class="nav-label-mobile" data-i18n="nav.accommodation">Stay</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-32 md:pt-36">
+
+    <!-- ================= HOME PAGE ================= -->
+    <div id="page-home" class="page-content active" data-admin-page="home" data-design-mode="premium-concierge">
+        <section class="home-premium" data-admin-section="home.hero">
+            <div class="home-hero">
+                <div class="home-hero-bg" aria-hidden="true">
+                    <img src="assets/images/home-concierge-journey.png" alt="" data-admin-field="home.hero.backgroundImage" data-admin-type="image">
+                </div>
+                <div class="home-shell home-hero-grid">
+                    <div class="home-hero-copy home-reveal">
+                        <span class="home-kicker" data-i18n="home.kicker">Premium overseas treatment management</span>
+                        <h1 data-admin-field="home.hero.title" data-admin-type="title" data-i18n="home.title" data-i18n-html="true">Hospitals in Singapore, Malaysia and Thailand &mdash; <em>which one truly matches your condition?</em></h1>
+                        <p class="home-lead" data-i18n="home.lead">We find leading specialist physicians in Singapore, Malaysia and Thailand, arrange the travel and the accommodation, and follow your condition after you return home.</p>
+                        <div class="home-action-row">
+                            <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="home-action primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.643.135-.953l11.566-4.458c.538-.196 1.006.128.832.941z"/></svg>
+                                <span data-i18n="home.cta.primary">Ask us anything, 24/7</span>
+                            </a>
+                            <a href="tel:+85512464639" class="home-action secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <span data-i18n="home.cta.secondary">012 464 639</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="home-manager-card home-reveal">
+                        <div class="home-manager-photo">
+                            <img src="https://z-cdn-media.chatglm.cn/files/4f4b0257-e764-4f4b-8ddb-e6358793b72c.jpg?auth_key=1888090278-a470ce6b189447a4ac830268e412ca7c-0-03d753cd4d877c98818ea6bb19b6a7b3"
+                                 alt="Chamnan Choeut, founder and health speaker"
+                                 width="220" height="220" decoding="async" loading="lazy"
+                                 onerror="this.closest('.home-manager-photo').setAttribute('data-fallback','');this.remove();"
+                                 data-admin-field="home.manager.photo" data-admin-type="image">
+                        </div>
+                        <div class="home-manager-info">
+                            <span data-i18n="home.manager.label">Founder, Health Speaker</span>
+                            <strong data-i18n="home.manager.name">Chamnan Choeut</strong>
+                        </div>
+                        <div class="home-live-badge">
+                            <span></span>
+                            <b data-i18n="home.manager.status">Reachable 24/7</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-trust-strip home-shell home-reveal" aria-label="Concierge highlights">
+                    <div><strong>PNH</strong><span data-i18n="home.trust.local">prepared from Cambodia</span></div>
+                    <div><strong>MY · SG · TH</strong><span data-i18n="home.trust.options">hospital options</span></div>
+                    <div><strong>KH</strong><span data-i18n="home.trust.follow">follow-up at home</span></div>
+                </div>
+            </div>
+
+            <section class="home-route-section">
+                <div class="home-shell home-route-grid">
+                    <div class="home-route-image home-reveal">
+                        <img src="assets/images/home-route-story.png" alt="Cambodia to Malaysia Singapore Thailand medical tourism route visual" data-admin-field="home.story.routeImage" data-admin-type="image">
+                        <div class="home-route-line" aria-hidden="true">
+                            <span>PNH</span>
+                            <i></i>
+                            <span>MY SG TH</span>
+                        </div>
+                    </div>
+                    <div class="home-route-copy home-reveal">
+                        <span class="home-kicker dark" data-i18n="home.story.kicker">Treatment abroad</span>
+                        <h2 data-admin-field="home.story.title" data-admin-type="title" data-i18n="home.story.title">How our team coordinates between the hospital and the patient, stage by stage.</h2>
+                        <div class="home-step-list">
+                            <article>
+                                <span>01</span>
+                                <h3 data-i18n="home.story.step1">Understand the condition</h3>
+                                <p data-i18n="home.story.step1.desc">Symptoms, medical history, and the concerns of the patient and the family.</p>
+                            </article>
+                            <article>
+                                <span>02</span>
+                                <h3 data-i18n="home.story.step2">Match the right specialist</h3>
+                                <p data-i18n="home.story.step2.desc">The appropriate country, hospital, and specialist physician.</p>
+                            </article>
+                            <article>
+                                <span>03</span>
+                                <h3 data-i18n="home.story.step3">Plan the treatment</h3>
+                                <p data-i18n="home.story.step3.desc">Records, appointment dates, travel, and accommodation.</p>
+                            </article>
+                            <article>
+                                <span>04</span>
+                                <h3 data-i18n="home.story.step4">Continue care after return</h3>
+                                <p data-i18n="home.story.step4.desc">Updates from the doctor, and consultation once you are home.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-usp-section" data-admin-section="home.usp">
+                <div class="home-shell">
+                    <div class="home-usp-heading home-reveal">
+                        <span class="home-kicker dark" data-i18n="home.usp.kicker">Where our experience sits</span>
+                        <h2 data-admin-field="home.usp.title" data-admin-type="title" data-i18n="home.usp.title">We help plan the journey to treatment, and we follow up after you return home.</h2>
+                    </div>
+                    <div class="home-usp-grid">
+                        <article class="home-usp-card home-reveal">
+                            <span class="home-usp-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M8.5 14.5A6 6 0 1 1 15.5 14c-.8.6-1.3 1.4-1.5 2.4h-4c-.2-.8-.7-1.4-1.5-1.9Z"></path></svg>
+                            </span>
+                            <h3 data-i18n="home.usp.card1.title">Interpretation inside the hospital</h3>
+                            <p data-i18n="home.usp.card1.desc">The doctor's guidance on your condition, explained in clear Khmer before you choose a hospital.</p>
+                        </article>
+                        <article class="home-usp-card home-reveal">
+                            <span class="home-usp-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"></path><path d="M5 12h14"></path><circle cx="12" cy="12" r="8"></circle></svg>
+                            </span>
+                            <h3 data-i18n="home.usp.card2.title">Specialist matched to the condition</h3>
+                            <p data-i18n="home.usp.card2.desc">Options in Malaysia, Singapore or Thailand, matched to your treatment goal and your budget.</p>
+                        </article>
+                        <article class="home-usp-card home-reveal">
+                            <span class="home-usp-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"></path><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+                            </span>
+                            <h3 data-i18n="home.usp.card3.title">Medical records prepared</h3>
+                            <p data-i18n="home.usp.card3.desc">Treatment history and results from other hospitals, gathered so the treatment can be properly assessed.</p>
+                        </article>
+                        <article class="home-usp-card home-reveal">
+                            <span class="home-usp-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7c-4.5 0-7.5 2.7-8.6 6.7C10.4 10 7.9 8 4 8c.4 6.8 4 10.8 8 12 4.2-1.3 7.4-5.6 8-13Z"></path></svg>
+                            </span>
+                            <h3 data-i18n="home.usp.card4.title">Follow-up care at home</h3>
+                            <p data-i18n="home.usp.card4.desc">Continued consultation and symptom tracking with the doctor after you return home.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-services-section">
+                <div class="home-shell">
+                    <div class="home-section-heading home-reveal">
+                        <span class="home-kicker dark" data-i18n="home.paths.kicker">What we coordinate for you</span>
+                        <h2 data-admin-field="home.paths.title" data-admin-type="title" data-i18n="home.paths.title">The four services our team provides to Cambodian patients.</h2>
+                    </div>
+                    <div class="home-service-grid">
+                        <button class="home-service-tile home-reveal" type="button" onclick="navigateTo('checkup')">
+                            <span class="home-service-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M9 15h6"></path><path d="M9 11h2"></path></svg>
+                            </span>
+                            <strong data-i18n="home.services.checkup">Health check</strong>
+                            <small data-i18n="home.services.checkup.sub">Annual health screening programmes</small>
+                        </button>
+                        <button class="home-service-tile home-reveal" type="button" onclick="navigateTo('surgery')">
+                            <span class="home-service-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M12 14v4"></path><path d="M10 16h4"></path></svg>
+                            </span>
+                            <strong data-i18n="home.services.surgery">Surgery</strong>
+                            <small data-i18n="home.services.surgery.sub">Treatment by specialist physicians abroad</small>
+                        </button>
+                        <button class="home-service-tile home-reveal" type="button" onclick="navigateTo('travel')">
+                            <span class="home-service-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
+                            </span>
+                            <strong data-i18n="home.services.travel">Treatment travel</strong>
+                            <small data-i18n="home.services.travel.sub">The journey arranged from Phnom Penh onward</small>
+                        </button>
+                        <button class="home-service-tile home-reveal" type="button" onclick="navigateTo('accommodation')">
+                            <span class="home-service-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9h.01"></path><path d="M9 13h.01"></path><path d="M9 17h.01"></path></svg>
+                            </span>
+                            <strong data-i18n="home.services.accommodation">Stay</strong>
+                            <small data-i18n="home.services.accommodation.sub">Help finding accommodation during treatment</small>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <!-- ================= CHECKUP PAGE ================= -->
+    <div id="page-checkup" class="page-content" data-admin-page="checkup" data-design-mode="premium-showcase">
+        <section class="checkup-showcase" data-admin-section="checkup.hero">
+            <div class="checkup-showcase-bg" aria-hidden="true">
+                <img src="assets/images/checkup-concierge-hero.jpg" alt="" data-admin-field="checkup.hero.backgroundImage" data-admin-type="image">
+            </div>
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="checkup-showcase-grid">
+                    <div class="checkup-showcase-copy checkup-reveal">
+                        <span class="checkup-kicker" data-i18n="checkup.kicker">Private health check planning</span>
+                        <h1 data-admin-field="checkup.hero.title" data-admin-type="title" data-i18n="checkup.title" data-i18n-html="true">Why is it worth <em>having your health check abroad?</em></h1>
+                        <p data-i18n="checkup.lead">Because our team plans the screening precisely, protects your privacy, and gives you access to the newest diagnostic medicine as it becomes available.</p>
+                        <div class="checkup-action-row">
+                            <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="checkup-action primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.054 5.56-5.022c.242-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.643.135-.953l11.566-4.458c.538-.196 1.006.128.832.941z"/></svg>
+                                <span data-i18n="checkup.cta.primary">Plan a health check</span>
+                            </a>
+                            <a href="tel:+85512464639" class="checkup-action secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <span data-i18n="checkup.cta.secondary">012 464 639</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="checkup-visual-board checkup-reveal" aria-label="Checkup visual route">
+                        <div class="checkup-main-photo">
+                            <img src="assets/images/checkup-screening-day.jpg" alt="Patient having a preventive medical screening day" data-admin-field="checkup.hero.cardImageOne" data-admin-type="image">
+                        </div>
+                        <div class="checkup-mini-photo first">
+                            <img src="assets/images/checkup-health-snapshot.jpg" alt="Medical concierge preparing a health snapshot" data-admin-field="checkup.hero.cardImageTwo" data-admin-type="image">
+                        </div>
+                        <div class="checkup-mini-photo second">
+                            <img src="assets/images/checkup-report-clarity.jpg" alt="Doctor and coordinator explaining a medical report" data-admin-field="checkup.hero.cardImageThree" data-admin-type="image">
+                        </div>
+                        <div class="checkup-flight-card" aria-hidden="true">
+                            <span>PNH</span>
+                            <div></div>
+                            <span>MY SG TH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkup-micro-stats checkup-reveal" aria-label="Concierge support highlights">
+                    <div><strong data-i18n="common.before">Before</strong><span data-i18n="checkup.micro.records">records ready</span></div>
+                    <div><strong data-i18n="common.during">During</strong><span data-i18n="checkup.micro.visit">visit guided</span></div>
+                    <div><strong data-i18n="common.after">After</strong><span data-i18n="checkup.micro.report">report explained</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="checkup-story-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="checkup-story-heading checkup-reveal">
+                    <span class="checkup-kicker dark" data-i18n="checkup.story.visual">The health check journey</span>
+                    <h2 data-admin-field="checkup.story.title" data-admin-type="title" data-i18n="checkup.story.title">Four clear stages in the health check process.</h2>
+                </div>
+                <div class="checkup-story-grid">
+                    <article class="checkup-story-card checkup-reveal">
+                        <img src="assets/images/checkup-health-snapshot.jpg" alt="Doctor listening during a checkup preparation consultation" data-admin-field="checkup.story.snapshot.image" data-admin-type="image">
+                        <div class="checkup-story-info">
+                            <span>01</span>
+                            <h3 data-i18n="checkup.story.card1.title">We listen to your health concern</h3>
+                            <p data-i18n="checkup.story.card1.desc">So the doctor we choose is the right match for your condition.</p>
+                        </div>
+                    </article>
+                    <article class="checkup-story-card checkup-reveal">
+                        <img src="assets/images/checkup-smart-match.jpg" alt="Medical concierge matching a checkup package" data-admin-field="checkup.story.match.image" data-admin-type="image">
+                        <div class="checkup-story-info">
+                            <span>02</span>
+                            <h3 data-i18n="checkup.story.card2.title">A comparison of hospitals in three countries</h3>
+                            <p data-i18n="checkup.story.card2.desc">Finding hospitals that meet the standard within what you can afford.</p>
+                        </div>
+                    </article>
+                    <article class="checkup-story-card checkup-reveal">
+                        <img src="assets/images/checkup-screening-day.jpg" alt="Modern diagnostic screening day in a private hospital" data-admin-field="checkup.story.screening.image" data-admin-type="image">
+                        <div class="checkup-story-info">
+                            <span>03</span>
+                            <h3 data-i18n="checkup.story.card3.title">Screening day</h3>
+                            <p data-i18n="checkup.story.card3.desc">The tests, the medical imaging, and the doctor's review.</p>
+                        </div>
+                    </article>
+                    <article class="checkup-story-card checkup-reveal">
+                        <img src="assets/images/checkup-report-clarity.jpg" alt="Doctor explaining a medical report after screening" data-admin-field="checkup.story.report.image" data-admin-type="image">
+                        <div class="checkup-story-info">
+                            <span>04</span>
+                            <h3 data-i18n="checkup.story.card4.title">The report, prepared</h3>
+                            <p data-i18n="checkup.story.card4.desc">We explain it in Khmer, between the doctor and the patient, in plain terms.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="checkup-infographic-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="checkup-infographic-card checkup-reveal">
+                    <div class="checkup-infographic-copy">
+                        <span class="checkup-kicker dark" data-i18n="checkup.route.currentKicker">Cambodia to abroad</span>
+                        <h2 data-admin-field="checkup.route.title" data-admin-type="title" data-i18n="checkup.route.title">Your health check route, from the first step through to the last.</h2>
+                    </div>
+                    <div class="checkup-route-visual" aria-label="Medical checkup route infographic">
+                        <div class="checkup-route-node">
+                            <div class="checkup-route-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M9 15h6"></path><path d="M9 11h2"></path></svg>
+                            </div>
+                            <strong data-i18n="checkup.route.prepare.short">Prepare</strong>
+                            <span data-i18n="checkup.route.records.short">Records</span>
+                        </div>
+                        <div class="checkup-route-line"></div>
+                        <div class="checkup-route-node featured">
+                            <div class="checkup-route-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9h1"></path><path d="M9 13h1"></path><path d="M9 17h1"></path></svg>
+                            </div>
+                            <strong data-i18n="checkup.route.hospital.short">Hospital</strong>
+                            <span data-i18n="checkup.route.screening.short">Screening</span>
+                        </div>
+                        <div class="checkup-route-line"></div>
+                        <div class="checkup-route-node">
+                            <div class="checkup-route-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>
+                            </div>
+                            <strong data-i18n="checkup.route.explain.short">Explain</strong>
+                            <span data-i18n="checkup.route.khmerEnglish">Khmer / English</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="checkup-premium-cta">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="checkup-premium-card">
+                    <div>
+                        <span class="checkup-kicker" data-i18n="checkup.cta.ready">Ready before departure</span>
+                        <h2 data-admin-field="checkup.cta.title" data-admin-type="title" data-i18n="checkup.cta.title">Send us your health details and any records you have, so a specialist can review your treatment.</h2>
+                    </div>
+                    <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="checkup-action primary"><span data-i18n="common.messageChamnan">Message us 24/7</span></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= SURGERY PAGE ================= -->
+    <div id="page-surgery" class="page-content" data-admin-page="surgery" data-design-mode="premium-showcase">
+        <section class="surgery-showcase" data-admin-section="surgery.hero">
+            <div class="surgery-showcase-bg" aria-hidden="true">
+                <img src="assets/images/surgery-concierge-hero.jpg" alt="" data-admin-field="surgery.hero.backgroundImage" data-admin-type="image">
+            </div>
+
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="surgery-showcase-grid">
+                    <div class="surgery-showcase-copy surgery-reveal">
+                        <span class="surgery-kicker" data-i18n="surgery.kicker">Private surgical planning</span>
+                        <h1 data-admin-field="surgery.hero.title" data-admin-type="title" data-i18n="surgery.title" data-i18n-html="true">Surgery abroad, <em>arranged by a team held to the highest professional standard.</em></h1>
+                        <p data-i18n="surgery.lead">We help Cambodian patients prepare the diagnosis, collect the relevant records, consult specialist physicians, and settle a complete surgical plan before travelling for treatment abroad.</p>
+                        <div class="surgery-action-row">
+                            <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="surgery-action primary">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.3 2.9 10.5c-1.1.4-1.1 1.9.1 2.2l4.7 1.4 1.8 5.5c.3 1 1.6 1.2 2.2.3l2.5-3.5 4.8 3.5c.9.7 2.2.2 2.4-.9l2.5-14.2c.2-1.1-.9-2-2.2-1.5Zm-4.2 4.1-7 6.4-.8 3.3-1.1-3.5 8.9-6.2Z"/></svg>
+                                <span data-i18n="surgery.cta.primary">Plan the surgery</span>
+                            </a>
+                            <a href="tel:+85512464639" class="surgery-action secondary">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 1.3.4 2.6.6 4 .6.7 0 1.2.5 1.2 1.2v3.5c0 .7-.5 1.2-1.2 1.2C10.3 22 2 13.7 2 3.4c0-.7.5-1.2 1.2-1.2h3.6c.7 0 1.2.5 1.2 1.2 0 1.4.2 2.8.6 4 .1.4 0 .8-.3 1.2l-1.7 2.2Z"/></svg>
+                                <span data-i18n="surgery.cta.secondary">012 464 639</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="surgery-visual-board surgery-reveal">
+                        <figure class="surgery-main-photo">
+                            <img src="assets/images/surgery-theatre-care.jpg" alt="Advanced international operating theatre prepared for minimally invasive surgical care" data-admin-field="surgery.hero.cardImageOne" data-admin-type="image">
+                        </figure>
+                        <figure class="surgery-mini-photo first">
+                            <img src="assets/images/surgery-specialist-review.jpg" alt="Surgeon reviewing diagnostic images with a Cambodian patient before surgery" data-admin-field="surgery.hero.cardImageTwo" data-admin-type="image">
+                        </figure>
+                        <figure class="surgery-mini-photo second">
+                            <img src="assets/images/surgery-private-recovery.jpg" alt="Cambodian patient recovering comfortably in a private international hospital room" data-admin-field="surgery.hero.cardImageThree" data-admin-type="image">
+                        </figure>
+                        <div class="surgery-route-card" aria-label="Surgery journey from review to recovery">
+                            <span data-i18n="surgery.hero.review">Review</span>
+                            <div aria-hidden="true"><i></i></div>
+                            <span data-i18n="surgery.hero.recover">Recover</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="surgery-micro-stats surgery-reveal" aria-label="Surgery support highlights">
+                    <div><strong data-i18n="common.before">Before</strong><span data-i18n="surgery.micro.records">records reviewed</span></div>
+                    <div><strong data-i18n="common.during">During</strong><span data-i18n="surgery.micro.procedure">surgery coordinated</span></div>
+                    <div><strong data-i18n="common.after">After</strong><span data-i18n="surgery.micro.recovery">recovery guided</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="surgery-story-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="surgery-section-intro surgery-reveal">
+                    <span class="surgery-kicker" data-i18n="surgery.story.visual">The surgical journey</span>
+                    <h2 data-admin-field="surgery.story.title" data-admin-type="title" data-i18n="surgery.story.title">From the first step to the end of treatment, every stage is handled with care and accountability.</h2>
+                </div>
+
+                <div class="surgery-story-grid">
+                    <article class="surgery-story-card surgery-reveal">
+                        <img src="assets/images/surgery-specialist-review.jpg" alt="Specialist reviewing diagnosis and imaging with a Cambodian patient" data-admin-field="surgery.story.review.image" data-admin-type="image">
+                        <div>
+                            <span data-i18n="surgery.story.stage1">01 / Clarify</span>
+                            <h3 data-i18n="surgery.story.card1.title">Specialist review</h3>
+                            <p data-i18n="surgery.story.card1.desc">Reports and records prepared before travel.</p>
+                        </div>
+                    </article>
+
+                    <article class="surgery-story-card surgery-reveal">
+                        <img src="assets/images/surgery-theatre-care.jpg" alt="Modern operating theatre with surgical team and minimally invasive equipment" data-admin-field="surgery.story.theatre.image" data-admin-type="image">
+                        <div>
+                            <span data-i18n="surgery.story.stage2">02 / Treat</span>
+                            <h3 data-i18n="surgery.story.card2.title">Care in the operating theatre</h3>
+                            <p data-i18n="surgery.story.card2.desc">The medical team and the hospital's systems are prepared to plan.</p>
+                        </div>
+                    </article>
+
+                    <article class="surgery-story-card surgery-reveal">
+                        <img src="assets/images/surgery-private-recovery.jpg" alt="Private recovery suite with patient, family, nurse, and coordinator" data-admin-field="surgery.story.recovery.image" data-admin-type="image">
+                        <div>
+                            <span data-i18n="surgery.story.stage3">03 / Recover</span>
+                            <h3 data-i18n="surgery.story.card3.title">Rehabilitation after surgery</h3>
+                            <p data-i18n="surgery.story.card3.desc">Comfort and family requirements arranged through the recovery stay.</p>
+                        </div>
+                    </article>
+
+                    <article class="surgery-story-card surgery-reveal">
+                        <img src="assets/images/surgery-return-followup.jpg" alt="Cambodian family and coordinator reviewing a post-surgery follow-up call" data-admin-field="surgery.story.followup.image" data-admin-type="image">
+                        <div>
+                            <span data-i18n="surgery.story.stage4">04 / Return</span>
+                            <h3 data-i18n="surgery.story.card4.title">Follow-up at home</h3>
+                            <p data-i18n="surgery.story.card4.desc">Ongoing consultation and care once you have returned home.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="surgery-infographic-section">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="surgery-infographic-card surgery-reveal">
+                    <div class="surgery-info-copy">
+                        <span class="surgery-kicker" data-i18n="surgery.route.currentKicker">One coordinated route</span>
+                        <h2 data-admin-field="surgery.route.title" data-admin-type="title" data-i18n="surgery.route.title">We resolve the details from Phnom Penh through to the specialist hospital abroad.</h2>
+                    </div>
+                    <div class="surgery-route-steps" aria-label="Surgery coordination route">
+                        <div class="surgery-route-step">
+                            <span>01</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                            <strong data-i18n="surgery.route.records.short">Records</strong>
+                        </div>
+                        <div class="surgery-route-step">
+                            <span>02</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 12h14"/><circle cx="12" cy="12" r="8"/></svg>
+                            <strong data-i18n="surgery.route.specialist.short">Specialist</strong>
+                        </div>
+                        <div class="surgery-route-step">
+                            <span>03</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15h16M6 15l3-8h6l3 8M9 19h6"/></svg>
+                            <strong data-i18n="surgery.route.procedure.short">Surgery</strong>
+                        </div>
+                        <div class="surgery-route-step">
+                            <span>04</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7c-4.5 0-7.5 2.7-8.6 6.7C10.4 10 7.9 8 4 8c.4 6.8 4 10.8 8 12 4.2-1.3 7.4-5.6 8-13Z"/></svg>
+                            <strong data-i18n="surgery.route.recover.short">Recover</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="surgery-premium-cta">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="surgery-premium-card surgery-reveal">
+                    <div>
+                        <span class="surgery-kicker" data-i18n="surgery.cta.ready">Ready for specialist review</span>
+                        <h2 data-admin-field="surgery.cta.title" data-admin-type="title" data-i18n="surgery.cta.title">Send us a quotation from another hospital and our team will review the price options and compare them before you decide.</h2>
+                    </div>
+                    <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="surgery-action primary"><span data-i18n="common.messageChamnan">Message us 24/7</span></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= TRAVEL PAGE (Upgraded Journey Layout) ================= -->
+    <div id="page-travel" class="page-content" data-admin-page="travel" data-design-mode="premium-flow">
+        <section class="travel-upgrade travel-premium-flow" aria-labelledby="travel-journey-title" data-admin-section="travel.hero">
+            <div class="travel-hero">
+                <div class="travel-hero-bg" aria-hidden="true">
+                    <img src="assets/images/travel-concierge-hero.jpg" alt="" data-admin-field="travel.hero.backgroundImage" data-admin-type="image">
+                </div>
+                <div class="travel-hero-inner">
+                    <span class="travel-eyebrow" data-i18n="travel.kicker">Travel guidance</span>
+                    <h1 id="travel-journey-title" data-admin-field="travel.hero.title" data-admin-type="title" data-i18n="travel.title" data-i18n-html="true">Travelling abroad for treatment, <em>guided like a private journey.</em></h1>
+                    <p class="travel-lead" data-i18n="travel.lead">From the planning in Phnom Penh to arriving at the hospital in Malaysia, Singapore or Thailand, we give you the detail you need to travel with confidence.</p>
+                    <div class="travel-hero-stats">
+                        <div class="travel-stat"><div class="travel-stat-number">PNH</div><div class="travel-stat-label" data-i18n="travel.stats.local.title">Local support desk</div></div>
+                        <div class="travel-stat"><div class="travel-stat-number">MY SG TH</div><div class="travel-stat-label" data-i18n="travel.stats.arrival.title">Hospital arrival</div></div>
+                        <div class="travel-stat"><div class="travel-stat-number">24/7</div><div class="travel-stat-label" data-i18n="travel.stats.support.title">Support while travelling</div></div>
+                    </div>
+                    <div class="travel-hero-actions">
+                        <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="travel-cta-button"><span data-i18n="travel.cta.primary">Plan my journey</span></a>
+                        <a href="tel:+85512464639" class="travel-cta-secondary" data-i18n="travel.cta.secondary">Call 012 464 639</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="travel-story-board">
+                <div class="travel-story-intro">
+                    <span class="travel-eyebrow" data-i18n="travel.story.visual">The support journey</span>
+                    <h2 data-admin-field="travel.story.title" data-admin-type="title" data-i18n="travel.story.title">Three key stages that make the journey to treatment easier than before.</h2>
+                </div>
+                <div class="travel-story-grid">
+                    <article class="travel-story-card">
+                        <img src="assets/images/travel-departure-briefing.jpg" alt="Cambodian family receiving medical travel briefing before departure" data-admin-field="travel.story.departure.image" data-admin-type="image">
+                        <div><span data-i18n="travel.story.brief">01 / Briefing</span><h3 data-i18n="travel.story.beforeFlight">Before the flight</h3></div>
+                    </article>
+                    <article class="travel-story-card">
+                        <img src="assets/images/travel-singapore-arrival.jpg" alt="Cambodian patient and family greeted by private transfer after arriving abroad" data-admin-field="travel.story.arrival.image" data-admin-type="image">
+                        <div><span data-i18n="travel.story.arrive">02 / Arrive</span><h3 data-i18n="travel.story.privateTransfer">Private transfer</h3></div>
+                    </article>
+                    <article class="travel-story-card">
+                        <img src="assets/images/travel-hospital-handoff.jpg" alt="Care coordinator supporting Cambodian patient at an international hospital lobby" data-admin-field="travel.story.handoff.image" data-admin-type="image">
+                        <div><span data-i18n="travel.story.handoff">03 / Handover</span><h3 data-i18n="travel.story.hospitalWelcome">Coordination at the hospital</h3></div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="travel-journey">
+                <div class="travel-journey-intro">
+                    <span class="travel-eyebrow" data-i18n="travel.route.motion">The live route</span>
+                    <h2 data-admin-field="travel.route.title" data-admin-type="title" data-i18n="travel.route.title">At every stage of the journey, someone is there to coordinate, wherever you are.</h2>
+                </div>
+                <div class="travel-journey-track" id="travelJourneyTrack">
+                    <svg class="travel-route-svg" viewBox="0 0 44 1000" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="travelRouteGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#d97561"></stop>
+                                <stop offset="46%" stop-color="#63d0c7"></stop>
+                                <stop offset="100%" stop-color="#c7a36a"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path class="travel-route-bg" d=""></path>
+                        <path class="travel-route-fg" d=""></path>
+                        <g class="travel-route-progress-plane" transform="translate(0 0)">
+                            <circle class="travel-route-progress-dot" cx="0" cy="0" r="7"></circle>
+                            <path class="travel-route-progress-icon" d="M-5 -1 6 -6 2 0 6 6z"></path>
+                        </g>
+                    </svg>
+
+                    <div class="travel-endpoint travel-endpoint-start">
+                        <div class="travel-dot">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <polygon points="12 6 14.5 12 12 18 9.5 12" fill="currentColor" stroke="none"></polygon>
+                            </svg>
+                        </div>
+                        <div class="travel-endpoint-label">
+                            <span class="travel-stage" data-i18n="travel.route.startStage">Start</span>
+                            <div class="travel-title" data-i18n="travel.route.startTitle">Phnom Penh, Cambodia</div>
+                            <div class="travel-sub" data-i18n="travel.route.startDesc">The local coordination desk prepares your route.</div>
+                        </div>
+                    </div>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">01</span><span class="travel-stage" data-i18n="travel.route.consult">Consult</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.planTitle">Plan the course of treatment</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.planDesc">We listen to your health concern, set the timing, and assess the treatment.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.localDesk">Local support desk</span><span class="travel-tag" data-i18n="travel.route.clearPlan">A clear plan</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">02</span><span class="travel-stage" data-i18n="travel.route.step1.title">Prepare</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.documentsTitle">Records ready</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.documentsDesc">We collect your past treatment history, your passport details, and the flight tickets.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.step1.tag1">Records</span><span class="travel-tag" data-i18n="travel.route.translation">Translation</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">03</span><span class="travel-stage" data-i18n="travel.route.book">Book</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.alignedTitle">The hospital appointment process</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.alignedDesc">The agreed price is confirmed, the doctor is booked, and the treatment date is set clearly.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.hospitalSlot">Hospital appointment</span><span class="travel-tag" data-i18n="travel.route.hotelRoute">Route to the hotel</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">04</span><span class="travel-stage" data-i18n="travel.route.depart">Depart</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.briefTitle">Briefing before the flight</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.briefDesc">The family receives the itinerary, the emergency contact number, and the instructions for arriving at the hospital.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.airportReady">Ready at the airport</span><span class="travel-tag" data-i18n="travel.route.tripContact">Trip contact</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">05</span><span class="travel-stage" data-i18n="travel.route.arrive">Arrive</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.transferTitle">The hospital car meets you at the airport</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.transferDesc">The airport pickup connects through to the hotel and the hospital.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.driver">Driver</span><span class="travel-tag" data-i18n="travel.route.hotelOrHospital">Hotel or hospital</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">06</span><span class="travel-stage" data-i18n="travel.route.care">Care</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.handoffTitle">Hospital admission coordinated</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.handoffDesc">The coordinator confirms the registration, the schedule, and the updates for the family with the medical team.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.checkin">Registration</span><span class="travel-tag" data-i18n="travel.route.familyUpdates">Updates for the family</span></div>
+                        </div>
+                    </article>
+
+                    <article class="travel-milestone">
+                        <div class="travel-milestone-marker"><div class="travel-node">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </div></div>
+                        <div class="travel-milestone-content">
+                            <div class="travel-milestone-head"><span class="travel-number">07</span><span class="travel-stage" data-i18n="travel.route.return">Return</span></div>
+                            <h3 class="travel-milestone-title" data-i18n="travel.route.returnTitle">The journey home after treatment</h3>
+                            <p class="travel-milestone-desc" data-i18n="travel.route.returnDesc">Your next appointment letter, and continued consultation while you rest at home.</p>
+                            <div class="travel-milestone-tags"><span class="travel-tag" data-i18n="travel.route.reports">Reports</span><span class="travel-tag" data-i18n="travel.route.aftercare">Continued care</span></div>
+                        </div>
+                    </article>
+
+                    <div class="travel-endpoint travel-endpoint-end">
+                        <div class="travel-dot">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <polyline points="9 12 11 14 15 10"></polyline>
+                            </svg>
+                        </div>
+                        <div class="travel-endpoint-label">
+                            <span class="travel-stage" data-i18n="travel.route.complete">Complete</span>
+                            <div class="travel-title" data-i18n="travel.route.completeTitle">Home safely</div>
+                            <div class="travel-sub" data-i18n="travel.route.completeDesc">A plan is set to monitor your symptoms and to keep the doctor updated.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="travel-final-cta" id="travelCta" aria-labelledby="travel-cta-title">
+                <div class="travel-cta-card">
+                    <span class="travel-cta-eyebrow" data-i18n="travel.cta.startRoute">Start the route</span>
+                    <h2 id="travel-cta-title" data-admin-field="travel.cta.title" data-admin-type="title" data-i18n="travel.cta.title">Send our team your travel dates and a photograph of your passport, so the arrangements can be settled before departure.</h2>
+                    <p data-i18n="travel.cta.routeMessage">If anything in the service goes wrong, our team will not stay silent &mdash; we step in and put it right for you immediately.</p>
+                    <div class="travel-cta-actions">
+                        <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="travel-cta-button">
+                            <span data-i18n="common.messageChamnan">Message us 24/7</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+                        </a>
+                        <a href="tel:+85512464639" class="travel-cta-secondary" data-i18n="travel.cta.secondary">Call 012 464 639</a>
+                    </div>
+                    <div class="travel-manager-note">
+                        <span class="travel-manager-name" data-i18n="travel.manager.name">Overseas treatment travel team &mdash; Singapore, Malaysia and Thailand</span>
+                        <span class="travel-manager-title" data-i18n="travel.manager.title">Premium overseas treatment travel manager</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= ACCOMMODATION PAGE ================= -->
+    <div id="page-accommodation" class="page-content" data-admin-page="accommodation" data-design-mode="premium-stay">
+        <section class="stay-premium" data-admin-section="accommodation.hero">
+            <div class="stay-hero">
+                <div class="stay-hero-bg" aria-hidden="true">
+                    <img src="assets/images/accommodation-concierge-hero.jpg" alt="" data-admin-field="accommodation.hero.backgroundImage" data-admin-type="image">
+                </div>
+                <div class="stay-shell stay-hero-grid">
+                    <div class="stay-hero-copy stay-reveal">
+                        <span class="stay-kicker" data-i18n="accommodation.kicker">Accommodation support</span>
+                        <h1 data-admin-field="accommodation.hero.title" data-admin-type="title" data-i18n="accommodation.title" data-i18n-html="true">Help booking a hotel <em>close to the hospital.</em></h1>
+                        <p data-i18n="accommodation.lead">Our team compares hotel prices near the hospital and finds somewhere convenient for the patient's family.</p>
+                        <div class="stay-action-row">
+                            <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="stay-action primary">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.3 2.9 10.5c-1.1.4-1.1 1.9.1 2.2l4.7 1.4 1.8 5.5c.3 1 1.6 1.2 2.2.3l2.5-3.5 4.8 3.5c.9.7 2.2.2 2.4-.9l2.5-14.2c.2-1.1-.9-2-2.2-1.5Zm-4.2 4.1-7 6.4-.8 3.3-1.1-3.5 8.9-6.2Z"/></svg>
+                                <span data-i18n="accommodation.cta.primary">Check hotel prices</span>
+                            </a>
+                            <a href="tel:+85512464639" class="stay-action secondary">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 1.3.4 2.6.6 4 .6.7 0 1.2.5 1.2 1.2v3.5c0 .7-.5 1.2-1.2 1.2C10.3 22 2 13.7 2 3.4c0-.7.5-1.2 1.2-1.2h3.6c.7 0 1.2.5 1.2 1.2 0 1.4.2 2.8.6 4 .1.4 0 .8-.3 1.2l-1.7 2.2Z"/></svg>
+                                <span data-i18n="accommodation.cta.secondary">012 464 639</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="stay-price-panel stay-reveal" aria-label="Hotel comparison support">
+                        <span data-i18n="accommodation.panel.best">The most suitable price</span>
+                        <div class="stay-price-bars" aria-hidden="true">
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                        </div>
+                        <div class="stay-panel-row">
+                            <strong data-i18n="accommodation.panel.nearHospital">Near the hospital</strong>
+                            <small data-i18n="accommodation.panel.lessStress">less stress while travelling</small>
+                        </div>
+                        <div class="stay-panel-row">
+                            <strong data-i18n="accommodation.panel.recoveryRoom">Recovery room</strong>
+                            <small data-i18n="accommodation.panel.quietSleep">a quiet place to rest</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="stay-trust-strip stay-shell stay-reveal" aria-label="Accommodation support highlights">
+                    <div><strong data-i18n="accommodation.trust.priceShort">Price</strong><span data-i18n="accommodation.trust.compare">compare options</span></div>
+                    <div><strong data-i18n="accommodation.trust.routeShort">Route</strong><span data-i18n="accommodation.trust.outsideNear">outside or near the hospital</span></div>
+                    <div><strong data-i18n="accommodation.trust.rest">Rest</strong><span data-i18n="accommodation.trust.sleep">recovery rest</span></div>
+                </div>
+            </div>
+
+            <section class="stay-story-section">
+                <div class="stay-shell">
+                    <div class="stay-section-heading stay-reveal">
+                        <span class="stay-kicker dark" data-i18n="accommodation.story.visual">The stay journey</span>
+                        <h2 data-admin-field="accommodation.story.title" data-admin-type="title" data-i18n="accommodation.story.title">Reasonably priced hotel options, chosen with recovery in mind.</h2>
+                    </div>
+                    <div class="stay-story-grid">
+                        <article class="stay-story-card stay-reveal" data-admin-section="accommodation.story.price">
+                            <img src="assets/images/accommodation-price-search.jpg" alt="Concierge comparing hotel prices for a medical traveler" data-admin-field="accommodation.story.price.image" data-admin-type="image">
+                            <div>
+                                <span data-i18n="accommodation.story.stage1">01 / Compare</span>
+                                <h3 data-i18n="accommodation.story.card1.title">Find a suitable price</h3>
+                                <p data-i18n="accommodation.story.card1.desc">Budget, distance, and room type.</p>
+                            </div>
+                        </article>
+                        <article class="stay-story-card stay-reveal" data-admin-section="accommodation.story.route">
+                            <img src="assets/images/accommodation-route-plan.jpg" alt="Hospital-near accommodation route plan with transfer support" data-admin-field="accommodation.story.route.image" data-admin-type="image">
+                            <div>
+                                <span data-i18n="accommodation.story.stage2">02 / Locate</span>
+                                <h3 data-i18n="accommodation.story.card2.title">Stay close to care</h3>
+                                <p data-i18n="accommodation.story.card2.desc">The route between hospital, hotel, and airport.</p>
+                            </div>
+                        </article>
+                        <article class="stay-story-card stay-reveal" data-admin-section="accommodation.story.recovery">
+                            <img src="assets/images/accommodation-recovery-sleep.jpg" alt="Patient resting peacefully in a premium recovery room after treatment" data-admin-field="accommodation.story.recovery.image" data-admin-type="image">
+                            <div>
+                                <span data-i18n="accommodation.story.stage3">03 / Recover</span>
+                                <h3 data-i18n="accommodation.story.card3.title">Rest safely after treatment</h3>
+                                <p data-i18n="accommodation.story.card3.desc">A quiet room, and support from the family.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stay-route-section">
+                <div class="stay-shell stay-route-card stay-reveal">
+                    <div class="stay-route-copy">
+                        <span class="stay-kicker dark" data-i18n="accommodation.route.currentKicker">Staying near the hospital</span>
+                        <h2 data-admin-field="accommodation.route.title" data-admin-type="title" data-i18n="accommodation.route.title">From the booking to bedtime, every detail is checked.</h2>
+                    </div>
+                    <div class="stay-route-steps" aria-label="Accommodation support route">
+                        <div class="stay-route-step">
+                            <span>01</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5h16v14"></path><path d="M4 11h16"></path><path d="M8 8h.01M12 8h.01M16 8h.01"></path></svg>
+                            <strong data-i18n="accommodation.route.hotelList">Hotel list</strong>
+                        </div>
+                        <div class="stay-route-step">
+                            <span>02</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"></path><path d="M6 12c0-4 2-7 6-9 4 2 6 5 6 9s-2 7-6 9c-4-2-6-5-6-9Z"></path></svg>
+                            <strong data-i18n="accommodation.route.priceCheck">Price check</strong>
+                        </div>
+                        <div class="stay-route-step">
+                            <span>03</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <strong data-i18n="accommodation.route.fit">A suitable route</strong>
+                        </div>
+                        <div class="stay-route-step">
+                            <span>04</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"></path><path d="M7 12V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5"></path><path d="M6 16h12"></path><path d="M8 20h8"></path></svg>
+                            <strong data-i18n="accommodation.route.sleep">Recovery rest</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stay-final-cta">
+                <div class="stay-shell">
+                    <div class="stay-cta-card stay-reveal">
+                        <div>
+                            <span class="stay-kicker" data-i18n="accommodation.cta.start">Start the stay plan</span>
+                            <h2 data-admin-field="accommodation.cta.title" data-admin-type="title" data-i18n="accommodation.cta.title">You are welcome to ask our team about any of the details.</h2>
+                            <p data-i18n="accommodation.cta.message">Please confirm the hotel booking at least three days before departure.</p>
+                        </div>
+                        <a href="https://t.me/healthspeaker" target="_blank" rel="noopener noreferrer" class="stay-action primary"><span data-i18n="common.messageChamnan">Message us 24/7</span></a>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-navy text-white px-0 pb-0 pt-0 md:px-6 md:pt-6">
+        <div class="container mx-auto">
+            <div class="footer-shell">
+                <div class="footer-grid">
+                    <div class="footer-section footer-brand-section md:pr-4">
+                        <div class="footer-brand-lockup" data-admin-field="brand.footerLogo" data-admin-type="brand">
+                            <span class="footer-brand-mark" aria-hidden="true">
+                                <svg viewBox="0 0 48 48">
+                                    <path d="M24 6c9.9 0 18 8.1 18 18s-8.1 18-18 18S6 33.9 6 24 14.1 6 24 6Z"></path>
+                                    <path d="M8 24h8l4-8 7 17 4-9h9"></path>
+                                </svg>
+                            </span>
+                            <span class="footer-brand-text">Med<span>Hub</span><b>24</b></span>
+                        </div>
+                        <p class="footer-brand-note" data-i18n="footer.brand.note">Premium overseas treatment coordination for Cambodian patients seeking care in Malaysia, Singapore, and Thailand.</p>
+                        <div class="mobile-footer-meta">
+                            <div class="mobile-contact-box">
+                                <h4 class="font-semibold text-mint" data-i18n="footer.contact.title">Contact us 24/7</h4>
+                                <div class="mobile-contact-actions">
+                                    <a href="https://www.facebook.com/healthspeakers" target="_blank" rel="noopener noreferrer" class="mobile-contact-link facebook" data-admin-field="contacts.facebook" data-admin-type="url">
+                                        <span class="footer-facebook-icon" aria-hidden="true">f</span>
+                                        <span>Health Speaker</span>
+                                    </a>
+                                    <a href="tel:+85512464639" class="mobile-contact-link phone" data-admin-field="contacts.phone" data-admin-type="phone">
+                                        <span class="footer-phone-icon" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.95.35 1.88.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.93.35 1.86.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        </span>
+                                        <span>+855 12 464 639</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mobile-address-box">
+                                <h4 class="font-semibold text-mint" data-i18n="footer.address.title">Address</h4>
+                                <p class="text-gray-300" data-i18n="footer.address" data-i18n-html="true">#161, Street 51 (Pasteur), Sangkat Boeung Raing,<br>Khan Daun Penh 12211, Phnom Penh,<br>Kingdom of Cambodia.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-section footer-contact-section">
+                        <h4 class="font-semibold text-lg md:text-xl text-mint" data-i18n="footer.contact.title">Contact us 24/7</h4>
+                        <ul class="footer-contact-stack space-y-1.5 text-gray-300 text-sm">
+                            <li>
+                                <a href="https://www.facebook.com/healthspeakers" target="_blank" rel="noopener noreferrer" class="footer-contact-link hover:text-white transition" data-admin-field="contacts.facebook" data-admin-type="url">
+                                    <span class="footer-facebook-icon" aria-hidden="true">f</span>
+                                    <span>Health Speaker</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+85512464639" class="footer-contact-link hover:text-white transition" data-admin-field="contacts.phone" data-admin-type="phone">
+                                    <span class="footer-phone-icon" aria-hidden="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.95.35 1.88.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.93.35 1.86.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    </span>
+                                    <span>+855 12 464 639</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-section footer-address-section">
+                        <h4 class="font-semibold text-lg md:text-xl text-mint" data-i18n="footer.address.title">Address</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed" data-i18n="footer.address" data-i18n-html="true">#161, Street 51 (Pasteur), Sangkat Boeung Raing,<br>Khan Daun Penh 12211, Phnom Penh,<br>Kingdom of Cambodia.</p>
+                    </div>
+
+                </div>
+
+                <div class="footer-trust-strip" aria-label="Service promises">
+                    <span data-i18n="footer.promise.private">Private coordination</span>
+                    <span data-i18n="footer.promise.khmer">Khmer support</span>
+                    <span data-i18n="footer.promise.regions">Malaysia · Singapore · Thailand</span>
+                </div>
+
+                <div class="footer-divider border-t border-gray-600 text-center text-gray-400 text-xs md:text-sm">
+                    <p class="pt-3" data-i18n="footer.copyright">&copy; 2026 MedHub24.com · Premium overseas medical treatment coordination for Cambodian patients. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>
