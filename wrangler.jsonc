@@ -1,0 +1,22 @@
+{
+  // MedHub24 — static site deployed as a Cloudflare Worker with static
+  // assets. "Connect to Git" from Workers & Pages creates a Worker, not
+  // a legacy Pages project, and a Worker needs this file to know what to
+  // publish. There is no Worker script: omitting "main" makes this an
+  // assets-only Worker, which is what a static site wants.
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+
+  "name": "medhub24",
+  "compatibility_date": "2026-09-01",
+
+  "assets": {
+    // Relative to this file, which sits at the repository root.
+    "directory": "./medhub24",
+
+    // Routing happens in js/app.js and never changes the URL, so any
+    // path that is not a real file resolves to the document rather than
+    // to a 404. medhub24/_redirects carries the same rule for the
+    // legacy Pages runtime.
+    "not_found_handling": "single-page-application"
+  }
+}

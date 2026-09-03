@@ -25,12 +25,16 @@ medhub24-webapp/
 │   ├── en/common.js
 │   └── km/common.js          # APPROVED — production content
 ├── assets/
-│   ├── fonts/                # self-hosted Khmer faces + FONTS.md ← read this
+│   ├── fonts/                # self-hosted Khmer faces (+ OFL.txt)
 │   └── images/
-├── _headers                  # Cloudflare Pages: caching + security headers
-├── _redirects                # Cloudflare Pages: SPA fallback
-└── DEPLOY.md                 # Cloudflare Pages runbook
+├── _headers                  # response headers: caching + security
+└── _redirects                # SPA fallback
 ```
+
+Documentation lives in `docs/` at the repository root, deliberately
+**outside** this directory. `medhub24/` is the published root — anything
+left in it is reachable on medhub24.com. `docs/` holds this file,
+`DEPLOY.md`, `SETUP-CLOUDFLARE.md` and `FONTS.md`.
 
 Run: `python3 -m http.server 8000`. A server is required — `file://` blocks
 the webfonts.
@@ -140,7 +144,7 @@ from this origin. Khmer therefore cannot be replaced by a device font and
 does not depend on a third-party CDN staying reachable from Cambodia.
 `js/khmer-font.js` verifies this on every load and writes
 `data-khmer-font="selfhosted"` or `"fallback"` to `<html>`.
-See `assets/fonts/FONTS.md`.
+See `docs/FONTS.md`.
 
 Koh Santepheap replaced Hanuman. Hanuman shipped one weight, so the CSS had
 to map 600–900 onto the same file to stop the browser synthesising a fake

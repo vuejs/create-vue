@@ -1,9 +1,9 @@
 # Cloudflare Pages — redirects
 # https://developers.cloudflare.com/pages/configuration/redirects/
 
-# Internal documentation must not be served from the public domain.
-/README.md    /index.html   404
-/DEPLOY.md    /index.html   404
+# Internal documentation is not in this directory at all — it lives in
+# docs/ at the repository root, outside the published root. Nothing to
+# exclude here.
 
 # The site is a single-document SPA; routing happens in js/app.js and
 # never changes the URL. Anything else resolves to the document.
