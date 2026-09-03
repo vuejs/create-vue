@@ -130,15 +130,31 @@ English and Khmer are separated **structurally**, not by convention:
 
 | Script | Role | Family |
 |---|---|---|
-| Khmer | body, UI, headings | **Hanuman** (self-hosted) |
+| Khmer | body, UI, headings | **Koh Santepheap** (self-hosted, 300/400/700/900) |
 | Khmer | hero headlines | **Angkor** (self-hosted) |
 | Latin | body | Plus Jakarta Sans |
 | Latin | headings | Poppins |
 
-Both Khmer faces are self-hosted, so Khmer cannot be replaced by a device font
-and does not depend on a CDN. `js/khmer-font.js` verifies this on every load
-and writes `data-khmer-font="selfhosted"` or `"fallback"` to `<html>`.
+Both Khmer faces are Google Fonts' own Khmer-subset `woff2` files, served
+from this origin. Khmer therefore cannot be replaced by a device font and
+does not depend on a third-party CDN staying reachable from Cambodia.
+`js/khmer-font.js` verifies this on every load and writes
+`data-khmer-font="selfhosted"` or `"fallback"` to `<html>`.
 See `assets/fonts/FONTS.md`.
+
+Koh Santepheap replaced Hanuman. Hanuman shipped one weight, so the CSS had
+to map 600–900 onto the same file to stop the browser synthesising a fake
+bold (which smears the coeng). Koh Santepheap has real weights, so Khmer
+hierarchy can now use weight as well as size and colour. Hanuman stays
+declared from its TTF as the last approved face before a device font. The
+four woff2 files total 122KB, against 394KB for the two TTFs they replace.
+
+**Latin inside a Khmer page.** The Khmer faces are declared for Khmer
+codepoints only, so Latin skips past them in the stack. The Latin faces are
+therefore named in `--medhub-khmer-*` too. Without them Latin fell through
+to the generic `sans-serif`, and the MedHub24 wordmark, "PNH", "24/7" and
+the phone numbers rendered in the device font whenever the site was in
+Khmer.
 
 ### Rules for editing Khmer type
 
@@ -157,6 +173,37 @@ See `assets/fonts/FONTS.md`.
 - Khmer needs ~0.25–0.3 more line-height than Latin at the same size.
 - Khmer has no italic; `<em>` renders as emphasis, not a slant.
 - Hanuman has one weight. Hierarchy comes from size and colour, not weight.
+
+---
+
+## Language
+
+**The site opens in Khmer.** The audience is Cambodian patients; English is
+the manual switch.
+
+`index.html` is authored in English, and that matters to the i18n layer:
+`applyTranslationNodes` keys every text node against the English locale and
+falls back to it for a missing key. `js/i18n.js` therefore keeps two
+separate constants:
+
+| Constant | Meaning |
+|---|---|
+| `DEFAULT_LANGUAGE` (`en`) | the language the markup is written in — the source locale |
+| `INITIAL_LANGUAGE` (`km`) | what a first-time visitor sees |
+
+Changing `DEFAULT_LANGUAGE` to `km` would break the reverse lookup against
+the English markup. Change `INITIAL_LANGUAGE` instead.
+
+Resolution order: `?lang=` → previous choice in `localStorage` → Khmer. A
+visitor who switches to English stays in English on their next visit.
+
+Because the markup is English, waiting for `DOMContentLoaded` to swap the
+copy leaves a frame of English on screen. An inline script at the end of
+`<body>` applies the translation there instead — the parser has built the
+whole document but has not fired `DOMContentLoaded`, so the swap lands
+before first contentful paint (measured: swap at 205ms, FCP at 216ms). The
+`DOMContentLoaded` handler still runs and is idempotent, so the page is
+unaffected if that script throws.
 
 ---
 
@@ -198,7 +245,6 @@ Object.keys(MEDHUB_LOCALES.en).filter(k => !used.has(k) && !k.startsWith('meta.'
 - The manager portrait is still hot-linked from a signed `chatglm.cn` URL whose
   `auth_key` expires. It now degrades to a monogram rather than a broken image,
   but download it into `assets/images/` before production.
-- Phone: displayed `012 464 639` / `+855 12 464 639`, linked `tel:+85512464639`.
-  **Please confirm** — the brief gave `(+8551)2464639`, which does not parse as
-  a Cambodian mobile number.
+- Phone: displayed `012 464 639`, linked `tel:+85512464639`. Confirmed
+  correct by the owner.
 - Facebook blue `#1877f2` is deliberately kept off-palette on the social link.

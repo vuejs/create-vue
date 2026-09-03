@@ -4,6 +4,9 @@
    - Shared UI behavior for all locales
    ============================================================ */
 
+/* The source locale of index.html — used to normalise an unknown value,
+   not to decide what a visitor sees. The arrival language is
+   MEDHUB_I18N.INITIAL_LANGUAGE (Khmer). */
 const DEFAULT_LANGUAGE = 'en';
 const LANGUAGE_BUTTON_META = {
     en: {
@@ -98,7 +101,7 @@ function applyInitialRoute() {
 
 window.addEventListener('DOMContentLoaded', () => {
     applyInitialRoute();
-    const currentLanguage = window.MEDHUB_I18N?.getLanguage?.() || DEFAULT_LANGUAGE;
+    const currentLanguage = window.MEDHUB_I18N?.getLanguage?.() || window.MEDHUB_I18N?.INITIAL_LANGUAGE || 'km';
     updateLanguageButtons(currentLanguage);
 });
 

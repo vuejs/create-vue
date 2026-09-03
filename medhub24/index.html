@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,8 @@
 
     <!-- Khmer faces are self-hosted, so they cannot be substituted by a device
          font and do not depend on a third-party CDN. -->
-    <link rel="preload" href="assets/fonts/Hanuman-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/KohSantepheap-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/Angkor-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Tailwind theme config (surgical navy / coral / clinical teal palette + fonts) -->
     <script src="js/config.js"></script>
@@ -38,7 +39,7 @@
     <!-- Verifies the approved Khmer webfont actually rendered -->
     <script src="js/khmer-font.js" defer></script>
 </head>
-<body class="font-body text-navy overflow-x-hidden" data-lang="en">
+<body class="font-body text-navy overflow-x-hidden" data-lang="km">
 
     <!-- ================= HEADER ================= -->
     <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
@@ -973,5 +974,28 @@
 
     <!-- App logic -->
     <script src="js/app.js"></script>
+
+    <!-- The markup is authored in English; the site opens in Khmer. Waiting
+         for DOMContentLoaded to swap the copy leaves a frame of English on
+         screen. Running here — the parser has built the whole body but has
+         not yet fired DOMContentLoaded — swaps it before first paint. The
+         DOMContentLoaded handler in i18n.js still runs and is idempotent,
+         so if anything throws here the page is unaffected. -->
+    <script>
+        (function () {
+            try {
+                var i18n = window.MEDHUB_I18N;
+                if (!i18n) { return; }
+                var lang = i18n.getLanguage();
+                i18n.applyMeta(lang);
+                i18n.applyTranslationNodes(lang);
+                if (typeof window.updateLanguageButtons === 'function') {
+                    window.updateLanguageButtons(lang);
+                }
+            } catch (error) {
+                /* i18n.js re-applies on DOMContentLoaded. */
+            }
+        }());
+    </script>
 </body>
 </html>

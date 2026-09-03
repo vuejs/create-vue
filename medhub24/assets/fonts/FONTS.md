@@ -1,3 +1,20 @@
+> **Updated.** The Khmer body face is now **Koh Santepheap**, not Hanuman,
+> and both Khmer faces are Khmer-subset `woff2` files taken from Google
+> Fonts and served from this origin:
+>
+> | File | Family | Weight |
+> |---|---|---|
+> | `KohSantepheap-Light.woff2` | MedHub Khmer | 300 |
+> | `KohSantepheap-Regular.woff2` | MedHub Khmer | 400–500 |
+> | `KohSantepheap-Bold.woff2` | MedHub Khmer | 600–700 |
+> | `KohSantepheap-Black.woff2` | MedHub Khmer | 800–900 |
+> | `Angkor-Regular.woff2` | MedHub Khmer Display | 400 (headlines only) |
+>
+> `Hanuman-Regular.ttf` is kept and still declared, as the last approved
+> face before a device font. Both families are SIL Open Font Licence 1.1;
+> see `OFL.txt`. The notes below still describe the licence and the
+> unicode-range separation, which are unchanged.
+
 # Fonts — MedHub24
 
 ## Approved faces

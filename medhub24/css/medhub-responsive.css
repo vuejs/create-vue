@@ -159,3 +159,35 @@ pre {
     max-width: 100%;
     overflow-x: auto;
 }
+
+/* ------------------------------------------------------------
+   6. Header row clearance
+
+   The brand wordmark and the language pill sit at opposite ends of a
+   justify-between row with nothing guaranteeing space between them. At
+   320px they met exactly (0px gap) once the Khmer pill grew. Give the
+   row a real gap and let the brand — not the control — absorb the
+   squeeze.
+   ------------------------------------------------------------ */
+header .container > .flex.justify-between {
+    gap: 0.6rem;
+}
+
+header .brand-logo {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+header :is(.mobile-language-toggle, .desktop-language-badge) {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 360px) {
+    header .brand-logo-word {
+        font-size: 1.34rem !important;   /* 21.4px, from 24.3px */
+    }
+
+    header :is(.mobile-language-toggle, .desktop-language-badge) {
+        padding-inline: 0.6rem;
+    }
+}

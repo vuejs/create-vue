@@ -15,7 +15,7 @@
     'use strict';
 
     var PROBE = 'ការព្យាបាល';               // Khmer, always present in the copy
-    var FACES = ['MedHub Khmer', 'Hanuman'];
+    var FACES = ['MedHub Khmer', 'Koh Santepheap', 'Hanuman'];
     var DISPLAY = ['MedHub Khmer Display', 'Angkor'];
 
     function faceRenders(family) {
@@ -56,7 +56,7 @@
             console.warn(
                 '[MedHub24] The approved Khmer face is NOT rendering. Khmer text is being drawn ' +
                 'by a device font and will not match the approved design. Check that ' +
-                'assets/fonts/Hanuman-Regular.ttf is deployed and served as font/ttf. ' +
+                'assets/fonts/KohSantepheap-Regular.woff2 is deployed and served as font/woff2. ' +
                 'See assets/fonts/FONTS.md.'
             );
         } else if (window.MEDHUB24_FONT_DEBUG) {

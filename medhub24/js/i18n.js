@@ -1,5 +1,15 @@
 (function () {
+    /* DEFAULT_LANGUAGE is the language index.html is AUTHORED in. It is
+       the source locale: applyTranslationNodes keys every text node
+       against it, and it is the fallback when a key is missing from the
+       other locale. It is not "the language a visitor sees" — changing
+       it would break the reverse lookup against the English markup.
+
+       INITIAL_LANGUAGE is what a first-time visitor gets. The audience
+       is Cambodian patients, so the site opens in Khmer; ?lang= and a
+       previous choice in localStorage both still win over it. */
     const DEFAULT_LANGUAGE = 'en';
+    const INITIAL_LANGUAGE = 'km';
     const STORAGE_KEY = 'medhub24.lang';
     const KHMER_DRAFT_KEY = 'medhub24.khmerDraft';
     const state = {
@@ -30,7 +40,7 @@
     }
 
     function getLanguage() {
-        return state.language || getRequestedLanguage() || readStoredLanguage() || DEFAULT_LANGUAGE;
+        return state.language || getRequestedLanguage() || readStoredLanguage() || INITIAL_LANGUAGE;
     }
 
     function getLocale(lang) {
@@ -246,6 +256,7 @@
 
     window.MEDHUB_I18N = {
         DEFAULT_LANGUAGE,
+        INITIAL_LANGUAGE,
         normalizeLanguage,
         readStoredLanguage,
         getLanguage,

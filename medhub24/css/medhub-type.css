@@ -35,36 +35,73 @@
    link in <head>), and only then to a device font.
    ------------------------------------------------------------ */
 
-/* Hanuman — the design system's Khmer body face, self-hosted.
-   Hanuman ships a single weight; 600/700 are mapped to the same file so
-   the browser never synthesises a fake bold (which smears the coeng). */
+/* Koh Santepheap — the Khmer body face, self-hosted.
+   Google Fonts' own Khmer-subset woff2 files, served from this origin
+   so Khmer cannot be replaced by a device font and does not depend on
+   a third-party CDN staying reachable from Cambodia.
+
+   Unlike Hanuman (one weight, which forced 600–900 to be mapped onto
+   the same file so the browser would not synthesise a fake bold and
+   smear the coeng), Koh Santepheap ships real weights. Hierarchy can
+   now come from weight as well as size and colour. */
 @font-face {
     font-family: 'MedHub Khmer';
-    src: url('../assets/fonts/Hanuman-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/KohSantepheap-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
+}
+
+@font-face {
+    font-family: 'MedHub Khmer';
+    src: url('../assets/fonts/KohSantepheap-Regular.woff2') format('woff2');
     font-weight: 400 500;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
 }
 
 @font-face {
     font-family: 'MedHub Khmer';
-    src: url('../assets/fonts/Hanuman-Regular.ttf') format('truetype');
-    font-weight: 600 900;
+    src: url('../assets/fonts/KohSantepheap-Bold.woff2') format('woff2');
+    font-weight: 600 700;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
 }
 
-/* Display face for hero headlines only. Angkor is single-weight;
-   font-synthesis is disabled so no browser fakes a bold. */
+@font-face {
+    font-family: 'MedHub Khmer';
+    src: url('../assets/fonts/KohSantepheap-Black.woff2') format('woff2');
+    font-weight: 800 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
+}
+
+/* Display face for hero headlines only. Angkor is a decorative face —
+   it is single-weight, wide, and unreadable at body sizes. Keep it to
+   headlines; font-synthesis is disabled so no browser fakes a bold. */
 @font-face {
     font-family: 'MedHub Khmer Display';
-    src: url('../assets/fonts/Angkor-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Angkor-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B, U+25CC;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
+}
+
+/* Hanuman stays declared from the TTF already in the repo, as the last
+   approved face before a device font. It is never chosen while the
+   Koh Santepheap files above are reachable. */
+@font-face {
+    font-family: 'Hanuman';
+    src: url('../assets/fonts/Hanuman-Regular.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
 }
 
 
@@ -78,8 +115,17 @@
     --medhub-latin-heading: 'Poppins', 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
 
     /* Khmer — approved face first, network copy second, device last */
-    --medhub-khmer-body: 'MedHub Khmer', 'Hanuman', 'Noto Sans Khmer', 'Khmer OS Battambang', sans-serif;
-    --medhub-khmer-display: 'MedHub Khmer Display', 'MedHub Khmer', 'Hanuman', sans-serif;
+    /* The Khmer faces are declared for Khmer codepoints only
+       (unicode-range), so Latin inside a Khmer page skips past them.
+       The Latin faces must therefore be named here too — without them
+       Latin fell through to the generic `sans-serif`, and the MedHub24
+       wordmark, "PNH", "24/7" and the phone numbers rendered in the
+       device font (San Francisco on iOS) whenever the site was in
+       Khmer. Khmer still resolves to the Khmer faces first. */
+    --medhub-khmer-body: 'MedHub Khmer', 'Koh Santepheap', 'Hanuman', 'Noto Sans Khmer',
+                         'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --medhub-khmer-display: 'MedHub Khmer Display', 'Angkor', 'MedHub Khmer', 'Koh Santepheap',
+                            'Poppins', 'Plus Jakarta Sans', system-ui, sans-serif;
 
     /* Khmer vertical rhythm. Khmer stacks subscript consonants
        (coeng) below the baseline and vowel signs above it, so it
