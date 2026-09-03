@@ -31,3 +31,10 @@
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
+
+# The Khmer copy editor is an internal tool. It is unlinked and entirely
+# client-side (localStorage + BroadcastChannel, no server), so it is kept
+# reachable for staff — but it must never appear in search results.
+/khmer-copy-tool.html
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: private, max-age=0, must-revalidate
