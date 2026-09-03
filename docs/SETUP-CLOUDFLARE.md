@@ -32,19 +32,28 @@ publishes to `medhub24.pages.dev`.
 **Check that URL before attaching the domain.** It should open in Khmer,
 with the language pill top-right reading `KH / EN`.
 
-## 3. Attach the domain
+## 3. Attach the domain — automatic
 
-In the project → **Custom domains** → **Set up a custom domain**.
+Nothing to click. `wrangler.jsonc` declares both hostnames as custom
+domain routes:
 
-Add both:
+```jsonc
+"routes": [
+  { "pattern": "www.medhub24.com", "custom_domain": true },
+  { "pattern": "medhub24.com",     "custom_domain": true }
+]
+```
 
-- `www.medhub24.com`
-- `medhub24.com`
+`wrangler deploy` creates the Custom Domain binding and the DNS record
+for each one, because medhub24.com is a zone in the same account. The
+build does this on every deploy and is idempotent.
 
-The zone is already in this Cloudflare account, so Pages creates the DNS
-records itself. No manual DNS entry is needed.
+If a build fails here with an authorisation error, the build's token
+lacks DNS edit permission on the zone — attach the domains once by hand
+under **Settings → Domains & Routes → Add**, and later deploys will
+match the config without needing to create anything.
 
-## 4. Pick one canonical hostname
+## 4. Pick one canonical hostname (dashboard only)
 
 Serving the same site on both the apex and `www` splits your SEO and
 looks careless in a link. Choose one — `www.medhub24.com`, per the

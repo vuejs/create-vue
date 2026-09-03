@@ -18,5 +18,15 @@
     // to a 404. medhub24/_redirects carries the same rule for the
     // legacy Pages runtime.
     "not_found_handling": "single-page-application"
-  }
+  },
+
+  // Custom domains. `wrangler deploy` creates each hostname's Custom
+  // Domain binding and the DNS record for it, because medhub24.com is a
+  // zone in this same account — so attaching the domain needs no
+  // dashboard step. This replaces whatever currently answers on these
+  // hostnames, which is the intent.
+  "routes": [
+    { "pattern": "www.medhub24.com", "custom_domain": true },
+    { "pattern": "medhub24.com", "custom_domain": true }
+  ]
 }
