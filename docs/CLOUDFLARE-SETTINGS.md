@@ -10,26 +10,33 @@ Cloudflare → **Compute (Workers & Pages)** → the **medhub24** worker →
 | Field | What to put | Why |
 |---|---|---|
 | **Branch** | **`main`** | The website is now on `main`. If Cloudflare was pointed at a branch that did not contain it, that alone would explain everything. |
-| **Root directory** | **`deploy`** | **The other one that matters.** See below. |
+| Root directory | blank **or** `deploy` | **Either works.** If unsure, leave it blank. See below. |
 | Build command | *leave empty* | The website is plain files. There is nothing to build. |
 | Deploy command | `npx wrangler deploy` | The command that publishes it. |
 
 Click **Save**, then find the most recent deployment and click
 **Retry deployment**.
 
-### Why "Root directory" matters
+### Why "Root directory" no longer matters
 
-The website is 45 plain files that need no processing at all. But they sit
-inside a copy of an unrelated tool for Vue developers, and that tool's setup
-files are at the top of the folder.
+It used to. The website is 45 plain files needing no processing, but they sit
+inside a copy of an unrelated tool for Vue developers whose setup files are at
+the top of the folder — so Cloudflare would try to install that whole toolchain
+before publishing your site, and any stumble there stopped the build.
 
-Left at the top, Cloudflare tries to install that whole developer toolchain —
-and download a separate project it refers to — before publishing your site. If
-any of that stumbles, the build stops and the site never appears.
+The publishing instructions now exist in **both** places, kept identical
+automatically, so it works either way:
 
-`deploy` is a small folder containing only the publishing instructions and
-nothing else. Point Cloudflare there and there is nothing to install, so there
-is nothing to fail.
+| Root directory | What it uses |
+|---|---|
+| blank (the default) | the instructions at the top of the folder |
+| `deploy` | the small folder containing only those instructions |
+
+The setup script that was most likely to fail has also been fixed, so the
+toolchain can no longer break the build from the top level.
+
+**Leave it blank if you are unsure.** The field that actually matters is
+**Branch**.
 
 ---
 

@@ -1,0 +1,37 @@
+{
+  // MedHub24 — static site deployed as a Cloudflare Worker with static
+  // assets. Omitting "main" makes this an assets-only Worker, which is
+  // what a static site wants.
+  //
+  // This is the ROOT config, used when Cloudflare's build Root directory
+  // is left blank (its default). deploy/wrangler.jsonc is the same
+  // configuration for when Root directory is set to `deploy`. Both exist
+  // so the deploy succeeds under either setting — which one is
+  // configured cannot be seen from the development environment.
+  //
+  // The two MUST stay equivalent: scripts/check-wrangler-configs.mjs
+  // asserts that, and runs before every deploy.
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+
+  "name": "medhub24",
+  "compatibility_date": "2026-09-01",
+
+  "assets": {
+    // Relative to this file, at the repository root. Unlike the deploy/
+    // copy, this path does not escape its own directory.
+    "directory": "./medhub24",
+
+    // Routing happens in js/app.js and never changes the URL, so any
+    // path that is not a real file resolves to the document rather than
+    // to a 404.
+    "not_found_handling": "single-page-application"
+  },
+
+  // Only the canonical hostname. `wrangler deploy` is one operation: if
+  // attaching any hostname fails, nothing publishes at all. The apex
+  // reaches the site by redirecting to www, which cannot break the
+  // publish.
+  "routes": [
+    { "pattern": "www.medhub24.com", "custom_domain": true }
+  ]
+}

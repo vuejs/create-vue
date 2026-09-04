@@ -17,6 +17,9 @@ cd "$(dirname "$0")/.."
 say() { printf '\n\033[1m%s\033[0m\n' "$*"; }
 jq_() { python3 -c "import sys,json;d=json.load(sys.stdin);$1"; }
 
+say "0/6  Checking the two wrangler configs agree"
+node "$(dirname "$0")/check-wrangler-configs.mjs" || exit 1
+
 say "1/6  Verifying the API token"
 curl "${CF[@]}" "$API/user/tokens/verify" | jq_ "
 assert d['success'], d.get('errors')
@@ -39,8 +42,9 @@ mx=[r for r in rs if r['type'] in ('MX','TXT')]
 print(f'   {len(mx)} MX/TXT records (email) — NOT touched by this deploy')"
 
 say "3/6  Deploying the site"
-# Config lives in deploy/, not the repo root — see deploy/package.json.
-npx --yes wrangler@latest deploy --config deploy/wrangler.jsonc
+# wrangler.jsonc exists at both the repo root and in deploy/, kept
+# identical by the check above, so this works from either directory.
+npx --yes wrangler@latest deploy
 
 say "4/6  Confirming the custom domains attached"
 for h in "$WWW" "$ZONE"; do

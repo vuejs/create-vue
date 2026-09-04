@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Check the two wrangler configs agree
+        run: node scripts/check-wrangler-configs.mjs
+
       - name: Deploy and verify
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
