@@ -30,13 +30,21 @@
     "not_found_handling": "single-page-application"
   },
 
-  // Custom domains. `wrangler deploy` creates each hostname's Custom
-  // Domain binding and the DNS record for it, because medhub24.com is a
-  // zone in this same account — so attaching the domain needs no
-  // dashboard step. This replaces whatever currently answers on these
-  // hostnames, which is the intent.
+  // Custom domain. `wrangler deploy` creates the Custom Domain binding
+  // and its DNS record, because medhub24.com is a zone in this same
+  // account — so attaching the domain needs no dashboard step.
+  //
+  // Only the canonical hostname is attached. `wrangler deploy` is a
+  // single operation: if attaching any hostname fails, the whole deploy
+  // fails and nothing publishes, including the hostname that would have
+  // worked. The apex is the likelier of the two to fail — a Page Rule
+  // was reported on medhub24.com, and an existing rule or record there
+  // can conflict with a Custom Domain binding — so a conflict on the
+  // hostname that is not even the primary could sink the deployment.
+  //
+  // The apex reaches the site by redirecting to www, which is a
+  // separate concern from publishing and cannot break it.
   "routes": [
-    { "pattern": "www.medhub24.com", "custom_domain": true },
-    { "pattern": "medhub24.com", "custom_domain": true }
+    { "pattern": "www.medhub24.com", "custom_domain": true }
   ]
 }

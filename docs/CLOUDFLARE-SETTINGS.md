@@ -9,10 +9,10 @@ Cloudflare → **Compute (Workers & Pages)** → the **medhub24** worker →
 
 | Field | What to put | Why |
 |---|---|---|
-| **Root directory** | **`deploy`** | **This is the one that matters.** See below. |
+| **Branch** | **`main`** | The website is now on `main`. If Cloudflare was pointed at a branch that did not contain it, that alone would explain everything. |
+| **Root directory** | **`deploy`** | **The other one that matters.** See below. |
 | Build command | *leave empty* | The website is plain files. There is nothing to build. |
 | Deploy command | `npx wrangler deploy` | The command that publishes it. |
-| Branch | `claude/cloudflare-deploy-ui-upgrade-nzfgzq` | Where the finished website lives. |
 
 Click **Save**, then find the most recent deployment and click
 **Retry deployment**.
@@ -52,6 +52,20 @@ fastest way forward.
 
 Cloudflare → the worker → **Deployments** (or **Builds**) → click the most
 recent one → scroll to the bottom → copy the red text. A screenshot is fine.
+
+---
+
+## About the two web addresses
+
+Only **www.medhub24.com** is connected to the website. The bare
+**medhub24.com** reaches it by redirecting to the www address.
+
+They are kept separate on purpose. Publishing is a single all-or-nothing
+operation: if connecting one address fails, the whole publish fails and
+*nothing* goes live — including the address that would have worked. The bare
+domain is the more likely of the two to have a conflict, and it is not your
+main address, so it is handled by a redirect instead. A problem there can no
+longer stop your website from publishing.
 
 ---
 
