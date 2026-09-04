@@ -106,3 +106,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Wrangler local state (miniflare caches from `wrangler dev --local`).
+# Machine-local scratch: never useful in the repository.
+.wrangler/
