@@ -14,7 +14,7 @@
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install || true",
     "format": "prettier --write .",
     "build": "zx ./scripts/build.mjs",
     "snapshot": "zx ./scripts/snapshot.mjs",
