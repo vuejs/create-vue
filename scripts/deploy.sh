@@ -48,6 +48,9 @@ rs=d.get('result') or []
 print('   $h:', rs[0]['hostname']+' -> '+rs[0]['service'] if rs else 'NOT ATTACHED')" || true
 done
 
+# From here on, a failed check must be reported, not abort the run.
+set +e
+
 say "5/6  Waiting for DNS + certificate"
 for i in $(seq 1 30); do
   code=$(curl -s -o /dev/null -m 10 -w '%{http_code}' "https://$WWW/" || true)
@@ -68,5 +71,25 @@ done
 echo "   opens in Khmer:"
 curl -s -m 15 "https://$WWW/" | grep -oE '<html lang="[a-z]+"' | sed 's/^/     /'
 
-say "Done. Next: set the apex redirect (see docs/SETUP-CLOUDFLARE.md section 4),"
-echo "then revoke the API token."
+say "Apex redirect"
+curl -sI -m 15 "https://$ZONE/" 2>/dev/null | grep -iE '^HTTP|^location' | sed 's/^/   /' \
+  || echo "   could not reach https://$ZONE/"
+
+say "Paths that must NOT be public"
+for path in /README.md /DEPLOY.md /assets/images/medhub24-claude-V2.zip; do
+  printf '   %-46s %s\n' "$path" "$(curl -s -o /dev/null -m 15 -w '%{http_code}' "https://$WWW$path")"
+done
+
+say "Content checks"
+html=$(curl -s -m 20 "https://$WWW/")
+echo "$html" | grep -oE '<html lang="[a-z]+"' | sed 's/^/   /' || echo "   no lang attribute"
+if echo "$html" | grep -q 'MedHub26'; then
+  echo "   FAIL: footer still says MedHub26.com"
+else
+  echo "   footer domain OK (no MedHub26)"
+fi
+printf '   staff tool noindex: '
+curl -sI -m 15 "https://$WWW/khmer-copy-tool" | grep -i '^x-robots-tag' || echo "MISSING"
+
+say "Done. Remaining manual step: none, unless a check above failed."
+echo "Remember to revoke the API token once you are satisfied."

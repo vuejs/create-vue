@@ -1,0 +1,38 @@
+name: Deploy medhub24
+
+# Runs on GitHub's runners, which have unrestricted network access to
+# Cloudflare. The development environment's egress policy denies
+# api.cloudflare.com and the site's own domain, so this is where the
+# deployment and its verification actually happen — and where their
+# output can be read back.
+on:
+  push:
+    branches: [claude/cloudflare-deploy-ui-upgrade-nzfgzq]
+    paths-ignore: ['docs/**', '**/*.md']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-medhub24
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Deploy and verify
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: f3c26a34786535542210e320b2bbaad9
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Repository secret CLOUDFLARE_API_TOKEN is not set."
+            echo "Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          ./scripts/deploy.sh
