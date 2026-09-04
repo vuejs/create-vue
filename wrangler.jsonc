@@ -15,8 +15,10 @@
 
     // Routing happens in js/app.js and never changes the URL, so any
     // path that is not a real file resolves to the document rather than
-    // to a 404. medhub24/_redirects carries the same rule for the
-    // legacy Pages runtime.
+    // to a 404. This is the only mechanism doing it: the equivalent
+    // `/* /index.html 200` rule in _redirects was rejected by the
+    // runtime as an infinite loop (the .html-stripping redirect
+    // re-triggers it), so that file has been removed.
     "not_found_handling": "single-page-application"
   },
 

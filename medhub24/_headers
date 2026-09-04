@@ -35,6 +35,13 @@
 # The Khmer copy editor is an internal tool. It is unlinked and entirely
 # client-side (localStorage + BroadcastChannel, no server), so it is kept
 # reachable for staff — but it must never appear in search results.
+# The Workers runtime strips `.html` and 307s to the extensionless path,
+# so /khmer-copy-tool is the URL a crawler actually indexes. Both forms
+# are listed: a rule on the .html path alone only ever decorates the
+# redirect, never the page.
+/khmer-copy-tool
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: private, max-age=0, must-revalidate
 /khmer-copy-tool.html
   X-Robots-Tag: noindex, nofollow
   Cache-Control: private, max-age=0, must-revalidate
