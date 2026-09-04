@@ -39,7 +39,8 @@ mx=[r for r in rs if r['type'] in ('MX','TXT')]
 print(f'   {len(mx)} MX/TXT records (email) — NOT touched by this deploy')"
 
 say "3/6  Deploying the site"
-npx --yes wrangler@latest deploy
+# Config lives in deploy/, not the repo root — see deploy/package.json.
+npx --yes wrangler@latest deploy --config deploy/wrangler.jsonc
 
 say "4/6  Confirming the custom domains attached"
 for h in "$WWW" "$ZONE"; do

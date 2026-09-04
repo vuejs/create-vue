@@ -4,14 +4,22 @@
   // a legacy Pages project, and a Worker needs this file to know what to
   // publish. There is no Worker script: omitting "main" makes this an
   // assets-only Worker, which is what a static site wants.
+  //
+  // Set Cloudflare's build Root directory to `deploy` so this is the
+  // config it finds. See deploy/package.json for why that matters.
   "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
 
   "name": "medhub24",
   "compatibility_date": "2026-09-01",
 
   "assets": {
-    // Relative to this file, which sits at the repository root.
-    "directory": "./medhub24",
+    // Relative to this file. The config lives in deploy/ rather than at
+    // the repository root so Cloudflare's build can be pointed here: this
+    // directory has no lockfile, no submodule and no toolchain, so the
+    // install step cannot drag in the create-vue devDependencies (esbuild,
+    // zx, husky, prettier) or the `playground` git submodule — none of
+    // which a 45-file static site needs to publish.
+    "directory": "../medhub24",
 
     // Routing happens in js/app.js and never changes the URL, so any
     // path that is not a real file resolves to the document rather than

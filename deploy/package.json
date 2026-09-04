@@ -1,0 +1,6 @@
+{
+  "name": "medhub24-deploy",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Deploy-only directory. Deliberately dependency-free: Cloudflare's build installs from its Root directory, and pointing that at the repository root pulled in the create-vue toolchain (esbuild, zx, husky, prettier) plus the `playground` git submodule to publish a static site that needs none of it. With Root directory set to `deploy`, the install step finds this file, has nothing to install, and cannot fail."
+}
