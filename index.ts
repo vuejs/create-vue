@@ -462,6 +462,10 @@ async function init() {
   }
   if (needsVitest) {
     render('config/vitest')
+    callbacks.push(async (dataStore) => {
+      const vitestConfigPath = path.resolve(root, 'vitest.config.js')
+      dataStore[vitestConfigPath] = { needsTypeScript }
+    })
   }
   if (needsCypress) {
     render('config/cypress')
