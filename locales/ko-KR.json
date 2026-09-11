@@ -1,0 +1,89 @@
+{
+  "projectName": {
+    "message": "프로젝트 이름 (대상 디렉터리):",
+    "invalidMessage": "비어 있으면 안 됩니다"
+  },
+  "shouldOverwrite": {
+    "dirForPrompts": {
+      "current": "현재 디렉터리",
+      "target": "대상 디렉터리"
+    },
+    "message": "이(가) 비어 있지 않습니다. 기존 파일을 삭제하고 계속하시겠습니까?"
+  },
+  "packageName": {
+    "message": "패키지 이름:",
+    "invalidMessage": "유효하지 않은 package.json 이름입니다"
+  },
+  "featureSelection": {
+    "message": "프로젝트에 포함할 기능을 선택하세요:",
+    "hint": "(↑/↓ 이동, 스페이스바로 선택, a로 전체 선택/해제, 엔터로 확인)"
+  },
+  "needsTypeScript": {
+    "message": "TypeScript를 사용하시겠습니까?"
+  },
+  "needsJsx": {
+    "message": "JSX 지원"
+  },
+  "needsRouter": {
+    "message": "Router (SPA 개발)"
+  },
+  "needsPinia": {
+    "message": "Pinia (상태 관리)"
+  },
+  "needsVitest": {
+    "message": "Vitest (단위 테스트)"
+  },
+  "needsE2eTesting": {
+    "message": "End-to-End 테스트"
+  },
+  "needsEslint": {
+    "message": "Linter (오류 방지)"
+  },
+  "needsPrettier": {
+    "message": "Prettier (코드 포맷팅)"
+  },
+  "e2eSelection": {
+    "message": "End-to-End 테스트 프레임워크를 선택하세요:",
+    "hint": "(↑/↓ 이동, 엔터로 확인)",
+    "selectOptions": {
+      "playwright": { "title": "Playwright", "desc": "https://playwright.dev/" },
+      "cypress": {
+        "title": "Cypress",
+        "desc": "https://www.cypress.io/",
+        "hintOnComponentTesting": "Cypress Component Testing을 이용한 단위 테스트도 지원합니다 - https://www.cypress.io/"
+      }
+    }
+  },
+  "needsExperimental": {
+    "message": "실험적 기능을 활성화하시겠습니까?"
+  },
+  "needsExperimentalFeatures": {
+    "message": "프로젝트에 포함할 실험적 기능을 선택하세요:",
+    "hint": "(↑/↓ 이동, 스페이스바로 선택, a로 전체 선택/해제, 엔터로 확인)"
+  },
+  "needsVueBeta": {
+    "message": "Vue 3.6 (베타)"
+  },
+  "needsOxfmt": {
+    "message": "Prettier 대신 Oxfmt 사용"
+  },
+  "needsBareboneTemplates": {
+    "message": "예제 코드를 모두 건너뛰고 빈 Vue 프로젝트로 시작하시겠습니까?"
+  },
+  "packageManagerSelection": {
+    "message": "사용할 패키지 매니저를 선택하세요:",
+    "hint": "(Vue 3.6 베타는 패키지 매니저별로 다른 버전 오버라이드가 필요합니다)"
+  },
+  "errors": {
+    "operationCancelled": "작업이 취소되었습니다"
+  },
+  "defaultToggleOptions": {
+    "active": "예",
+    "inactive": "아니오"
+  },
+  "infos": {
+    "scaffolding": "다음 위치에 프로젝트를 생성합니다:",
+    "done": "완료되었습니다. 이제 다음을 실행하세요:",
+    "optionalGitCommand": "선택 사항: 다음 명령으로 프로젝트 디렉터리에 Git을 초기화하세요:"
+  }
+}
