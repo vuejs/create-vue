@@ -174,7 +174,7 @@ async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | typeof CANCEL_SYM
     process.exit(0)
   }
 
-  return result as T
+  return result
 }
 
 const helpMessage = `\
