@@ -307,21 +307,27 @@ async function init() {
   }
 
   if (!canSkipEmptying(targetDir) && !forceOverwrite) {
-    result.shouldOverwrite = await unwrapPrompt(
-      confirm({
+    const overwrite = await unwrapPrompt(
+      select({
         message: `${
           targetDir === '.'
             ? language.shouldOverwrite.dirForPrompts.current
             : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
         } ${language.shouldOverwrite.message}`,
-        initialValue: false,
+        options: [
+          { value: 'remove', label: language.shouldOverwrite.selectOptions!.remove.title },
+          { value: 'cancel', label: language.shouldOverwrite.selectOptions!.cancel.title },
+          { value: 'ignore', label: language.shouldOverwrite.selectOptions!.ignore.title },
+        ],
       }),
     )
 
-    if (!result.shouldOverwrite) {
+    if (overwrite === 'cancel') {
       cancel(red('✖') + ` ${language.errors.operationCancelled}`)
       process.exit(0)
     }
+
+    result.shouldOverwrite = overwrite === 'remove'
   }
 
   if (!isValidPackageName(targetDir)) {

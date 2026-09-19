@@ -8,7 +8,12 @@
       "current": "当前目录",
       "target": "目标文件夹"
     },
-    "message": "非空，是否覆盖？"
+    "message": "非空，请选择如何处理：",
+    "selectOptions": {
+      "remove": { "title": "删除现有文件并继续" },
+      "cancel": { "title": "取消操作" },
+      "ignore": { "title": "忽略现有文件并继续" }
+    }
   },
   "packageName": {
     "message": "请输入包名称：",
