@@ -1,4 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>haoqunjiang/renovate-presets:npm.json5", "helpers:pinGitHubActionDigests"]
+  "extends": ["github>haoqunjiang/renovate-presets:npm.json5", "helpers:pinGitHubActionDigests"],
+  "packageRules": [
+    {
+      "description": "Update Oxlint and its ESLint plugin together",
+      "matchFileNames": ["template/linting/oxlint/package.json"],
+      "matchDepNames": ["oxlint", "eslint-plugin-oxlint"],
+      "groupName": "aligned oxlint packages",
+      "groupSingleUpdates": true,
+      "minimumGroupSize": 2
+    }
+  ]
 }

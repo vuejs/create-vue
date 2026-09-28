@@ -4,7 +4,17 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
-import { intro, outro, text, confirm, multiselect, select, isCancel, cancel } from '@clack/prompts'
+import {
+  intro,
+  outro,
+  text,
+  confirm,
+  multiselect,
+  select,
+  isCancel,
+  cancel,
+  CANCEL_SYMBOL,
+} from '@clack/prompts'
 import { red, green, cyan, bold, dim } from 'picocolors'
 
 import ejs from 'ejs'
@@ -156,13 +166,14 @@ function emptyDir(dir) {
   )
 }
 
-async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | symbol>): Promise<T> {
+async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | typeof CANCEL_SYMBOL>): Promise<T> {
   const result = await maybeCancelPromise
 
   if (isCancel(result)) {
     cancel(red('✖') + ` ${language.errors.operationCancelled}`)
     process.exit(0)
   }
+
   return result
 }
 
@@ -462,6 +473,10 @@ async function init() {
   }
   if (needsVitest) {
     render('config/vitest')
+    callbacks.push(async (dataStore) => {
+      const vitestConfigPath = path.resolve(root, 'vitest.config.js')
+      dataStore[vitestConfigPath] = { needsTypeScript }
+    })
   }
   if (needsCypress) {
     render('config/cypress')
