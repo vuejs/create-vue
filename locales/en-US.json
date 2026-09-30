@@ -8,7 +8,12 @@
       "current": "Current directory",
       "target": "Target directory"
     },
-    "message": "is not empty. Remove all existing files and continue?"
+    "message": "is not empty. Please choose how to proceed:",
+    "selectOptions": {
+      "remove": { "title": "Remove existing files and continue" },
+      "cancel": { "title": "Cancel operation" },
+      "ignore": { "title": "Ignore files and continue" }
+    }
   },
   "packageName": {
     "message": "Package name:",
