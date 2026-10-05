@@ -45,7 +45,7 @@ jobs:
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
       # Note we use the atos-actions/* version to tar/untar the files
-      - uses: atos-actions/upload-artifact@c846fabc48df7881bc3c491cd0bd73dc62f3b58b # v2
+      - uses: atos-actions/upload-artifact@685ce730470b5d45a2a700c11752d88259246909 # v2
         with:
           name: build-output
           path: |
@@ -131,7 +131,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
+      - uses: atos-actions/download-artifact@c32de2e7d033111ae599cef52f416a704108a598 # v2
         with:
           name: build-output
 
@@ -181,7 +181,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
+      - uses: atos-actions/download-artifact@c32de2e7d033111ae599cef52f416a704108a598 # v2
         with:
           name: build-output
 
@@ -292,7 +292,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
+      - uses: atos-actions/download-artifact@c32de2e7d033111ae599cef52f416a704108a598 # v2
         with:
           name: build-output
 
