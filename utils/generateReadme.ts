@@ -8,10 +8,17 @@ const sfcTypeSupportDoc = [
   '',
 ].join('\n')
 
+const tsgoEditorSupportDoc = [
+  '',
+  'This project replaces its workspace TypeScript package with [typescript-native-bridge](https://github.com/johnsoncodehk/typescript-native-bridge). Command-line tools use the bridge automatically. To use it in VS Code after installing dependencies, accept the prompt to use the workspace TypeScript version. If the prompt does not appear, run **TypeScript: Select TypeScript Version** and choose **Use Workspace Version**.',
+  '',
+].join('\n')
+
 export default function generateReadme({
   projectName,
   packageManager,
   needsTypeScript,
+  needsTsgo,
   needsCypress,
   needsCypressCT,
   needsPlaywright,
@@ -28,7 +35,7 @@ This template should help get you started developing with Vue 3 in Vite.
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
+${needsTsgo ? tsgoEditorSupportDoc : ''}
 ## Recommended Browser Setup
 
 - Chromium-based browsers (Chrome, Edge, Brave, etc.):

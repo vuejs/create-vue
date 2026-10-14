@@ -8,7 +8,12 @@
       "current": "Répertoire courant",
       "target": "Répertoire cible"
     },
-    "message": "n'est pas vide. Supprimer les fichiers existants et continuer\u00a0?"
+    "message": "n'est pas vide. Veuillez choisir comment proc\u00e9der\u00a0:",
+    "selectOptions": {
+      "remove": { "title": "Supprimer les fichiers existants et continuer" },
+      "cancel": { "title": "Annuler l'op\u00e9ration" },
+      "ignore": { "title": "Ignorer les fichiers et continuer" }
+    }
   },
   "packageName": {
     "message": "Nom du package\u00a0:",
@@ -64,6 +69,9 @@
   "needsVueRc": {
     "message": "Vue 3.6 (version candidate)"
   },
+  "needsTsgo": {
+    "message": "Remplacer TypeScript par typescript-native-bridge (tsgo)"
+  },
   "needsOxfmt": {
     "message": "Remplacer Prettier par Oxfmt"
   },
@@ -72,10 +80,13 @@
   },
   "packageManagerSelection": {
     "message": "Quel gestionnaire de paquets allez-vous utiliser\u00a0?",
-    "hint": "(La version candidate de Vue 3.6 nécessite de forcer certaines versions différemment selon le gestionnaire de paquets)"
+    "hint": "(Les fonctionnalités expérimentales sélectionnées nécessitent de forcer certaines versions différemment selon le gestionnaire de paquets)"
   },
   "errors": {
     "operationCancelled": "Operation annulée"
+  },
+  "warnings": {
+    "tsgoNubReleaseAge": "La période d’attente de 24 heures appliquée par défaut par Nub peut temporairement empêcher l’installation d’une version de typescript-native-bridge récemment publiée. En savoir plus : https://nubjs.com/docs/install#cooling-window"
   },
   "defaultToggleOptions": {
     "active": "Oui",

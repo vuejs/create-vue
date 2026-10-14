@@ -8,7 +8,12 @@
       "current": "當前資料夾",
       "target": "目標資料夾"
     },
-    "message": "非空，是否覆蓋？"
+    "message": "非空，請選擇如何處理：",
+    "selectOptions": {
+      "remove": { "title": "刪除現有檔案並繼續" },
+      "cancel": { "title": "取消操作" },
+      "ignore": { "title": "忽略現有檔案並繼續" }
+    }
   },
   "packageName": {
     "message": "請輸入套件名稱：",
@@ -64,6 +69,9 @@
   "needsVueRc": {
     "message": "Vue 3.6（發行候選版本）"
   },
+  "needsTsgo": {
+    "message": "使用 typescript-native-bridge（tsgo）替代 TypeScript"
+  },
   "needsOxfmt": {
     "message": "使用 Oxfmt 替代 Prettier"
   },
@@ -72,10 +80,13 @@
   },
   "packageManagerSelection": {
     "message": "專案將使用哪個套件管理器？",
-    "hint": "（需要根據套件管理器生成對應的 Vue 3.6 發行候選版本配置）"
+    "hint": "（所選試驗特性需要根據套件管理器使用不同的版本覆寫配置）"
   },
   "errors": {
     "operationCancelled": "操作取消"
+  },
+  "warnings": {
+    "tsgoNubReleaseAge": "Nub 預設的 24 小時發布冷卻期可能會暫時阻止安裝剛發布的 typescript-native-bridge 版本。瞭解詳情：https://nubjs.com/docs/install#cooling-window"
   },
   "defaultToggleOptions": {
     "active": "是",

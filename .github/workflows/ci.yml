@@ -19,13 +19,14 @@ permissions:
 
 jobs:
   build:
+    if: github.repository == 'vuejs/create-vue'
     runs-on: ubuntu-latest
     name: Build the package
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 24
@@ -34,6 +35,7 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
           CHROMEDRIVER_SKIP_DOWNLOAD: true
+      - run: pnpm peers check
       - run: pnpm build
       - run: pnpm format-check
       - run: pnpm test:unit
@@ -43,7 +45,7 @@ jobs:
       # Use artifact to share the output across different jobs
       # No need to save node_modules because they are all bundled
       # Note we use the atos-actions/* version to tar/untar the files
-      - uses: atos-actions/upload-artifact@b4bda764a71a0c1ceff250a5a75a881085541b4f # v2
+      - uses: atos-actions/upload-artifact@c846fabc48df7881bc3c491cd0bd73dc62f3b58b # v2
         with:
           name: build-output
           path: |
@@ -56,6 +58,7 @@ jobs:
   # ====================
   verify-scripts:
     needs: build
+    if: github.repository == 'vuejs/create-vue'
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -89,7 +92,7 @@ jobs:
               build
           # ----- Vitest -----
           - name: 'test:unit (vitest)'
-            run: pnpm --filter '*vitest*' test:unit
+            run: node ../scripts/run-without-warnings.mjs pnpm --filter '*vitest*' exec vitest --run
           # ----- ESLint -----
           - name: 'lint:oxlint'
             run: pnpm --filter '*eslint*' lint:oxlint --max-warnings=0 -A no-empty-file
@@ -115,10 +118,10 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       CHROMEDRIVER_SKIP_DOWNLOAD: true
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: ${{ matrix.node-version }}
@@ -128,7 +131,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@4f03ef0088aa7cc100d3406f10a39dcb830c3e74 # v2
+      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
         with:
           name: build-output
 
@@ -152,6 +155,7 @@ jobs:
   # Ubuntu E2E - runs on every push/PR
   verify-e2e:
     needs: build
+    if: github.repository == 'vuejs/create-vue'
     strategy:
       matrix:
         e2e-framework: [cypress, playwright]
@@ -164,10 +168,10 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: ${{ matrix.node-version }}
@@ -177,7 +181,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@4f03ef0088aa7cc100d3406f10a39dcb830c3e74 # v2
+      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
         with:
           name: build-output
 
@@ -256,7 +260,7 @@ jobs:
   # Windows/macOS E2E - only runs on main branch (slow, less critical for PRs)
   verify-e2e-cross-platform:
     needs: build
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    if: github.repository == 'vuejs/create-vue' && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     strategy:
       matrix:
         e2e-framework: [cypress, playwright]
@@ -275,10 +279,10 @@ jobs:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright-bin
       CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress-bin
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           submodules: true
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: ${{ matrix.node-version }}
@@ -288,7 +292,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@4f03ef0088aa7cc100d3406f10a39dcb830c3e74 # v2
+      - uses: atos-actions/download-artifact@53b502b174d1bfccdd916c46162114378a5066c3 # v2
         with:
           name: build-output
 
