@@ -10,16 +10,14 @@ allowBuilds:
   esbuild: false
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 5.0.1
   vite-plus: latest
 dedupePeers: true
+# Keep template dependencies independent of the root Vite+ toolchain.
+resolvePeersFromWorkspaceRoot: false
 overrides:
   vite: 'catalog:'
-  vitest: 'catalog:'
 peerDependencyRules:
   allowAny:
     - vite
-    - vitest
   allowedVersions:
     vite: '*'
-    vitest: '*'
