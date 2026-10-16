@@ -332,15 +332,18 @@ async function init() {
     result.shouldOverwrite = overwrite === 'remove'
   }
 
-  if (!isValidPackageName(targetDir)) {
+  const defaultPackageName = targetDir === '.' ? path.basename(cwd) : targetDir
+  if (!isValidPackageName(defaultPackageName)) {
     result.packageName = await unwrapPrompt(
       text({
         message: language.packageName.message,
-        initialValue: toValidPackageName(targetDir),
+        initialValue: toValidPackageName(defaultPackageName),
         validate: (value) =>
           isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
       }),
     )
+  } else {
+    result.packageName = defaultPackageName
   }
 
   if (!isFeatureFlagsUsed) {
