@@ -13,6 +13,7 @@ import {
   select,
   isCancel,
   cancel,
+  log,
   CANCEL_SYMBOL,
 } from '@clack/prompts'
 import { red, green, cyan, bold, dim } from 'picocolors'
@@ -291,6 +292,7 @@ async function init() {
       ? banners.gradientBanner
       : banners.defaultBanner,
   )
+  log.message(dim(`${cliPackageJson.name} v${cliPackageJson.version}`), { spacing: 0 })
 
   if (!targetDir) {
     const _result = await unwrapPrompt(
