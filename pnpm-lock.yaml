@@ -189,8 +189,8 @@ importers:
         specifier: ^0.9.1
         version: 0.9.1(typescript@6.0.3)(vue@3.5.44)
       ejs:
-        specifier: ^6.0.1
-        version: 6.0.1
+        specifier: ^7.0.2
+        version: 7.0.2
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -277,7 +277,7 @@ importers:
         version: 3.5.44(typescript@6.0.3)
       vue-router:
         specifier: ^5.4.0
-        version: 5.4.0(@vue/compiler-sfc@3.5.44)(pinia@4.1.0)(rolldown@1.2.14)(rollup@4.64.10)(vue@3.5.44)
+        version: 5.4.0(@vue/compiler-sfc@3.5.44)(pinia@4.1.0)(rolldown@1.2.14)(rollup@4.64.10)(typescript@6.0.3)(vue@3.5.44)
 
   template/config/typescript:
     devDependencies:
@@ -2179,8 +2179,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  ejs@6.0.1:
-    resolution: {integrity: sha512-UaaM14yby8U3k02ihS1Bmj5Kz2d7CCQM1scxpgs4Mhkq8F1wR2gl3+Ts4h5Ne4Mnt7M9m4Dw7jsuMr3+xO4vZA==}
+  ejs@7.0.2:
+    resolution: {integrity: sha512-LcDSEP6Oclb9sTiSyG0MpG0RuKvLDRxCOOt+2sIk+kdk1rMkFU8SRnT0qaNt5zvU0LOV1YXXOvIoZL/sKwabvw==}
     engines: {node: '>=0.12.18'}
     hasBin: true
 
@@ -5413,7 +5413,7 @@ snapshots:
       minimatch: 10.2.6
       semver: 7.8.5
 
-  ejs@6.0.1: {}
+  ejs@7.0.2: {}
 
   electron-to-chromium@1.5.459: {}
 
@@ -6707,7 +6707,7 @@ snapshots:
       pathe: 2.0.3
       picomatch: 4.0.7
 
-  unplugin@3.4.0(rolldown@1.2.14)(rollup@4.64.10):
+  unplugin@3.4.0(rolldown@1.2.14)(rollup@4.64.10)(typescript@6.0.3):
     dependencies:
       '@jridgewell/remapping': 2.3.5
       picomatch: 4.0.7
@@ -6931,7 +6931,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-router@5.4.0(@vue/compiler-sfc@3.5.44)(pinia@4.1.0)(rolldown@1.2.14)(rollup@4.64.10)(vue@3.5.44):
+  vue-router@5.4.0(@vue/compiler-sfc@3.5.44)(pinia@4.1.0)(rolldown@1.2.14)(rollup@4.64.10)(typescript@6.0.3)(vue@3.5.44):
     dependencies:
       '@vue-macros/common': 3.1.4(vue@3.5.44)
       '@vue/devtools-api': 8.2.1
@@ -6947,7 +6947,7 @@ snapshots:
       picomatch: 4.0.7
       scule: 1.3.0
       tinyglobby: 0.2.17
-      unplugin: 3.4.0(rolldown@1.2.14)(rollup@4.64.10)
+      unplugin: 3.4.0(rolldown@1.2.14)(rollup@4.64.10)(typescript@6.0.3)
       unplugin-utils: 0.3.2
       vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@24.19.2)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.13)'
       vue: 3.5.44(typescript@6.0.3)
