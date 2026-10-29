@@ -131,7 +131,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@059cd37f96523a1611d6475ff4a05c191541eb52 # v2
+      - uses: atos-actions/download-artifact@d4cffd050fb791e934de9d92a81170f669691031 # v2
         with:
           name: build-output
 
@@ -181,7 +181,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@059cd37f96523a1611d6475ff4a05c191541eb52 # v2
+      - uses: atos-actions/download-artifact@d4cffd050fb791e934de9d92a81170f669691031 # v2
         with:
           name: build-output
 
@@ -292,7 +292,7 @@ jobs:
         run: >-
           node -e "require('fs').rmSync('./playground', { recursive: true, force: true })"
 
-      - uses: atos-actions/download-artifact@059cd37f96523a1611d6475ff4a05c191541eb52 # v2
+      - uses: atos-actions/download-artifact@d4cffd050fb791e934de9d92a81170f669691031 # v2
         with:
           name: build-output
 
