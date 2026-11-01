@@ -33,6 +33,7 @@ import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 import applyOverrides from './utils/applyOverrides'
+import applyVitePlus from './utils/vitePlus'
 import {
   inferPackageManager,
   getPackageManagerOptions,
@@ -66,6 +67,7 @@ const FEATURE_FLAGS = [
   // Kept as a compatibility alias for the former Vue 3.6 beta feature.
   'vue-beta',
   'tsgo',
+  'vite-plus',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -110,6 +112,10 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
     value: 'tsgo',
     label: language.needsTsgo.message,
+  },
+  {
+    value: 'vite-plus',
+    label: language.needsVitePlus.message,
   },
 ] as const
 
@@ -223,6 +229,10 @@ Available feature flags:
   --tsgo
     Add TypeScript support using typescript-native-bridge (tsgo).
     Requires specifying a package manager in interactive mode.
+  --vite-plus
+    Use Vite+ (vp) as the unified toolchain, bundling Vite, Vitest, Oxlint
+    and Oxfmt into a single dependency. Requires specifying a package manager
+    in interactive mode.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -398,10 +408,11 @@ async function init() {
       }),
     )
 
-    // Ask for package manager if Vue 3.6 RC or tsgo is selected (needed for correct overrides)
+    // Ask for package manager if Vue 3.6 RC, tsgo or Vite+ is selected (needed for correct overrides)
     if (
       result.experimentFeatures.includes('vue-rc') ||
-      result.experimentFeatures.includes('tsgo')
+      result.experimentFeatures.includes('tsgo') ||
+      result.experimentFeatures.includes('vite-plus')
     ) {
       const packageManagerOptions = getPackageManagerOptions(inferredPackageManager).map((pm) => ({
         value: pm,
@@ -443,6 +454,7 @@ async function init() {
   const needsVueRc = experimentFeatures.includes('vue-rc') || argv['vue-rc'] || argv['vue-beta']
   // tsgo replaces the `typescript` package, so it only makes sense with TypeScript enabled
   const needsTsgo = needsTypeScript && (experimentFeatures.includes('tsgo') || argv.tsgo)
+  const needsVitePlus = experimentFeatures.includes('vite-plus') || argv['vite-plus']
 
   const { e2eFramework } = result
   const needsCypress =
@@ -486,8 +498,13 @@ async function init() {
     render('config/vitest')
     callbacks.push(async (dataStore) => {
       const vitestConfigPath = path.resolve(root, 'vitest.config.js')
-      dataStore[vitestConfigPath] = { needsTypeScript }
+      dataStore[vitestConfigPath] = { needsTypeScript, needsVitePlus }
+      const specPath = path.resolve(root, 'src/components/__tests__/HelloWorld.spec.js')
+      dataStore[specPath] = { needsVitePlus }
     })
+  }
+  if (needsVitePlus) {
+    render('config/vite-plus')
   }
   if (needsCypress) {
     render('config/cypress')
@@ -607,6 +624,27 @@ async function init() {
     render('entry/default')
   }
 
+  // Render barebone templates before the EJS pass, so that `.ejs` files
+  // they contribute (e.g. the bare Vitest spec) are rendered as well.
+  if (needsBareboneTemplates) {
+    trimBoilerplate(root)
+    render('bare/base')
+    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
+    if (needsTypeScript) {
+      render('bare/typescript')
+    }
+    if (needsVitest) {
+      render('bare/vitest')
+      callbacks.push(async (dataStore) => {
+        const specPath = path.resolve(root, 'src/__tests__/App.spec.js')
+        dataStore[specPath] = { needsVitePlus }
+      })
+    }
+    if (needsCypressCT) {
+      render('bare/cypress-ct')
+    }
+  }
+
   // An external data store for callbacks to share data
   const dataStore = {}
   // Process callbacks
@@ -629,21 +667,6 @@ async function init() {
       }
     },
   )
-
-  if (needsBareboneTemplates) {
-    trimBoilerplate(root)
-    render('bare/base')
-    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
-    if (needsTypeScript) {
-      render('bare/typescript')
-    }
-    if (needsVitest) {
-      render('bare/vitest')
-    }
-    if (needsCypressCT) {
-      render('bare/cypress-ct')
-    }
-  }
 
   // Cleanup.
 
@@ -704,11 +727,18 @@ async function init() {
   // Use the package manager selected by user for the version overrides, or inferred from user agent
   const packageManager = result.packageManager ?? inferredPackageManager
 
-  // Apply version overrides for experimental features (Vue 3.6 RC, tsgo) if enabled
-  if (needsVueRc || needsTsgo) {
+  // Apply version overrides for experimental features (Vue 3.6 RC, tsgo, Vite+) if enabled
+  if (needsVueRc || needsTsgo || needsVitePlus) {
     const pkgPath = path.resolve(root, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-    applyOverrides(root, packageManager, pkg, { vueRc: needsVueRc, tsgo: needsTsgo })
+    if (needsVitePlus) {
+      applyVitePlus(pkg, { needsTypeScript, needsVitest, needsEslint, needsOxfmt })
+    }
+    applyOverrides(root, packageManager, pkg, {
+      vueRc: needsVueRc,
+      tsgo: needsTsgo,
+      vitePlus: needsVitePlus,
+    })
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
   }
 
