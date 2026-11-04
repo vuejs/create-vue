@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { mergeConfig, defineConfig, configDefaults } from 'vitest/config'
+import { mergeConfig, defineConfig, configDefaults } from '<%- needsVitePlus ? "vite-plus" : "vitest/config" %>'
 import viteConfig from './vite.config.<%= needsTypeScript ? 'ts' : 'js' %>'
 
 export default mergeConfig(

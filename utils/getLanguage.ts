@@ -41,6 +41,7 @@ interface Language {
   needsVueRc: LanguageItem
   needsTsgo: LanguageItem
   needsOxfmt: LanguageItem
+  needsVitePlus: LanguageItem
   needsBareboneTemplates: LanguageItem
   packageManagerSelection: LanguageItem
   errors: {
