@@ -252,7 +252,7 @@ function formatReleaseInfo() {
       dateStyle: 'medium',
       timeZone: 'UTC',
     }).format(date)
-    return messages.infos.updated.replace('{date}', `${formattedDate} (UTC)`)
+    return messages.infos.released.replace('{date}', `${formattedDate} (UTC)`)
   } catch {
     // Some runtimes ship without locale-aware date formatting.
     return versionInfo

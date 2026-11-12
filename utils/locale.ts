@@ -54,7 +54,7 @@ interface Messages {
     inactive: string
   }
   infos: {
-    updated: string
+    released: string
     scaffolding: string
     done: string
     optionalGitCommand: string
