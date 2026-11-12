@@ -42,6 +42,7 @@ import { resolveNeedsTypeScript } from './utils/resolveFeatures'
 
 import cliPackageJson from './package.json' with { type: 'json' }
 
+const versionInfo = `${cliPackageJson.name} v${cliPackageJson.version}`
 const locale = detectLocale()
 const messages = await loadMessages(fileURLToPath(new URL('./locales', import.meta.url)), locale)
 
@@ -237,16 +238,25 @@ Deprecated feature flags:
     Oxlint is now always included when ESLint is selected.
 `
 
-function formatReleaseInfo(pkg: { name: string; version: string; releasedAt?: string }) {
-  if (pkg.releasedAt) {
-    try {
-      const date = new Date(pkg.releasedAt).toLocaleDateString(locale, { dateStyle: 'medium' })
-      return messages.infos.updated.replace('{date}', date)
-    } catch {
-      // Some runtimes ship without locale-aware date formatting.
-    }
+function formatReleaseInfo() {
+  const match = /^\d+\.(\d{4})(\d{2})(\d{2})\./.exec(cliPackageJson.version)
+  if (!match) return versionInfo
+
+  const [, year, month, day] = match
+  const date = new Date(`${year}-${month}-${day}`)
+  // Explicit versions can have an eight-digit minor that isn't a calendar date.
+  if (date.getUTCDate() !== Number(day)) return versionInfo
+
+  try {
+    const formattedDate = new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    }).format(date)
+    return messages.infos.updated.replace('{date}', `${formattedDate} (UTC)`)
+  } catch {
+    // Some runtimes ship without locale-aware date formatting.
+    return versionInfo
   }
-  return `${pkg.name} v${pkg.version}`
 }
 
 async function init() {
@@ -273,7 +283,7 @@ async function init() {
   }
 
   if (argv.version) {
-    console.log(`${cliPackageJson.name} v${cliPackageJson.version}`)
+    console.log(versionInfo)
     process.exit(0)
   }
 
@@ -305,7 +315,7 @@ async function init() {
       ? banners.gradientBanner
       : banners.defaultBanner,
   )
-  log.message(dim(formatReleaseInfo(cliPackageJson)), { spacing: 0 })
+  log.message(dim(formatReleaseInfo()), { spacing: 0 })
 
   if (!targetDir) {
     const _result = await unwrapPrompt(

@@ -17,14 +17,10 @@ await runReleasePreflight()
 
 $.verbose = true
 const { version: currentVersion } = await fs.readJson(packageJsonPath)
-const releasedAt = new Date()
-const targetVersion = explicitVersion ?? nextReleaseVersion(currentVersion, releasedAt)
+const targetVersion = explicitVersion ?? nextReleaseVersion(currentVersion, new Date())
 await $`pnpm version --no-git-checks --no-git-tag-version ${targetVersion}`
 
-const releasePackage = await fs.readJson(packageJsonPath)
-releasePackage.releasedAt = releasedAt.toISOString()
-await fs.writeJson(packageJsonPath, releasePackage, { spaces: 2 })
-const { version } = releasePackage
+const { version } = await fs.readJson(packageJsonPath)
 const tagName = `v${version}`
 
 await $`pnpm build`
