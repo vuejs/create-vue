@@ -381,7 +381,6 @@ async function init() {
     result.features = await unwrapPrompt(
       multiselect({
         message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
-        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
         options: featureOptions,
         required: false,
       }),
