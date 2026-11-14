@@ -63,6 +63,15 @@ export default function applyVitePlus(
     preview: 'vp preview',
     ...(needsVitest ? { 'test:unit': 'vp test' } : {}),
     lint: 'vp lint . --fix',
-    format: 'vp fmt src/',
+    // Oxfmt handles non-JS files too, so it isn't scoped to `src/`
+    format: 'vp fmt',
+    // Type checking is off in the lint config (`typeCheck: false`), so
+    // TypeScript projects still need `vue-tsc` here
+    check: needsTypeScript ? 'vp check && vue-tsc --build' : 'vp check',
+  }
+
+  // Cypress' dev-mode e2e script invokes `vite dev` directly
+  if (typeof pkg.scripts['test:e2e:dev'] === 'string') {
+    pkg.scripts['test:e2e:dev'] = pkg.scripts['test:e2e:dev'].replace(/\bvite dev\b/, 'vp dev')
   }
 }

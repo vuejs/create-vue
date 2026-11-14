@@ -37,7 +37,8 @@ describe('applyVitePlus', () => {
       preview: 'vp preview',
       'test:unit': 'vp test',
       lint: 'vp lint . --fix',
-      format: 'vp fmt src/',
+      format: 'vp fmt',
+      check: 'vp check',
     })
     expect(pkg.devDependencies).toStrictEqual({
       vite: 'npm:@voidzero-dev/vite-plus-core@^1.6.0',
@@ -53,6 +54,7 @@ describe('applyVitePlus', () => {
 
     expect(pkg.scripts.build).toBe('run-p type-check "build-only {@}" --')
     expect(pkg.scripts['build-only']).toBe('vp build')
+    expect(pkg.scripts.check).toBe('vp check && vue-tsc --build')
   })
 
   it('always adds lint and format scripts, even without Vitest', () => {
@@ -67,8 +69,21 @@ describe('applyVitePlus', () => {
       'build-only': 'vp build',
       preview: 'vp preview',
       lint: 'vp lint . --fix',
-      format: 'vp fmt src/',
+      format: 'vp fmt',
+      check: 'vp check',
     })
+  })
+
+  it('rewrites Cypress e2e scripts that call `vite dev` directly', () => {
+    const pkg = createPackageJson()
+    pkg.scripts['test:e2e:dev'] =
+      "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'"
+
+    applyVitePlus(pkg, {})
+
+    expect(pkg.scripts['test:e2e:dev']).toBe(
+      "start-server-and-test 'vp dev --port 4173' http://localhost:4173 'cypress open --e2e'",
+    )
   })
 })
 

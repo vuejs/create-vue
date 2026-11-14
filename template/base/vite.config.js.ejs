@@ -38,6 +38,12 @@ export default defineConfig({
     categories: {
       correctness: 'error',
     },
+    // Type information powers Oxlint's type-aware rules, while actual
+    // type checking stays with `vue-tsc` (see the `check` script).
+    options: {
+      typeAware: true,
+      typeCheck: false,
+    },
   },
   fmt: {
     semi: false,
