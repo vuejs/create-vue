@@ -200,9 +200,9 @@ importers:
       rollup-plugin-license:
         specifier: ^3.7.2
         version: 3.7.2(picomatch@4.0.7)(rollup@4.68.2)
-      semver:
-        specifier: ^7.8.6
-        version: 7.8.6
+      verkit:
+        specifier: ^0.5.0
+        version: 0.5.0
       vite-plus:
         specifier: 'catalog:'
         version: 1.5.1(@types/node@24.19.2)(@vitest/ui@5.1.0)(@volar/typescript@2.4.30)(@vue/language-core@3.3.14)(jiti@2.7.0)(jsdom@31.0.0)(playwright@1.65.0)(typescript@6.0.3)(vue-tsc@3.3.14)
@@ -3809,6 +3809,10 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  verkit@0.5.0:
+    resolution: {integrity: sha512-u4J1hr6Y+C/hit34GwL3eIcUf3wngT8TlYUjK7tk0jxydKLAq3sYvifjdTDA6U3KCKRcQCQDGf/srjxfZF3l7g==}
+    engines: {node: '>=18.12.0'}
+
   verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
 
@@ -7155,6 +7159,8 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
+
+  verkit@0.5.0: {}
 
   verror@1.10.0:
     dependencies:

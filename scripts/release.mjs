@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 import 'zx/globals'
-import semver from 'semver'
+import { isValid } from 'verkit'
 import { runReleasePreflight } from './release-preflight.mjs'
 import { nextReleaseVersion } from './release-version.mjs'
 
@@ -9,7 +9,7 @@ const projectRoot = path.resolve(__dirname, '../')
 const playgroundDir = path.resolve(projectRoot, 'playground/')
 const packageJsonPath = path.resolve(projectRoot, 'package.json')
 
-if (extraArgs.length || (explicitVersion !== undefined && !semver.valid(explicitVersion))) {
+if (extraArgs.length || (explicitVersion !== undefined && !isValid(explicitVersion))) {
   throw new Error('Usage: pnpm release [x.y.z]')
 }
 

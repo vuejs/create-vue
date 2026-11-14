@@ -1,7 +1,7 @@
-import semver from 'semver'
+import { increment, parse } from 'verkit'
 
 export function nextReleaseVersion(currentVersion, releasedAt) {
-  const current = new semver.SemVer(currentVersion)
+  const current = parse(currentVersion)
   const utcDate = Number(releasedAt.toISOString().slice(0, 10).replaceAll('-', ''))
 
   if (current.minor > utcDate) {
@@ -11,7 +11,7 @@ export function nextReleaseVersion(currentVersion, releasedAt) {
   }
   if (current.minor === utcDate) {
     // A patch bump also promotes a prerelease to its stable version.
-    return current.inc('patch').version
+    return increment(current, 'patch')
   }
   return `${current.major}.${utcDate}.0`
 }
