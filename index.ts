@@ -33,7 +33,7 @@ import getCommand from './utils/getCommand'
 import getLanguage from './utils/getLanguage'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 import applyOverrides from './utils/applyOverrides'
-import applyVitePlus from './utils/vitePlus'
+import applyVitePlus, { isLaunchedByVitePlus, isVitePlusInstalled } from './utils/vitePlus'
 import {
   inferPackageManager,
   getPackageManagerOptions,
@@ -44,6 +44,15 @@ import { resolveNeedsTypeScript } from './utils/resolveFeatures'
 import cliPackageJson from './package.json' with { type: 'json' }
 
 const language = await getLanguage(fileURLToPath(new URL('./locales', import.meta.url)))
+
+// Vite+ (>= 1.6.0) sets `VP_USER_AGENT` when `vp create` spawns this CLI.
+// In that case Vite+ is implied, so the other prompts still run but the
+// Vite+ / linter / formatter entries are hidden.
+const launchedByVitePlus = isLaunchedByVitePlus()
+// Otherwise only offer Vite+ in the prompts when a global `vp` binary is
+// available; users without Vite+ installed should see no change in the
+// prompts. (The explicit `--vite-plus` flag works regardless.)
+const shouldOfferVitePlus = !launchedByVitePlus && isVitePlusInstalled()
 
 const FEATURE_FLAGS = [
   'default',
@@ -364,11 +373,16 @@ async function init() {
       }),
     )
 
+    // When spawned by `vp create`, Vite+ provides linting and formatting, so
+    // the ESLint / Prettier entries are hidden altogether.
+    const featureOptions = launchedByVitePlus
+      ? FEATURE_OPTIONS.filter(({ value }) => value !== 'eslint' && value !== 'prettier')
+      : FEATURE_OPTIONS
     result.features = await unwrapPrompt(
       multiselect({
         message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
         // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
-        options: FEATURE_OPTIONS,
+        options: featureOptions,
         required: false,
       }),
     )
@@ -395,14 +409,25 @@ async function init() {
         }),
       )
     }
-    // tsgo replaces TypeScript, so it's only offered when TypeScript is enabled
-    const experimentalFeatureOptions = result.needsTypeScript
-      ? EXPERIMENTAL_FEATURE_OPTIONS
-      : EXPERIMENTAL_FEATURE_OPTIONS.filter(({ value }) => value !== 'tsgo')
+    const experimentalFeatureOptions = EXPERIMENTAL_FEATURE_OPTIONS.filter(({ value }) => {
+      // tsgo replaces TypeScript, so it's only offered when TypeScript is enabled
+      if (value === 'tsgo') {
+        return result.needsTypeScript
+      }
+      // Vite+ is only offered when a `vp` binary is installed (and is hidden
+      // when spawned by `vp create`, where it is implied)
+      if (value === 'vite-plus') {
+        return shouldOfferVitePlus
+      }
+      // Oxfmt is implied by Vite+ when spawned by `vp create`
+      if (value === 'oxfmt') {
+        return !launchedByVitePlus
+      }
+      return true
+    })
     result.experimentFeatures = await unwrapPrompt(
       multiselect({
         message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
-        // @ts-expect-error @clack/prompt's type doesn't support readonly array yet
         options: experimentalFeatureOptions,
         required: false,
       }),
@@ -447,14 +472,35 @@ async function init() {
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
   const needsVitest = argv.vitest || argv.tests || argv['with-tests'] || features.includes('vitest')
-  const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
-  const needsPrettier =
-    argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
-  const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
+  let needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
+  let needsPrettier = argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  let needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsVueRc = experimentFeatures.includes('vue-rc') || argv['vue-rc'] || argv['vue-beta']
   // tsgo replaces the `typescript` package, so it only makes sense with TypeScript enabled
   const needsTsgo = needsTypeScript && (experimentFeatures.includes('tsgo') || argv.tsgo)
-  const needsVitePlus = experimentFeatures.includes('vite-plus') || argv['vite-plus']
+  const needsVitePlus =
+    launchedByVitePlus || experimentFeatures.includes('vite-plus') || argv['vite-plus']
+
+  if (needsVitePlus) {
+    // `vp lint` is Oxlint-only and `vp fmt` is Oxfmt, so ESLint, Prettier and
+    // the standalone Oxfmt template are dropped on this path.
+    const conflictingFlags = (
+      ['eslint', 'eslint-with-prettier', 'prettier', 'oxfmt'] as const
+    ).filter((flag) => argv[flag])
+    if (conflictingFlags.length > 0) {
+      log.warn(
+        `${language.warnings.vitePlusIgnoresFlags} ${conflictingFlags
+          .map((flag) => `--${flag}`)
+          .join(', ')}`,
+      )
+    } else if (needsEslint || needsPrettier || needsOxfmt) {
+      // Selected in the prompts, before Vite+ was chosen.
+      log.info(language.infos.vitePlusReplacesLintFormat)
+    }
+    needsEslint = false
+    needsPrettier = false
+    needsOxfmt = false
+  }
 
   const { e2eFramework } = result
   const needsCypress =
@@ -483,6 +529,17 @@ async function init() {
   }
   // Render base template
   render('base')
+  callbacks.push(async (dataStore) => {
+    // Feature flags for the `vite.config` EJS template. Runs after the
+    // template's own `.data.mjs` callback, so the plugin data is preserved.
+    const viteConfigPath = path.resolve(root, 'vite.config.js')
+    dataStore[viteConfigPath] = {
+      ...dataStore[viteConfigPath],
+      needsTypeScript,
+      needsVitePlus,
+      needsVitest,
+    }
+  })
 
   // Add configs.
   if (needsJsx) {
@@ -497,11 +554,19 @@ async function init() {
   if (needsVitest) {
     render('config/vitest')
     callbacks.push(async (dataStore) => {
-      const vitestConfigPath = path.resolve(root, 'vitest.config.js')
-      dataStore[vitestConfigPath] = { needsTypeScript, needsVitePlus }
       const specPath = path.resolve(root, 'src/components/__tests__/HelloWorld.spec.js')
       dataStore[specPath] = { needsVitePlus }
     })
+    if (needsVitePlus) {
+      // Vite+ recommends against a separate `vitest.config.*`; unit tests are
+      // configured in the `test` block of `vite.config` instead.
+      fs.rmSync(path.resolve(root, 'vitest.config.js.ejs'))
+    } else {
+      callbacks.push(async (dataStore) => {
+        const vitestConfigPath = path.resolve(root, 'vitest.config.js')
+        dataStore[vitestConfigPath] = { needsTypeScript }
+      })
+    }
   }
   if (needsVitePlus) {
     render('config/vite-plus')
@@ -732,7 +797,7 @@ async function init() {
     const pkgPath = path.resolve(root, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     if (needsVitePlus) {
-      applyVitePlus(pkg, { needsTypeScript, needsVitest, needsEslint, needsOxfmt })
+      applyVitePlus(pkg, { needsTypeScript, needsVitest })
     }
     applyOverrides(root, packageManager, pkg, {
       vueRc: needsVueRc,
@@ -764,7 +829,7 @@ async function init() {
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
-  if (needsPrettier || needsOxfmt) {
+  if (needsPrettier || needsOxfmt || needsVitePlus) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`

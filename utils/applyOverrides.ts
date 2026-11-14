@@ -26,11 +26,6 @@ const CORE_VUE_PACKAGES = [
 // and tsserver plugins keep working.
 const TSGO_SPEC = 'npm:typescript-native-bridge@latest'
 
-// Vite+ bundles its own Vite core. Aliasing the `vite` dependency to it keeps a
-// single copy in the dependency tree, shared with `vite-plus` itself and with
-// the peer dependencies of plugins like `@vitejs/plugin-vue`.
-const VITE_PLUS_CORE_SPEC = 'npm:@voidzero-dev/vite-plus-core@^1.4.0'
-
 export type OverrideFeatures = {
   vueRc?: boolean
   tsgo?: boolean
@@ -59,11 +54,11 @@ export default function applyOverrides(
     }
   }
 
-  if (vitePlus && pkg.devDependencies?.vite) {
-    // Point the direct `vite` dependency at the Vite+ core for every package
-    // manager, so the manifests stay honest about what is actually resolved.
-    pkg.devDependencies.vite = VITE_PLUS_CORE_SPEC
-  }
+  // Vite+ bundles its own Vite core. The `config/vite-plus` template aliases
+  // the direct `vite` dependency to it (next to `vite-plus` in the template
+  // manifest, so Renovate keeps both up to date); here we only need to
+  // propagate that alias to transitive `vite` dependencies.
+  const vitePlusCoreSpec = vitePlus ? pkg.devDependencies?.vite : undefined
 
   if (packageManager === 'npm' || packageManager === 'bun') {
     // https://github.com/npm/rfcs/blob/main/accepted/0036-overrides.md
@@ -91,7 +86,7 @@ export default function applyOverrides(
       }
     }
 
-    if (vitePlus) {
+    if (vitePlusCoreSpec) {
       // The direct `vite` dependency already carries the alias, so the override
       // references it via "$vite" to keep both in sync (same trick as tsgo above).
       pkg.overrides = {
@@ -104,8 +99,8 @@ export default function applyOverrides(
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
     }
-    if (vitePlus) {
-      overrides['vite'] = VITE_PLUS_CORE_SPEC
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
     }
     pkg.resolutions = {
       ...pkg.resolutions,
@@ -117,8 +112,8 @@ export default function applyOverrides(
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
     }
-    if (vitePlus) {
-      overrides['vite'] = VITE_PLUS_CORE_SPEC
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
     }
     let yamlContent = `overrides:
 ${Object.entries(overrides)
@@ -155,8 +150,8 @@ ${peerDependencyRules.join('')}`
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
     }
-    if (vitePlus) {
-      overrides['vite'] = VITE_PLUS_CORE_SPEC
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
     }
     pkg.overrides = {
       ...pkg.overrides,

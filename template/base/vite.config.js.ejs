@@ -1,6 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
 
+<%_ if (needsVitePlus) { _%>
+import { defineConfig<% if (needsVitest) { %>, configDefaults<% } %> } from 'vite-plus'
+<%_ } else { _%>
 import { defineConfig } from 'vite'
+<%_ } _%>
 <%_ for (const { importer } of plugins) { _%>
 <%- importer %>
 <%_ } _%>
@@ -17,4 +21,27 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+<%_ if (needsVitePlus) { _%>
+  // Vite+ recommends against separate `vitest.config.*` / `.oxlintrc.json` /
+  // `.oxfmtrc.json` files; the `test`, `lint` and `fmt` blocks live here.
+  <%_ if (needsVitest) { _%>
+  test: {
+    environment: 'jsdom',
+    exclude: [...configDefaults.exclude, 'e2e/**'],
+  },
+  <%_ } _%>
+  lint: {
+    plugins: ['eslint'<% if (needsTypeScript) { %>, 'typescript'<% } %>, 'unicorn', 'oxc', 'vue'<% if (needsVitest) { %>, 'vitest'<% } %>],
+    env: {
+      browser: true,
+    },
+    categories: {
+      correctness: 'error',
+    },
+  },
+  fmt: {
+    semi: false,
+    singleQuote: true,
+  },
+<%_ } _%>
 })

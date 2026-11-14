@@ -1,5 +1,11 @@
-import { it, describe, expect } from 'vite-plus/test'
-import applyVitePlus from '../utils/vitePlus'
+/// <reference types="node" />
+
+import * as fs from 'node:fs'
+import * as os from 'node:os'
+import * as path from 'node:path'
+import { it, describe, expect, afterEach } from 'vite-plus/test'
+import applyVitePlus, { isLaunchedByVitePlus, isVitePlusInstalled } from '../utils/vitePlus'
+import applyOverrides from '../utils/applyOverrides'
 
 function createPackageJson(): Record<string, any> {
   return {
@@ -9,16 +15,10 @@ function createPackageJson(): Record<string, any> {
       'build-only': 'vite build',
       preview: 'vite preview',
       'test:unit': 'vitest',
-      'lint:oxlint': 'oxlint . --fix',
-      'lint:eslint': 'eslint . --fix --cache',
-      format: 'oxfmt src/',
     },
     devDependencies: {
-      eslint: '^10.13.0',
-      oxfmt: '^0.75.0',
-      oxlint: '~1.90.0',
-      vite: '^8.3.5',
-      'vite-plus': '^1.4.0',
+      vite: 'npm:@voidzero-dev/vite-plus-core@^1.6.0',
+      'vite-plus': '^1.6.0',
       vitest: '^5.0.5',
     },
   }
@@ -28,7 +28,7 @@ describe('applyVitePlus', () => {
   it('routes all tool scripts through vp and drops bundled packages', () => {
     const pkg = createPackageJson()
 
-    applyVitePlus(pkg, { needsVitest: true, needsEslint: true, needsOxfmt: true })
+    applyVitePlus(pkg, { needsVitest: true })
 
     expect(pkg.scripts).toStrictEqual({
       dev: 'vp dev',
@@ -36,15 +36,12 @@ describe('applyVitePlus', () => {
       'build-only': 'vp build',
       preview: 'vp preview',
       'test:unit': 'vp test',
-      'lint:oxlint': 'vp lint . --fix',
-      // ESLint is not part of Vite+ and is left untouched
-      'lint:eslint': 'eslint . --fix --cache',
+      lint: 'vp lint . --fix',
       format: 'vp fmt src/',
     })
     expect(pkg.devDependencies).toStrictEqual({
-      eslint: '^10.13.0',
-      vite: '^8.3.5',
-      'vite-plus': '^1.4.0',
+      vite: 'npm:@voidzero-dev/vite-plus-core@^1.6.0',
+      'vite-plus': '^1.6.0',
     })
   })
 
@@ -58,20 +55,93 @@ describe('applyVitePlus', () => {
     expect(pkg.scripts['build-only']).toBe('vp build')
   })
 
-  it('only rewrites scripts for the features that were selected', () => {
+  it('always adds lint and format scripts, even without Vitest', () => {
     const pkg = createPackageJson()
     delete pkg.scripts['test:unit']
-    delete pkg.scripts['lint:oxlint']
-    delete pkg.scripts.format
-    delete pkg.scripts['build-only']
 
     applyVitePlus(pkg, {})
 
     expect(pkg.scripts).toStrictEqual({
       dev: 'vp dev',
       build: 'vp build',
+      'build-only': 'vp build',
       preview: 'vp preview',
-      'lint:eslint': 'eslint . --fix --cache',
+      lint: 'vp lint . --fix',
+      format: 'vp fmt src/',
     })
+  })
+})
+
+describe('applyOverrides with vitePlus', () => {
+  const spec = 'npm:@voidzero-dev/vite-plus-core@^1.6.0'
+  const createPkg = (): Record<string, any> => ({
+    devDependencies: { vite: spec, 'vite-plus': '^1.6.0' },
+  })
+
+  it('references the aliased direct dependency via "$vite" for npm and bun', () => {
+    for (const packageManager of ['npm', 'bun'] as const) {
+      const pkg = createPkg()
+
+      applyOverrides('', packageManager, pkg, { vitePlus: true })
+
+      // The alias spec itself is declared in the `config/vite-plus` template
+      // manifest, so it is left untouched here.
+      expect(pkg.devDependencies.vite).toBe(spec)
+      expect(pkg.overrides).toStrictEqual({ vite: '$vite' })
+    }
+  })
+
+  it('reuses the manifest spec in yarn resolutions', () => {
+    const pkg = createPkg()
+
+    applyOverrides('', 'yarn', pkg, { vitePlus: true })
+
+    expect(pkg.resolutions).toStrictEqual({ vite: spec })
+  })
+
+  it('reuses the manifest spec in pnpm-workspace.yaml and relaxes the vite peer range', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'create-vue-'))
+    const pkg = createPkg()
+
+    applyOverrides(root, 'pnpm', pkg, { vitePlus: true })
+
+    const yaml = fs.readFileSync(path.join(root, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain(`'vite': '${spec}'`)
+    expect(yaml).toContain('allowedVersions')
+    fs.rmSync(root, { recursive: true, force: true })
+  })
+})
+
+describe('isLaunchedByVitePlus', () => {
+  afterEach(() => {
+    delete process.env.VP_USER_AGENT
+  })
+
+  it('is true when VP_USER_AGENT is set by `vp create`', () => {
+    process.env.VP_USER_AGENT = 'vite-plus/1.6.0'
+    expect(isLaunchedByVitePlus()).toBe(true)
+  })
+
+  it('is false otherwise', () => {
+    delete process.env.VP_USER_AGENT
+    expect(isLaunchedByVitePlus()).toBe(false)
+  })
+})
+
+describe('isVitePlusInstalled', () => {
+  afterEach(() => {
+    delete process.env.VP_HOME
+  })
+
+  it('finds the vp binary under VP_HOME', () => {
+    const vpHome = fs.mkdtempSync(path.join(os.tmpdir(), 'create-vue-vp-'))
+    const binDir = path.join(vpHome, 'bin')
+    fs.mkdirSync(binDir, { recursive: true })
+    fs.writeFileSync(path.join(binDir, process.platform === 'win32' ? 'vp.cmd' : 'vp'), '')
+    process.env.VP_HOME = vpHome
+
+    expect(isVitePlusInstalled()).toBe(true)
+
+    fs.rmSync(vpHome, { recursive: true, force: true })
   })
 })
