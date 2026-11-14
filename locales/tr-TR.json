@@ -75,6 +75,9 @@
   "needsOxfmt": {
     "message": "Prettier'ı Oxfmt ile değiştir"
   },
+  "needsVitePlus": {
+    "message": "Vite, Vitest, Oxlint ve Oxfmt için birleşik araç zinciri olarak Vite+ (vp) kullan"
+  },
   "needsBareboneTemplates": {
     "message": "Tüm örnek kodları atlayıp boş bir Vue projesi ile başlansın mı?"
   },
@@ -86,7 +89,8 @@
     "operationCancelled": "İşlem iptal edildi"
   },
   "warnings": {
-    "tsgoNubReleaseAge": "Nub'ın varsayılan 24 saatlik bekleme süresi, yeni yayımlanan bir typescript-native-bridge sürümünün yüklenmesini geçici olarak engelleyebilir. Daha fazla bilgi: https://nubjs.com/docs/install#cooling-window"
+    "tsgoNubReleaseAge": "Nub'ın varsayılan 24 saatlik bekleme süresi, yeni yayımlanan bir typescript-native-bridge sürümünün yüklenmesini geçici olarak engelleyebilir. Daha fazla bilgi: https://nubjs.com/docs/install#cooling-window",
+    "vitePlusIgnoresFlags": "Vite+, Oxlint ve Oxfmt'i birlikte içerir; bu nedenle aşağıdaki çakışan özellik bayrakları yok sayılır:"
   },
   "defaultToggleOptions": {
     "active": "Evet",
@@ -95,6 +99,7 @@
   "infos": {
     "scaffolding": "İskele projesi",
     "done": "Tamamlandı. Şimdi bunu çalıştır:",
-    "optionalGitCommand": "İsteğe bağlı: Proje dizininizde Git'i şununla başlatın:"
+    "optionalGitCommand": "İsteğe bağlı: Proje dizininizde Git'i şununla başlatın:",
+    "vitePlusReplacesLintFormat": "Vite+, Oxlint ve Oxfmt'i birlikte içerir; bu nedenle ESLint / Prettier / Oxfmt seçimleri değiştirildi."
   }
 }

@@ -75,6 +75,9 @@
   "needsOxfmt": {
     "message": "Replace Prettier with Oxfmt"
   },
+  "needsVitePlus": {
+    "message": "Use Vite+ (vp) as the unified toolchain for Vite, Vitest, Oxlint and Oxfmt"
+  },
   "needsBareboneTemplates": {
     "message": "Skip all example code and start with a blank Vue project?"
   },
@@ -86,7 +89,8 @@
     "operationCancelled": "Operation cancelled"
   },
   "warnings": {
-    "tsgoNubReleaseAge": "Nub's default 24-hour cooling window may temporarily prevent installing a newly published typescript-native-bridge version. Learn more: https://nubjs.com/docs/install#cooling-window"
+    "tsgoNubReleaseAge": "Nub's default 24-hour cooling window may temporarily prevent installing a newly published typescript-native-bridge version. Learn more: https://nubjs.com/docs/install#cooling-window",
+    "vitePlusIgnoresFlags": "Vite+ bundles Oxlint and Oxfmt, so the following conflicting feature flags are ignored:"
   },
   "defaultToggleOptions": {
     "active": "Yes",
@@ -95,6 +99,7 @@
   "infos": {
     "scaffolding": "Scaffolding project in",
     "done": "Done. Now run:",
-    "optionalGitCommand": "Optional: Initialize Git in your project directory with:"
+    "optionalGitCommand": "Optional: Initialize Git in your project directory with:",
+    "vitePlusReplacesLintFormat": "Vite+ bundles Oxlint and Oxfmt, so the ESLint / Prettier / Oxfmt selections have been replaced."
   }
 }

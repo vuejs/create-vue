@@ -41,6 +41,7 @@ interface Language {
   needsVueRc: LanguageItem
   needsTsgo: LanguageItem
   needsOxfmt: LanguageItem
+  needsVitePlus: LanguageItem
   needsBareboneTemplates: LanguageItem
   packageManagerSelection: LanguageItem
   errors: {
@@ -48,6 +49,7 @@ interface Language {
   }
   warnings: {
     tsgoNubReleaseAge: string
+    vitePlusIgnoresFlags: string
   }
   defaultToggleOptions: {
     active: string
@@ -57,6 +59,7 @@ interface Language {
     scaffolding: string
     done: string
     optionalGitCommand: string
+    vitePlusReplacesLintFormat: string
   }
 }
 

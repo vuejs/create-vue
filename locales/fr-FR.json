@@ -75,6 +75,9 @@
   "needsOxfmt": {
     "message": "Remplacer Prettier par Oxfmt"
   },
+  "needsVitePlus": {
+    "message": "Utiliser Vite+ (vp) comme chaîne d'outils unifiée pour Vite, Vitest, Oxlint et Oxfmt"
+  },
   "needsBareboneTemplates": {
     "message": "Ignorer tout le code d'exemple et commencer avec un projet Vue vierge\u00a0?"
   },
@@ -86,7 +89,8 @@
     "operationCancelled": "Operation annulée"
   },
   "warnings": {
-    "tsgoNubReleaseAge": "La période d’attente de 24 heures appliquée par défaut par Nub peut temporairement empêcher l’installation d’une version de typescript-native-bridge récemment publiée. En savoir plus : https://nubjs.com/docs/install#cooling-window"
+    "tsgoNubReleaseAge": "La période d’attente de 24 heures appliquée par défaut par Nub peut temporairement empêcher l’installation d’une version de typescript-native-bridge récemment publiée. En savoir plus : https://nubjs.com/docs/install#cooling-window",
+    "vitePlusIgnoresFlags": "Vite+ intègre Oxlint et Oxfmt, donc les options de fonctionnalités conflictuelles suivantes sont ignorées :"
   },
   "defaultToggleOptions": {
     "active": "Oui",
@@ -95,6 +99,7 @@
   "infos": {
     "scaffolding": "Génération du projet dans",
     "done": "Terminé. Exécutez maintenant\u00a0:",
-    "optionalGitCommand": "Optionnel\u00a0: Initialisez Git dans votre répertoire de projet avec\u00a0:"
+    "optionalGitCommand": "Optionnel\u00a0: Initialisez Git dans votre répertoire de projet avec\u00a0:",
+    "vitePlusReplacesLintFormat": "Vite+ intègre Oxlint et Oxfmt, donc les sélections ESLint / Prettier / Oxfmt ont été remplacées."
   }
 }

@@ -75,6 +75,9 @@
   "needsOxfmt": {
     "message": "使用 Oxfmt 替代 Prettier"
   },
+  "needsVitePlus": {
+    "message": "使用 Vite+（vp）作为统一工具链（Vite、Vitest、Oxlint、Oxfmt）"
+  },
   "needsBareboneTemplates": {
     "message": "跳过所有示例代码，创建一个空白的 Vue 项目？"
   },
@@ -86,7 +89,8 @@
     "operationCancelled": "操作取消"
   },
   "warnings": {
-    "tsgoNubReleaseAge": "Nub 默认的 24 小时发布冷却期可能会暂时阻止安装刚发布的 typescript-native-bridge 版本。了解详情：https://nubjs.com/docs/install#cooling-window"
+    "tsgoNubReleaseAge": "Nub 默认的 24 小时发布冷却期可能会暂时阻止安装刚发布的 typescript-native-bridge 版本。了解详情：https://nubjs.com/docs/install#cooling-window",
+    "vitePlusIgnoresFlags": "Vite+ 内置 Oxlint 和 Oxfmt，以下冲突的功能标志将被忽略："
   },
   "defaultToggleOptions": {
     "active": "是",
@@ -95,6 +99,7 @@
   "infos": {
     "scaffolding": "正在初始化项目",
     "done": "项目初始化完成，可执行以下命令：",
-    "optionalGitCommand": "可选：使用以下命令在项目目录中初始化 Git："
+    "optionalGitCommand": "可选：使用以下命令在项目目录中初始化 Git：",
+    "vitePlusReplacesLintFormat": "Vite+ 内置 Oxlint 和 Oxfmt，ESLint / Prettier / Oxfmt 选项已被替换。"
   }
 }

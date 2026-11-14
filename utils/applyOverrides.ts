@@ -29,6 +29,7 @@ const TSGO_SPEC = 'npm:typescript-native-bridge@latest'
 export type OverrideFeatures = {
   vueRc?: boolean
   tsgo?: boolean
+  vitePlus?: boolean
 }
 
 /**
@@ -44,7 +45,7 @@ export default function applyOverrides(
   root: string,
   packageManager: PackageManager,
   pkg: Record<string, any>,
-  { vueRc = false, tsgo = false }: OverrideFeatures,
+  { vueRc = false, tsgo = false, vitePlus = false }: OverrideFeatures,
 ): void {
   const overrides: Record<string, string> = {}
   if (vueRc) {
@@ -52,6 +53,12 @@ export default function applyOverrides(
       overrides[name] = 'rc'
     }
   }
+
+  // Vite+ bundles its own Vite core. The `config/vite-plus` template aliases
+  // the direct `vite` dependency to it (next to `vite-plus` in the template
+  // manifest, so Renovate keeps both up to date); here we only need to
+  // propagate that alias to transitive `vite` dependencies.
+  const vitePlusCoreSpec = vitePlus ? pkg.devDependencies?.vite : undefined
 
   if (packageManager === 'npm' || packageManager === 'bun') {
     // https://github.com/npm/rfcs/blob/main/accepted/0036-overrides.md
@@ -78,10 +85,22 @@ export default function applyOverrides(
         }
       }
     }
+
+    if (vitePlusCoreSpec) {
+      // The direct `vite` dependency already carries the alias, so the override
+      // references it via "$vite" to keep both in sync (same trick as tsgo above).
+      pkg.overrides = {
+        ...pkg.overrides,
+        vite: '$vite',
+      }
+    }
   } else if (packageManager === 'yarn') {
     // https://github.com/yarnpkg/rfcs/blob/master/implemented/0000-selective-versions-resolutions.md
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
+    }
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
     }
     pkg.resolutions = {
       ...pkg.resolutions,
@@ -93,18 +112,32 @@ export default function applyOverrides(
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
     }
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
+    }
     let yamlContent = `overrides:
 ${Object.entries(overrides)
   .map(([key, value]) => `  '${key}': '${value}'`)
   .join('\n')}
 `
 
+    const peerDependencyRules: string[] = []
     if (vueRc) {
+      peerDependencyRules.push(`  allowAny:
+    - 'vue'
+`)
+    }
+    if (vitePlus) {
+      // `vite-plus-core` is versioned like Vite+ itself, not like Vite,
+      // so peers such as `@vitejs/plugin-vue` need their range check relaxed.
+      peerDependencyRules.push(`  allowedVersions:
+    vite: '*'
+`)
+    }
+    if (peerDependencyRules.length) {
       yamlContent += `
 peerDependencyRules:
-  allowAny:
-    - 'vue'
-`
+${peerDependencyRules.join('')}`
     }
 
     fs.writeFileSync(path.resolve(root, 'pnpm-workspace.yaml'), yamlContent, 'utf-8')
@@ -116,6 +149,9 @@ peerDependencyRules:
     // map alone is sufficient.
     if (tsgo) {
       overrides['typescript'] = TSGO_SPEC
+    }
+    if (vitePlusCoreSpec) {
+      overrides['vite'] = vitePlusCoreSpec
     }
     pkg.overrides = {
       ...pkg.overrides,
