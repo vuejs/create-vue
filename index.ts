@@ -30,7 +30,7 @@ import {
 } from './utils/directoryTraverse'
 import generateReadme from './utils/generateReadme'
 import getCommand from './utils/getCommand'
-import getLanguage from './utils/getLanguage'
+import { detectLocale, loadMessages } from './utils/locale'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 import applyOverrides from './utils/applyOverrides'
 import applyVitePlus, { isLaunchedByVitePlus, isVitePlusInstalled } from './utils/vitePlus'
@@ -43,7 +43,9 @@ import { resolveNeedsTypeScript } from './utils/resolveFeatures'
 
 import cliPackageJson from './package.json' with { type: 'json' }
 
-const language = await getLanguage(fileURLToPath(new URL('./locales', import.meta.url)))
+const versionInfo = `${cliPackageJson.name} v${cliPackageJson.version}`
+const locale = detectLocale()
+const messages = await loadMessages(fileURLToPath(new URL('./locales', import.meta.url)), locale)
 
 // Vite+ (>= 1.6.0) sets `VP_USER_AGENT` when `vp create` spawns this CLI.
 // In that case Vite+ is implied, so the other prompts still run but the
@@ -82,49 +84,49 @@ const FEATURE_FLAGS = [
 const FEATURE_OPTIONS = [
   {
     value: 'jsx',
-    label: language.needsJsx.message,
+    label: messages.needsJsx.message,
   },
   {
     value: 'router',
-    label: language.needsRouter.message,
+    label: messages.needsRouter.message,
   },
   {
     value: 'pinia',
-    label: language.needsPinia.message,
+    label: messages.needsPinia.message,
   },
   {
     value: 'vitest',
-    label: language.needsVitest.message,
+    label: messages.needsVitest.message,
   },
   {
     value: 'e2e',
-    label: language.needsE2eTesting.message,
+    label: messages.needsE2eTesting.message,
   },
   {
     value: 'eslint',
-    label: language.needsEslint.message,
+    label: messages.needsEslint.message,
   },
   {
     value: 'prettier',
-    label: language.needsPrettier.message,
+    label: messages.needsPrettier.message,
   },
 ] as const
 const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
     value: 'oxfmt',
-    label: language.needsOxfmt.message,
+    label: messages.needsOxfmt.message,
   },
   {
     value: 'vue-rc',
-    label: language.needsVueRc.message,
+    label: messages.needsVueRc.message,
   },
   {
     value: 'tsgo',
-    label: language.needsTsgo.message,
+    label: messages.needsTsgo.message,
   },
   {
     value: 'vite-plus',
-    label: language.needsVitePlus.message,
+    label: messages.needsVitePlus.message,
   },
 ] as const
 
@@ -186,7 +188,7 @@ async function unwrapPrompt<T>(maybeCancelPromise: Promise<T | typeof CANCEL_SYM
   const result = await maybeCancelPromise
 
   if (isCancel(result)) {
-    cancel(red('✖') + ` ${language.errors.operationCancelled}`)
+    cancel(red('✖') + ` ${messages.errors.operationCancelled}`)
     process.exit(0)
   }
 
@@ -255,6 +257,27 @@ Deprecated feature flags:
     Oxlint is now always included when ESLint is selected.
 `
 
+function formatReleaseInfo() {
+  const match = /^\d+\.(\d{4})(\d{2})(\d{2})\./.exec(cliPackageJson.version)
+  if (!match) return versionInfo
+
+  const [, year, month, day] = match
+  const date = new Date(`${year}-${month}-${day}`)
+  // Explicit versions can have an eight-digit minor that isn't a calendar date.
+  if (date.getUTCDate() !== Number(day)) return versionInfo
+
+  try {
+    const formattedDate = new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    }).format(date)
+    return messages.infos.released.replace('{date}', `${formattedDate} (UTC)`)
+  } catch {
+    // Some runtimes ship without locale-aware date formatting.
+    return versionInfo
+  }
+}
+
 async function init() {
   const cwd = process.cwd()
   const args = process.argv.slice(2)
@@ -279,7 +302,7 @@ async function init() {
   }
 
   if (argv.version) {
-    console.log(`${cliPackageJson.name} v${cliPackageJson.version}`)
+    console.log(versionInfo)
     process.exit(0)
   }
 
@@ -311,16 +334,16 @@ async function init() {
       ? banners.gradientBanner
       : banners.defaultBanner,
   )
-  log.message(dim(`${cliPackageJson.name} v${cliPackageJson.version}`), { spacing: 0 })
+  log.message(dim(formatReleaseInfo()), { spacing: 0 })
 
   if (!targetDir) {
     const _result = await unwrapPrompt(
       text({
-        message: language.projectName.message,
+        message: messages.projectName.message,
         placeholder: defaultProjectName,
         defaultValue: defaultProjectName,
         validate: (value) =>
-          !value || value.trim().length > 0 ? undefined : language.projectName.invalidMessage,
+          !value || value.trim().length > 0 ? undefined : messages.projectName.invalidMessage,
       }),
     )
     const projectName = _result?.trim() || defaultProjectName
@@ -332,19 +355,19 @@ async function init() {
       select({
         message: `${
           targetDir === '.'
-            ? language.shouldOverwrite.dirForPrompts.current
-            : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
-        } ${language.shouldOverwrite.message}`,
+            ? messages.shouldOverwrite.dirForPrompts.current
+            : `${messages.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
+        } ${messages.shouldOverwrite.message}`,
         options: [
-          { value: 'remove', label: language.shouldOverwrite.selectOptions!.remove.title },
-          { value: 'cancel', label: language.shouldOverwrite.selectOptions!.cancel.title },
-          { value: 'ignore', label: language.shouldOverwrite.selectOptions!.ignore.title },
+          { value: 'remove', label: messages.shouldOverwrite.selectOptions!.remove.title },
+          { value: 'cancel', label: messages.shouldOverwrite.selectOptions!.cancel.title },
+          { value: 'ignore', label: messages.shouldOverwrite.selectOptions!.ignore.title },
         ],
       }),
     )
 
     if (overwrite === 'cancel') {
-      cancel(red('✖') + ` ${language.errors.operationCancelled}`)
+      cancel(red('✖') + ` ${messages.errors.operationCancelled}`)
       process.exit(0)
     }
 
@@ -355,10 +378,10 @@ async function init() {
   if (!isValidPackageName(defaultPackageName)) {
     result.packageName = await unwrapPrompt(
       text({
-        message: language.packageName.message,
+        message: messages.packageName.message,
         initialValue: toValidPackageName(defaultPackageName),
         validate: (value) =>
-          isValidPackageName(value) ? undefined : language.packageName.invalidMessage,
+          isValidPackageName(value) ? undefined : messages.packageName.invalidMessage,
       }),
     )
   } else {
@@ -368,7 +391,7 @@ async function init() {
   if (!isFeatureFlagsUsed) {
     result.needsTypeScript = await unwrapPrompt(
       confirm({
-        message: language.needsTypeScript.message,
+        message: messages.needsTypeScript.message,
         initialValue: true,
       }),
     )
@@ -380,7 +403,7 @@ async function init() {
       : FEATURE_OPTIONS
     result.features = await unwrapPrompt(
       multiselect({
-        message: `${language.featureSelection.message} ${dim(language.featureSelection.hint)}`,
+        message: `${messages.featureSelection.message} ${dim(messages.featureSelection.hint)}`,
         options: featureOptions,
         required: false,
       }),
@@ -390,19 +413,19 @@ async function init() {
       const hasVitest = result.features.includes('vitest')
       result.e2eFramework = await unwrapPrompt(
         select({
-          message: `${language.e2eSelection.message} ${dim(language.e2eSelection.hint)}`,
+          message: `${messages.e2eSelection.message} ${dim(messages.e2eSelection.hint)}`,
           options: [
             {
               value: 'playwright',
-              label: language.e2eSelection.selectOptions.playwright.title,
-              hint: language.e2eSelection.selectOptions.playwright.desc,
+              label: messages.e2eSelection.selectOptions.playwright.title,
+              hint: messages.e2eSelection.selectOptions.playwright.desc,
             },
             {
               value: 'cypress',
-              label: language.e2eSelection.selectOptions.cypress.title,
+              label: messages.e2eSelection.selectOptions.cypress.title,
               hint: hasVitest
-                ? language.e2eSelection.selectOptions.cypress.desc
-                : language.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
+                ? messages.e2eSelection.selectOptions.cypress.desc
+                : messages.e2eSelection.selectOptions.cypress.hintOnComponentTesting!,
             },
           ],
         }),
@@ -426,7 +449,7 @@ async function init() {
     })
     result.experimentFeatures = await unwrapPrompt(
       multiselect({
-        message: `${language.needsExperimentalFeatures.message} ${dim(language.needsExperimentalFeatures.hint)}`,
+        message: `${messages.needsExperimentalFeatures.message} ${dim(messages.needsExperimentalFeatures.hint)}`,
         options: experimentalFeatureOptions,
         required: false,
       }),
@@ -445,7 +468,7 @@ async function init() {
 
       result.packageManager = await unwrapPrompt(
         select({
-          message: `${language.packageManagerSelection.message} ${dim(language.packageManagerSelection.hint)}`,
+          message: `${messages.packageManagerSelection.message} ${dim(messages.packageManagerSelection.hint)}`,
           options: packageManagerOptions,
         }),
       )
@@ -457,7 +480,7 @@ async function init() {
   } else if (!isFeatureFlagsUsed) {
     result.needsBareboneTemplates = await unwrapPrompt(
       confirm({
-        message: language.needsBareboneTemplates.message,
+        message: messages.needsBareboneTemplates.message,
         // TODO: default to true sometime in the future
         initialValue: false,
       }),
@@ -488,13 +511,13 @@ async function init() {
     ).filter((flag) => argv[flag])
     if (conflictingFlags.length > 0) {
       log.warn(
-        `${language.warnings.vitePlusIgnoresFlags} ${conflictingFlags
+        `${messages.warnings.vitePlusIgnoresFlags} ${conflictingFlags
           .map((flag) => `--${flag}`)
           .join(', ')}`,
       )
     } else if (needsEslint || needsPrettier || needsOxfmt) {
       // Selected in the prompts, before Vite+ was chosen.
-      log.info(language.infos.vitePlusReplacesLintFormat)
+      log.info(messages.infos.vitePlusReplacesLintFormat)
     }
     needsEslint = false
     needsPrettier = false
@@ -515,7 +538,7 @@ async function init() {
     fs.mkdirSync(root)
   }
 
-  console.log(`\n${language.infos.scaffolding} ${root}...`)
+  console.log(`\n${messages.infos.scaffolding} ${root}...`)
 
   const pkg = { name: result.packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
@@ -822,7 +845,7 @@ async function init() {
     }),
   )
 
-  let outroMessage = `${language.infos.done}\n\n`
+  let outroMessage = `${messages.infos.done}\n\n`
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
@@ -835,13 +858,13 @@ async function init() {
 
   if (needsTsgo && packageManager === 'nub') {
     outroMessage += `
-${dim('|')} ${language.warnings.tsgoNubReleaseAge}
+${dim('|')} ${messages.warnings.tsgoNubReleaseAge}
 `
   }
 
   if (!dotGitDirectoryState.hasDotGitDirectory) {
     outroMessage += `
-${dim('|')} ${language.infos.optionalGitCommand}
+${dim('|')} ${messages.infos.optionalGitCommand}
 
    ${bold(green('git init && git add -A && git commit -m "initial commit"'))}`
   }
