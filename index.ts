@@ -842,6 +842,7 @@ async function init() {
       needsPlaywright,
       needsCypressCT,
       needsEslint,
+      needsVitePlus,
     }),
   )
 
