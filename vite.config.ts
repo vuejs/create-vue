@@ -23,7 +23,7 @@ export default defineConfig({
       // inference), so the rule cannot function here.
       'typescript/no-useless-default-assignment': 'off',
     },
-    ignorePatterns: ['playground/**', 'template/**'],
+    ignorePatterns: ['playground/**', 'template/**', 'vue-project/**'],
     options: {
       typeAware: true,
       typeCheck: true,
