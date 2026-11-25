@@ -33,6 +33,7 @@ import getCommand from './utils/getCommand'
 import { detectLocale, loadMessages } from './utils/locale'
 import { trimBoilerplate, removeCSSImport, emptyRouterConfig } from './utils/trimBoilerplate'
 import applyOverrides from './utils/applyOverrides'
+import applyVitePlus, { isLaunchedByVitePlus, isVitePlusInstalled } from './utils/vitePlus'
 import {
   inferPackageManager,
   getPackageManagerOptions,
@@ -45,6 +46,15 @@ import cliPackageJson from './package.json' with { type: 'json' }
 const versionInfo = `${cliPackageJson.name} v${cliPackageJson.version}`
 const locale = detectLocale()
 const messages = await loadMessages(fileURLToPath(new URL('./locales', import.meta.url)), locale)
+
+// Vite+ (>= 1.6.0) sets `VP_USER_AGENT` when `vp create` spawns this CLI.
+// In that case Vite+ is implied, so the other prompts still run but the
+// Vite+ / linter / formatter entries are hidden.
+const launchedByVitePlus = isLaunchedByVitePlus()
+// Otherwise only offer Vite+ in the prompts when a global `vp` binary is
+// available; users without Vite+ installed should see no change in the
+// prompts. (The explicit `--vite-plus` flag works regardless.)
+const shouldOfferVitePlus = !launchedByVitePlus && isVitePlusInstalled()
 
 const FEATURE_FLAGS = [
   'default',
@@ -68,6 +78,7 @@ const FEATURE_FLAGS = [
   // Kept as a compatibility alias for the former Vue 3.6 beta feature.
   'vue-beta',
   'tsgo',
+  'vite-plus',
 ] as const
 
 const FEATURE_OPTIONS = [
@@ -112,6 +123,10 @@ const EXPERIMENTAL_FEATURE_OPTIONS = [
   {
     value: 'tsgo',
     label: messages.needsTsgo.message,
+  },
+  {
+    value: 'vite-plus',
+    label: messages.needsVitePlus.message,
   },
 ] as const
 
@@ -225,6 +240,10 @@ Available feature flags:
   --tsgo
     Add TypeScript support using typescript-native-bridge (tsgo).
     Requires specifying a package manager in interactive mode.
+  --vite-plus
+    Use Vite+ (vp) as the unified toolchain, bundling Vite, Vitest, Oxlint
+    and Oxfmt into a single dependency. Requires specifying a package manager
+    in interactive mode.
 
 Unstable feature flags:
   --tests, --with-tests
@@ -377,10 +396,15 @@ async function init() {
       }),
     )
 
+    // When spawned by `vp create`, Vite+ provides linting and formatting, so
+    // the ESLint / Prettier entries are hidden altogether.
+    const featureOptions = launchedByVitePlus
+      ? FEATURE_OPTIONS.filter(({ value }) => value !== 'eslint' && value !== 'prettier')
+      : FEATURE_OPTIONS
     result.features = await unwrapPrompt(
       multiselect({
         message: `${messages.featureSelection.message} ${dim(messages.featureSelection.hint)}`,
-        options: FEATURE_OPTIONS,
+        options: featureOptions,
         required: false,
       }),
     )
@@ -407,10 +431,22 @@ async function init() {
         }),
       )
     }
-    // tsgo replaces TypeScript, so it's only offered when TypeScript is enabled
-    const experimentalFeatureOptions = result.needsTypeScript
-      ? EXPERIMENTAL_FEATURE_OPTIONS
-      : EXPERIMENTAL_FEATURE_OPTIONS.filter(({ value }) => value !== 'tsgo')
+    const experimentalFeatureOptions = EXPERIMENTAL_FEATURE_OPTIONS.filter(({ value }) => {
+      // tsgo replaces TypeScript, so it's only offered when TypeScript is enabled
+      if (value === 'tsgo') {
+        return result.needsTypeScript
+      }
+      // Vite+ is only offered when a `vp` binary is installed (and is hidden
+      // when spawned by `vp create`, where it is implied)
+      if (value === 'vite-plus') {
+        return shouldOfferVitePlus
+      }
+      // Oxfmt is implied by Vite+ when spawned by `vp create`
+      if (value === 'oxfmt') {
+        return !launchedByVitePlus
+      }
+      return true
+    })
     result.experimentFeatures = await unwrapPrompt(
       multiselect({
         message: `${messages.needsExperimentalFeatures.message} ${dim(messages.needsExperimentalFeatures.hint)}`,
@@ -419,10 +455,11 @@ async function init() {
       }),
     )
 
-    // Ask for package manager if Vue 3.6 RC or tsgo is selected (needed for correct overrides)
+    // Ask for package manager if Vue 3.6 RC, tsgo or Vite+ is selected (needed for correct overrides)
     if (
       result.experimentFeatures.includes('vue-rc') ||
-      result.experimentFeatures.includes('tsgo')
+      result.experimentFeatures.includes('tsgo') ||
+      result.experimentFeatures.includes('vite-plus')
     ) {
       const packageManagerOptions = getPackageManagerOptions(inferredPackageManager).map((pm) => ({
         value: pm,
@@ -457,13 +494,35 @@ async function init() {
   const needsRouter = argv.router || argv['vue-router'] || features.includes('router')
   const needsPinia = argv.pinia || features.includes('pinia')
   const needsVitest = argv.vitest || argv.tests || argv['with-tests'] || features.includes('vitest')
-  const needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
-  const needsPrettier =
-    argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
-  const needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
+  let needsEslint = argv.eslint || argv['eslint-with-prettier'] || features.includes('eslint')
+  let needsPrettier = argv.prettier || argv['eslint-with-prettier'] || features.includes('prettier')
+  let needsOxfmt = experimentFeatures.includes('oxfmt') || argv['oxfmt']
   const needsVueRc = experimentFeatures.includes('vue-rc') || argv['vue-rc'] || argv['vue-beta']
   // tsgo replaces the `typescript` package, so it only makes sense with TypeScript enabled
   const needsTsgo = needsTypeScript && (experimentFeatures.includes('tsgo') || argv.tsgo)
+  const needsVitePlus =
+    launchedByVitePlus || experimentFeatures.includes('vite-plus') || argv['vite-plus']
+
+  if (needsVitePlus) {
+    // `vp lint` is Oxlint-only and `vp fmt` is Oxfmt, so ESLint, Prettier and
+    // the standalone Oxfmt template are dropped on this path.
+    const conflictingFlags = (
+      ['eslint', 'eslint-with-prettier', 'prettier', 'oxfmt'] as const
+    ).filter((flag) => argv[flag])
+    if (conflictingFlags.length > 0) {
+      log.warn(
+        `${messages.warnings.vitePlusIgnoresFlags} ${conflictingFlags
+          .map((flag) => `--${flag}`)
+          .join(', ')}`,
+      )
+    } else if (needsEslint || needsPrettier || needsOxfmt) {
+      // Selected in the prompts, before Vite+ was chosen.
+      log.info(messages.infos.vitePlusReplacesLintFormat)
+    }
+    needsEslint = false
+    needsPrettier = false
+    needsOxfmt = false
+  }
 
   const { e2eFramework } = result
   const needsCypress =
@@ -492,6 +551,17 @@ async function init() {
   }
   // Render base template
   render('base')
+  callbacks.push(async (dataStore) => {
+    // Feature flags for the `vite.config` EJS template. Runs after the
+    // template's own `.data.mjs` callback, so the plugin data is preserved.
+    const viteConfigPath = path.resolve(root, 'vite.config.js')
+    dataStore[viteConfigPath] = {
+      ...dataStore[viteConfigPath],
+      needsTypeScript,
+      needsVitePlus,
+      needsVitest,
+    }
+  })
 
   // Add configs.
   if (needsJsx) {
@@ -506,9 +576,22 @@ async function init() {
   if (needsVitest) {
     render('config/vitest')
     callbacks.push(async (dataStore) => {
-      const vitestConfigPath = path.resolve(root, 'vitest.config.js')
-      dataStore[vitestConfigPath] = { needsTypeScript }
+      const specPath = path.resolve(root, 'src/components/__tests__/HelloWorld.spec.js')
+      dataStore[specPath] = { needsVitePlus }
     })
+    if (needsVitePlus) {
+      // Vite+ recommends against a separate `vitest.config.*`; unit tests are
+      // configured in the `test` block of `vite.config` instead.
+      fs.rmSync(path.resolve(root, 'vitest.config.js.ejs'))
+    } else {
+      callbacks.push(async (dataStore) => {
+        const vitestConfigPath = path.resolve(root, 'vitest.config.js')
+        dataStore[vitestConfigPath] = { needsTypeScript }
+      })
+    }
+  }
+  if (needsVitePlus) {
+    render('config/vite-plus')
   }
   if (needsCypress) {
     render('config/cypress')
@@ -628,6 +711,27 @@ async function init() {
     render('entry/default')
   }
 
+  // Render barebone templates before the EJS pass, so that `.ejs` files
+  // they contribute (e.g. the bare Vitest spec) are rendered as well.
+  if (needsBareboneTemplates) {
+    trimBoilerplate(root)
+    render('bare/base')
+    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
+    if (needsTypeScript) {
+      render('bare/typescript')
+    }
+    if (needsVitest) {
+      render('bare/vitest')
+      callbacks.push(async (dataStore) => {
+        const specPath = path.resolve(root, 'src/__tests__/App.spec.js')
+        dataStore[specPath] = { needsVitePlus }
+      })
+    }
+    if (needsCypressCT) {
+      render('bare/cypress-ct')
+    }
+  }
+
   // An external data store for callbacks to share data
   const dataStore = {}
   // Process callbacks
@@ -650,21 +754,6 @@ async function init() {
       }
     },
   )
-
-  if (needsBareboneTemplates) {
-    trimBoilerplate(root)
-    render('bare/base')
-    // TODO: refactor the `render` utility to avoid this kind of manual mapping?
-    if (needsTypeScript) {
-      render('bare/typescript')
-    }
-    if (needsVitest) {
-      render('bare/vitest')
-    }
-    if (needsCypressCT) {
-      render('bare/cypress-ct')
-    }
-  }
 
   // Cleanup.
 
@@ -725,11 +814,18 @@ async function init() {
   // Use the package manager selected by user for the version overrides, or inferred from user agent
   const packageManager = result.packageManager ?? inferredPackageManager
 
-  // Apply version overrides for experimental features (Vue 3.6 RC, tsgo) if enabled
-  if (needsVueRc || needsTsgo) {
+  // Apply version overrides for experimental features (Vue 3.6 RC, tsgo, Vite+) if enabled
+  if (needsVueRc || needsTsgo || needsVitePlus) {
     const pkgPath = path.resolve(root, 'package.json')
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-    applyOverrides(root, packageManager, pkg, { vueRc: needsVueRc, tsgo: needsTsgo })
+    if (needsVitePlus) {
+      applyVitePlus(pkg, { needsTypeScript, needsVitest })
+    }
+    applyOverrides(root, packageManager, pkg, {
+      vueRc: needsVueRc,
+      tsgo: needsTsgo,
+      vitePlus: needsVitePlus,
+    })
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
   }
 
@@ -746,6 +842,7 @@ async function init() {
       needsPlaywright,
       needsCypressCT,
       needsEslint,
+      needsVitePlus,
     }),
   )
 
@@ -755,7 +852,7 @@ async function init() {
     outroMessage += `   ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'install')))}\n`
-  if (needsPrettier || needsOxfmt) {
+  if (needsPrettier || needsOxfmt || needsVitePlus) {
     outroMessage += `   ${bold(green(getCommand(packageManager, 'format')))}\n`
   }
   outroMessage += `   ${bold(green(getCommand(packageManager, 'dev')))}\n`

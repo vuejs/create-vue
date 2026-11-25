@@ -24,6 +24,7 @@ export default function generateReadme({
   needsPlaywright,
   needsVitest,
   needsEslint,
+  needsVitePlus,
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -139,6 +140,18 @@ ${commandFor('test:e2e', '--debug')}
 
 \`\`\`sh
 ${commandFor('lint')}
+\`\`\`
+`
+  }
+
+  if (needsVitePlus) {
+    npmScriptsDescriptions += `
+### Lint, Format and Check with [Vite+](https://viteplus.dev/)
+
+\`\`\`sh
+${commandFor('lint')}
+${commandFor('format')}
+${commandFor('check')}
 \`\`\`
 `
   }

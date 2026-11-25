@@ -297,6 +297,15 @@ importers:
         specifier: ^3.3.14
         version: 3.3.14(typescript@6.0.3)
 
+  template/config/vite-plus:
+    devDependencies:
+      vite:
+        specifier: npm:@voidzero-dev/vite-plus-core@latest
+        version: '@voidzero-dev/vite-plus-core@8.3.8000(@types/node@26.6.6)(@volar/typescript@2.4.30)(@vue/language-core@3.3.14)(jiti@2.7.0)(typescript@6.0.3)(vue-tsc@3.3.14)'
+      vite-plus:
+        specifier: ^1.6.0
+        version: 1.7.0(@types/node@26.6.6)(@vitest/ui@5.1.0)(@volar/typescript@2.4.30)(@vue/language-core@3.3.14)(jiti@2.7.0)(jsdom@31.0.0)(playwright@1.65.0)(typescript@6.0.3)(vue-tsc@3.3.14)
+
   template/config/vitest:
     dependencies:
       vue:
@@ -7166,7 +7175,6 @@ snapshots:
       - utf-8-validate
       - vue-tsc
       - yaml
-    optional: true
 
   vitest@5.1.0(@types/node@24.19.2)(@vitest/browser-preview@5.1.0)(@vitest/ui@5.1.0)(@voidzero-dev/vite-plus-core@8.3.8000)(jsdom@31.0.0):
     dependencies:
