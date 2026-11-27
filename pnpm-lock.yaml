@@ -179,9 +179,9 @@ importers:
       '@clack/prompts':
         specifier: ^1.9.0
         version: 1.9.0
-      '@tsconfig/node24':
-        specifier: ^24.0.5
-        version: 24.0.5
+      '@tsconfig/node26':
+        specifier: ^26.0.0
+        version: 26.0.2
       '@types/node':
         specifier: ^24.19.2
         version: 24.19.2
@@ -408,9 +408,9 @@ importers:
 
   template/tsconfig/base:
     devDependencies:
-      '@tsconfig/node24':
-        specifier: ^24.0.5
-        version: 24.0.5
+      '@tsconfig/node26':
+        specifier: ^26.0.0
+        version: 26.0.2
       '@vue/tsconfig':
         specifier: ^0.9.1
         version: 0.9.1(typescript@6.0.3)(vue@3.5.45)
@@ -1522,8 +1522,8 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
 
-  '@tsconfig/node24@24.0.5':
-    resolution: {integrity: sha512-DWC54fGPuhZgg3Ighg4Y/A/bA3ZdB5hnzAuv/MkQ/X85sVsBsMQxu8t7khutdYeiNksBbFdDyeqv1HSW2Zl8aA==}
+  '@tsconfig/node26@26.0.2':
+    resolution: {integrity: sha512-RIBSoNGQxUQ8r4hSrEzS6TrUneoKaCuX6BjL4zF3wqttGq2w06zCea4d8P1gRvM/HZyDT1FQJ8trZSyy/63oMg==}
 
   '@tsrs/darwin-arm64@7.1.0-beta.tsrs4':
     resolution: {integrity: sha512-Be1McQGyHipWIjnkvytZmh7Wi4YVATvTfiEuPX34kfk+W7QCtTdUUHnuLZ7bzwy8LgL9VDCmyvQtWiF3MENxBQ==}
@@ -4960,7 +4960,7 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.2
 
-  '@tsconfig/node24@24.0.5': {}
+  '@tsconfig/node26@26.0.2': {}
 
   '@tsrs/darwin-arm64@7.1.0-beta.tsrs4':
     optional: true
