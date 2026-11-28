@@ -31,6 +31,7 @@ interface Messages {
   needsE2eTesting: LanguageItem
   needsEslint: LanguageItem
   needsPrettier: LanguageItem
+  needsTailwind: LanguageItem
   e2eSelection: LanguageItem & {
     selectOptions?: {
       [key: string]: { title: string; desc?: string; hintOnComponentTesting?: string }
